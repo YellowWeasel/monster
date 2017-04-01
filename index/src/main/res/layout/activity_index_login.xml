@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    tools:context=".view.impl.LoginActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/index_login_rel_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/index_login_et_tel"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="5dp"
+                android:ems="11"
+                android:hint="手机号码"
+                android:inputType="phone" />
+
+            <EditText
+                android:id="@+id/index_login_et_pass"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/index_login_et_tel"
+                android:layout_margin="5dp"
+                android:layout_toStartOf="@+id/login_check_bt_sendCode"
+                android:ems="10"
+                android:hint="密码"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/index_login_rel_login"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/index_login_rel_input">
+
+            <Button
+                android:id="@+id/index_login_btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/btn_shape_green"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:text="登&#160;录" />
+
+            <TextView
+                android:id="@+id/index_login_tv_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/index_login_btn_login"
+                android:layout_alignStart="@+id/index_login_btn_login"
+                android:layout_marginBottom="20dp"
+                android:text="注册用户" />
+
+            <TextView
+                android:id="@+id/login_tv_agreements"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/index_login_btn_login"
+                android:layout_alignEnd="@+id/index_login_btn_login"
+                android:layout_marginBottom="20dp"
+                android:text="用户协议" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
