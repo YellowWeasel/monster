@@ -7,6 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Interceptor;
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback;
 import com.alibaba.android.arouter.facade.template.IInterceptor;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.util.ErayicLog;
 
 /**
@@ -22,7 +23,7 @@ public class LoginInterceptor implements IInterceptor {
     @Override
     public void process(Postcard postcard, InterceptorCallback callback) {
         if (postcard.getPath().equals("/main/MainActivity")) {
-            if (postcard.getExtras().getBoolean("pass-login", false)) {
+            if ( PreferenceUtils.getParam("AutoLogin", false)) {
                 ErayicLog.d("LoginInterceptor:::通过登陆拦截器");
                 callback.onContinue(postcard);//处理完成 交还控制权
             } else {

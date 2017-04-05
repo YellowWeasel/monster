@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseActivity;
+import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.index.R;
 import com.erayic.agr.index.presenter.ILoginPresenter;
@@ -79,10 +80,10 @@ public class LoginActivity extends BaseActivity implements ILoginView, View.OnCl
         if (v.getId() == R.id.index_login_tv_register) {
 
         } else if (v.getId() == R.id.index_login_btn_login) {
+            PreferenceUtils.putParam("AutoLogin", true);
             Bundle bundle = new Bundle();
-            bundle.putBoolean("pass-login", true);
-            bundle.putBoolean("pass-code", false);
-            ARouter.getInstance().build("/main/MainActivity").with(bundle).navigation();
+            bundle.putBoolean("pass-code", true);
+            ARouter.getInstance().build("/index/CodeActivity").with(bundle).navigation();
         }
     }
 }

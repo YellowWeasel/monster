@@ -22,14 +22,14 @@ public class CodeInterceptor implements IInterceptor {
 
     @Override
     public void process(Postcard postcard, InterceptorCallback callback) {
-        if (postcard.getPath().equals("/main/MainActivity")) {
+        if (postcard.getPath().equals("/index/CodeActivity")) {
             Bundle bundle = postcard.getExtras();
             if (bundle.getBoolean("pass-code", false)) {
                 ErayicLog.d("LoginInterceptor:::通过验证码拦截器");
-                callback.onContinue(postcard);//处理完成 交还控制权
+                ARouter.getInstance().build("/main/MainActivity").navigation();//跳转到主页面
             } else {
                 ErayicLog.e("LoginInterceptor:::未通过验证码拦截器，跳转验证码页面");
-                ARouter.getInstance().build("/index/CodeActivity").navigation();//跳转到登陆页面
+                callback.onContinue(postcard);//处理完成 交还控制权
             }
         } else {
             callback.onContinue(postcard);//处理完成 交还控制权

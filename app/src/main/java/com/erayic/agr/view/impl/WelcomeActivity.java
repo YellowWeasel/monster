@@ -56,9 +56,7 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView {
         baseHandler.postDelayed(new TimerTask() {
             @Override
             public void run() {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("pass-login", PreferenceUtils.getParam("AutoLogin", false));
-                ARouter.getInstance().build("/main/MainActivity").with(bundle).navigation();
+                ARouter.getInstance().build("/main/MainActivity").navigation();
                 WelcomeActivity.this.finish();
             }
         }, 3000);
