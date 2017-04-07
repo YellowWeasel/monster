@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:fitsSystemWindows="true"
+    android:foreground="?android:attr/selectableItemBackground"
     tools:context=".view.impl.LoginActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -17,10 +17,10 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/app_base_bar_background"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -29,6 +29,7 @@
         android:layout_height="match_parent"
         android:background="@android:color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
         <LinearLayout
             android:id="@+id/index_login_rel_input"
@@ -43,10 +44,8 @@
                 android:id="@+id/index_login_et_tel"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:layout_margin="5dp"
+                android:drawableLeft="@drawable/app_base_android_4"
                 android:ems="11"
                 android:hint="手机号码"
                 android:inputType="phone" />
@@ -55,10 +54,8 @@
                 android:id="@+id/index_login_et_pass"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/index_login_et_tel"
                 android:layout_margin="5dp"
-                android:layout_toStartOf="@+id/login_check_bt_sendCode"
+                android:drawableLeft="@drawable/app_base_android_4"
                 android:ems="10"
                 android:hint="密码"
                 android:inputType="textPersonName" />
@@ -80,9 +77,9 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:background="@drawable/btn_shape_green"
+                android:text="登&#160;录"
                 android:textColor="@android:color/white"
-                android:textSize="16sp"
-                android:text="登&#160;录" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/index_login_tv_register"
@@ -100,7 +97,7 @@
                 android:layout_above="@+id/index_login_btn_login"
                 android:layout_alignEnd="@+id/index_login_btn_login"
                 android:layout_marginBottom="20dp"
-                android:text="用户协议" />
+                android:text="忘记密码" />
 
         </RelativeLayout>
 

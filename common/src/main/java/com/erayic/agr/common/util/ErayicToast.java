@@ -31,6 +31,16 @@ public class ErayicToast {
     /**
      * 文本Toast
      *
+     * @param context Context
+     * @param message 消息 类型:CharSequence
+     */
+    public static void TextToast(Context context, CharSequence message) {
+        TextToast(context, message, LENGTH_SHORT, BOTTOM);
+    }
+
+    /**
+     * 文本Toast
+     *
      * @param context  Context
      * @param message  消息 类型:CharSequence
      * @param duration 持续时间  LENGTH_LONG(长)或者LENGTH_SHORT(短)

@@ -2,8 +2,6 @@ package com.erayic.agr.common.base;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -23,11 +21,11 @@ import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
  * 注解：Activity 基类
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements BGASwipeBackHelper.Delegate{
+public abstract class BaseActivity extends AppCompatActivity implements BGASwipeBackHelper.Delegate {
 
     protected AppCompatActivity mContext;
     protected BGASwipeBackHelper mSwipeBackHelper;
-    protected Handler baseHandler;
+//    protected Handler baseHandler;
 
     /**
      * 页面布局的 根view
@@ -58,7 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
     public void setContentView(View view) {
         super.setContentView(view);
         mContentView = view;
-        baseHandler = new Handler(Looper.getMainLooper());
+//        baseHandler = new Handler(Looper.getMainLooper());
         initView();
         setStatusBar();
         initData();
@@ -78,7 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
      * 初始化状态栏
      */
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.app_base_bar_color));
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.app_base_bar_background));
     }
 
     /**
@@ -103,7 +101,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
         // 设置阴影区域的透明度是否根据滑动的距离渐变。默认值为 true
         mSwipeBackHelper.setIsShadowAlphaGradient(true);
         // 设置触发释放后自动滑动返回的阈值，默认值为 0.3f
-        mSwipeBackHelper.setSwipeBackThreshold(0.3f);
+        mSwipeBackHelper.setSwipeBackThreshold(0.4f);
     }
 
     /**

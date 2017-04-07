@@ -21,14 +21,17 @@ public class LoginInterceptor implements IInterceptor {
     private Context context;
 
     @Override
-    public void process(Postcard postcard, InterceptorCallback callback) {
-        if (postcard.getPath().equals("/main/MainActivity")) {
-            if ( PreferenceUtils.getParam("AutoLogin", false)) {
+    public void process(Postcard postcard, final InterceptorCallback callback) {
+        ErayicLog.e(postcard.toString());
+        if (postcard.getPath().equals("/main/Activity/MainActivity")) {
+            if (PreferenceUtils.getParam("AutoLogin", false)) {
                 ErayicLog.d("LoginInterceptor:::通过登陆拦截器");
                 callback.onContinue(postcard);//处理完成 交还控制权
             } else {
                 ErayicLog.e("LoginInterceptor:::未通过登陆拦截器，跳转登陆页面");
-                ARouter.getInstance().build("/index/LoginActivity").navigation();//跳转到登陆页面
+                ARouter.getInstance().build("/index/Activity/LoginActivity")
+                        .navigation();//跳转到登陆页面
+                callback.onInterrupt(null);
             }
         } else {
             callback.onContinue(postcard);//处理完成 交还控制权

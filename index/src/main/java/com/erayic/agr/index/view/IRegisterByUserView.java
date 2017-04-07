@@ -8,7 +8,7 @@ import com.erayic.agr.common.base.IBaseView;
  * 注解：
  */
 
-public interface ICodeView extends IBaseView {
+public interface IRegisterByUserView extends IBaseView{
 
     /**
      * 验证码发送成功
@@ -16,8 +16,8 @@ public interface ICodeView extends IBaseView {
     void verSendSure();
 
     /**
-     * 校验成功
+     * 注册成功
      */
-    void checkSure();
+    void registerSure();
 
 }

@@ -8,7 +8,7 @@ package com.erayic.agr.common.net;
 
 public interface OnDataListener<T> {
 
-    void success(T response); // 网络操作成功
+    void success(T response); // 获取数据成功
 
-    void fail(String msg); // 网络操作失败
+    void fail(int errCode,String msg); // 获取数据失败
 }

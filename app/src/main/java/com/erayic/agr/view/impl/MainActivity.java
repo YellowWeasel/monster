@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.R;
 import com.erayic.agr.common.base.BaseActivity;
+import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.view.IMainView;
 
@@ -14,7 +15,7 @@ import com.erayic.agr.view.IMainView;
  * 注解：
  */
 
-@Route(path = "/main/MainActivity", name = "APP主承载页面")
+@Route(path = "/main/Activity/MainActivity", name = "APP主承载页面")
 public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
@@ -35,7 +36,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void showToast(final String msg) {
-        baseHandler.post(new Runnable() {
+        MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 ErayicToast.TextToast(getApplicationContext(), msg, ErayicToast.BOTTOM);

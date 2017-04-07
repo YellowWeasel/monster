@@ -6,7 +6,7 @@ package com.erayic.agr.common.base;
  * 注解：
  */
 
-public interface IBaseView {
+public interface IBaseView{
 
     /**
      * 显示短时消息

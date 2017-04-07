@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:foreground="?android:attr/selectableItemBackground"
-    tools:context=".view.impl.CodeActivity">
+    tools:context=".view.impl.RegisterByEntActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -24,45 +24,61 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
-        android:id="@+id/login_rel_all"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/app_base_layout_background"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:id="@+id/index_code_rel_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_margin="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
             android:background="@color/app_base_item_background"
             android:orientation="vertical">
 
-            <TextView
+            <EditText
+                android:id="@+id/index_register_ent_phone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="2dp"
-                android:gravity="center_vertical"
-                android:text="验证码已发送到您的手机："
-                android:textColor="@color/app_base_text_title_1"
+                android:layout_height="50dp"
+                android:drawableLeft="@drawable/app_base_android_4"
+                android:ems="10"
+                android:hint="请输入手机号码"
+                android:inputType="phone"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/index_code_tel"
+            <EditText
+                android:id="@+id/index_register_ent_entName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="2dp"
-                android:gravity="center_vertical"
-                android:text="18888888888"
-                android:textColor="@color/app_base_text_title_2"
+                android:layout_height="50dp"
+                android:drawableLeft="@drawable/app_base_android_4"
+                android:ems="10"
+                android:hint="企业or基地名称"
+                android:inputType="text"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/index_register_ent_userName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:drawableLeft="@drawable/app_base_android_4"
+                android:ems="10"
+                android:hint="真实姓名"
+                android:inputType="text"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/index_register_ent_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:drawableLeft="@drawable/app_base_android_4"
+                android:ems="10"
+                android:hint="登陆密码"
+                android:inputType="textPassword"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -72,7 +88,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/index_code_verCode"
+                    android:id="@+id/index_register_ent_verCode"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -83,7 +99,7 @@
                     android:textSize="16sp" />
 
                 <Button
-                    android:id="@+id/index_code_send"
+                    android:id="@+id/index_register_ent_send"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
@@ -94,8 +110,19 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/index_register_ent_eg"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:text="注册代表同意服务条款和隐私政策"
+                android:textSize="14sp" />
+
             <Button
-                android:id="@+id/index_code_check"
+                android:id="@+id/index_register_ent_register"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginLeft="30dp"
@@ -103,13 +130,11 @@
                 android:layout_marginTop="30dp"
                 android:background="@drawable/btn_shape_green"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:text="验&#160;证"
+                android:text="注&#160;册"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
-
-
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

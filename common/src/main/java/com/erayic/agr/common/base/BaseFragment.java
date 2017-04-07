@@ -2,8 +2,6 @@ package com.erayic.agr.common.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +18,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 public abstract class BaseFragment extends Fragment {
     public View view;
     public Context ct;
-    protected Handler baseHandler;
+//    protected Handler baseHandler;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -32,7 +30,7 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);//初始化ARouter
         ct = getActivity();
-        baseHandler = new Handler(Looper.getMainLooper());
+//        baseHandler = new Handler(Looper.getMainLooper());
         initData(savedInstanceState);
     }
 

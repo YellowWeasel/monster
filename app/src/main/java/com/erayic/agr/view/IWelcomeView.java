@@ -12,4 +12,9 @@ public interface IWelcomeView extends IBaseView{
 
     void toMainActivity();
 
+    /**
+     * 延时销毁
+     */
+    void delayFinish();
+
 }

@@ -26,6 +26,11 @@ public class SchemeFilterActivity extends BaseActivity {
             public void onLost(Postcard postcard) {
                 finish();
             }
+
+            @Override
+            public void onArrival(Postcard postcard) {
+
+            }
         });
     }
 
