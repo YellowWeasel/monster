@@ -1,5 +1,7 @@
 package com.erayic.agr.index.presenter.impl;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.model.IIndexModel;
 import com.erayic.agr.common.model.impl.IndexModelImpl;
@@ -16,11 +18,12 @@ import com.erayic.agr.index.view.IRegisterByUserView;
 public class RegisterByUserPresenterImpl implements IRegisterByUserPresenter {
 
     private IRegisterByUserView registerByUserView;
-    private IIndexModel indexModel;
+    @Autowired
+    IIndexModel indexModel;
 
     public RegisterByUserPresenterImpl(IRegisterByUserView registerByUserView) {
         this.registerByUserView = registerByUserView;
-        this.indexModel = new IndexModelImpl();
+        ARouter.getInstance().inject(this);
     }
 
     @Override

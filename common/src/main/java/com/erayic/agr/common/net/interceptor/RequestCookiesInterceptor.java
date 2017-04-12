@@ -17,11 +17,11 @@ import rx.functions.Action1;
  * 注解：向请求中添加cookie 拦截器
  */
 
-public class SendCookiesInterceptor implements Interceptor {
+public class RequestCookiesInterceptor implements Interceptor {
 
     private Context context;
 
-    public SendCookiesInterceptor(Context context) {
+    public RequestCookiesInterceptor(Context context) {
         super();
         this.context = context;
 

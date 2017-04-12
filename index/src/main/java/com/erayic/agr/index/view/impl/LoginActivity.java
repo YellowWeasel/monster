@@ -15,9 +15,14 @@ import com.erayic.agr.common.util.ErayicRegularly;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.index.R;
+import com.erayic.agr.index.R2;
 import com.erayic.agr.index.presenter.ILoginPresenter;
 import com.erayic.agr.index.presenter.impl.LoginPresenterImpl;
 import com.erayic.agr.index.view.ILoginView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 作者：hejian
@@ -26,13 +31,25 @@ import com.erayic.agr.index.view.ILoginView;
  */
 
 @Route(path = "/index/Activity/LoginActivity", name = "登陆")
-public class LoginActivity extends BaseActivity implements ILoginView, View.OnClickListener {
+public class LoginActivity extends BaseActivity implements ILoginView {
 
-    private Toolbar toolbar;
-
-    private EditText index_login_et_tel, index_login_et_pass;
-    private TextView index_login_tv_register;
-    private Button index_login_btn_login;
+    @BindView(R2.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R2.id.index_login_et_tel)
+    EditText indexLoginEtTel;
+    @BindView(R2.id.index_login_et_pass)
+    EditText indexLoginEtPass;
+    @BindView(R2.id.index_login_btn_login)
+    Button indexLoginBtnLogin;
+    @BindView(R2.id.index_login_tv_register)
+    TextView indexLoginTvRegister;
+    @BindView(R2.id.login_tv_agreements)
+    TextView loginTvAgreements;
+    //    private Toolbar toolbar;
+//
+//    private EditText index_login_et_tel, index_login_et_pass;
+//    private TextView index_login_tv_register;
+//    private Button index_login_btn_login;
     private LoadingDialog dialog;
 
     private ILoginPresenter presenter;
@@ -45,16 +62,8 @@ public class LoginActivity extends BaseActivity implements ILoginView, View.OnCl
 
     @Override
     public void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("登陆");
         setSupportActionBar(toolbar);
-
-        index_login_et_tel = (EditText) findViewById(R.id.index_login_et_tel);
-        index_login_et_pass = (EditText) findViewById(R.id.index_login_et_pass);
-        index_login_tv_register = (TextView) findViewById(R.id.index_login_tv_register);
-        index_login_tv_register.setOnClickListener(this);
-        index_login_btn_login = (Button) findViewById(R.id.index_login_btn_login);
-        index_login_btn_login.setOnClickListener(this);
 
     }
 
@@ -98,15 +107,17 @@ public class LoginActivity extends BaseActivity implements ILoginView, View.OnCl
 
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.index_login_tv_register) {
-            ARouter.getInstance().build("/index/Activity/RegisterActivity").navigation();
-        } else if (v.getId() == R.id.index_login_btn_login) {
-            if (isVerification()) {
-                presenter.login(index_login_et_tel.getText().toString(), index_login_et_pass.getText().toString());
-            }
+
+    @OnClick(R2.id.index_login_btn_login)
+    public void onLoginViewClicked() {
+        if (isVerification()) {
+            presenter.login(indexLoginEtTel.getText().toString(), indexLoginEtPass.getText().toString());
         }
+    }
+
+    @OnClick(R2.id.index_login_tv_register)
+    public void onRegisterViewClicked() {
+        ARouter.getInstance().build("/index/Activity/RegisterActivity").navigation();
     }
 
     /**
@@ -114,11 +125,11 @@ public class LoginActivity extends BaseActivity implements ILoginView, View.OnCl
      */
     private boolean isVerification() {
         boolean pass = true;
-        if (!ErayicRegularly.isPhone(index_login_et_tel.getText().toString())) {
-            index_login_et_tel.setError("请输入正确的手机号码");
+        if (!ErayicRegularly.isPhone(indexLoginEtTel.getText().toString())) {
+            indexLoginEtTel.setError("请输入正确的手机号码");
             pass = false;
-        } else if (index_login_et_pass.getText().toString().length() < 6) {
-            index_login_et_pass.setError("密码格式错误");
+        } else if (indexLoginEtPass.getText().toString().length() < 6) {
+            indexLoginEtPass.setError("密码格式错误");
             pass = false;
         }
         return pass;
@@ -132,7 +143,12 @@ public class LoginActivity extends BaseActivity implements ILoginView, View.OnCl
 
     @Override
     public void toCodeActivity() {
-        ARouter.getInstance().build("/index/CodeActivity").withString("tel", index_login_et_tel.getText().toString()).navigation();
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ARouter.getInstance().build("/index/Activity/CodeActivity").withString("tel", indexLoginEtTel.getText().toString()).navigation();
+            }
+        });
     }
 
 

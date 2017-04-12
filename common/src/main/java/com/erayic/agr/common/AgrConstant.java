@@ -15,5 +15,5 @@ public class AgrConstant {
 
 
     /* 测试数据 */
-    public static final String Test_PHONE = "fa78e84d-1d81-45f2-91de-3c16307adb3e";
+    public static final String Test_PHONE = "fa78e84d-1d81-45f2-91de-3c16307adb3p";
 }

@@ -1,6 +1,8 @@
 package com.erayic.agr.index.presenter.impl;
 
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.model.IIndexModel;
 import com.erayic.agr.common.model.impl.IndexModelImpl;
@@ -17,12 +19,12 @@ import com.erayic.agr.index.view.IRegisterByEntView;
 public class RegisterByEntPresenterImpl implements IRegisterByEntPresenter {
 
     private IRegisterByEntView registerByEntView;
-
-    private IIndexModel indexModel;
+    @Autowired
+    IIndexModel indexModel;
 
     public RegisterByEntPresenterImpl(IRegisterByEntView registerByEntView) {
         this.registerByEntView = registerByEntView;
-        this.indexModel = new IndexModelImpl();
+        ARouter.getInstance().inject(this);
     }
 
     @Override

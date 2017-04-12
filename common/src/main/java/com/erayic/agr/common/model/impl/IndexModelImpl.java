@@ -1,5 +1,8 @@
 package com.erayic.agr.common.model.impl;
 
+import android.content.Context;
+
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.model.IIndexModel;
 import com.erayic.agr.common.net.DataBack;
@@ -23,6 +26,7 @@ import rx.schedulers.Schedulers;
  * 邮箱：hkceey@outlook.com
  * 注解：
  */
+@Route(path = "/common/model/index", name = "应用相关数据接口实现")
 public class IndexModelImpl implements IIndexModel {
 
     @SuppressWarnings("unchecked")
@@ -247,5 +251,10 @@ public class IndexModelImpl implements IIndexModel {
 
                     }
                 });
+    }
+
+    @Override
+    public void init(Context context) {
+
     }
 }

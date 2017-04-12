@@ -6,21 +6,24 @@
     <color name="colorAccent">#FF4081</color>
 
     <!--APP状态标题栏基础色-->
-    <color name="app_base_bar_background">#16bbf9</color>
+    <color name="app_base_bar_background">#f8fafb</color>
     <!--内容页基础色-->
-    <color name="app_base_layout_background">#F1F1F1</color>
+    <color name="app_base_layout_background">#efeff4</color>
     <!--ITEM基础色-->
     <color name="app_base_item_background">#FFFFFF</color>
     <!--1级标题基础色-->
-    <color name="app_base_text_title_1">#3e3e3e</color>
+    <color name="app_base_text_title_1">#58595b</color>
     <!--2级标题基础色-->
-    <color name="app_base_text_title_2">#656565</color>
+    <color name="app_base_text_title_2">#808285</color>
     <!--3级标题基础色-->
-    <color name="app_base_text_title_3">#a2a2a2</color>
+    <color name="app_base_text_title_3">#a7a9ac</color>
+    <!--价格信息-->
+    <color name="app_base_text_price">#f15a24</color>
 
     <!--按钮绿色-->
     <color name="ui_btn_background_green">#1aad19</color>
     <!--按钮红色-->
     <color name="ui_btn_background_red">#ef2529</color>
-
+    <!--按钮橙色-->
+    <color name="ui_btn_background_orange">#fba621</color>
 </resources>

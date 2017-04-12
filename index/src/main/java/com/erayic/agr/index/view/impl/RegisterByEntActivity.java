@@ -22,9 +22,14 @@ import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.util.ErayicRegularly;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.index.R;
+import com.erayic.agr.index.R2;
 import com.erayic.agr.index.presenter.IRegisterByEntPresenter;
 import com.erayic.agr.index.presenter.impl.RegisterByEntPresenterImpl;
 import com.erayic.agr.index.view.IRegisterByEntView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 作者：hejian
@@ -33,13 +38,26 @@ import com.erayic.agr.index.view.IRegisterByEntView;
  */
 
 @Route(path = "/index/Activity/RegisterByEntActivity", name = "企业注册")
-public class RegisterByEntActivity extends BaseActivity implements IRegisterByEntView, View.OnClickListener {
+public class RegisterByEntActivity extends BaseActivity implements IRegisterByEntView {
 
-    private Toolbar toolbar;
-
-    private EditText index_register_ent_phone, index_register_ent_entName, index_register_ent_userName, index_register_ent_password, index_register_ent_verCode;
-    private Button index_register_ent_send, index_register_ent_register;
-    private TextView index_register_ent_eg;
+    @BindView(R2.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R2.id.index_register_ent_phone)
+    EditText indexRegisterEntPhone;
+    @BindView(R2.id.index_register_ent_entName)
+    EditText indexRegisterEntEntName;
+    @BindView(R2.id.index_register_ent_userName)
+    EditText indexRegisterEntUserName;
+    @BindView(R2.id.index_register_ent_password)
+    EditText indexRegisterEntPassword;
+    @BindView(R2.id.index_register_ent_verCode)
+    EditText indexRegisterEntVerCode;
+    @BindView(R2.id.index_register_ent_send)
+    Button indexRegisterEntSend;
+    @BindView(R2.id.index_register_ent_eg)
+    TextView indexRegisterEntEg;
+    @BindView(R2.id.index_register_ent_register)
+    Button indexRegisterEntRegister;
 
     private IRegisterByEntPresenter presenter;
     private TimeCount time;
@@ -48,56 +66,49 @@ public class RegisterByEntActivity extends BaseActivity implements IRegisterByEn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index_register_ent);
+        ButterKnife.bind(this);
     }
 
     @Override
     public void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("企业注册");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        index_register_ent_phone = (EditText) findViewById(R.id.index_register_ent_phone);
-        index_register_ent_entName = (EditText) findViewById(R.id.index_register_ent_entName);
-        index_register_ent_userName = (EditText) findViewById(R.id.index_register_ent_userName);
-        index_register_ent_password = (EditText) findViewById(R.id.index_register_ent_password);
-        index_register_ent_verCode = (EditText) findViewById(R.id.index_register_ent_verCode);
-        index_register_ent_send = (Button) findViewById(R.id.index_register_ent_send);
-        index_register_ent_send.setOnClickListener(this);
-        index_register_ent_register = (Button) findViewById(R.id.index_register_ent_register);
-        index_register_ent_register.setOnClickListener(this);
-        index_register_ent_eg = (TextView) findViewById(R.id.index_register_ent_eg);
     }
 
     @Override
     public void initData() {
         presenter = new RegisterByEntPresenterImpl(this);
         time = new TimeCount(60000, 1000);
-        index_register_ent_eg.setText(getClickableSpan());
+        indexRegisterEntEg.setText(getClickableSpan());
         //设置超链接可点击
-        index_register_ent_eg.setMovementMethod(LinkMovementMethod.getInstance());
+        indexRegisterEntEg.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.index_register_ent_register) {//注册
-            if (isVerification()) {
-                presenter.enterpriseRegister(index_register_ent_phone.getText().toString(), index_register_ent_userName.getText().toString(),
-                        index_register_ent_entName.getText().toString(), index_register_ent_password.getText().toString(),
-                        index_register_ent_verCode.getText().toString());
-            }
-        } else if (v.getId() == R.id.index_register_ent_send) {//发送验证码
-            if (!ErayicRegularly.isPhone(index_register_ent_phone.getText().toString()))
-                index_register_ent_phone.setError("请输入正确的手机号码");
-            else {
-                //发送验证码
-                presenter.sendTelVerify(index_register_ent_phone.getText().toString());
-            }
+    @OnClick(R2.id.index_register_ent_send)
+    public void onIndexRegisterEntSendClicked() {
+        if (!ErayicRegularly.isPhone(indexRegisterEntPhone.getText().toString()))
+            indexRegisterEntPhone.setError("请输入正确的手机号码");
+        else {
+            //发送验证码
+            presenter.sendTelVerify(indexRegisterEntPhone.getText().toString());
+        }
+
+    }
+
+    @OnClick(R2.id.index_register_ent_register)
+    public void onIndexRegisterEntRegisterClicked() {
+        if (isVerification()) {
+            presenter.enterpriseRegister(indexRegisterEntPhone.getText().toString(), indexRegisterEntUserName.getText().toString(),
+                    indexRegisterEntEntName.getText().toString(), indexRegisterEntPassword.getText().toString(),
+                    indexRegisterEntVerCode.getText().toString());
         }
     }
+
 
     @Override
     public void showToast(final String msg) {
@@ -159,8 +170,8 @@ public class RegisterByEntActivity extends BaseActivity implements IRegisterByEn
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                index_register_ent_send.setClickable(false);
-                index_register_ent_send.setText("再次发送(" + millisUntilFinished / 1000 + "s)");
+                indexRegisterEntSend.setClickable(false);
+                indexRegisterEntSend.setText("再次发送(" + millisUntilFinished / 1000 + "s)");
             }
         });
     }
@@ -169,8 +180,8 @@ public class RegisterByEntActivity extends BaseActivity implements IRegisterByEn
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                index_register_ent_send.setClickable(true);
-                index_register_ent_send.setText("再次发送");
+                indexRegisterEntSend.setClickable(true);
+                indexRegisterEntSend.setText("再次发送");
             }
         });
     }
@@ -196,20 +207,20 @@ public class RegisterByEntActivity extends BaseActivity implements IRegisterByEn
      */
     private boolean isVerification() {
         boolean pass = true;
-        if (!ErayicRegularly.isPhone(index_register_ent_phone.getText().toString())) {
-            index_register_ent_phone.setError("请输入正确的手机号码");
+        if (!ErayicRegularly.isPhone(indexRegisterEntPhone.getText().toString())) {
+            indexRegisterEntPhone.setError("请输入正确的手机号码");
             pass = false;
-        } else if (!ErayicRegularly.isEntName(index_register_ent_entName.getText().toString())) {
-            index_register_ent_entName.setError("请输入正确的企业名称");
+        } else if (!ErayicRegularly.isEntName(indexRegisterEntEntName.getText().toString())) {
+            indexRegisterEntEntName.setError("请输入正确的企业名称");
             pass = false;
-        } else if (!ErayicRegularly.isActuaName(index_register_ent_userName.getText().toString())) {
-            index_register_ent_userName.setError("请输入真实姓名");
+        } else if (!ErayicRegularly.isActuaName(indexRegisterEntUserName.getText().toString())) {
+            indexRegisterEntUserName.setError("请输入真实姓名");
             pass = false;
-        } else if (!ErayicRegularly.isPassword(index_register_ent_password.getText().toString())) {
-            index_register_ent_password.setError("6-21字母和数字组成，不能是纯数字或纯英文");
+        } else if (!ErayicRegularly.isPassword(indexRegisterEntPassword.getText().toString())) {
+            indexRegisterEntPassword.setError("6-21字母和数字组成，不能是纯数字或纯英文");
             pass = false;
-        } else if (!ErayicRegularly.isVerCode(index_register_ent_verCode.getText().toString())) {
-            index_register_ent_verCode.setError("验证码格式错误");
+        } else if (!ErayicRegularly.isVerCode(indexRegisterEntVerCode.getText().toString())) {
+            indexRegisterEntVerCode.setError("验证码格式错误");
             pass = false;
         }
         return pass;

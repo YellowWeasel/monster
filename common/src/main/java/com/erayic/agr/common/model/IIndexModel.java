@@ -1,5 +1,6 @@
 package com.erayic.agr.common.model;
 
+import com.alibaba.android.arouter.facade.template.IProvider;
 import com.erayic.agr.common.net.OnDataListener;
 
 /**
@@ -8,7 +9,7 @@ import com.erayic.agr.common.net.OnDataListener;
  * 注解：
  */
 
-public interface IIndexModel{
+public interface IIndexModel  extends IProvider {
 
     /**
      * 登录

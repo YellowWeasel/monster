@@ -31,6 +31,11 @@ public class SchemeFilterActivity extends BaseActivity {
             public void onArrival(Postcard postcard) {
 
             }
+
+            @Override
+            public void onInterrupt(Postcard postcard) {
+                finish();
+            }
         });
     }
 

@@ -22,7 +22,6 @@ public class LoginInterceptor implements IInterceptor {
 
     @Override
     public void process(Postcard postcard, final InterceptorCallback callback) {
-        ErayicLog.e(postcard.toString());
         if (postcard.getPath().equals("/main/Activity/MainActivity")) {
             if (PreferenceUtils.getParam("AutoLogin", false)) {
                 ErayicLog.d("LoginInterceptor:::通过登陆拦截器");

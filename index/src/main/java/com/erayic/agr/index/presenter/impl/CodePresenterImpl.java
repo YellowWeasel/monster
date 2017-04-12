@@ -1,5 +1,7 @@
 package com.erayic.agr.index.presenter.impl;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.model.IIndexModel;
 import com.erayic.agr.common.model.impl.IndexModelImpl;
@@ -16,12 +18,12 @@ import com.erayic.agr.index.view.ICodeView;
 public class CodePresenterImpl implements ICodePresenter {
 
     private ICodeView codeView;
-
-    private IIndexModel indexModel;
+    @Autowired
+    IIndexModel indexModel;
 
     public CodePresenterImpl(ICodeView codeView) {
         this.codeView = codeView;
-        this.indexModel = new IndexModelImpl();
+        ARouter.getInstance().inject(this);
     }
 
     @Override
@@ -30,6 +32,7 @@ public class CodePresenterImpl implements ICodePresenter {
             @Override
             public void success(Object response) {
                 codeView.showToast(response.toString());
+                codeView.verSendSure();
             }
 
             @Override

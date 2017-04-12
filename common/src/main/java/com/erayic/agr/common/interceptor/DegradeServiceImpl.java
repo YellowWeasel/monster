@@ -17,13 +17,14 @@ import com.erayic.agr.common.util.ErayicToast;
 @Route(path = "/xxx/xxx/xxx")
 public class DegradeServiceImpl implements DegradeService {
 
+    private Context mContext;
     @Override
     public void onLost(Context context, Postcard postcard) {
-        ErayicToast.TextToast(context, "找不到" + postcard.getPath());
+        ErayicToast.TextToast(mContext, "找不到" + postcard.getPath());
     }
 
     @Override
     public void init(Context context) {
-
+        this.mContext = context;
     }
 }

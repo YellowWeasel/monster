@@ -12,6 +12,7 @@ import com.erayic.agr.common.R;
 import com.erayic.agr.common.util.ErayicStack;
 import com.jaeger.library.StatusBarUtil;
 
+import butterknife.ButterKnife;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 
 
@@ -55,6 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
+        ButterKnife.bind(this);
         mContentView = view;
 //        baseHandler = new Handler(Looper.getMainLooper());
         initView();
@@ -93,7 +95,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
         // 设置是否仅仅跟踪左侧边缘的滑动返回。默认值为 true
         mSwipeBackHelper.setIsOnlyTrackingLeftEdge(true);
         // 设置是否是微信滑动返回样式。默认值为 true
-        mSwipeBackHelper.setIsWeChatStyle(true);
+        mSwipeBackHelper.setIsWeChatStyle(false);
         // 设置阴影资源 id。默认值为 R.drawable.bga_sbl_shadow
         mSwipeBackHelper.setShadowResId(R.drawable.bga_sbl_shadow);
         // 设置是否显示滑动返回的阴影效果。默认值为 true

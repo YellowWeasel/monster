@@ -64,18 +64,26 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView {
                         .navigation(WelcomeActivity.this, new NavigationCallback() {
                             @Override
                             public void onFound(Postcard postcard) {
-                                delayFinish();
+                                //到启动页面
                             }
 
                             @Override
                             public void onLost(Postcard postcard) {
+                                //未找到启动页面
                                 showToast("启动APP失败，请联系我们");
                                 delayFinish();
                             }
 
                             @Override
                             public void onArrival(Postcard postcard) {
+                                //找到启动页面并且通过拦截器成功
+                                delayFinish();
+                            }
 
+                            @Override
+                            public void onInterrupt(Postcard postcard) {
+                                //找到启动页面被拦截器执行打断
+                                delayFinish();
                             }
                         });
             }
@@ -89,7 +97,7 @@ public class WelcomeActivity extends BaseActivity implements IWelcomeView {
             public void run() {
                 WelcomeActivity.this.finish();
             }
-        }, 1000);
+        }, 0);
     }
 
 }

@@ -16,9 +16,14 @@ import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.util.ErayicRegularly;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.index.R;
+import com.erayic.agr.index.R2;
 import com.erayic.agr.index.presenter.ICodePresenter;
 import com.erayic.agr.index.presenter.impl.CodePresenterImpl;
 import com.erayic.agr.index.view.ICodeView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 作者：hejian
@@ -27,13 +32,18 @@ import com.erayic.agr.index.view.ICodeView;
  */
 
 @Route(path = "/index/Activity/CodeActivity", name = "验证")
-public class CodeActivity extends BaseActivity implements ICodeView, View.OnClickListener {
+public class CodeActivity extends BaseActivity implements ICodeView {
 
-    private Toolbar toolbar;
-
-    private TextView index_code_tel;
-    private EditText index_code_verCode;
-    private Button index_code_send, index_code_check;
+    @BindView(R2.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R2.id.index_code_tel)
+    TextView indexCodeTel;
+    @BindView(R2.id.index_code_verCode)
+    EditText indexCodeVerCode;
+    @BindView(R2.id.index_code_send)
+    Button indexCodeSend;
+    @BindView(R2.id.index_code_check)
+    Button indexCodeCheck;
 
     @Autowired
     String tel;
@@ -50,38 +60,32 @@ public class CodeActivity extends BaseActivity implements ICodeView, View.OnClic
 
     @Override
     public void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("验证信息");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        index_code_tel = (TextView) findViewById(R.id.index_code_tel);
-        index_code_verCode = (EditText) findViewById(R.id.index_code_verCode);
-        index_code_send = (Button) findViewById(R.id.index_code_send);
-        index_code_send.setOnClickListener(this);
-        index_code_check = (Button) findViewById(R.id.index_code_check);
-        index_code_check.setOnClickListener(this);
     }
 
     @Override
     public void initData() {
         presenter = new CodePresenterImpl(this);
         time = new TimeCount(60000, 1000);
-        index_code_tel.setText(tel);
+        indexCodeTel.setText(tel);
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.index_code_check) {
-            if (!ErayicRegularly.isVerCode(index_code_verCode.getText().toString())) {
-                index_code_verCode.setError("验证码格式错误");
-            } else {
-                presenter.checkTelVerify(tel, index_code_verCode.getText().toString());
-            }
-        } else if (v.getId() == R.id.index_code_check) {
-            presenter.sendTelVerify(tel);
+    @OnClick(R2.id.index_code_send)
+    public void onIndexCodeSendClicked() {
+        presenter.sendTelVerify(tel);
+    }
+
+    @OnClick(R2.id.index_code_check)
+    public void onIndexCodeCheckClicked() {
+        if (!ErayicRegularly.isVerCode(indexCodeVerCode.getText().toString())) {
+            indexCodeVerCode.setError("验证码格式错误");
+        } else {
+            presenter.checkTelVerify(tel, indexCodeVerCode.getText().toString());
         }
     }
 
@@ -104,8 +108,8 @@ public class CodeActivity extends BaseActivity implements ICodeView, View.OnClic
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                index_code_send.setClickable(false);
-                index_code_send.setText("再次发送(" + millisUntilFinished / 1000 + "s)");
+                indexCodeSend.setClickable(false);
+                indexCodeSend.setText("再次发送(" + millisUntilFinished / 1000 + "s)");
             }
         });
     }
@@ -114,8 +118,8 @@ public class CodeActivity extends BaseActivity implements ICodeView, View.OnClic
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                index_code_send.setClickable(true);
-                index_code_send.setText("再次发送");
+                indexCodeSend.setClickable(true);
+                indexCodeSend.setText("再次发送");
             }
         });
     }
@@ -142,6 +146,7 @@ public class CodeActivity extends BaseActivity implements ICodeView, View.OnClic
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     /* 定义一个倒计时的内部类 */
     private class TimeCount extends CountDownTimer {

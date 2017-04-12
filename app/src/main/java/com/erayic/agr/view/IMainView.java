@@ -9,4 +9,7 @@ import com.erayic.agr.common.base.IBaseView;
  */
 
 public interface IMainView extends IBaseView{
+
+    void initNetData();
+
 }

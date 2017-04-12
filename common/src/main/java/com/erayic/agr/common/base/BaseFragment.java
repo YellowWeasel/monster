@@ -2,12 +2,17 @@ package com.erayic.agr.common.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * 作者：Hkceey
@@ -16,32 +21,34 @@ import com.alibaba.android.arouter.launcher.ARouter;
  */
 
 public abstract class BaseFragment extends Fragment {
-    public View view;
-    public Context ct;
-//    protected Handler baseHandler;
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    private View view;
+
+    protected abstract int getLayoutId();
+
+    protected abstract void initView(View view, Bundle savedInstanceState);
+
+    protected abstract void initData();
+
+    protected void releaseView() {
+
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);//初始化ARouter
-        ct = getActivity();
-//        baseHandler = new Handler(Looper.getMainLooper());
-        initData(savedInstanceState);
     }
 
-    /**
-     * setContentView;
-     */
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        if (view == null)
-            view = initView(inflater);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (view == null) {
+            view = inflater.inflate(getLayoutId(), container, false);
+            ButterKnife.bind(this, view);
+            initView(view, savedInstanceState);
+            initData();
+        }
         ViewGroup parent = (ViewGroup) view.getParent();
         if (parent != null) {
             parent.removeView(view);
@@ -49,56 +56,15 @@ public abstract class BaseFragment extends Fragment {
         return view;
     }
 
-    public View getRootView() {
-        return view;
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
-    /**
-     * 初始化view
-     */
-    public abstract View initView(LayoutInflater inflater);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        releaseView();
+    }
 
-    /**
-     * 初始化数据
-     */
-    public abstract void initData(Bundle savedInstanceState);
-
-//    /**
-//     * 跳转页面
-//     *
-//     * @param clazz
-//     */
-//    public void skipAct(Class clazz) {
-//        Intent intent = new Intent(ct, clazz);
-//        intent.putExtra("fromWhere", getClass().getSimpleName());
-//        startActivity(intent);
-//    }
-//
-//    public void skipAct(Class clazz, Bundle bundle) {
-//        Intent intent = new Intent(ct, clazz);
-//        intent.putExtras(bundle);
-//        intent.putExtra("fromWhere", getClass().getSimpleName());
-//        startActivity(intent);
-//    }
-//
-//    public void skipAct(Class clazz, Bundle bundle, int flags) {
-//        Intent intent = new Intent(ct, clazz);
-//        intent.putExtra("fromWhere", getClass().getSimpleName());
-//        intent.putExtras(bundle);
-//        intent.setFlags(flags);
-//        startActivity(intent);
-//    }
-//
-//    public void skipActForResult(Class clazz, int REQUEST_CODE) {
-//        Intent intent = new Intent(ct, clazz);
-//        intent.putExtra("fromWhere", getClass().getSimpleName());
-//        startActivityForResult(intent, REQUEST_CODE);
-//    }
-//
-//    public void skipActForResult(Class clazz, Bundle bundle, int REQUEST_CODE) {
-//        Intent intent = new Intent(ct, clazz);
-//        intent.putExtras(bundle);
-//        intent.putExtra("fromWhere", getClass().getSimpleName());
-//        startActivityForResult(intent, REQUEST_CODE);
-//    }
 }

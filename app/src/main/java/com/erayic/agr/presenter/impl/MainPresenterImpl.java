@@ -1,0 +1,44 @@
+package com.erayic.agr.presenter.impl;
+
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.erayic.agr.common.model.IUserModel;
+import com.erayic.agr.common.model.impl.UserModelImpl;
+import com.erayic.agr.common.net.OnDataListener;
+import com.erayic.agr.common.net.back.UserInfoBean;
+import com.erayic.agr.presenter.IMainPresenter;
+import com.erayic.agr.view.IMainView;
+
+/**
+ * 作者：hejian
+ * 邮箱：hkceey@outlook.com
+ * 注解：
+ */
+
+public class MainPresenterImpl implements IMainPresenter {
+
+    private IMainView mainView;
+    @Autowired
+    IUserModel userModel;
+
+    public MainPresenterImpl(IMainView mainView) {
+        this.mainView = mainView;
+        ARouter.getInstance().inject(this);
+    }
+
+    @Override
+    public void getUserInfo() {
+        userModel.getUserInfo(new OnDataListener<Object>() {
+            @Override
+            public void success(Object response) {
+                mainView.showToast("用户信息更新成功");
+                mainView.initNetData();
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
+                mainView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
+    }
+}

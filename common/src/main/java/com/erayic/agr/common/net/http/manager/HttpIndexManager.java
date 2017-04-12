@@ -26,7 +26,7 @@ public class HttpIndexManager {
                 if (manager == null) {
                     manager = new HttpIndexManager();
                     serviceReceivedCookies = HttpRetrofit.getReceivedCookiesRetrofit().create(IHttpIndexService.class);
-                    service = HttpRetrofit.getNoCookiesRetrofit().create(IHttpIndexService.class);
+                    service = HttpRetrofit.getDefaultRetrofit().create(IHttpIndexService.class);
                 }
             }
         }

@@ -22,9 +22,14 @@ import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.util.ErayicRegularly;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.index.R;
+import com.erayic.agr.index.R2;
 import com.erayic.agr.index.presenter.IRegisterByUserPresenter;
 import com.erayic.agr.index.presenter.impl.RegisterByUserPresenterImpl;
 import com.erayic.agr.index.view.IRegisterByUserView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 作者：hejian
@@ -33,13 +38,29 @@ import com.erayic.agr.index.view.IRegisterByUserView;
  */
 
 @Route(path = "/index/Activity/RegisterByUserActivity", name = "用户注册")
-public class RegisterByUserActivity extends BaseActivity implements IRegisterByUserView, View.OnClickListener {
+public class RegisterByUserActivity extends BaseActivity implements IRegisterByUserView {
+    @BindView(R2.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R2.id.index_register_user_phone)
+    EditText indexRegisterUserPhone;
+    @BindView(R2.id.index_register_user_code)
+    EditText indexRegisterUserCode;
+    @BindView(R2.id.index_register_user_password)
+    EditText indexRegisterUserPassword;
+    @BindView(R2.id.index_register_user_verCode)
+    EditText indexRegisterUserVerCode;
+    @BindView(R2.id.index_register_user_send)
+    Button indexRegisterUserSend;
+    @BindView(R2.id.index_register_user_eg)
+    TextView indexRegisterUserEg;
+    @BindView(R2.id.index_register_user_register)
+    Button indexRegisterUserRegister;
 
-    private Toolbar toolbar;
-
-    private EditText index_register_user_phone, index_register_user_code, index_register_user_password, index_register_user_verCode;
-    private TextView index_register_user_eg;
-    private Button index_register_user_send, index_register_user_register;
+//    private Toolbar toolbar;
+//
+//    private EditText index_register_user_phone, index_register_user_code, index_register_user_password, index_register_user_verCode;
+//    private TextView index_register_user_eg;
+//    private Button index_register_user_send, index_register_user_register;
 
     private IRegisterByUserPresenter presenter;
     private TimeCount time;
@@ -52,47 +73,37 @@ public class RegisterByUserActivity extends BaseActivity implements IRegisterByU
 
     @Override
     public void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("邀请码注册");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-        index_register_user_phone = (EditText) findViewById(R.id.index_register_user_phone);
-        index_register_user_code = (EditText) findViewById(R.id.index_register_user_code);
-        index_register_user_password = (EditText) findViewById(R.id.index_register_user_password);
-        index_register_user_verCode = (EditText) findViewById(R.id.index_register_user_verCode);
-        index_register_user_eg = (TextView) findViewById(R.id.index_register_user_eg);
-        index_register_user_send = (Button) findViewById(R.id.index_register_user_send);
-        index_register_user_send.setOnClickListener(this);
-        index_register_user_register = (Button) findViewById(R.id.index_register_user_register);
-        index_register_user_register.setOnClickListener(this);
     }
 
     @Override
     public void initData() {
         presenter = new RegisterByUserPresenterImpl(this);
         time = new TimeCount(60000, 1000);
-        index_register_user_eg.setText(getClickableSpan());
+        indexRegisterUserEg.setText(getClickableSpan());
         //设置超链接可点击
-        index_register_user_eg.setMovementMethod(LinkMovementMethod.getInstance());
+        indexRegisterUserEg.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.index_register_user_send) {
-            if (!ErayicRegularly.isPhone(index_register_user_phone.getText().toString()))
-                index_register_user_phone.setError("请输入正确的手机号码");
-            else {
-                //发送验证码
-                presenter.sendTelVerify(index_register_user_phone.getText().toString());
-            }
-        } else if (v.getId() == R.id.index_register_user_register) {
-            if (isVerification()) {
-                presenter.userByInvite(index_register_user_password.getText().toString(), index_register_user_phone.getText().toString(),
-                        index_register_user_code.getText().toString(), index_register_user_verCode.getText().toString());
-            }
+    @OnClick(R2.id.index_register_user_send)
+    public void onIndexRegisterUserSendClicked() {
+        if (!ErayicRegularly.isPhone(indexRegisterUserPhone.getText().toString()))
+            indexRegisterUserPhone.setError("请输入正确的手机号码");
+        else {
+            //发送验证码
+            presenter.sendTelVerify(indexRegisterUserPhone.getText().toString());
+        }
+    }
+
+    @OnClick(R2.id.index_register_user_register)
+    public void onIndexRegisterUserRegisterClicked() {
+        if (isVerification()) {
+            presenter.userByInvite(indexRegisterUserPassword.getText().toString(), indexRegisterUserPhone.getText().toString(),
+                    indexRegisterUserCode.getText().toString(), indexRegisterUserVerCode.getText().toString());
         }
     }
 
@@ -124,17 +135,17 @@ public class RegisterByUserActivity extends BaseActivity implements IRegisterByU
      */
     private boolean isVerification() {
         boolean pass = true;
-        if (!ErayicRegularly.isPhone(index_register_user_phone.getText().toString())) {
-            index_register_user_phone.setError("请输入正确的手机号码");
+        if (!ErayicRegularly.isPhone(indexRegisterUserPhone.getText().toString())) {
+            indexRegisterUserPhone.setError("请输入正确的手机号码");
             pass = false;
-        } else if (!ErayicRegularly.isVerCode(index_register_user_code.getText().toString())) {
-            index_register_user_code.setError("邀请码格式错误");
+        } else if (!ErayicRegularly.isVerCode(indexRegisterUserCode.getText().toString())) {
+            indexRegisterUserCode.setError("邀请码格式错误");
             pass = false;
-        } else if (!ErayicRegularly.isPassword(index_register_user_password.getText().toString())) {
-            index_register_user_password.setError("6-21字母和数字组成，不能是纯数字或纯英文");
+        } else if (!ErayicRegularly.isPassword(indexRegisterUserPassword.getText().toString())) {
+            indexRegisterUserPassword.setError("6-21字母和数字组成，不能是纯数字或纯英文");
             pass = false;
-        } else if (!ErayicRegularly.isVerCode(index_register_user_verCode.getText().toString())) {
-            index_register_user_verCode.setError("验证码格式错误");
+        } else if (!ErayicRegularly.isVerCode(indexRegisterUserVerCode.getText().toString())) {
+            indexRegisterUserVerCode.setError("验证码格式错误");
             pass = false;
         }
         return pass;
@@ -177,8 +188,8 @@ public class RegisterByUserActivity extends BaseActivity implements IRegisterByU
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                index_register_user_send.setClickable(false);
-                index_register_user_send.setText("再次发送(" + millisUntilFinished / 1000 + "s)");
+                indexRegisterUserSend.setClickable(false);
+                indexRegisterUserSend.setText("再次发送(" + millisUntilFinished / 1000 + "s)");
             }
         });
     }
@@ -187,8 +198,8 @@ public class RegisterByUserActivity extends BaseActivity implements IRegisterByU
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                index_register_user_send.setClickable(true);
-                index_register_user_send.setText("再次发送");
+                indexRegisterUserSend.setClickable(true);
+                indexRegisterUserSend.setText("再次发送");
             }
         });
     }
@@ -208,6 +219,7 @@ public class RegisterByUserActivity extends BaseActivity implements IRegisterByU
             }
         });
     }
+
 
     /* 定义一个倒计时的内部类 */
     private class TimeCount extends CountDownTimer {

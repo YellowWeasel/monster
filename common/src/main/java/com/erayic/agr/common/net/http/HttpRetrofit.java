@@ -6,6 +6,7 @@ import com.alibaba.android.arouter.exception.InitException;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.net.interceptor.LoggingInterceptor;
 import com.erayic.agr.common.net.interceptor.ReceivedCookiesInterceptor;
+import com.erayic.agr.common.net.interceptor.RequestCookiesInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
@@ -43,6 +44,9 @@ public class HttpRetrofit {
         }
     }
 
+    /**
+     * 请求Retrofit（保存Cookies）
+     */
     public static Retrofit getReceivedCookiesRetrofit() {
         if (!hasInit)
             throw new InitException("HttpRetrofit::Init::Invoke init(context) first!");
@@ -68,7 +72,10 @@ public class HttpRetrofit {
         }
     }
 
-    public static Retrofit getSendCookiesRetrofit() {
+    /**
+     * 请求Retrofit（携带Cookies）
+     */
+    public static Retrofit getRequestCookiesRetrofit() {
         if (!hasInit)
             throw new InitException("HttpRetrofit::Init::Invoke init(context) first!");
         else {
@@ -82,7 +89,7 @@ public class HttpRetrofit {
                                 .client(new OkHttpClient.Builder()
                                         .retryOnConnectionFailure(true)
                                         .addInterceptor(new LoggingInterceptor())
-                                        .addInterceptor(new ReceivedCookiesInterceptor(application))
+                                        .addInterceptor(new RequestCookiesInterceptor(application))
                                         .connectTimeout(15, TimeUnit.SECONDS)
                                         .build())
                                 .build();
@@ -93,7 +100,10 @@ public class HttpRetrofit {
         }
     }
 
-    public static Retrofit getNoCookiesRetrofit() {
+    /**
+     * 获取默认Retrofit（无Cookies）
+     */
+    public static Retrofit getDefaultRetrofit() {
         if (!hasInit)
             throw new InitException("HttpRetrofit::Init::Invoke init(context) first!");
         else {
