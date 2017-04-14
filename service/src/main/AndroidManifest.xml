@@ -7,10 +7,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
         <activity
-            android:name=".view.impl.ServiceMarketActivity"
+            android:name=".view.impl.ServiceListByEntActivity"
             android:theme="@style/AppTheme.Transparent" />
         <activity
-            android:name=".view.impl.ServiceInfoActivity"
+            android:name=".view.impl.ServiceInfoByEntActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.ServiceBuyActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.ServicePriceByEntActivity"
             android:theme="@style/AppTheme.Transparent" />
     </application>
 

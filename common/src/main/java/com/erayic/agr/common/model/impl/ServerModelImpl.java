@@ -7,6 +7,8 @@ import com.erayic.agr.common.model.IServerModel;
 import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.ErrorCode;
 import com.erayic.agr.common.net.OnDataListener;
+import com.erayic.agr.common.net.back.CommonPriceBean;
+import com.erayic.agr.common.net.back.ServiceInfoByEntBean;
 import com.erayic.agr.common.net.back.ServiceSystemBean;
 import com.erayic.agr.common.net.back.ServiceBuyByUserBean;
 import com.erayic.agr.common.net.http.manager.HttpServerManager;
@@ -98,6 +100,80 @@ public class ServerModelImpl implements IServerModel {
 
                     @Override
                     public void onNext(DataBack<ServiceSystemBean> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void getSpecifyServiceByEnt(String serviceID, final OnDataListener<ServiceInfoByEntBean> listener) {
+        HttpServerManager.getInstance().getSpecifyServiceByEnt(serviceID)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<ServiceInfoByEntBean>>() {
+                    @Override
+                    public void call(DataBack<ServiceInfoByEntBean> objectDataBack) {
+                        ErayicLog.i("getSpecifyServiceByEnt", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<ServiceInfoByEntBean>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<ServiceInfoByEntBean> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void getAllPriceByService(String serviceID, final OnDataListener<List<CommonPriceBean>> listener) {
+        HttpServerManager.getInstance().getAllPriceByService(serviceID)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<List<CommonPriceBean>>>() {
+                    @Override
+                    public void call(DataBack<List<CommonPriceBean>> objectDataBack) {
+                        ErayicLog.i("getAllPriceByService", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<List<CommonPriceBean>>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<List<CommonPriceBean>> objectDataBack) {
 
                     }
                 });

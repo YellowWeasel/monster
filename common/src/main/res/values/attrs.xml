@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ExpandableTextView">
+        <attr name="etv_MaxLinesOnShrink" format="reference|integer" />
+        <attr name="etv_EllipsisHint" format="reference|string" /><!--default is ..-->
+        <attr name="etv_ToExpandHint" format="reference|string" /><!--“展开”提示字符串，默认为“展开”-->
+        <attr name="etv_ToShrinkHint" format="reference|string" /><!--“收缩”提示字符串，默认为“收缩”-->
+        <attr name="etv_GapToExpandHint" format="reference|string" /><!--“toExpandHint”和“trimmed text”之间的差距-->
+        <attr name="etv_GapToShrinkHint" format="reference|string" /><!--“toShrinkHint”和“trimmed text”之间的差距-->
+        <attr name="etv_EnableToggle" format="reference|boolean" /><!--点击ExpandTextView切换状态-->
+        <attr name="etv_ToExpandHintShow" format="reference|boolean" /><!--是否显示“展开”-->
+        <attr name="etv_ToShrinkHintShow" format="reference|boolean" /><!--是否显示“收缩”-->
+        <attr name="etv_ToExpandHintColor" format="reference|color" /><!--“展开”颜色-->
+        <attr name="etv_ToShrinkHintColor" format="reference|color" /><!--“收缩”颜色-->
+        <attr name="etv_ToExpandHintColorBgPressed" format="reference|color" /><!--“展开”按下背景颜色-->
+        <attr name="etv_ToShrinkHintColorBgPressed" format="reference|color" /><!--“收缩”按下背景颜色-->
+        <attr name="etv_InitState" format="enum"><!--初始化状态，默认是收缩-->
+            <enum name="shrink" value="0" />
+            <enum name="expand" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <!--金额 样式  元大 角分小 $25.33-->
+    <declare-styleable name="MoneyView">
+        <!--金额-->
+        <attr name="money" format="float" />
+        <!--金额颜色-->
+        <attr name="money_color" format="color" />
+        <!--元大小-->
+        <attr name="yuan_size" format="dimension" />
+        <!--分大小-->
+        <attr name="cent_size" format="dimension" />
+        <!--单元大小-->
+        <attr name="unit_size" format="dimension" />
+        <!--单位名称-->
+        <attr name="unit_text" format="string" />
+        <!--前缀文本-->
+        <attr name="prefix_text" format="string" />
+        <!--前缀大小-->
+        <attr name="prefix_size" format="dimension" />
+        <!--前缀颜色-->
+        <attr name="prefix_color" format="color" />
+        <!--前缀右边距-->
+        <attr name="prefix_padding" format="dimension" />
+        <!--是否使用千分符-->
+        <attr name="grouping" format="boolean" />
+    </declare-styleable>
+</resources>

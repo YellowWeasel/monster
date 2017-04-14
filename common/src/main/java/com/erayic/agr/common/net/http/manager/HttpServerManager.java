@@ -40,8 +40,25 @@ public class HttpServerManager {
         return serviceRequest.getAllServiceByUser();
     }
 
-    public Observable getAllSystemServiceByEnt(){
+    /**
+     * 得到应用系统所适用的所有服务
+     */
+    public Observable getAllSystemServiceByEnt() {
         return serviceRequest.getAllSystemServiceByEnt();
+    }
+
+    /**
+     * 以企业身份得到一个服务详情
+     */
+    public Observable getSpecifyServiceByEnt(String serviceID) {
+        return serviceRequest.getSpecifyServiceByEnt(serviceID);
+    }
+
+    /**
+     * 得到服务所有的价格
+     */
+    public Observable getAllPriceByService(String serviceID) {
+        return serviceRequest.getAllPriceByService(serviceID);
     }
 
 }

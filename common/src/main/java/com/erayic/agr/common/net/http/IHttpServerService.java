@@ -1,12 +1,15 @@
 package com.erayic.agr.common.net.http;
 
 import com.erayic.agr.common.net.DataBack;
+import com.erayic.agr.common.net.back.CommonPriceBean;
+import com.erayic.agr.common.net.back.ServiceInfoByEntBean;
 import com.erayic.agr.common.net.back.ServiceSystemBean;
 import com.erayic.agr.common.net.back.ServiceBuyByUserBean;
 
 import java.util.List;
 
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -32,5 +35,25 @@ public interface IHttpServerService {
      */
     @GET("Service/GetAllSystemServiceByEnt")
     Observable<DataBack<ServiceSystemBean>> getAllSystemServiceByEnt();
+
+    /**
+     * 以企业身份得到一个服务详情
+     * @param serviceID 服务ID
+     * @return DataBack
+     */
+    @GET("Service/GetSpecifyServiceByEnt")
+    Observable<DataBack<ServiceInfoByEntBean>> getSpecifyServiceByEnt(
+            @Query("serviceID") String serviceID
+    );
+
+    /**
+     * 得到服务所有的价格
+     * @param serviceID 服务ID
+     * @return DataBack
+     */
+    @GET("Service/GetAllPriceByService")
+    Observable<DataBack<List<CommonPriceBean>>> getAllPriceByService(
+            @Query("serviceID") String serviceID
+    );
 
 }

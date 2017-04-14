@@ -11,7 +11,7 @@ import java.util.List;
 public class ServiceSystemBean {
 
     private List<ServicesInfo> Services;//服务信息
-    private List<ImageHeadBean> Head;//头部信息
+    private List<CommonImageBean> Head;//头部信息
 
     public static class ServicesInfo {
         private String ServiceID;//服务ID
@@ -19,7 +19,7 @@ public class ServiceSystemBean {
         private String Descript;//描述
         private int Classify;//类别
         private int Type;//类型
-        private PriceBean MasterPrice;//主价格
+        private CommonPriceBean MasterPrice;//主价格
         private String Icon;//图片地址
 
         public String getServiceID() {
@@ -62,11 +62,11 @@ public class ServiceSystemBean {
             Type = type;
         }
 
-        public PriceBean getMasterPrice() {
+        public CommonPriceBean getMasterPrice() {
             return MasterPrice;
         }
 
-        public void setMasterPrice(PriceBean masterPrice) {
+        public void setMasterPrice(CommonPriceBean masterPrice) {
             MasterPrice = masterPrice;
         }
 
@@ -87,11 +87,11 @@ public class ServiceSystemBean {
         Services = services;
     }
 
-    public List<ImageHeadBean> getHead() {
+    public List<CommonImageBean> getHead() {
         return Head;
     }
 
-    public void setHead(List<ImageHeadBean> head) {
+    public void setHead(List<CommonImageBean> head) {
         Head = head;
     }
 

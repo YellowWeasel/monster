@@ -16,4 +16,9 @@ public class AgrConstant {
 
     /* 测试数据 */
     public static final String Test_PHONE = "fa78e84d-1d81-45f2-91de-3c16307adb3p";
+
+
+    public static final int ACTIVITY_REQUEST_ServiceBuyActivity = 9001;
+    public static final int ACTIVITY_RESULT_Service_PriceByEntActivity = 9002;
+
 }
