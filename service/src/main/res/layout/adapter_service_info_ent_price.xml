@@ -32,6 +32,7 @@
                 android:text="价格：200/年"
                 android:textColor="@color/app_base_text_price"
                 android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/service_info_dueDate"
                 android:layout_width="match_parent"
@@ -48,9 +49,10 @@
             android:layout_width="80dp"
             android:layout_height="30dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/btn_service_orange_bg"
+            android:background="@drawable/app_base_btn_back_yellow"
             android:foreground="?android:attr/selectableItemBackground"
             android:text="购买"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/app_base_btn_text_yellow"
+            android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

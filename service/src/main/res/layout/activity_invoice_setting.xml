@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/app_base_bar_background"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_base_layout_background"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_base_layout_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:text="普通发票信息"
+                android:textColor="@color/app_base_text_title_3"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/app_base_recycler_item_line" />
+        </LinearLayout>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/app_base_item_background"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:text="发票抬头"
+                android:textColor="@color/app_base_text_title_2"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/invoice_setting_ent_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/app_base_edit_back_gray"
+                android:hint="请输入个人或公司名称"
+                android:inputType="text|textPhonetic"
+                android:text="海南晓晨科技有限公司"
+                android:textColor="@color/app_base_text_title_2"
+                android:textColorHint="@color/app_base_text_title_3"
+                android:textSize="16sp" />
+
+        </TableRow>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_base_layout_background"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:text="邮寄地址"
+                android:textColor="@color/app_base_text_title_3"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/app_base_recycler_item_line" />
+        </LinearLayout>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/app_base_item_background"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:text="收件人"
+                android:textColor="@color/app_base_text_title_2"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/invoice_setting_user_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/app_base_edit_back_gray"
+                android:inputType="text|textPhonetic"
+                android:textColor="@color/app_base_text_title_2"
+                android:textColorHint="@color/app_base_text_title_3"
+                android:textSize="16sp" />
+
+        </TableRow>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/app_base_recycler_item_line" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/app_base_item_background"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:text="手机号码"
+                android:textColor="@color/app_base_text_title_2"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/invoice_setting_user_tel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/app_base_edit_back_gray"
+                android:inputType="phone"
+                android:textColor="@color/app_base_text_title_2"
+                android:textColorHint="@color/app_base_text_title_3"
+                android:textSize="16sp" />
+
+        </TableRow>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/app_base_recycler_item_line" />
+
+        <TableRow
+            android:id="@+id/invoice_setting_area_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/app_base_item_background"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:text="所在地区"
+                android:textColor="@color/app_base_text_title_2"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/invoice_setting_user_area"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/app_base_text_title_2"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                app:srcCompat="@drawable/app_base_default_right" />
+
+        </TableRow>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/app_base_recycler_item_line" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/app_base_item_background"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:text="详细地址"
+                android:textColor="@color/app_base_text_title_2"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/invoice_setting_user_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/app_base_edit_back_gray"
+                android:hint="请完善地址信息"
+                android:inputType="textPostalAddress|textPhonetic"
+                android:textColor="@color/app_base_text_title_2"
+                android:textColorHint="@color/app_base_text_title_3"
+                android:textSize="16sp" />
+
+        </TableRow>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/app_base_recycler_item_line" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -5,8 +5,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.model.IServerModel;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.ServiceBuyByUserBean;
-import com.erayic.agr.service.presenter.IServiceListByUserPresenter;
-import com.erayic.agr.service.view.IServiceListByUserView;
+import com.erayic.agr.service.presenter.IServiceEntrancePresenter;
+import com.erayic.agr.service.view.IServiceEntranceView;
 
 import java.util.List;
 
@@ -16,24 +16,24 @@ import java.util.List;
  * 注解：
  */
 
-public class ServiceListByUserPresenterImpl implements IServiceListByUserPresenter {
+public class ServiceEntrancePresenterImpl implements IServiceEntrancePresenter {
 
-    private IServiceListByUserView serviceView;
+    private IServiceEntranceView serviceView;
     @Autowired
     IServerModel serverModel;
 
-    public ServiceListByUserPresenterImpl(IServiceListByUserView serviceView) {
+    public ServiceEntrancePresenterImpl(IServiceEntranceView serviceView) {
         this.serviceView = serviceView;
         ARouter.getInstance().inject(this);
     }
 
 
     @Override
-    public void getAllServiceByUser() {
-        serverModel.getAllServiceByUser(new OnDataListener<List<ServiceBuyByUserBean>>() {
+    public void getAllSystemServiceByUser() {
+        serverModel.getAllSystemServiceByUser(new OnDataListener<List<ServiceBuyByUserBean>>() {
             @Override
             public void success(List<ServiceBuyByUserBean> response) {
-
+                serviceView.refreshView(response);
             }
 
             @Override

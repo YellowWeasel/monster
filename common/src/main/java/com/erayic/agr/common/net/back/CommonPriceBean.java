@@ -1,6 +1,7 @@
 package com.erayic.agr.common.net.back;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * 作者：hejian
@@ -8,9 +9,7 @@ import java.io.Serializable;
  * 注解：价格Bean
  */
 
-public class CommonPriceBean  implements Serializable {
-
-    private static final long serialVersionUID = 9060527069391618394L;
+public class CommonPriceBean implements Parcelable {
 
     private int PriceID;//价格ID
     private float Price;//价格
@@ -85,4 +84,43 @@ public class CommonPriceBean  implements Serializable {
     public void setCheck(boolean check) {
         isCheck = check;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(PriceID);
+        dest.writeFloat(Price);
+        dest.writeString(Unit);
+        dest.writeByte((byte) (IsOffers ? 1 : 0));
+        dest.writeString(VaildStart);
+        dest.writeString(VaildEnd);
+        dest.writeByte((byte) (IsMaster ? 1 : 0));
+    }
+
+    protected CommonPriceBean(Parcel in) {
+        PriceID = in.readInt();
+        Price = in.readFloat();
+        Unit = in.readString();
+        IsOffers = in.readByte() != 0;
+        VaildStart = in.readString();
+        VaildEnd = in.readString();
+        IsMaster = in.readByte() != 0;
+    }
+
+
+    public static final Creator<CommonPriceBean> CREATOR = new Creator<CommonPriceBean>() {
+        @Override
+        public CommonPriceBean createFromParcel(Parcel in) {
+            return new CommonPriceBean(in);
+        }
+
+        @Override
+        public CommonPriceBean[] newArray(int size) {
+            return new CommonPriceBean[size];
+        }
+    };
 }

@@ -41,10 +41,10 @@ public class MoneyView extends View {
     /**
      * 文本 元的大小
      */
-    private int mYuanSize = sp2px(18);
-    private int mCentSize = sp2px(14);
-    private int mUnitSize = sp2px(14);
-    private int mPrefixSize = sp2px(12);
+    private int mYuanSize = sp2px(16);
+    private int mCentSize = sp2px(12);
+    private int mUnitSize = sp2px(16);
+    private int mPrefixSize = sp2px(10);
     //    private int mPrefixPadding = dp2px(4); //小数点与分的间隔
 //    private int mPointPaddingLeft = dp2px(3); //小数点与分的间隔
 //    private int mPointPaddingRight = dp2px(4); //小数点与分的间隔
@@ -177,7 +177,7 @@ public class MoneyView extends View {
         int maxHeight = Math.max(mYuanBound.height(), mCentBound.height());
         maxHeight = Math.max(maxHeight, mPrefixBound.height());
         //文本占据的高度
-        mTextHeight = maxHeight + (int) (maxDescent + 0.5f);
+        mTextHeight = maxHeight + (int) (maxDescent + 1f);
 
         specMode = MeasureSpec.getMode(heightMeasureSpec);
         specSize = MeasureSpec.getSize(heightMeasureSpec);
@@ -195,7 +195,7 @@ public class MoneyView extends View {
         //绘制X坐标
 //        int drawX = (getMeasuredWidth() - mTextWidth) / 2;//居中
         int drawX = (getMeasuredWidth() - mTextWidth);//右对齐
-        float drawY = (getMeasuredHeight() + mTextHeight) / 2 - maxDescent;
+        float drawY = (getMeasuredHeight() + mTextHeight - maxDescent) / 2;
         if (mMoney == 0) {
             mPaint.setColor(mMoneyColor);
             mPaint.setTextSize(mYuanSize);

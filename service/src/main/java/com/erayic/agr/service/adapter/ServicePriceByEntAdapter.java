@@ -1,5 +1,7 @@
 package com.erayic.agr.service.adapter;
 
+import android.content.Context;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.common.net.back.CommonPriceBean;
 import com.erayic.agr.service.R;
@@ -15,9 +17,11 @@ import java.util.List;
 
 public class ServicePriceByEntAdapter extends BaseQuickAdapter<CommonPriceBean, ServicePriceByEntItemViewHolder> {
 
+    private Context context;
 
-    public ServicePriceByEntAdapter(List<CommonPriceBean> data) {
+    public ServicePriceByEntAdapter(Context context,List<CommonPriceBean> data) {
         super(R.layout.adapter_service_price_ent_item, data);
+        this.context = context;
     }
 
     @Override

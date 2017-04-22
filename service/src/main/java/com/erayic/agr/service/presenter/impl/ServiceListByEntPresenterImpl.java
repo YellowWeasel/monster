@@ -49,23 +49,14 @@ public class ServiceListByEntPresenterImpl implements IServiceListByEntPresenter
                         list.add(entity);
                     }
                 }
-                //测试数据
-                if (list.size()>2){
-                    list.add(list.get(1));
-                    list.add(list.get(1));
-                    list.add(list.get(1));
-                    list.add(list.get(1));
-                    list.add(list.get(1));
-                    list.add(list.get(1));
-                    list.add(list.get(1));
-                    list.add(list.get(1));
-                }
+//                }
                 marketView.refreshServiceView(list);
             }
 
             @Override
             public void fail(int errCode, String msg) {
                 marketView.clearRefresh();
+                marketView.showToast("错误代码：" + errCode + "\n描述：" + msg);
                 marketView.refreshServiceView(null);
             }
         });

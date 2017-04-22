@@ -1,5 +1,6 @@
 package com.erayic.agr.common.net.back;
 
+
 import java.util.List;
 
 /**
@@ -8,27 +9,32 @@ import java.util.List;
  * 注解：
  */
 
-public class ServiceBuyByUserBean {
+public class ServiceBuyByUserBean  {
 
-    private String ServiceID;//服务ID
+    private String Icon;//服务图标
     private String ServiceName;//服务名称
-    private int Classify;//分类
-    private int Type;//类别
-    private String OpenTime;//开通时间
-    private String EndTime;//截止时间
-    private int Status;//当前服务状态
-    private List<ServiceBuyByEntBean.SpecifysInfo> Specifys;//子服务信息
+    private String ServiceID;//服务ID
+    private int Type;//服务类型
+    private int Classify;//服务分类
+    private int JumpType;//跳转类型
+    private String JumpUrl;//跳转链接
+    private boolean IsOwner;//是否关注
+    private List<SpecifysInfo> Specifys;//子服务信息
 
-    public static class SpecifysInfo {
+
+    public static class SpecifysInfo{
+        private int JumpType;//跳转类型
+        private String Sepcify;//子服务名称
         private String ServiceID;//服务ID
-        private String Sepcify;//服务名称
+        private String Url;//跳转链接
+        private boolean IsOwner;//是否关注
 
-        public String getServiceID() {
-            return ServiceID;
+        public int getJumpType() {
+            return JumpType;
         }
 
-        public void setServiceID(String serviceID) {
-            ServiceID = serviceID;
+        public void setJumpType(int jumpType) {
+            JumpType = jumpType;
         }
 
         public String getSepcify() {
@@ -38,14 +44,38 @@ public class ServiceBuyByUserBean {
         public void setSepcify(String sepcify) {
             Sepcify = sepcify;
         }
+
+        public String getServiceID() {
+            return ServiceID;
+        }
+
+        public void setServiceID(String serviceID) {
+            ServiceID = serviceID;
+        }
+
+        public String getUrl() {
+            return Url;
+        }
+
+        public void setUrl(String url) {
+            Url = url;
+        }
+
+        public boolean isOwner() {
+            return IsOwner;
+        }
+
+        public void setOwner(boolean owner) {
+            IsOwner = owner;
+        }
     }
 
-    public String getServiceID() {
-        return ServiceID;
+    public String getIcon() {
+        return Icon;
     }
 
-    public void setServiceID(String serviceID) {
-        ServiceID = serviceID;
+    public void setIcon(String icon) {
+        Icon = icon;
     }
 
     public String getServiceName() {
@@ -56,12 +86,12 @@ public class ServiceBuyByUserBean {
         ServiceName = serviceName;
     }
 
-    public int getClassify() {
-        return Classify;
+    public String getServiceID() {
+        return ServiceID;
     }
 
-    public void setClassify(int classify) {
-        Classify = classify;
+    public void setServiceID(String serviceID) {
+        ServiceID = serviceID;
     }
 
     public int getType() {
@@ -72,37 +102,43 @@ public class ServiceBuyByUserBean {
         Type = type;
     }
 
-    public String getOpenTime() {
-        return OpenTime;
+    public int getClassify() {
+        return Classify;
     }
 
-    public void setOpenTime(String openTime) {
-        OpenTime = openTime;
+    public void setClassify(int classify) {
+        Classify = classify;
     }
 
-    public String getEndTime() {
-        return EndTime;
+    public int getJumpType() {
+        return JumpType;
     }
 
-    public void setEndTime(String endTime) {
-        EndTime = endTime;
+    public void setJumpType(int jumpType) {
+        JumpType = jumpType;
     }
 
-    public int getStatus() {
-        return Status;
+    public String getJumpUrl() {
+        return JumpUrl;
     }
 
-    public void setStatus(int status) {
-        Status = status;
+    public void setJumpUrl(String jumpUrl) {
+        JumpUrl = jumpUrl;
     }
 
-    public List<ServiceBuyByEntBean.SpecifysInfo> getSpecifys() {
+    public boolean isOwner() {
+        return IsOwner;
+    }
+
+    public void setOwner(boolean owner) {
+        IsOwner = owner;
+    }
+
+    public List<SpecifysInfo> getSpecifys() {
         return Specifys;
     }
 
-    public void setSpecifys(List<ServiceBuyByEntBean.SpecifysInfo> specifys) {
+    public void setSpecifys(List<SpecifysInfo> specifys) {
         Specifys = specifys;
     }
-
-
 }

@@ -80,12 +80,10 @@ public class ServiceInfoByEntAdapter extends BaseMultiItemQuickAdapter<ServiceIn
                         ((ServiceInfoByEntPriceViewHolder) helper).serviceInfoPrice.setText("服务价格：￥" + item.getPrice().getServicePrice().getPrice() + "/" + item.getPrice().getServicePrice().getUnit());
                         ((ServiceInfoByEntPriceViewHolder) helper).serviceInfoBuy.setVisibility(View.VISIBLE);
                         if (item.getPrice().isBuy()) {
-                            ((ServiceInfoByEntPriceViewHolder) helper).serviceInfoBuy.setBackgroundResource(R.color.ui_btn_background_red);
                             ((ServiceInfoByEntPriceViewHolder) helper).serviceInfoBuy.setText("续购");
                             ((ServiceInfoByEntPriceViewHolder) helper).serviceInfoDueDate.setVisibility(View.VISIBLE);
-                            ((ServiceInfoByEntPriceViewHolder) helper).serviceInfoDueDate.setText("到期时间" + ErayicNetDate.getStringDate(item.getPrice().getDueDate()) + "");
+                            ((ServiceInfoByEntPriceViewHolder) helper).serviceInfoDueDate.setText("到期时间：" + ErayicNetDate.getStringDate(item.getPrice().getDueDate()) + "");
                         } else {
-                            ((ServiceInfoByEntPriceViewHolder) helper).serviceInfoBuy.setBackgroundResource(R.color.app_base_text_price);
                             ((ServiceInfoByEntPriceViewHolder) helper).serviceInfoBuy.setText("购买");
                             ((ServiceInfoByEntPriceViewHolder) helper).serviceInfoDueDate.setVisibility(View.GONE);
                         }

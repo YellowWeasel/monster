@@ -140,8 +140,8 @@ public class ServiceListByEntActivity extends BaseActivity implements IServiceLi
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {//返回
             finish();
-        } else if (item.getItemId() == R.id.action_service_admin) {
-            showToast("企业账户");
+        } else if (item.getItemId() == R.id.action_service_admin) {//企业账户
+            ARouter.getInstance().build("/service/activity/BusinessAccountActivity").navigation();
         }
         return super.onOptionsItemSelected(item);
     }

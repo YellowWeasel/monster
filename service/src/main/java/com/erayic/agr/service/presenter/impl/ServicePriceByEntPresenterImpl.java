@@ -6,7 +6,7 @@ import com.erayic.agr.common.model.IServerModel;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.CommonPriceBean;
 import com.erayic.agr.service.presenter.IServicePriceByEntPresenter;
-import com.erayic.agr.service.view.IServicePriceByEntView;
+import com.erayic.agr.service.view.IServicePriceView;
 
 import java.util.List;
 
@@ -16,13 +16,13 @@ import java.util.List;
  * 注解：
  */
 
-public class ServicePriceByEntPrensenterImpl implements IServicePriceByEntPresenter {
+public class ServicePriceByEntPresenterImpl implements IServicePriceByEntPresenter {
 
-    private IServicePriceByEntView view;
+    private IServicePriceView view;
     @Autowired
     IServerModel serverModel;
 
-    public ServicePriceByEntPrensenterImpl(IServicePriceByEntView view) {
+    public ServicePriceByEntPresenterImpl(IServicePriceView view) {
         this.view = view;
         ARouter.getInstance().inject(this);
     }
@@ -40,6 +40,7 @@ public class ServicePriceByEntPrensenterImpl implements IServicePriceByEntPresen
             @Override
             public void fail(int errCode, String msg) {
                 view.clearRefresh();
+                view.refreshServiceView(null);
                 view.showToast("错误代码：" + errCode + "\n描述：" + msg);
             }
         });

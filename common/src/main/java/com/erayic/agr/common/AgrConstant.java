@@ -9,6 +9,7 @@ package com.erayic.agr.common;
 public class AgrConstant {
 
     public static final String WEB_SERVER_URL = "http://192.168.0.188:8000/";
+    public static final String IMAGE_URL_PREFIX = "http://192.168.0.7";
 
     public static final String GUID_Empty = "00000000-0000-0000-0000-000000000000";
     public static final String AGR_PLANT_APPID = "7E550992-C157-4CB4-8048-9DCDF560A41D";
@@ -20,5 +21,6 @@ public class AgrConstant {
 
     public static final int ACTIVITY_REQUEST_ServiceBuyActivity = 9001;
     public static final int ACTIVITY_RESULT_Service_PriceByEntActivity = 9002;
+    public static final int ACTIVITY_RESULT_Service_TopicByEntActivity = 9003;
 
 }

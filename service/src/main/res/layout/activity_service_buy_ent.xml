@@ -41,28 +41,50 @@
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical|right"
-                android:text="合计：￥3000.00元"
-                android:textColor="@color/app_base_text_price"
-                android:textSize="16sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/app_base_recycler_item_line" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="0.7"
-                android:background="@drawable/btn_service_red_bg"
-                android:text="提交并支付"
-                android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:text="实付款"
+                    android:textColor="@color/app_base_text_price"
+                    android:textSize="16sp" />
+
+                <com.erayic.agr.common.view.MoneyView
+                    android:id="@+id/service_buy_total_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    app:money="30.59"
+                    app:money_color="@color/app_base_text_price"
+                    app:unit_text="" />
+
+                <Button
+                    android:id="@+id/service_buy_total_order"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_service_red_bg"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:text="提交并支付"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
         </LinearLayout>
     </RelativeLayout>
 

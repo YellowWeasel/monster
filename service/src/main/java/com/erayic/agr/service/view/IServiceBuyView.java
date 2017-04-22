@@ -9,4 +9,20 @@ import com.erayic.agr.common.base.IBaseView;
  */
 
 public interface IServiceBuyView extends IBaseView {
+
+    /**
+     * 显示加载Dialog
+     */
+    void showLoading();
+
+    /**
+     * 隐藏加载Dialog
+     */
+    void dismissLoading();
+
+    /**
+     * 提交成功
+     */
+    void submitSure();
+
 }

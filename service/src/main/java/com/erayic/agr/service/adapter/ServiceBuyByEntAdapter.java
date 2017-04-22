@@ -4,11 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.TableRow;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.erayic.agr.common.net.back.CommonSubServiceBean;
 import com.erayic.agr.common.net.back.enums.EnumPayType;
 import com.erayic.agr.common.net.back.enums.EnumServiceType;
 import com.erayic.agr.common.util.ErayicLog;
@@ -31,6 +30,7 @@ public class ServiceBuyByEntAdapter extends BaseMultiItemQuickAdapter<ServiceBuy
     private Context context;
 
     private OnSelectPriceClickListener onSelectPriceClickListener;
+    private OnSelectTopicClickListener onSelectTopicClickListener;
 
     public ServiceBuyByEntAdapter(Context context, List<ServiceBuyByEntEntity> data) {
         super(data);
@@ -39,6 +39,10 @@ public class ServiceBuyByEntAdapter extends BaseMultiItemQuickAdapter<ServiceBuy
 
     public void setOnSelectPriceClickListener(OnSelectPriceClickListener onSelectPriceClickListener) {
         this.onSelectPriceClickListener = onSelectPriceClickListener;
+    }
+
+    public void setOnSelectTopicClickListener(OnSelectTopicClickListener onSelectTopicClickListener) {
+        this.onSelectTopicClickListener = onSelectTopicClickListener;
     }
 
     @Override
@@ -76,15 +80,32 @@ public class ServiceBuyByEntAdapter extends BaseMultiItemQuickAdapter<ServiceBuy
                             return true;
                         }
                     });
+
                     if (item.getBuyContent().getServiceType() == EnumServiceType.Subject) {
                         ((ServiceBuyByEntContentViewHolder) helper).serviceBuyTopicLayout.setVisibility(View.VISIBLE);
                         ((ServiceBuyByEntContentViewHolder) helper).serviceBuyTopicName.setText("");
-                        for (ServiceBuyByEntEntity.TopiceService service : item.getBuyContent().getTopiceServices()) {
-                            ((ServiceBuyByEntContentViewHolder) helper).serviceBuyTopicName.append(service.getServiceName() + " ");
-                        }
+                        if (item.getBuyContent().getTopiceServices() == null) {
+                            ((ServiceBuyByEntContentViewHolder) helper).serviceBuyTopicName.append("");
+                        } else
+                            for (CommonSubServiceBean service : item.getBuyContent().getTopiceServices()) {
+                                ((ServiceBuyByEntContentViewHolder) helper).serviceBuyTopicName.append(service.getCrop() + " ");
+                            }
                     } else {
                         ((ServiceBuyByEntContentViewHolder) helper).serviceBuyTopicLayout.setVisibility(View.GONE);
                     }
+                    ((ServiceBuyByEntContentViewHolder) helper).serviceBuyTopicLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (onSelectTopicClickListener != null)
+                                onSelectTopicClickListener.onClick(v);
+                        }
+                    });
+                    ((ServiceBuyByEntContentViewHolder) helper).serviceBuyTopicLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            return true;
+                        }
+                    });
                 }
                 break;
             case ServiceBuyByEntEntity.TYPE_PAY:
@@ -157,6 +178,10 @@ public class ServiceBuyByEntAdapter extends BaseMultiItemQuickAdapter<ServiceBuy
     }
 
     public interface OnSelectPriceClickListener {
+        void onClick(View view);
+    }
+
+    public interface OnSelectTopicClickListener {
         void onClick(View view);
     }
 

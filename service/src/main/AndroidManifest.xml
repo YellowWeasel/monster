@@ -16,7 +16,25 @@
             android:name=".view.impl.ServiceBuyActivity"
             android:theme="@style/AppTheme.Transparent" />
         <activity
-            android:name=".view.impl.ServicePriceByEntActivity"
+            android:name=".view.impl.ServicePriceActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.ServiceTopicActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.BusinessAccountActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.OrderByEntActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.InvoiceSettingActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.OrderInfoActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.ServiceManageActivity"
             android:theme="@style/AppTheme.Transparent" />
     </application>
 

@@ -6,11 +6,11 @@ package com.erayic.agr.service.presenter;
  * 注解：
  */
 
-public interface IServiceListByUserPresenter {
+public interface IServiceEntrancePresenter {
 
     /**
      * 得到用户已拥有的所有服务
      */
-    void getAllServiceByUser();
+    void getAllSystemServiceByUser();
 
 }

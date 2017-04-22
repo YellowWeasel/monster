@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_base_item_background"
+    android:orientation="vertical">
+
+    <TableRow
+        android:id="@+id/service_manage_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/service_manage_item_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:srcCompat="@drawable/image_service_test" />
+
+        <TextView
+            android:id="@+id/service_manage_item_name"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="电话推送"
+            android:textColor="@color/app_base_text_title_2"
+            android:textSize="16sp" />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/service_manage_item_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:checked="false"
+            />
+
+        <ImageView
+            android:id="@+id/service_manage_item_sub"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            app:srcCompat="@drawable/app_base_default_right" />
+    </TableRow>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/app_base_recycler_item_line" />
+
+</LinearLayout>

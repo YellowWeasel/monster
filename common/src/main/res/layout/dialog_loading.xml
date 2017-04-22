@@ -6,10 +6,12 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
+    <!--https://github.com/81813780/AVLoadingIndicatorView-->
+
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/common_dialog_loading"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:indicatorColor="@color/app_base_bar_background"
-        app:indicatorName="BallClipRotatePulseIndicator" />
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:indicatorColor="@android:color/white"
+        app:indicatorName="BallTrianglePathIndicator" />
 </LinearLayout>

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/app_base_bar_background"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_base_layout_background"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/order_info_swipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants">
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/app_base_item_background"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:orientation="horizontal">
+
+                            <RelativeLayout
+                                android:layout_width="60dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp">
+
+                                <ImageView
+                                    android:id="@+id/order_info_service_icon"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="10dp"
+                                    app:srcCompat="@drawable/image_service_test" />
+                            </RelativeLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/order_info_service_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:ellipsize="end"
+                                    android:gravity="center_vertical"
+                                    android:maxLines="1"
+                                    android:text="天气预报"
+                                    android:textColor="@color/app_base_text_title_1"
+                                    android:textSize="16sp" />
+
+
+                                <TextView
+                                    android:id="@+id/order_info_price"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:ellipsize="end"
+                                    android:lineSpacingExtra="3dp"
+                                    android:maxLines="1"
+                                    android:text="总价：￥5000.00"
+                                    android:textColor="@color/app_base_text_title_3"
+                                    android:textSize="14sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="100dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/order_info_statue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:ellipsize="end"
+                                    android:gravity="center"
+                                    android:lineSpacingExtra="3dp"
+                                    android:maxLines="1"
+                                    android:text="已完成"
+                                    android:textColor="@color/app_base_text_status_gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/order_info_layout_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="订单信息"
+                            android:textColor="@color/app_base_text_title_2"
+                            android:textSize="16sp" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/order_info_recycler_order"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/app_base_item_background"
+                            android:clipToPadding="false" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/order_info_layout_invoice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="发票信息"
+                            android:textColor="@color/app_base_text_title_2"
+                            android:textSize="16sp" />
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/app_base_item_background"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="10dp"
+                                android:text="发票状态"
+                                android:textColor="@color/app_base_text_title_2"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/order_info_statue_invoice"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:text="未开具"
+                                android:textColor="@color/app_base_text_title_3"
+                                android:textSize="16sp" />
+
+                            <Button
+                                android:id="@+id/order_info_ask_invoice"
+                                android:layout_width="80dp"
+                                android:layout_height="25dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/app_base_btn_back_yellow"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:text="索要发票"
+                                android:textColor="@color/app_base_btn_text_yellow" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="25dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                app:srcCompat="@drawable/app_base_default_right" />
+
+                        </TableRow>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/order_info_layout_pay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="支付信息"
+                            android:textColor="@color/app_base_text_title_2"
+                            android:textSize="16sp" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/order_info_recycler_pay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/app_base_item_background"
+                            android:clipToPadding="false" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/order_info_pay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/btn_service_red_bg"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:text="支付"
+                        android:textSize="16sp" />
+
+
+                </LinearLayout>
+
+
+            </android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

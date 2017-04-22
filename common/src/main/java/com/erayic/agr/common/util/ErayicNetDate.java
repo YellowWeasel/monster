@@ -68,6 +68,20 @@ public class ErayicNetDate {
     }
 
     /**
+     * 将服务器时间/Date(XXXXXXXXXXX)/转换为年月日时分
+     */
+    public static String getStringDateYMDHM(String arg) {
+        String regEx = "[^0-9]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(arg);
+
+        calendar.setTimeInMillis(Long.parseLong(m.replaceAll("").trim()));
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+        return format.format(calendar.getTimeInMillis());
+    }
+
+    /**
      * 将服务器时间/Date(XXXXXXXXXXX)/转换为字符串(时分秒)
      */
     public static String getStringDateHms(String arg) {

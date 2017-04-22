@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/app_base_item_background"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/order_info_item_name"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:text="发票状态"
+            android:textColor="@color/app_base_text_title_2"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/order_info_item_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="未开具"
+            android:textColor="@color/app_base_text_title_3"
+            android:textSize="14sp" />
+
+    </TableRow>
+</LinearLayout>

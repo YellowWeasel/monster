@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.net.back.CommonImageBean;
 import com.erayic.agr.common.util.ErayicTextUtil;
 import com.erayic.agr.service.R;
@@ -100,8 +101,11 @@ public class ServiceListByEntAdapter extends BaseMultiItemQuickAdapter<ServiceLi
                             return true;
                         }
                     });
+                    Glide.with(context).load(AgrConstant.IMAGE_URL_PREFIX + item.getServicesInfo().getIcon())
+                            .error(R.drawable.image_service_test)
+                            .into(((ServiceListByEntItemViewHolder) helper).serviceMarketItemImg);
                     ((ServiceListByEntItemViewHolder) helper).serviceMarketItemName.setText(item.getServicesInfo().getServiceName());
-                    ((ServiceListByEntItemViewHolder) helper).serviceMarketItemDirections.setText("\u3000\u3000" + item.getServicesInfo().getDescript() + "");
+                    ((ServiceListByEntItemViewHolder) helper).serviceMarketItemDirections.setText(item.getServicesInfo().getDescript());
                     if (item.getServicesInfo().getMasterPrice().getPriceID() == 0) {
                         ((ServiceListByEntItemViewHolder) helper).serviceMarketItemPrice.setMoney(0, "免费");
                     } else {

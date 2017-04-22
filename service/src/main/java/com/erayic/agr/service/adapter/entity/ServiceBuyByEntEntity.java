@@ -2,6 +2,7 @@ package com.erayic.agr.service.adapter.entity;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.erayic.agr.common.net.back.CommonPriceBean;
+import com.erayic.agr.common.net.back.CommonSubServiceBean;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class ServiceBuyByEntEntity implements MultiItemEntity {
         private String serviceID;//服务ID
         private int serviceType;//服务类型
         private CommonPriceBean priceBean;//当前选中的价格
-        private List<TopiceService> topiceServices;//主题服务
+        private List<CommonSubServiceBean> topiceServices;//主题服务
 
         public String getServiceName() {
             return serviceName;
@@ -59,11 +60,11 @@ public class ServiceBuyByEntEntity implements MultiItemEntity {
             this.priceBean = priceBean;
         }
 
-        public List<TopiceService> getTopiceServices() {
+        public List<CommonSubServiceBean> getTopiceServices() {
             return topiceServices;
         }
 
-        public void setTopiceServices(List<TopiceService> topiceServices) {
+        public void setTopiceServices(List<CommonSubServiceBean> topiceServices) {
             this.topiceServices = topiceServices;
         }
     }
@@ -101,26 +102,6 @@ public class ServiceBuyByEntEntity implements MultiItemEntity {
         }
     }
 
-    public static class TopiceService {
-        private String serviceID;//服务ID
-        private String serviceName;//服务名称
-
-        public String getServiceID() {
-            return serviceID;
-        }
-
-        public void setServiceID(String serviceID) {
-            this.serviceID = serviceID;
-        }
-
-        public String getServiceName() {
-            return serviceName;
-        }
-
-        public void setServiceName(String serviceName) {
-            this.serviceName = serviceName;
-        }
-    }
 
     @Override
     public int getItemType() {

@@ -83,7 +83,7 @@ public class ServiceInfoByEntActivity extends BaseActivity implements IServiceIn
             public void onBuyClick(View view, CommonPriceBean bean) {
                 ARouter.getInstance().build("/service/activity/ServiceBuyActivity").withString("serviceName", serviceName)
                         .withString("serviceID", serviceID).withString("serviceIcon", serviceIcon)
-                        .withInt("serviceType", serviceType).withSerializable("priceBean", bean).navigation();
+                        .withInt("serviceType", serviceType).withParcelable("priceBean", bean).navigation();
             }
         });
         adapter.isFirstOnly(false);

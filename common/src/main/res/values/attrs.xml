@@ -45,4 +45,29 @@
         <!--是否使用千分符-->
         <attr name="grouping" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="PagerSlidingTabStrip">
+        <!--滑动条的颜色-->
+        <attr name="pstsIndicatorColor" format="color" />
+        <!--滑动条所在的那个全宽线的颜色-->
+        <attr name="pstsUnderlineColor" format="color" />
+        <!--每个标签的分割线的颜色-->
+        <attr name="pstsDividerColor" format="color" />
+        <!--滑动条的高度-->
+        <attr name="pstsIndicatorHeight" format="dimension" />
+        <!--滑动条所在的那个全宽线的高度-->
+        <attr name="pstsUnderlineHeight" format="dimension" />
+        <!--分割线底部和顶部的填充宽度-->
+        <attr name="pstsDividerPadding" format="dimension" />
+        <!--每个标签左右填充宽度-->
+        <attr name="pstsTabPaddingLeftRight" format="dimension" />
+        <!--被选择的标签的偏移滚动-->
+        <attr name="pstsScrollOffset" format="dimension" />
+        <!--每个标签的背景，应该是一个StateListDrawable-->
+        <attr name="pstsTabBackground" format="reference" />
+        <!--如果设置为true，每个标签是相同的控件，均匀平分整个屏幕，默认是false-->
+        <attr name="pstsShouldExpand" format="boolean" />
+        <!--如果为true，所有标签都是大写字母，默认为true-->
+        <attr name="pstsTextAllCaps" format="boolean" />
+    </declare-styleable>
 </resources>
