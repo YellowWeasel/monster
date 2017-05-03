@@ -38,7 +38,7 @@
     <!--按钮绿色-->
     <color name="ui_btn_background_green">#1aad19</color>
     <!--按钮红色-->
-    <color name="ui_btn_background_red">#ef2529</color>
+    <color name="ui_btn_background_red">#e64c1a</color>
     <!--按钮橙色-->
     <color name="ui_btn_background_orange">#fba621</color>
     <!--标题滑动栏背景颜色-->

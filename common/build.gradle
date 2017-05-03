@@ -48,9 +48,9 @@ dependencies {
 //    依赖注入
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    provided 'javax.annotation:jsr250-api:1.0'
-    compile 'com.google.dagger:dagger:2.10'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.10'
+//    provided 'javax.annotation:jsr250-api:1.0'
+//    compile 'com.google.dagger:dagger:2.10'
+//    annotationProcessor 'com.google.dagger:dagger-compiler:2.10'
 //    ARouter
     compile 'com.alibaba:arouter-api:1.2.1'
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.2'

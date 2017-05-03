@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_base_item_background"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/manage_content_icon_1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            app:srcCompat="@drawable/app_base_android_1" />
+
+        <TextView
+            android:id="@+id/manage_content_name_1"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical|left"
+            android:text="购买记录"
+            android:textColor="@color/app_base_text_title_1"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/manage_content_subName_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textColor="@color/app_base_text_title_3"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:visibility="invisible"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            app:srcCompat="@drawable/app_base_default_right" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/manage_content_icon_2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            app:srcCompat="@drawable/app_base_android_1" />
+
+        <TextView
+            android:id="@+id/manage_content_name_2"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical|left"
+            android:text="购买记录"
+            android:textColor="@color/app_base_text_title_1"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/manage_content_subName_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textColor="@color/app_base_text_title_3"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:visibility="invisible"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            app:srcCompat="@drawable/app_base_default_right" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/manage_content_icon_3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            app:srcCompat="@drawable/app_base_android_1" />
+
+        <TextView
+            android:id="@+id/manage_content_name_3"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical|left"
+            android:text="购买记录"
+            android:textColor="@color/app_base_text_title_1"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/manage_content_subName_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textColor="@color/app_base_text_title_3"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:visibility="invisible"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            app:srcCompat="@drawable/app_base_default_right" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/manage_content_icon_4"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            app:srcCompat="@drawable/app_base_android_1" />
+
+        <TextView
+            android:id="@+id/manage_content_name_4"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical|left"
+            android:text="购买记录"
+            android:textColor="@color/app_base_text_title_1"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/manage_content_subName_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textColor="@color/app_base_text_title_3"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:visibility="invisible"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            app:srcCompat="@drawable/app_base_default_right" />
+
+    </TableRow>
+</LinearLayout>

@@ -34,21 +34,21 @@ public class ErayicStack {
     /**
      * 添加Activity到堆栈
      */
-    public static void addActivity(Activity activity) {
+    public void addActivity(Activity activity) {
         activityStack.push(activity);
     }
 
     /**
      * 获取当前Activity（堆栈中最后一个压入的）
      */
-    public static Activity currentActivity() {
+    public Activity currentActivity() {
         return activityStack.lastElement();
     }
 
     /**
      * 结束当前Activity（堆栈中最后一个压入的）
      */
-    public static void finishCurrentActivity() {
+    public void finishCurrentActivity() {
         Activity activity = activityStack.pop();
         activity.finish();
     }
@@ -56,7 +56,7 @@ public class ErayicStack {
     /**
      * 结束指定的Activity
      */
-    public static void finishActivity(Activity activity) {
+    public void finishActivity(Activity activity) {
         if (activity != null) {
             activityStack.remove(activity);
             if (!activity.isFinishing()) {
@@ -68,7 +68,7 @@ public class ErayicStack {
     /**
      * 结束指定类名的Activity
      */
-    public static void finishActivity(Class<?> cls) {
+    public void finishActivity(Class<?> cls) {
         for (Activity activity : activityStack) {
             if (activity.getClass().equals(cls)) {
                 finishActivity(activity);
@@ -79,7 +79,7 @@ public class ErayicStack {
     /**
      * 结束所有Activity
      */
-    public static void finishAllActivity() {
+    public void finishAllActivity() {
         for (Activity activity : activityStack) {
             if (activity != null) {
                 activity.finish();
@@ -91,7 +91,7 @@ public class ErayicStack {
     /**
      * 退出应用程序
      */
-    public static void AppExit(Context context) {
+    public void AppExit(Context context) {
         try {
             finishAllActivity();
             ActivityManager manager = (ActivityManager) context

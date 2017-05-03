@@ -24,7 +24,7 @@ import com.erayic.agr.common.view.SectionedSpanSizeLookup;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
 import com.erayic.agr.service.adapter.ServiceEntranceAdapter;
-import com.erayic.agr.service.event.EventServiceEntranceBean;
+import com.erayic.agr.service.event.ServiceEntranceEvent;
 import com.erayic.agr.service.presenter.IServiceEntrancePresenter;
 import com.erayic.agr.service.presenter.impl.ServiceEntrancePresenterImpl;
 import com.erayic.agr.service.view.IServiceEntranceView;
@@ -118,21 +118,23 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onServiceEntranceEventThread(EventServiceEntranceBean bean) {
+    public void onServiceEntranceEventThread(ServiceEntranceEvent event) {
         //接受从设置服务中传回来的数据
-        ErayicLog.e(bean.getServiceID());
+        ErayicLog.e(event.getServiceID());
         if (adapter.getList() == null)
             return;
         for (ServiceBuyByUserBean beanBuffer : adapter.getList()) {
             if (beanBuffer.getType() == EnumServiceType.Subject) {
+                if (!beanBuffer.isOwner())
+                    beanBuffer.setOwner(true);
                 for (ServiceBuyByUserBean.SpecifysInfo specifysInfo : beanBuffer.getSpecifys()) {
-                    if (specifysInfo.getServiceID().equals(bean.getServiceID())) {
-                        specifysInfo.setOwner(bean.isOwner());
+                    if (specifysInfo.getServiceID().equals(event.getServiceID())) {
+                        specifysInfo.setOwner(event.isOwner());
                     }
                 }
             } else {
-                if (beanBuffer.getServiceID().equals(bean.getServiceID())) {
-                    beanBuffer.setOwner(bean.isOwner());
+                if (beanBuffer.getServiceID().equals(event.getServiceID())) {
+                    beanBuffer.setOwner(event.isOwner());
                 }
             }
         }

@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/index" />
+            <option value="$PROJECT_DIR$/manage" />
+            <option value="$PROJECT_DIR$/serverproduct" />
             <option value="$PROJECT_DIR$/service" />
           </set>
         </option>

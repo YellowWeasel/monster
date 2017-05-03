@@ -7,12 +7,15 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,12 +23,12 @@ import com.erayic.agr.common.R;
 import com.erayic.agr.common.util.ErayicDensity;
 
 /**
- * 作者：Hkceey
+ * 作者：hejian
  * 邮箱：hkceey@outlook.com
- * 注解：对话框
+ * 注解：输入对话框
  */
 
-public class ErayicDialog extends Dialog {
+public class ErayicEditDialog extends Dialog {
 
     private Context context;
 
@@ -41,16 +44,16 @@ public class ErayicDialog extends Dialog {
     public static final int BUTTON_2 = 0x00000002;
     public static final int BUTTON_3 = 0x00000003;
 
-    protected ErayicDialog(Context context, int theme) {
+    protected ErayicEditDialog(Context context, int theme) {
         super(context, theme);
         this.context = context;
     }
 
-    protected ErayicDialog(Context context) {
+    protected ErayicEditDialog(Context context) {
         this(context, R.style.ErayicDialogStyle);
     }
 
-    protected ErayicDialog(Context context, boolean cancelableOnTouchOutside) {
+    protected ErayicEditDialog(Context context, boolean cancelableOnTouchOutside) {
         this(context);
         this.setCanceledOnTouchOutside(cancelableOnTouchOutside);
     }
@@ -69,7 +72,7 @@ public class ErayicDialog extends Dialog {
     @SuppressLint({"NewApi", "InflateParams"})
     public static class Builder {
 
-        private ErayicDialog dialog;
+        private ErayicEditDialog dialog;
         private Context context;
 
         private CharSequence title;
@@ -99,22 +102,24 @@ public class ErayicDialog extends Dialog {
         private boolean cancelable = true;
         private boolean canceledOnTouchOutside;
         private View view;
-        private ErayicDialog.OnClickListener button1Listener;
-        private ErayicDialog.OnClickListener button2Listener;
-        private ErayicDialog.OnClickListener button3Listener;
-        private ErayicDialog.OnLinearClickListener linearListener;
+        private ErayicEditDialog.OnClickListener button1Listener;
+        private ErayicEditDialog.OnClickListener button2Listener;
+        private ErayicEditDialog.OnClickListener button3Listener;
+        private ErayicEditDialog.OnLinearClickListener linearListener;
         private int button1Flag;
         private int button2Flag;
         private int button3Flag;
 
         public Builder(Context context, int theme) {
-            dialog = new ErayicDialog(context, theme);
+            dialog = new ErayicEditDialog(context, theme);
             this.context = context;
             initData();
         }
 
         public Builder(Context context) {
-            dialog = new ErayicDialog(context);
+            dialog = new ErayicEditDialog(context);
+            dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
             this.context = context;
             initData();
         }
@@ -139,195 +144,195 @@ public class ErayicDialog extends Dialog {
             return context;
         }
 
-        public Builder setTitleBarGravity(int titlebarGravity) {
+        public ErayicEditDialog.Builder setTitleBarGravity(int titlebarGravity) {
             this.titlebarGravity = titlebarGravity;
             return this;
         }
 
-        public Builder setTitle(CharSequence title) {
+        public ErayicEditDialog.Builder setTitle(CharSequence title) {
             this.title = title;
             return this;
         }
 
-        public Builder setTitle(int titleResId) {
+        public ErayicEditDialog.Builder setTitle(int titleResId) {
             this.title = context.getResources().getString(titleResId);
             return this;
         }
 
-        public Builder setTitleColor(int titleColor) {
+        public ErayicEditDialog.Builder setTitleColor(int titleColor) {
             this.titleColor = titleColor;
             return this;
         }
 
-        public Builder setTitleColor(ColorStateList titleColor) {
+        public ErayicEditDialog.Builder setTitleColor(ColorStateList titleColor) {
             this.titleColorStateList = titleColor;
             return this;
         }
 
-        public Builder setTitleSize(float titleSize) {
+        public ErayicEditDialog.Builder setTitleSize(float titleSize) {
             this.titleSize = titleSize;
             return this;
         }
 
-        public Builder setIcon(Drawable icon) {
+        public ErayicEditDialog.Builder setIcon(Drawable icon) {
             this.icon = icon;
             return this;
         }
 
-        public Builder setIcon(int iconResId) {
+        public ErayicEditDialog.Builder setIcon(int iconResId) {
             this.icon = context.getResources().getDrawable(iconResId);
             return this;
         }
 
-        public Builder setMessage(CharSequence message, ErayicDialog.OnLinearClickListener listener) {
+        public ErayicEditDialog.Builder setMessage(CharSequence message, ErayicEditDialog.OnLinearClickListener listener) {
             this.message = message;
             this.linearListener = listener;
             return this;
         }
 
-        public Builder setMessage(int messageResId, ErayicDialog.OnLinearClickListener listener) {
+        public ErayicEditDialog.Builder setMessage(int messageResId, ErayicEditDialog.OnLinearClickListener listener) {
             this.message = context.getResources().getString(messageResId);
             this.linearListener = listener;
             return this;
         }
 
-        public Builder setMessage2(CharSequence message, ErayicDialog.OnLinearClickListener listener) {
+        public ErayicEditDialog.Builder setMessage2(CharSequence message, ErayicEditDialog.OnLinearClickListener listener) {
             this.message2 = message;
             this.linearListener = listener;
             return this;
         }
 
-        public Builder setMessage2(int messageResId, ErayicDialog.OnLinearClickListener listener) {
+        public ErayicEditDialog.Builder setMessage2(int messageResId, ErayicEditDialog.OnLinearClickListener listener) {
             this.message2 = context.getResources().getString(messageResId);
             this.linearListener = listener;
             return this;
         }
 
-        public Builder setMessageColor(int color) {
+        public ErayicEditDialog.Builder setMessageColor(int color) {
             this.messageColor = color;
             return this;
         }
 
-        public Builder setMessageColor(ColorStateList color) {
+        public ErayicEditDialog.Builder setMessageColor(ColorStateList color) {
             this.messageColorStateList = color;
             return this;
         }
 
-        public Builder setMessageSize(float size) {
+        public ErayicEditDialog.Builder setMessageSize(float size) {
             this.messageSize = size;
             return this;
         }
 
-        public Builder setButton1(CharSequence text,
-                                  ErayicDialog.OnClickListener listener) {
+        public ErayicEditDialog.Builder setButton1(CharSequence text,
+                                                   ErayicEditDialog.OnClickListener listener) {
             this.button1Text = text;
             this.button1Listener = listener;
             button1Flag = 1;
             return this;
         }
 
-        public Builder setButton1(int textId,
-                                  ErayicDialog.OnClickListener listener) {
+        public ErayicEditDialog.Builder setButton1(int textId,
+                                                   ErayicEditDialog.OnClickListener listener) {
             this.button1Text = context.getResources().getString(textId);
             this.button1Listener = listener;
             button1Flag = 1;
             return this;
         }
 
-        public Builder setButton1TextColor(int color) {
+        public ErayicEditDialog.Builder setButton1TextColor(int color) {
             this.button1TextColor = color;
             return this;
         }
 
-        public Builder setButton1TextColor(ColorStateList color) {
+        public ErayicEditDialog.Builder setButton1TextColor(ColorStateList color) {
             this.button1ColorStateList = color;
             return this;
         }
 
-        public Builder setButton1Size(float button1Size) {
+        public ErayicEditDialog.Builder setButton1Size(float button1Size) {
             this.button1Size = button1Size;
             return this;
         }
 
-        public Builder setButton2(CharSequence text,
-                                  ErayicDialog.OnClickListener listener) {
+        public ErayicEditDialog.Builder setButton2(CharSequence text,
+                                                   ErayicEditDialog.OnClickListener listener) {
             this.button2Text = text;
             this.button2Listener = listener;
             button2Flag = 2;
             return this;
         }
 
-        public Builder setButton2(int textId,
-                                  ErayicDialog.OnClickListener listener) {
+        public ErayicEditDialog.Builder setButton2(int textId,
+                                                   ErayicEditDialog.OnClickListener listener) {
             this.button2Text = context.getResources().getString(textId);
             this.button2Listener = listener;
             button2Flag = 2;
             return this;
         }
 
-        public Builder setButton2TextColor(int color) {
+        public ErayicEditDialog.Builder setButton2TextColor(int color) {
             this.button2TextColor = color;
             return this;
         }
 
-        public Builder setButton2TextColor(ColorStateList color) {
+        public ErayicEditDialog.Builder setButton2TextColor(ColorStateList color) {
             this.button2ColorStateList = color;
             return this;
         }
 
-        public Builder setButton2Size(float button2Size) {
+        public ErayicEditDialog.Builder setButton2Size(float button2Size) {
             this.button2Size = button2Size;
             return this;
         }
 
-        public Builder setButton3(CharSequence text,
-                                  ErayicDialog.OnClickListener listener) {
+        public ErayicEditDialog.Builder setButton3(CharSequence text,
+                                                   ErayicEditDialog.OnClickListener listener) {
             this.button3Text = text;
             this.button3Listener = listener;
             button3Flag = 4;
             return this;
         }
 
-        public Builder setButton3(int textId,
-                                  ErayicDialog.OnClickListener listener) {
+        public ErayicEditDialog.Builder setButton3(int textId,
+                                                   ErayicEditDialog.OnClickListener listener) {
             this.button3Text = context.getResources().getString(textId);
             this.button3Listener = listener;
             button3Flag = 4;
             return this;
         }
 
-        public Builder setButton3TextColor(int color) {
+        public ErayicEditDialog.Builder setButton3TextColor(int color) {
             this.button3TextColor = color;
             return this;
         }
 
-        public Builder setButton3TextColor(ColorStateList color) {
+        public ErayicEditDialog.Builder setButton3TextColor(ColorStateList color) {
             this.button3ColorStateList = color;
             return this;
         }
 
-        public Builder setButton3Size(float button3Size) {
+        public ErayicEditDialog.Builder setButton3Size(float button3Size) {
             this.button3Size = button3Size;
             return this;
         }
 
-        public Builder setCancelable(boolean cancelable) {
+        public ErayicEditDialog.Builder setCancelable(boolean cancelable) {
             this.cancelable = cancelable;
             return this;
         }
 
-        public Builder setCanceledOnTouchOutside(boolean canceled) {
+        public ErayicEditDialog.Builder setCanceledOnTouchOutside(boolean canceled) {
             this.canceledOnTouchOutside = canceled;
             return this;
         }
 
-        public Builder setView(View view) {
+        public ErayicEditDialog.Builder setView(View view) {
             this.view = view;
             return this;
         }
 
         @SuppressLint("InflateParams")
-        public ErayicDialog create() {
+        public ErayicEditDialog create() {
 
             if (dialog == null) {
                 return null;
@@ -337,26 +342,37 @@ public class ErayicDialog extends Dialog {
             View mView = null;
             LinearLayout mTitleBar = null;
             TextView mTitle = null;
-            TextView mMessage = null;
-            TextView mMessage2 = null;
+            EditText mMessage = null;
             TextView btnLeft = null;
             TextView btnCenter = null;
             TextView btnRight = null;
             LinearLayout addView = null;
-            LinearLayout addView2 = null;
             LinearLayout btnView = null;
             View btnDivider1 = null;
             View btnDivider2 = null;
             View msgBtnDivider = null;
-            View title_msg_divider2;
             mView = LayoutInflater.from(context).inflate(
-                    R.layout.hkceey_dialog_titlebar, null);
+                    R.layout.erayic_dialog_edit_titlebar, null);
             mTitleBar = (LinearLayout) mView.findViewById(R.id.titlebar);
             mTitle = (TextView) mView.findViewById(R.id.title);
-            mMessage = (TextView) mView.findViewById(R.id.message);
-            mMessage2 = (TextView) mView.findViewById(R.id.message2);
+            mMessage = (EditText) mView.findViewById(R.id.message);
+            mMessage.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    message = s;
+                }
+            });
             addView = (LinearLayout) mView.findViewById(R.id.layout_addview);
-            addView2 = (LinearLayout) mView.findViewById(R.id.layout_addview2);
             addView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
@@ -366,15 +382,7 @@ public class ErayicDialog extends Dialog {
                     }
                 }
             });
-            addView2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View arg0) {
-                    // TODO Auto-generated method stub
-                    if (linearListener != null) {
-                        linearListener.onClick(1);
-                    }
-                }
-            });
+
             btnLeft = (TextView) mView.findViewById(R.id.button_left);
             btnCenter = (TextView) mView.findViewById(R.id.button_center);
             btnRight = (TextView) mView.findViewById(R.id.button_right);
@@ -382,8 +390,7 @@ public class ErayicDialog extends Dialog {
             btnDivider2 = (View) mView.findViewById(R.id.btn_divider2);
             msgBtnDivider = (View) mView.findViewById(R.id.msg_btn_divider);
             btnView = (LinearLayout) mView.findViewById(R.id.btn_view);
-            title_msg_divider2 = (View) mView
-                    .findViewById(R.id.title_msg_divider2);
+
             if ((title != null) || (icon != null)) {
                 mTitle.setVisibility(View.VISIBLE);
                 mTitle.setText(title);
@@ -409,30 +416,10 @@ public class ErayicDialog extends Dialog {
             } else {
                 mMessage.setVisibility(View.GONE);
             }
-            if (message2 != null) {
-                title_msg_divider2.setVisibility(View.VISIBLE);
-                addView2.setVisibility(View.VISIBLE);
-                mMessage2.setVisibility(View.VISIBLE);
-                mMessage2.setText(message2);
-                mMessage2.setTextSize(messageSize);
-                mMessage2.setTextColor(messageColor);
-                if (messageColorStateList != null) {
-                    mMessage2.setTextColor(messageColorStateList);
-                }
-            } else {
-                title_msg_divider2.setVisibility(View.GONE);
-                addView2.setVisibility(View.GONE);
-                mMessage2.setVisibility(View.GONE);
-            }
             if (view != null) {
                 addView.removeAllViews();
                 addView.addView(view);
                 addView.setGravity(Gravity.CENTER);
-            }
-            if (view != null) {
-                addView2.removeAllViews();
-                addView2.addView(view);
-                addView2.setGravity(Gravity.CENTER);
             }
             int btnCountFlag = button1Flag + button2Flag + button3Flag;
             switch (btnCountFlag) {
@@ -458,7 +445,7 @@ public class ErayicDialog extends Dialog {
                                         @Override
                                         public void onClick(View arg0) {
                                             button1Listener.onClick(dialog,
-                                                    BUTTON_1);
+                                                    BUTTON_1,message);
                                         }
                                     });
                         }
@@ -487,7 +474,7 @@ public class ErayicDialog extends Dialog {
 
                                 @Override
                                 public void onClick(View arg0) {
-                                    button1Listener.onClick(dialog, BUTTON_1);
+                                    button1Listener.onClick(dialog, BUTTON_1,message);
                                 }
                             });
                         }
@@ -507,7 +494,7 @@ public class ErayicDialog extends Dialog {
 
                                 @Override
                                 public void onClick(View arg0) {
-                                    button2Listener.onClick(dialog, BUTTON_2);
+                                    button2Listener.onClick(dialog, BUTTON_2,message);
                                 }
                             });
                         }
@@ -535,7 +522,7 @@ public class ErayicDialog extends Dialog {
 
                                 @Override
                                 public void onClick(View arg0) {
-                                    button1Listener.onClick(dialog, BUTTON_1);
+                                    button1Listener.onClick(dialog, BUTTON_1,message);
                                 }
                             });
                         }
@@ -557,7 +544,7 @@ public class ErayicDialog extends Dialog {
                                         @Override
                                         public void onClick(View arg0) {
                                             button2Listener.onClick(dialog,
-                                                    BUTTON_2);
+                                                    BUTTON_2,message);
                                         }
                                     });
                         }
@@ -577,7 +564,7 @@ public class ErayicDialog extends Dialog {
 
                                 @Override
                                 public void onClick(View arg0) {
-                                    button3Listener.onClick(dialog, BUTTON_3);
+                                    button3Listener.onClick(dialog, BUTTON_3,message);
                                 }
                             });
                         }
@@ -592,19 +579,18 @@ public class ErayicDialog extends Dialog {
 
             dialog.setCancelable(cancelable);
             dialog.setCanceledOnTouchOutside(canceledOnTouchOutside);
-
             dialog.setContentView(mView);
             return dialog;
         }
 
-        public ErayicDialog show() {
+        public ErayicEditDialog show() {
             create().show();
             return dialog;
         }
     }
 
     public interface OnClickListener {
-        void onClick(Dialog dialog, int which);
+        void onClick(Dialog dialog, int which,CharSequence msg);
     }
 
     public interface OnLinearClickListener {
@@ -622,4 +608,3 @@ public class ErayicDialog extends Dialog {
         return outMetrics.widthPixels;
     }
 }
-

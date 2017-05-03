@@ -6,15 +6,19 @@ package com.erayic.agr.common.net.back;
  * 注解：
  */
 
-public class UserInfoBean {
+public class CommonUserInfoBean {
 
-    private String UserID;//用户ID
-    private String AppID;//应用ID
-    private String ActiveBaseID;//当前活动基地ID
-    private String BaseName;//基地名称
-    private String EntID;//企业ID
-    private String EntName;//企业名称
-    private BasicInfo Basic;//用户信息
+    private String UserID = "";//用户ID
+    private String AppID = "";//应用ID
+    private String ActiveBaseID = "";//当前活动基地ID
+    private String BaseName = "";//基地名称
+    private String EntID = "";//企业ID
+    private String EntName = "";//企业名称
+    private String Icon = "";//图片
+    private String Name = "";//姓名
+    private String TelNum = "";//电话号码
+    private boolean IsWeixin;//是否绑定微信
+    private int Role = -1;//角色
     private APPInfo APP;//APP信息
 
 
@@ -66,13 +70,6 @@ public class UserInfoBean {
         EntName = entName;
     }
 
-    public BasicInfo getBasic() {
-        return Basic;
-    }
-
-    public void setBasic(BasicInfo basic) {
-        Basic = basic;
-    }
 
     public APPInfo getAPP() {
         return APP;
@@ -82,31 +79,51 @@ public class UserInfoBean {
         this.APP = APP;
     }
 
-    public static class BasicInfo {
-        private String Name;//姓名
-        private int Role;//角色
+    public String getIcon() {
+        return Icon;
+    }
 
-        public String getName() {
-            return Name;
-        }
+    public void setIcon(String icon) {
+        Icon = icon;
+    }
 
-        public void setName(String name) {
-            Name = name;
-        }
+    public String getName() {
+        return Name;
+    }
 
-        public int getRole() {
-            return Role;
-        }
+    public void setName(String name) {
+        Name = name;
+    }
 
-        public void setRole(int role) {
-            Role = role;
-        }
+    public boolean isWeixin() {
+        return IsWeixin;
+    }
+
+    public void setWeixin(boolean weixin) {
+        IsWeixin = weixin;
+    }
+
+    public int getRole() {
+        return Role;
+    }
+
+    public void setRole(int role) {
+        Role = role;
+    }
+
+
+    public String getTelNum() {
+        return TelNum;
+    }
+
+    public void setTelNum(String telNum) {
+        TelNum = telNum;
     }
 
     public static class APPInfo {
-        private String ExpireTime;//到期时间
-        private String RegisterTime;//注册时间
-        private int Status;//状态
+        private String ExpireTime = "";//到期时间
+        private String RegisterTime = "";//注册时间
+        private int Status = -1;//状态
 
         public String getExpireTime() {
             return ExpireTime;

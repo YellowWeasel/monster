@@ -1,0 +1,48 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+    package="com.erayic.agr.manage">
+
+    <application android:allowBackup="true" android:label="@string/app_name"
+        android:supportsRtl="true">
+        <activity
+            android:name=".view.impl.PersonnelListActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.EnterpriseActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.UserInfoActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.BaseListActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.BaseInfoActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.PersonnelInfoActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.ProduceListActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.UnitInfoActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.UserSelectActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.ResourceActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.FertilizerInfoActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.PesticideInfoActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.SeedInfoActivity"
+            android:theme="@style/AppTheme.Transparent" />
+    </application>
+
+</manifest>

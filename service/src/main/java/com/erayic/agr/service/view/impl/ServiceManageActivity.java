@@ -18,7 +18,7 @@ import com.erayic.agr.common.view.SectionedSpanSizeLookup;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
 import com.erayic.agr.service.adapter.ServiceManageAdapter;
-import com.erayic.agr.service.event.EventServiceEntranceBean;
+import com.erayic.agr.service.event.ServiceEntranceEvent;
 import com.erayic.agr.service.presenter.IServiceManagePresenter;
 import com.erayic.agr.service.presenter.impl.ServiceManagePresenterImpl;
 import com.erayic.agr.service.view.IServiceManageView;
@@ -171,11 +171,11 @@ public class ServiceManageActivity extends BaseActivity implements IServiceManag
                 if (isSwitchSub) {
                     adapter.getList().get(switchGroupPosition).getSpecifys().get(switchChildPosition).setOwner(
                             !adapter.getList().get(switchGroupPosition).getSpecifys().get(switchChildPosition).isOwner());
-                    EventBus.getDefault().post(new EventServiceEntranceBean(adapter.getList().get(switchGroupPosition).getSpecifys().get(switchChildPosition).getServiceID(),
+                    EventBus.getDefault().post(new ServiceEntranceEvent(adapter.getList().get(switchGroupPosition).getSpecifys().get(switchChildPosition).getServiceID(),
                             adapter.getList().get(switchGroupPosition).getSpecifys().get(switchChildPosition).isOwner()));
                 } else {
                     adapter.getList().get(switchGroupPosition).setOwner(!adapter.getList().get(switchGroupPosition).isOwner());
-                    EventBus.getDefault().post(new EventServiceEntranceBean(adapter.getList().get(switchGroupPosition).getServiceID(),
+                    EventBus.getDefault().post(new ServiceEntranceEvent(adapter.getList().get(switchGroupPosition).getServiceID(),
                             adapter.getList().get(switchGroupPosition).isOwner()));
                 }
                 adapter.notifyDataSetChanged();

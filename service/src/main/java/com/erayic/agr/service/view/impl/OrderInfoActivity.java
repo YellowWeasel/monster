@@ -29,11 +29,10 @@ import com.erayic.agr.common.net.back.enums.EnumPayType;
 import com.erayic.agr.common.util.ErayicNetDate;
 import com.erayic.agr.common.util.ErayicTextUtil;
 import com.erayic.agr.common.util.ErayicToast;
-import com.erayic.agr.common.view.ErayicDialog;
+import com.erayic.agr.common.view.ErayicTextDialog;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
-import com.erayic.agr.service.adapter.OrderByHistoryAdapter;
 import com.erayic.agr.service.adapter.OrderByInfoAdapter;
 import com.erayic.agr.service.adapter.entity.OrderByInfoEntity;
 import com.erayic.agr.service.presenter.IOrderByInfoPresenter;
@@ -332,17 +331,17 @@ public class OrderInfoActivity extends BaseActivity implements IOrderInfoView, S
         if (item.getItemId() == android.R.id.home) {//返回
             finish();
         } else if (item.getItemId() == R.id.action_order_close) {//取消订单
-            new ErayicDialog.Builder(OrderInfoActivity.this)
+            new ErayicTextDialog.Builder(OrderInfoActivity.this)
                     .setMessage("确定取消订单吗？\n取消后此订单将会失效，如需再次购买请前往服务市场！", null)
                     .setTitle("温馨提示")
-                    .setButton1("确定", new ErayicDialog.OnClickListener() {
+                    .setButton1("确定", new ErayicTextDialog.OnClickListener() {
                         @Override
                         public void onClick(Dialog dialog, int which) {
                             presenter.cancelOrderByEntUser(orderID);
                             dialog.dismiss();
                         }
                     })
-                    .setButton2("取消", new ErayicDialog.OnClickListener() {
+                    .setButton2("取消", new ErayicTextDialog.OnClickListener() {
                         @Override
                         public void onClick(Dialog dialog, int which) {
                             dialog.dismiss();

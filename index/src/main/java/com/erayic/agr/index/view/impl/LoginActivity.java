@@ -12,6 +12,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.util.ErayicRegularly;
+import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.index.R;

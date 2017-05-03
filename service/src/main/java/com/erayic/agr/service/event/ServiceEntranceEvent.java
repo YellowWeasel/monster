@@ -6,12 +6,12 @@ package com.erayic.agr.service.event;
  * 注解：服务首页数据传递更新
  */
 
-public class EventServiceEntranceBean {
+public class ServiceEntranceEvent {
 
     private String serviceID;
     private boolean isOwner ;
 
-    public EventServiceEntranceBean(String serviceID,boolean isOwner){
+    public ServiceEntranceEvent(String serviceID, boolean isOwner){
         this.serviceID = serviceID;
         this.isOwner = isOwner;
     }

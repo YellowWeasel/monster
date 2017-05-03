@@ -12,6 +12,8 @@ import com.erayic.agr.common.R;
 import com.erayic.agr.common.util.ErayicStack;
 import com.jaeger.library.StatusBarUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 

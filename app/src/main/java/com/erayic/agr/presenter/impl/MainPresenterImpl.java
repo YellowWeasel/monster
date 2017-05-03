@@ -3,9 +3,8 @@ package com.erayic.agr.presenter.impl;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.model.IUserModel;
-import com.erayic.agr.common.model.impl.UserModelImpl;
 import com.erayic.agr.common.net.OnDataListener;
-import com.erayic.agr.common.net.back.UserInfoBean;
+import com.erayic.agr.common.net.back.CommonUserInfoBean;
 import com.erayic.agr.presenter.IMainPresenter;
 import com.erayic.agr.view.IMainView;
 
@@ -28,9 +27,9 @@ public class MainPresenterImpl implements IMainPresenter {
 
     @Override
     public void getUserInfo() {
-        userModel.getUserInfo(new OnDataListener<Object>() {
+        userModel.getUserInfo(new OnDataListener<CommonUserInfoBean>() {
             @Override
-            public void success(Object response) {
+            public void success(CommonUserInfoBean response) {
                 mainView.showToast("用户信息更新成功");
                 mainView.initNetData();
             }

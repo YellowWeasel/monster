@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_manage_resource_add_pesticide"
+        android:title="添加农药"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_manage_resource_add_fertilizer"
+        android:title="添加化肥"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_manage_resource_add_seed"
+        android:title="添加种子"
+        app:showAsAction="never" />
+</menu>

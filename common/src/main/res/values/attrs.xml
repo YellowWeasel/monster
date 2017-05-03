@@ -70,4 +70,14 @@
         <!--如果为true，所有标签都是大写字母，默认为true-->
         <attr name="pstsTextAllCaps" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <!--外边框宽度-->
+        <attr name="border_width" format="dimension" />
+        <!--外边框颜色-->
+        <attr name="border_color" format="color" />
+        <!--是否显示外边框-->
+        <attr name="border_overlay" format="boolean" />
+    </declare-styleable>
+
 </resources>
