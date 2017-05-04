@@ -89,10 +89,23 @@
                           </LinearLayout>
                  </LinearLayout>
                 <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:layout_alignParentBottom="true"
                     android:orientation="horizontal"
                     android:id="@+id/serverproduct_reporting_bottom_ll"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp">
+                    android:layout_height="100dp">
+                                <ImageView
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/image_serverproduct_position_icon"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:id="@+id/serverproduct_position_imageview"
+                                    />
+                                <TextView
+                                    android:id="@+id/serverproduct_base"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
 
                 </LinearLayout>
         </RelativeLayout>
