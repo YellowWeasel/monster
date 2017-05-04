@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <RelativeLayout
+            android:background="@color/skyblue"
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="@dimen/maxtitle"
+                    android:textColor="@color/white"
+                    android:text="32℃"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/serverproduct_tmp_text"
+                    />
+                <ImageView
+                    android:src="@drawable/image_serverproduct_sunny_icon"
+                    android:layout_centerInParent="true"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:id="@+id/serverproduct_forecast_imageview"
+                    />
+                 <LinearLayout
+                     android:layout_marginTop="20dp"
+                     android:layout_marginRight="20dp"
+                     android:layout_alignParentRight="true"
+                     android:gravity="center_horizontal"
+                     android:orientation="vertical"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+                          <LinearLayout
+                              android:orientation="horizontal"
+                              android:layout_width="match_parent"
+                              android:layout_height="60dp">
+                                   <ImageView
+                                       android:src="@drawable/image_serverproduct_rain_icon"
+                                       android:id="@+id/serverproduct_rain_imageview"
+                                       android:layout_width="60dp"
+                                       android:layout_height="60dp" />
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="60dp">
+                                            <TextView
+                                                android:textColor="@color/white"
+                                                android:text="降雨量"
+                                                android:id="@+id/serverproduct_rain_titletext"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="30dp" />
+                                             <TextView
+                                                 android:text="50ml"
+                                                 android:textColor="@color/white"
+                                                android:id="@+id/serverproduct__rain_valuetext"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="30dp" />
+                                    </LinearLayout>
+                          </LinearLayout>
+                          <LinearLayout
+                             android:orientation="horizontal"
+                             android:layout_width="match_parent"
+                             android:layout_height="60dp">
+                                  <ImageView
+                                      android:src="@drawable/image_serverproduct_hum_icon"
+                                      android:id="@+id/serverproduct_hum_imageview"
+                                      android:layout_width="60dp"
+                                      android:layout_height="60dp" />
+                                  <LinearLayout
+                                      android:orientation="vertical"
+                                      android:layout_width="match_parent"
+                                      android:layout_height="60dp">
+                                          <TextView
+                                              android:text="湿度"
+                                              android:textColor="@color/white"
+                                              android:id="@+id/serverproduct_hum_titletext"
+                                              android:layout_width="match_parent"
+                                              android:layout_height="30dp" />
+                                          <TextView
+                                              android:text="50%"
+                                              android:textColor="@color/white"
+                                              android:id="@+id/serverproduct__hum_valuetext"
+                                              android:layout_width="match_parent"
+                                              android:layout_height="30dp" />
+                                  </LinearLayout>
+                          </LinearLayout>
+                 </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/serverproduct_reporting_bottom_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp">
+
+                </LinearLayout>
+        </RelativeLayout>
+        <com.erayic.agr.serverproduct.view.NoScrollWebView
+            android:id="@+id/forecast_reporting_webview"
+            android:layout_weight="2"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+        <RelativeLayout
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+        </RelativeLayout>
+</LinearLayout>
