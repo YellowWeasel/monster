@@ -87,6 +87,7 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
         }
 
         adapter = new ServiceEntranceAdapter(getActivity());
+        adapter.setOnItemClickListener(new OnItemClickListener());
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 1);
         manager.setSpanSizeLookup(new SectionedSpanSizeLookup(adapter, manager));
         mineServiceRecyclerView.setLayoutManager(manager);
@@ -168,6 +169,20 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);//解绑EventBus
+    }
+
+    private class OnItemClickListener implements ServiceEntranceAdapter.OnItemClickListener {
+
+        @Override
+        public void onClick(View v, String serviceID) {
+            switch (serviceID) {
+                case "b759c79e-b365-4932-aab0-99ca72a35e04":
+                    ARouter.getInstance().build("/serverproduct/activity/ReportingActivity").withString("serviceID", serviceID).navigation();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
 }

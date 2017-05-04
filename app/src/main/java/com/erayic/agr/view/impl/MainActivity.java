@@ -96,7 +96,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                                 (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
                     }
                     break;
-                    case 2://用户
+                    case 9://用户
                     {
                         titlesName = new String[]{"首页", "管理单元", "信息服务", "我的"};
                         titleNormalIcons = new int[]{R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3};

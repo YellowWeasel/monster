@@ -29,6 +29,7 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
     private Context context;
     private List<ServiceBuyByUserBean> list;
     private SparseBooleanArray mBooleanMap;
+    private OnItemClickListener onItemClickListener;
 
     public ServiceEntranceAdapter(Context context) {
         this.context = context;
@@ -41,6 +42,10 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
 
     public List<ServiceBuyByUserBean> getList() {
         return list;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -97,6 +102,20 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
                 }
             }
         });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onClick(v, list.get(section).getServiceID());
+                }
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
     }
 
     @Override
@@ -105,7 +124,7 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
     }
 
     @Override
-    protected void onBindItemViewHolder(ServiceEntranceChildViewHolder holder, int section, int position) {
+    protected void onBindItemViewHolder(ServiceEntranceChildViewHolder holder, final int section, final int position) {
         if (list.get(section).getSpecifys().get(position).isOwner()) {
             holder.setVisibility(true);
         } else {
@@ -113,5 +132,23 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
         }
         holder.serviceEntranceItemChildIcon.setVisibility(View.INVISIBLE);
         holder.serviceEntranceItemChildName.setText(list.get(section).getSpecifys().get(position).getSepcify());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onClick(v, list.get(section).getSpecifys().get(position).getServiceID());
+                }
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
+    }
+
+    public interface OnItemClickListener {
+        void onClick(View v, String serviceID);
     }
 }

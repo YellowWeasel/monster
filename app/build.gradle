@@ -45,4 +45,5 @@ dependencies {
     compile project(path: ':index')
     compile project(path: ':service')
     compile project(path: ':manage')
+    compile project(path: ':serverproduct')
 }
