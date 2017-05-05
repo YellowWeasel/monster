@@ -1,305 +1,348 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RelativeLayout
-        android:background="@color/toptitle"
-        android:layout_width="match_parent"
-        android:layout_height="30dp">
-            <TextView
-                android:text="天气与农事"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:layout_centerInParent="true"
-                android:textSize="@dimen/title"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp" />
-    </RelativeLayout>
-        <RelativeLayout
-            android:background="@color/skyblue"
-            android:layout_weight="3"
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
-                <TextView
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:textSize="@dimen/maxtitle"
-                    android:textColor="@color/white"
-                    android:text="32℃"
-                    android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/serverproduct_tmp_text"
-                    />
-                <ImageView
-                    android:src="@drawable/image_serverproduct_sunny_icon"
-                    android:layout_centerInParent="true"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:id="@+id/serverproduct_forecast_imageview"
-                    />
-                 <LinearLayout
-                     android:layout_marginTop="20dp"
-                     android:layout_marginRight="10dp"
-                     android:layout_alignParentRight="true"
-                     android:gravity="center_horizontal"
-                     android:orientation="vertical"
-                     android:layout_width="60dp"
-                     android:layout_height="wrap_content">
-                          <LinearLayout
-                              android:orientation="horizontal"
-                              android:layout_width="60dp"
-                              android:layout_height="40dp">
-                                   <ImageView
-                                       android:src="@drawable/image_serverproduct_rain_icon"
-                                       android:id="@+id/serverproduct_rain_imageview"
-                                       android:layout_width="30dp"
-                                       android:layout_height="30dp" />
-                                    <LinearLayout
-                                        android:layout_marginLeft="3dp"
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="40dp">
-                                            <TextView
-                                                android:textColor="@color/white"
-                                                android:text="降雨量"
-                                                android:id="@+id/serverproduct_rain_titletext"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="20dp" />
-                                             <TextView
-                                                 android:text="50ml"
-                                                 android:textColor="@color/white"
-                                                android:id="@+id/serverproduct__rain_valuetext"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="20dp" />
-                                    </LinearLayout>
-                          </LinearLayout>
-                          <LinearLayout
-                             android:orientation="horizontal"
-                             android:layout_width="60dp"
-                             android:layout_height="40dp">
-                                  <ImageView
-                                      android:src="@drawable/image_serverproduct_hum_icon"
-                                      android:id="@+id/serverproduct_hum_imageview"
-                                      android:layout_width="30dp"
-                                      android:layout_height="30dp" />
-                                  <LinearLayout
-                                      android:layout_marginLeft="3dp"
-                                      android:orientation="vertical"
-                                      android:layout_width="match_parent"
-                                      android:layout_height="40dp">
-                                          <TextView
-                                              android:textSize="@dimen/content"
-                                              android:text="湿度"
-                                              android:textColor="@color/white"
-                                              android:id="@+id/serverproduct_hum_titletext"
-                                              android:layout_width="match_parent"
-                                              android:layout_height="20dp" />
-                                          <TextView
-                                              android:textSize="@dimen/content"
-                                              android:text="50%"
-                                              android:textColor="@color/white"
-                                              android:id="@+id/serverproduct__hum_valuetext"
-                                              android:layout_width="match_parent"
-                                              android:layout_height="20dp" />
-                                  </LinearLayout>
-                          </LinearLayout>
-                 </LinearLayout>
-                <LinearLayout
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="5dp"
-                    android:layout_alignParentBottom="true"
-                    android:orientation="horizontal"
-                    android:paddingRight="30dp"
-                    android:id="@+id/serverproduct_reporting_bottom_ll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp">
-                                <ImageView
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/image_serverproduct_position_icon"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:id="@+id/serverproduct_position_imageview"
-                                    />
-                                <TextView
-                                    android:layout_gravity="center"
-                                    android:text="海口基地"
-                                    android:textColor="@color/white"
-                                    android:textSize="@dimen/maxtitle"
-                                    android:id="@+id/serverproduct_base"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-                </LinearLayout>
-        </RelativeLayout>
-        <com.erayic.agr.serverproduct.view.NoScrollWebView
-            android:id="@+id/forecast_reporting_webview"
-            android:layout_weight="2"
-            android:layout_centerInParent="true"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"/>
-    <LinearLayout
-        android:background="@color/cyan"
-        android:orientation="horizontal"
-        android:id="@+id/serverproduct_reporting_linearlayout"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp">
-        <TextView
-            android:layout_gravity="center"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/title"
-            android:text="农事建议"
-            android:id="@+id/serverproduct_reporting_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp" />
-    </LinearLayout>
-        <LinearLayout
-            android:background="@color/bgcolor"
-            android:orientation="vertical"
-            android:layout_weight="2"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp">
-                            <LinearLayout
-                                android:background="@color/white"
-                                android:layout_marginTop="1dp"
-                                android:layout_marginLeft="1dp"
-                                android:orientation="horizontal"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent">
-                                <ImageView
-                                    android:src="@drawable/image_serverproduct_fertilization_icon"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp" />
-                                <TextView
-                                    android:layout_marginLeft="3dp"
-                                    android:text="施肥指数"
-                                    android:textSize="@dimen/content"
-                                    android:textColor="@color/fontcolor"
-                                    android:gravity="center"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_width="60dp"
-                                    android:layout_height="match_parent" />
-                                <TextView
-                                    android:layout_marginLeft="3dp"
-                                    android:textSize="@dimen/content"
-                                    android:textColor="@color/white"
-                                    android:gravity="center"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_width="60dp"
-                                    android:layout_height="match_parent" />
-                            </LinearLayout>
-                        <LinearLayout
-                            android:background="@color/white"
-                            android:layout_marginTop="1dp"
-                            android:layout_marginLeft="1dp"
-                            android:orientation="horizontal"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent">
-                            <ImageView
-                                android:src="@drawable/image_serverproduct_picking_icon"
-                                android:layout_marginLeft="10dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp" />
-                            <TextView
-                                android:layout_marginLeft="3dp"
-                                android:text="采摘指数"
-                                android:textSize="@dimen/content"
-                                android:textColor="@color/fontcolor"
-                                android:gravity="center"
-                                android:layout_gravity="center_vertical"
-                                android:layout_width="60dp"
-                                android:layout_height="match_parent" />
-                            <TextView
-                                android:layout_marginLeft="3dp"
-                                android:textSize="@dimen/content"
-                                android:textColor="@color/white"
-                                android:gravity="center"
-                                android:layout_gravity="center_vertical"
-                                android:layout_width="60dp"
-                                android:layout_height="match_parent" />
-                        </LinearLayout>
-                    </LinearLayout>
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/app_base_bar_background"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@color/skyblue"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:id="@+id/serverproduct_tmp_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="32℃"
+            android:textColor="@color/white"
+            android:textSize="@dimen/maxtitle" />
+
+        <ImageView
+            android:id="@+id/serverproduct_forecast_imageview"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/image_serverproduct_sunny_icon" />
+
+        <LinearLayout
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/serverproduct_rain_imageview"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/image_serverproduct_rain_icon" />
+
                 <LinearLayout
-                    android:background="@color/white"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginLeft="1dp"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:src="@drawable/image_serverproduct_spray_icon"
-                        android:layout_marginLeft="10dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="3dp"
+                    android:orientation="vertical">
+
                     <TextView
-                        android:layout_marginLeft="3dp"
-                        android:text="打药指数"
-                        android:textSize="@dimen/content"
-                        android:textColor="@color/fontcolor"
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent" />
+                        android:id="@+id/serverproduct_rain_titletext"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:text="降雨量"
+                        android:textColor="@color/white" />
+
                     <TextView
-                        android:layout_marginLeft="3dp"
-                        android:textSize="@dimen/content"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent" />
+                        android:id="@+id/serverproduct__rain_valuetext"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:text="50ml"
+                        android:textColor="@color/white" />
                 </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/serverproduct_hum_imageview"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/image_serverproduct_hum_icon" />
+
                 <LinearLayout
-                    android:background="@color/white"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginLeft="1dp"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
-                        <ImageView
-                            android:src="@drawable/image_serverproduct_irrigation_icon"
-                            android:layout_marginLeft="10dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp" />
-                        <TextView
-                            android:layout_marginLeft="3dp"
-                            android:text="灌溉指数"
-                            android:textSize="@dimen/content"
-                            android:textColor="@color/fontcolor"
-                            android:gravity="center"
-                            android:layout_gravity="center_vertical"
-                            android:layout_width="60dp"
-                            android:layout_height="match_parent" />
-                        <TextView
-                            android:layout_marginLeft="3dp"
-                        android:textSize="@dimen/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="3dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/serverproduct_hum_titletext"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:text="湿度"
                         android:textColor="@color/white"
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent" />
+                        android:textSize="@dimen/content" />
+
+                    <TextView
+                        android:id="@+id/serverproduct__hum_valuetext"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:text="50%"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/content" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/serverproduct_reporting_bottom_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            android:paddingRight="30dp">
+
+            <ImageView
+                android:id="@+id/serverproduct_position_imageview"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/image_serverproduct_position_icon" />
+
+            <TextView
+                android:id="@+id/serverproduct_base"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="海口基地"
+                android:textColor="@color/white"
+                android:textSize="@dimen/maxtitle" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.erayic.agr.serverproduct.view.NoScrollWebView
+        android:id="@+id/forecast_reporting_webview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_weight="2" />
+
+    <LinearLayout
+        android:id="@+id/serverproduct_reporting_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/cyan"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/serverproduct_reporting_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="农事建议"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="@color/bgcolor"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/image_serverproduct_fertilization_icon" />
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="center"
+                    android:text="施肥指数"
+                    android:textColor="@color/fontcolor"
+                    android:textSize="@dimen/content" />
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/image_serverproduct_picking_icon" />
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="center"
+                    android:text="采摘指数"
+                    android:textColor="@color/fontcolor"
+                    android:textSize="@dimen/content" />
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/image_serverproduct_spray_icon" />
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="center"
+                    android:text="打药指数"
+                    android:textColor="@color/fontcolor"
+                    android:textSize="@dimen/content" />
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/image_serverproduct_irrigation_icon" />
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="center"
+                    android:text="灌溉指数"
+                    android:textColor="@color/fontcolor"
+                    android:textSize="@dimen/content" />
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/content" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
