@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.net.back.CommonFertilizerBean;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
@@ -141,7 +142,7 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
     }
 
     @Override
-    public void updateSure(Object bean) {
+    public void updateSure(CommonFertilizerBean bean) {
 
     }
 

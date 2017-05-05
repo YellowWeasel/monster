@@ -68,11 +68,11 @@ public class PesticideInfoPresenterImpl implements IPesticideInfoPresenter {
     @Override
     public void getSpecifyResources(String resID, int type) {
         pesticideInfoView.showLoading();
-        resourceModel.getSpecifyResources(resID, type, new OnDataListener<Object>() {
+        resourceModel.getSpecifyResourcesByPesticide(resID, type, new OnDataListener<CommonPesticideBean>() {
             @Override
-            public void success(Object response) {
+            public void success(CommonPesticideBean response) {
                 pesticideInfoView.dismissLoading();
-                pesticideInfoView.updateSure((CommonPesticideBean) response);
+                pesticideInfoView.updateSure(response);
             }
 
             @Override

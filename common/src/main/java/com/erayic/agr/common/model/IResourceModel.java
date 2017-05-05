@@ -64,12 +64,17 @@ public interface IResourceModel extends IProvider {
     void getResourceByType(int type, OnDataListener<List<CommonResourceBean>> listener);
 
     /**
-     * 得到指定类型的生产资料
+     * 得到指定类型的生产资料(农药)
      */
-    void getSpecifyResources(String resID, int type, OnDataListener<Object> listener);
+    void getSpecifyResourcesByPesticide(String resID, int type, OnDataListener<CommonPesticideBean> listener);
+
+    /**
+     * 得到指定类型的生产资料(肥料)
+     */
+    void getSpecifyResourcesByFertilizer(String resID, int type, OnDataListener<CommonFertilizerBean> listener);
 
     /**
      * 删除一个生产资料
      */
-    void deleteResource(String resID,int type,OnDataListener<Object> listener);
+    void deleteResource(String resID, int type, OnDataListener<Object> listener);
 }

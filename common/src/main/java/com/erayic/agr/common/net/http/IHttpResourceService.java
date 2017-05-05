@@ -173,19 +173,6 @@ public interface IHttpResourceService {
     );
 
     /**
-     * 得到指定类型的生产资料详情
-     *
-     * @param resID 生产资料ID
-     * @param type  生产资料类型（1：农药，2：肥料，3：饲料，4：种子）
-     * @return DataBack
-     */
-    @GET("Resource/GetSpecifyResources")
-    Observable<DataBack<CommonPesticideBean>> getSpecifyResources(
-            @Query("resID") String resID,
-            @Query("type") int type
-    );
-
-    /**
      * 删除一个生产资料
      *
      * @param resID 生产资料ID
@@ -197,4 +184,33 @@ public interface IHttpResourceService {
             @Query("resID") String resID,
             @Query("type") int type
     );
+
+
+    /**
+     * 得到指定类型的生产资料详情(农药)
+     *
+     * @param resID 生产资料ID
+     * @param type  生产资料类型（1：农药，2：肥料，3：饲料，4：种子）
+     * @return DataBack
+     */
+    @GET("Resource/GetSpecifyResources")
+    Observable<DataBack<CommonPesticideBean>> getSpecifyResourcesByPesticide(
+            @Query("resID") String resID,
+            @Query("type") int type
+    );
+
+
+    /**
+     * 得到指定类型的生产资料详情(肥料)
+     *
+     * @param resID 生产资料ID
+     * @param type  生产资料类型（1：农药，2：肥料，3：饲料，4：种子）
+     * @return DataBack
+     */
+    @GET("Resource/GetSpecifyResources")
+    Observable<DataBack<CommonFertilizerBean>> getSpecifyResourcesByFertilizer(
+            @Query("resID") String resID,
+            @Query("type") int type
+    );
+
 }

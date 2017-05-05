@@ -121,17 +121,24 @@ public class HttpResourceManager {
     }
 
     /**
-     * 得到指定类型的生产资料
+     * 得到指定类型的生产资料(农药)
      */
-    public Observable getSpecifyResources(String resID, int type) {
-        return resourceService.getSpecifyResources(resID, type);
+    public Observable getSpecifyResourcesByPesticide(String resID, int type) {
+        return resourceService.getSpecifyResourcesByPesticide(resID, type);
+    }
+
+    /**
+     * 得到指定类型的生产资料(肥料)
+     */
+    public Observable getSpecifyResourcesByFertilizer(String resID, int type) {
+        return resourceService.getSpecifyResourcesByFertilizer(resID, type);
     }
 
     /**
      * 删除一个生产资料
      */
-    public Observable deleteResource(String resID, int type){
-        return resourceService.deleteResource(resID,type);
+    public Observable deleteResource(String resID, int type) {
+        return resourceService.deleteResource(resID, type);
     }
 
 }

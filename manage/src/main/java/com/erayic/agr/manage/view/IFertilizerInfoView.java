@@ -1,6 +1,7 @@
 package com.erayic.agr.manage.view;
 
 import com.erayic.agr.common.base.IBaseView;
+import com.erayic.agr.common.net.back.CommonFertilizerBean;
 
 /**
  * 作者：hejian
@@ -23,7 +24,7 @@ public interface IFertilizerInfoView extends IBaseView {
     /**
      * 查询数据成功
      */
-    void updateSure(Object bean);
+    void updateSure(CommonFertilizerBean bean);
 
     /**
      * 保存成功
