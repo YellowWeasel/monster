@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#fff</color>
+    <color name="white">#ffffff</color>
     <color name="skyblue">#4c638d</color>
     <color name="cyan">#1e8a75</color>
+    <color name="toptitle">#374254</color>
+    <color name="bgcolor">#999999</color>
+    <color name="fontcolor">#000000</color>
 </resources>
