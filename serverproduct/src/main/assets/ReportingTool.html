@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="echarts.min.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width:100%;height:190px;"></div>
+<script type="text/javascript">
+
+function refershView(){
+var json=window.Datas.GetData();
+var jsonData=eval('(' + json + ')');
+
+var maxRainlabel=jsonData.maxRainLabel;
+var rainYInterval=jsonData.rainYInterval;
+var minRainlabel=jsonData.minRainLabel;
+var rainDatas=jsonData.rainDatas;
+var windDatas=jsonData.windDatas;
+var tmpDatas=jsonData.tmpDatas;
+
+// 基于准备好的dom，初始化echarts实例
+ var myChart = echarts.init(document.getElementById('main'));
+ myChart.showLoading({
+    text:"加载数据中..."
+ });
+ var colors = ['#00a29a', '#6dabde', '#ea5514'];
+        // 指定图表的配置项和数据
+      var  option = {
+    color: colors,
+    title:{
+    text:'天气实况'
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross'
+        }
+    },
+    grid: {
+        right: '30%'
+    },
+    toolbox: {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        },
+        show:false
+    },
+    legend: {
+        data:['风力','温度','降水量']
+    },
+    xAxis: [
+        {
+            type: 'category',
+            axisTick: {
+                interval:0,
+                alignWithLabel: true
+            },
+            interval:1,
+            data:['1时','2时','3时','4时','5时','6时','7时','8时','9时','10时','11时','12时','13时','14时','15时','16时','17时','18时','19时','20时','21时','22时','23时','24时']
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            name: '风力',
+            min: 0,
+            max: 12,
+            position: 'right',
+            axisLabel: {
+                formatter: '{value} 级'
+            },
+             axisLine: {
+                lineStyle: {
+                    color: colors[0]
+                }
+            },
+            splitLine:{
+                show:false
+            }
+        },
+        {
+            type: 'value',
+            name: '降水量',
+            min: minRainlabel,
+            max: maxRainlabel,
+            interval:rainYInterval,
+            position: 'right',
+            offset: 50,
+            axisLine: {
+                lineStyle: {
+                    color: colors[1]
+                }
+            },
+            axisLabel: {
+                formatter: '{value} ml'
+            },
+            splitLine:{
+                show:false
+            }
+        },
+        {
+            type: 'value',
+            name: '温度',
+            min: 0,
+            max: 35,
+            interval:5,
+            position: 'left',
+            axisLine: {
+                lineStyle: {
+                    color: colors[2]
+                }
+            },
+            axisLabel: {
+                formatter: '{value} °C'
+            }
+        }
+    ],
+    series: [
+        {
+            name:'风力',
+            type:'line',
+            data:windDatas
+        },
+        {
+            name:'降水量',
+            type:'bar',
+            yAxisIndex: 1,
+            data:rainDatas
+        },
+        {
+            name:'温度',
+            type:'line',
+            yAxisIndex: 2,
+            data:tmpDatas
+        }
+    ]
+};
+
+// 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        myChart.hideLoading();
+}
+
+    </script>
+</body>
+</html>
