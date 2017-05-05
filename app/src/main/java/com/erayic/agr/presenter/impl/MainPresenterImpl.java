@@ -2,9 +2,11 @@ package com.erayic.agr.presenter.impl;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.erayic.agr.common.model.IApiModel;
 import com.erayic.agr.common.model.IUserModel;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.CommonUserInfoBean;
+import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
 import com.erayic.agr.presenter.IMainPresenter;
 import com.erayic.agr.view.IMainView;
 
@@ -19,6 +21,8 @@ public class MainPresenterImpl implements IMainPresenter {
     private IMainView mainView;
     @Autowired
     IUserModel userModel;
+//    @Autowired
+//    IApiModel apiModel;
 
     public MainPresenterImpl(IMainView mainView) {
         this.mainView = mainView;

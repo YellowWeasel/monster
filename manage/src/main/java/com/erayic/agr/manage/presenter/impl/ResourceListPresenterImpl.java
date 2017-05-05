@@ -4,9 +4,10 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.model.IResourceModel;
 import com.erayic.agr.common.net.OnDataListener;
-import com.erayic.agr.common.net.back.CommonProduceListBean;
-import com.erayic.agr.manage.presenter.IPesticideListPresenter;
-import com.erayic.agr.manage.view.IPesticideListView;
+import com.erayic.agr.common.net.back.CommonPesticideBean;
+import com.erayic.agr.common.net.back.CommonResourceBean;
+import com.erayic.agr.manage.presenter.IResourceListPresenter;
+import com.erayic.agr.manage.view.IResourceListView;
 
 import java.util.List;
 
@@ -16,27 +17,28 @@ import java.util.List;
  * 注解：
  */
 
-public class PesticideListPresenterImpl implements IPesticideListPresenter {
+public class ResourceListPresenterImpl implements IResourceListPresenter {
 
-    private IPesticideListView pesticideListView;
+    private IResourceListView pesticideListView;
 
     @Autowired
     IResourceModel resourceModel;
 
-    public PesticideListPresenterImpl(IPesticideListView pesticideListView){
+    public ResourceListPresenterImpl(IResourceListView pesticideListView){
         this.pesticideListView = pesticideListView;
         ARouter.getInstance().inject(this);
     }
 
 
     @Override
-    public void getResourceByType() {
+    public void getResourceByType(int type) {
         pesticideListView.openRefresh();
         //生产资料类型（1：农药，2：肥料，3：饲料，4：种子）
-        resourceModel.getResourceByType(1, new OnDataListener<List<Object>>() {
+        resourceModel.getResourceByType(type, new OnDataListener<List<CommonResourceBean>>() {
             @Override
-            public void success(List<Object> response) {
+            public void success(List<CommonResourceBean> response) {
                 pesticideListView.clearRefresh();
+                pesticideListView.refreshPersonnelView(response);
             }
 
             @Override

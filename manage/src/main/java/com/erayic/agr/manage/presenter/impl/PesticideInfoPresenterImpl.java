@@ -65,4 +65,41 @@ public class PesticideInfoPresenterImpl implements IPesticideInfoPresenter {
         });
     }
 
+    @Override
+    public void getSpecifyResources(String resID, int type) {
+        pesticideInfoView.showLoading();
+        resourceModel.getSpecifyResources(resID, type, new OnDataListener<Object>() {
+            @Override
+            public void success(Object response) {
+                pesticideInfoView.dismissLoading();
+                pesticideInfoView.updateSure((CommonPesticideBean) response);
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
+                pesticideInfoView.dismissLoading();
+                pesticideInfoView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
+    }
+
+    @Override
+    public void deleteResource(String resID, int type) {
+        pesticideInfoView.showLoading();
+        resourceModel.deleteResource(resID, type, new OnDataListener<Object>() {
+            @Override
+            public void success(Object response) {
+                pesticideInfoView.dismissLoading();
+                pesticideInfoView.showToast("删除成功");
+                pesticideInfoView.saveSure();
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
+                pesticideInfoView.dismissLoading();
+                pesticideInfoView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
+    }
+
 }

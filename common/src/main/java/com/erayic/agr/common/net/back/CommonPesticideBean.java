@@ -17,23 +17,23 @@ public class CommonPesticideBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String PID = "";//登记证号
-    private String ValidStart = "";//有效起始日
-    private String ValidEnd = "";//有效截止日
-    private String RegisterName = "";//农药名称
-    private String Toxicity = "";//农药毒性
-    private String Formulations = "";//农药剂型
-    private String Manufacturer = "";//生产厂家
+    private String ValidStart;//有效起始日
+    private String ValidEnd;//有效截止日
+    private String RegisterName;//农药名称
+    private String Toxicity;//农药毒性
+    private String Formulations;//农药剂型
+    private String Manufacturer;//生产厂家
     private List<ActivesInfo> Actives;//有效成分
     private List<ApplysInfo> Applys;//防治作物
     private String ResID = "00000000-0000-0000-0000-000000000000";//资源ID
     private int Type = 1;//资源类型
-    private String Name = "";//资源名称
-    private String CommonDesc = "";
+    private String Name;//资源名称
+    private String CommonDesc;
     private boolean IsReadOnly;//是否只读
 
     public static class ActivesInfo {
-        private String ActiveName = "";//有效成分
-        private String Content = "";//成分含量
+        private String ActiveName ;//有效成分
+        private String Content ;//成分含量
 
         public String getActiveName() {
             return ActiveName;
@@ -53,10 +53,10 @@ public class CommonPesticideBean implements Serializable {
     }
 
     public static class ApplysInfo {
-        private String crop = "";//作物名称
-        private String Prevention = "";//防治对象
-        private String Dosage = "";//用药量
-        private String method = "";//方式
+        private String crop ;//作物名称
+        private String Prevention ;//防治对象
+        private String Dosage ;//用药量
+        private String method ;//方式
 
         public String getCrop() {
             return crop;

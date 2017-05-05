@@ -10,6 +10,7 @@ import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.CommonFertilizerBean;
 import com.erayic.agr.common.net.back.CommonPesticideBean;
 import com.erayic.agr.common.net.back.CommonProduceListBean;
+import com.erayic.agr.common.net.back.CommonResourceBean;
 import com.erayic.agr.common.net.back.CommonSeedBean;
 import com.erayic.agr.common.net.http.manager.HttpResourceManager;
 import com.erayic.agr.common.net.http.manager.HttpServerManager;
@@ -329,14 +330,88 @@ public class ResourceModelImpl implements IResourceModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void getResourceByType(int type, final OnDataListener<List<Object>> listener) {
+    public void getResourceByType(int type, final OnDataListener<List<CommonResourceBean>> listener) {
         HttpResourceManager.getInstance().getResourceByType(type)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<Object>>>() {
+                .doOnNext(new Action1<DataBack<List<CommonResourceBean>>>() {
                     @Override
-                    public void call(DataBack<List<Object>> objectDataBack) {
+                    public void call(DataBack<List<CommonResourceBean>> objectDataBack) {
                         ErayicLog.i("getResourceByType", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void getSpecifyResources(String resID, int type, final OnDataListener<Object> listener) {
+        HttpResourceManager.getInstance().getSpecifyResources(resID, type)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<Object>>() {
+                    @Override
+                    public void call(DataBack<Object> objectDataBack) {
+                        ErayicLog.i("getSpecifyResources", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void deleteResource(String resID, int type, final OnDataListener<Object> listener) {
+        HttpResourceManager.getInstance().deleteResource(resID, type)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<Object>>() {
+                    @Override
+                    public void call(DataBack<Object> objectDataBack) {
+                        ErayicLog.i("deleteResource", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
                         } else {

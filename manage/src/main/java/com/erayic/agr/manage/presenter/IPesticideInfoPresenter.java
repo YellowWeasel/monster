@@ -21,4 +21,14 @@ public interface IPesticideInfoPresenter {
      */
     void addPesticide(CommonPesticideBean bean);
 
+    /**
+     * 得到指定农药的信息
+     */
+    void getSpecifyResources(String resID,int type);
+
+    /**
+     * 删除一个生产资料
+     */
+    void deleteResource(String resID,int type);
+
 }

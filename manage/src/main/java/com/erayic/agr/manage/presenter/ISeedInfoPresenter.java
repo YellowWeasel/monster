@@ -6,8 +6,5 @@ package com.erayic.agr.manage.presenter;
  * 注解：
  */
 
-public interface IPesticideListPresenter {
-
-    void getResourceByType();
-
+public interface ISeedInfoPresenter {
 }

@@ -9,4 +9,25 @@ import com.erayic.agr.common.base.IBaseView;
  */
 
 public interface IFertilizerInfoView extends IBaseView {
+
+    /**
+     * 显示加载Dialog
+     */
+    void showLoading();
+
+    /**
+     * 隐藏加载Dialog
+     */
+    void dismissLoading();
+
+    /**
+     * 查询数据成功
+     */
+    void updateSure(Object bean);
+
+    /**
+     * 保存成功
+     */
+    void saveSure();
+
 }

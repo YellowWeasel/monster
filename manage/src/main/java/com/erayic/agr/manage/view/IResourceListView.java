@@ -1,6 +1,8 @@
 package com.erayic.agr.manage.view;
 
 import com.erayic.agr.common.base.IBaseView;
+import com.erayic.agr.common.net.back.CommonPesticideBean;
+import com.erayic.agr.common.net.back.CommonResourceBean;
 
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
  * 注解：
  */
 
-public interface IPesticideListView extends IBaseView {
+public interface IResourceListView extends IBaseView {
 
 
     /**
@@ -26,6 +28,6 @@ public interface IPesticideListView extends IBaseView {
     /**
      * 刷新人员列表
      */
-    void refreshPersonnelView(List<Object> list);
+    void refreshPersonnelView(List<CommonResourceBean> list);
 
 }

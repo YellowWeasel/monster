@@ -15,6 +15,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.CommonPesticideBean;
+import com.erayic.agr.common.net.back.enums.EnumResourceType;
 import com.erayic.agr.common.util.ErayicLog;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
@@ -46,9 +47,10 @@ public class ResourceActivity extends BaseActivity implements IResourceView {
     private ResourcePagerAdapter adapter;
 
     private final String[] TITLES = {"农药", "化肥", "种子"};
-    private final Fragment[] fragments = new Fragment[]{(Fragment) ARouter.getInstance().build("/manage/fragment/PesticideListFragment").navigation(),
-            (Fragment) ARouter.getInstance().build("/manage/fragment/FertilizerListFragment").navigation(),
-            (Fragment) ARouter.getInstance().build("/manage/fragment/SeedListFragment").navigation()};
+    private final Fragment[] fragments = new Fragment[]{
+            (Fragment) ARouter.getInstance().build("/manage/fragment/ResourceListFragment").withInt("type", EnumResourceType.TYPE_PESTICIDE).navigation(),
+            (Fragment) ARouter.getInstance().build("/manage/fragment/ResourceListFragment").withInt("type", EnumResourceType.TYPE_FERTILIZER).navigation(),
+            (Fragment) ARouter.getInstance().build("/manage/fragment/ResourceListFragment").withInt("type", EnumResourceType.TYPE_SEED).navigation()};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,11 +106,16 @@ public class ResourceActivity extends BaseActivity implements IResourceView {
         } else if (item.getItemId() == R.id.action_manage_resource_add_pesticide) {
             ARouter.getInstance().build("/manage/activity/PesticideInfoActivity")
                     .withBoolean("isAdd", true)
-                    .withSerializable("pesticideBean", new CommonPesticideBean())
                     .navigation();
         } else if (item.getItemId() == R.id.action_manage_resource_add_fertilizer) {
+            ARouter.getInstance().build("/manage/activity/FertilizerInfoActivity")
+                    .withBoolean("isAdd", true)
+                    .navigation();
 
         } else if (item.getItemId() == R.id.action_manage_resource_add_seed) {
+            ARouter.getInstance().build("/manage/activity/SeedInfoActivity")
+                    .withBoolean("isAdd", true)
+                    .navigation();
 
         }
         return super.onOptionsItemSelected(item);
@@ -117,7 +124,7 @@ public class ResourceActivity extends BaseActivity implements IResourceView {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_manage_resource, menu);
+        getMenuInflater().inflate(R.menu.menu_manage_resource_add, menu);
         return true;
     }
 

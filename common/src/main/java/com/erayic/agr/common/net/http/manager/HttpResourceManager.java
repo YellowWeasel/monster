@@ -120,4 +120,18 @@ public class HttpResourceManager {
         return resourceService.getResourceByType(type);
     }
 
+    /**
+     * 得到指定类型的生产资料
+     */
+    public Observable getSpecifyResources(String resID, int type) {
+        return resourceService.getSpecifyResources(resID, type);
+    }
+
+    /**
+     * 删除一个生产资料
+     */
+    public Observable deleteResource(String resID, int type){
+        return resourceService.deleteResource(resID,type);
+    }
+
 }
