@@ -19,7 +19,7 @@ import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
 import com.erayic.agr.serverproduct.adapter.entity.BaseForecastInfo;
-import com.erayic.agr.serverproduct.adapter.entity.FeatureForecastDatas;
+import com.erayic.agr.serverproduct.adapter.entity.FutureForecastDatas;
 import com.erayic.agr.serverproduct.adapter.entity.RealTimeForecastInfo;
 import com.erayic.agr.serverproduct.adapter.entity.ReportingInfo;
 import com.erayic.agr.serverproduct.presenter.IReportingPresenter;
@@ -163,7 +163,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     }
     @Override
     public void refreshFeatureDataView(List<CommonFutureWeatherBean> bean) {
-        FeatureForecastDatas featureForecastDatas = new FeatureForecastDatas();
+        FutureForecastDatas featureForecastDatas = new FutureForecastDatas();
         infos.setFeatureForecastDatas(featureForecastDatas.InitFeature(bean));
         webView.loadUrl("file:///android_asset/ReportingTool.html");
         webView.setWebViewClient(new WebViewClient() {

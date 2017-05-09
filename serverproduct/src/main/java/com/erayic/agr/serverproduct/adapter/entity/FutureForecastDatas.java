@@ -3,9 +3,6 @@ package com.erayic.agr.serverproduct.adapter.entity;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,11 +12,11 @@ import java.util.List;
  * Created by wxk on 2017/5/6.
  */
 
-public class FeatureForecastDatas {
+public class FutureForecastDatas {
     private List<ForecastDatas> FeartureBeans;
     private String[] strDates;
 
-    public FeatureForecastDatas() {
+    public FutureForecastDatas() {
         FeartureBeans = new ArrayList<>();
         strDates=new String[24];
     }
@@ -32,7 +29,7 @@ public class FeatureForecastDatas {
         this.strDates = strDates;
     }
 
-    public FeatureForecastDatas InitFeature(List<CommonFutureWeatherBean> beans) {
+    public FutureForecastDatas InitFeature(List<CommonFutureWeatherBean> beans) {
         if (beans == null) return this;
         Calendar ca = Calendar.getInstance();
         ca.set(ca.get(Calendar.YEAR), ca.get(Calendar.MONTH), ca.get(Calendar.DAY_OF_MONTH), ca.get(Calendar.HOUR_OF_DAY), 0, 0);

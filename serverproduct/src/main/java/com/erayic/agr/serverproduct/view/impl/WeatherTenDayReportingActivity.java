@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.net.back.enums.EnumResourceType;
@@ -23,9 +24,9 @@ import com.erayic.agr.serverproduct.view.ITenDayReportingView;
 import butterknife.BindView;
 
 /**
- * Created by 23060 on 2017/5/8.
+ * Created by wxk on 2017/5/8.
  */
-
+@Route(path = "/serverproduct/activity/WeatherTenDayReportingActivity", name = "我的服务")
 public class WeatherTenDayReportingActivity extends BaseActivity implements ITenDayReportingView {
     @Autowired
     String month;
@@ -59,17 +60,6 @@ public class WeatherTenDayReportingActivity extends BaseActivity implements ITen
 
     @Override
     public void refreshTenDayReportingDatas(WeatherTendayReportingData bean) {
-
-    }
-    @Override
-    public void initView() {
-        weatherTenDayReportingPresenter=new WeatherTenDayReportingPresenter(this);
-        TITLES=new String[]{month+"上旬",month+"中旬",month+"下旬"};
-        mToolbar.setTitle("生产资料管理");
-        setSupportActionBar(mToolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
         adapter = new WeatherTenDayReporingViewPagerAdapter(this.getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources()
@@ -83,6 +73,16 @@ public class WeatherTenDayReportingActivity extends BaseActivity implements ITen
         slidingTabStrip.setDividerColorResource(R.color.app_base_tab_strip_divider);//每个标签的分割线的颜色
         slidingTabStrip.setIndicatorHeight(10);//滑动条的高度
         slidingTabStrip.setUnderlineHeight(1);//滑动条所在的那个全宽线的高度
+    }
+    @Override
+    public void initView() {
+        weatherTenDayReportingPresenter=new WeatherTenDayReportingPresenter(this);
+        TITLES=new String[]{month+"上旬",month+"中旬",month+"下旬"};
+        mToolbar.setTitle("生产资料管理");
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override

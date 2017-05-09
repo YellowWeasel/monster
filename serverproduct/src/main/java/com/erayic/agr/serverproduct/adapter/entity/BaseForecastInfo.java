@@ -7,7 +7,7 @@ package com.erayic.agr.serverproduct.adapter.entity;
 public class BaseForecastInfo {
         private String BaseName;
         private RealTimeForecastInfo NowForecastInfo;
-        private FeatureForecastDatas FeatureForecastDatas;
+        private FutureForecastDatas FeatureForecastDatas;
         private double FertilizationIndex;
         private double SprayInsecticideIndex;
         private double HarvestIndex;
@@ -33,11 +33,11 @@ public class BaseForecastInfo {
                 NowForecastInfo = nowForecastInfo;
         }
 
-        public com.erayic.agr.serverproduct.adapter.entity.FeatureForecastDatas getFeatureForecastDatas() {
+        public FutureForecastDatas getFeatureForecastDatas() {
                 return FeatureForecastDatas;
         }
 
-        public void setFeatureForecastDatas(com.erayic.agr.serverproduct.adapter.entity.FeatureForecastDatas featureForecastDatas) {
+        public void setFeatureForecastDatas(FutureForecastDatas featureForecastDatas) {
                 FeatureForecastDatas = featureForecastDatas;
         }
 
