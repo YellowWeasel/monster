@@ -213,4 +213,15 @@ public interface IHttpResourceService {
             @Query("type") int type
     );
 
+    /**
+     * 更新一个肥料
+     *
+     * @param bean 肥料实体
+     * @return DataBack
+     */
+    @GET("Resource/UpdateFertilizer")
+    Observable<DataBack<Object>> updateFertilizer(
+            @Body CommonFertilizerBean bean
+    );
+
 }

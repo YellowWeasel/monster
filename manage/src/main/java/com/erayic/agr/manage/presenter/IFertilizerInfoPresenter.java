@@ -30,4 +30,9 @@ public interface IFertilizerInfoPresenter {
      */
     void deleteResource(String resID, int type);
 
+    /**
+     * 更新肥料
+     */
+    void updateFertilizer(CommonFertilizerBean bean);
+
 }

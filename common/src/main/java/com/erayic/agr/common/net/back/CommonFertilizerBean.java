@@ -18,6 +18,7 @@ public class CommonFertilizerBean {
     private String Crops;//适宜作物
     private String Norm;//技术指标
     private String Shape;//产品形态
+    private boolean IsReadOnly;//是否可修改
 
     public String getResID() {
         return ResID;
@@ -89,5 +90,13 @@ public class CommonFertilizerBean {
 
     public void setShape(String shape) {
         Shape = shape;
+    }
+
+    public boolean isReadOnly() {
+        return IsReadOnly;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        IsReadOnly = readOnly;
     }
 }

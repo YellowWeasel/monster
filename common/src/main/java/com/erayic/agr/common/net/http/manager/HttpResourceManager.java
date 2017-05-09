@@ -141,4 +141,11 @@ public class HttpResourceManager {
         return resourceService.deleteResource(resID, type);
     }
 
+    /**
+     * 更新一个肥料
+     */
+    public Observable updateFertilizer(CommonFertilizerBean bean){
+        return resourceService.updateFertilizer(bean);
+    }
+
 }

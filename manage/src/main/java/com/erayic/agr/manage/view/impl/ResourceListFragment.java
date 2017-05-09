@@ -71,6 +71,11 @@ public class ResourceListFragment extends BaseFragment implements IResourceListV
                                 .navigation();
                         break;
                     case EnumResourceType.TYPE_FERTILIZER://化肥
+                        ARouter.getInstance().build("/manage/activity/FertilizerInfoActivity")
+                                .withBoolean("isAdd", false)
+                                .withString("resID", bean.getResID())
+                                .withString("resName", bean.getName())
+                                .navigation();
                         break;
                     case EnumResourceType.TYPE_FEED://饲料
                         break;

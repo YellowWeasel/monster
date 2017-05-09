@@ -46,4 +46,11 @@ public class HttpApiManager {
     public Observable getFeatureWeather() {
         return apiService.getFeatureWeather();
     }
+
+    /**
+     * 获取农业气象旬报
+     */
+    public Observable getWeatherTenDayReportsByMonth(int year, int month) {
+        return apiService.getWeatherTenDayReportsByMonth(year, month);
+    }
 }

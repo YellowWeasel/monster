@@ -77,4 +77,9 @@ public interface IResourceModel extends IProvider {
      * 删除一个生产资料
      */
     void deleteResource(String resID, int type, OnDataListener<Object> listener);
+
+    /**
+     * 更新一个肥料
+     */
+    void updateFertilizer(CommonFertilizerBean bean,OnDataListener<Object> listener);
 }

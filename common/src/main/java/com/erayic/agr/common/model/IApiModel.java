@@ -2,6 +2,7 @@ package com.erayic.agr.common.model;
 
 import com.alibaba.android.arouter.facade.template.IProvider;
 import com.erayic.agr.common.net.OnDataListener;
+import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
 
@@ -24,5 +25,10 @@ public interface IApiModel extends IProvider {
      * 得到未来24小时气象信息
      */
     void getFeatureWeather(OnDataListener<List<CommonFutureWeatherBean>> listener);
+
+    /**
+     * 获取农业气象旬报
+     */
+    void getWeatherTenDayReportsByMonth(int year, int month, OnDataListener<List<CommonReportsByMonthBean>> listener);
 
 }

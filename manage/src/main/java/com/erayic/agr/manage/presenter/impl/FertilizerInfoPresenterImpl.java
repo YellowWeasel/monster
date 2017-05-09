@@ -98,4 +98,23 @@ public class FertilizerInfoPresenterImpl implements IFertilizerInfoPresenter {
             }
         });
     }
+
+    @Override
+    public void updateFertilizer(CommonFertilizerBean bean) {
+        fertilizerInfoView.showLoading();
+        resourceModel.updateFertilizer(bean, new OnDataListener<Object>() {
+            @Override
+            public void success(Object response) {
+                fertilizerInfoView.dismissLoading();
+                fertilizerInfoView.showToast("保存成功");
+                fertilizerInfoView.saveSure();
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
+                fertilizerInfoView.dismissLoading();
+                fertilizerInfoView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
+    }
 }

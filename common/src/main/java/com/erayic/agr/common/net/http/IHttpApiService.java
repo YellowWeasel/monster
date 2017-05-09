@@ -1,12 +1,14 @@
 package com.erayic.agr.common.net.http;
 
 import com.erayic.agr.common.net.DataBack;
+import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
 
 import java.util.List;
 
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -32,5 +34,18 @@ public interface IHttpApiService {
      */
     @GET("Weather/GetFeatureWeather")
     Observable<DataBack<List<CommonFutureWeatherBean>>> getFeatureWeather();
+
+    /**
+     * 获取农业气象旬报
+     *
+     * @param year  年
+     * @param month 月
+     * @return
+     */
+    @GET("Weather/GetWeatherTenDayReportsByMonth")
+    Observable<DataBack<List<CommonReportsByMonthBean>>> getWeatherTenDayReportsByMonth(
+            @Query("year") int year,
+            @Query("month") int month
+    );
 
 }

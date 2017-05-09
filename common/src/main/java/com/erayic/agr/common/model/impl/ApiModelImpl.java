@@ -7,6 +7,8 @@ import com.erayic.agr.common.model.IApiModel;
 import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.ErrorCode;
 import com.erayic.agr.common.net.OnDataListener;
+import com.erayic.agr.common.net.back.CommonEntInfoBean;
+import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
 import com.erayic.agr.common.net.http.manager.HttpApiManager;
@@ -77,6 +79,44 @@ public class ApiModelImpl implements IApiModel {
                     @Override
                     public void call(DataBack<List<CommonFutureWeatherBean>> objectDataBack) {
                         ErayicLog.i("getFeatureWeather", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void getWeatherTenDayReportsByMonth(int year, int month, final OnDataListener<List<CommonReportsByMonthBean>> listener) {
+        HttpApiManager.getInstance().getWeatherTenDayReportsByMonth(year,month)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<List<CommonReportsByMonthBean>>>() {
+                    @Override
+                    public void call(DataBack<List<CommonReportsByMonthBean>> objectDataBack) {
+                        ErayicLog.i("getWeatherTenDayReportsByMonth", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
 
                             listener.success(objectDataBack.getResult());

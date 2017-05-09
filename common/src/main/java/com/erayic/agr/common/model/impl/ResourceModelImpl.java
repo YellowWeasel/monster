@@ -476,6 +476,43 @@ public class ResourceModelImpl implements IResourceModel {
                 });
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void updateFertilizer(CommonFertilizerBean bean, final OnDataListener<Object> listener) {
+        HttpResourceManager.getInstance().updateFertilizer(bean)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<Object>>() {
+                    @Override
+                    public void call(DataBack<Object> objectDataBack) {
+                        ErayicLog.i("updateFertilizer", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
     @Override
     public void init(Context context) {
 
