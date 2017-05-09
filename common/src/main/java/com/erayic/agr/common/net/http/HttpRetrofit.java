@@ -62,7 +62,7 @@ public class HttpRetrofit {
                                         .retryOnConnectionFailure(true)
                                         .addInterceptor(new LoggingInterceptor())
                                         .addInterceptor(new ReceivedCookiesInterceptor(application))
-                                        .connectTimeout(15, TimeUnit.SECONDS)
+                                            .connectTimeout(15, TimeUnit.SECONDS)
                                         .build())
                                 .build();
                     }

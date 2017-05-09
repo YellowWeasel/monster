@@ -7,8 +7,7 @@ import com.erayic.agr.common.model.IApiModel;
 import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.ErrorCode;
 import com.erayic.agr.common.net.OnDataListener;
-import com.erayic.agr.common.net.back.CommonEntInfoBean;
-import com.erayic.agr.common.net.back.api.CommonFertureWeatherBean;
+import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
 import com.erayic.agr.common.net.http.manager.HttpApiManager;
 import com.erayic.agr.common.util.ErayicGson;
@@ -70,13 +69,13 @@ public class ApiModelImpl implements IApiModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void getFeatureWeather(final OnDataListener<List<CommonFertureWeatherBean>> listener) {
+    public void getFeatureWeather(final OnDataListener<List<CommonFutureWeatherBean>> listener) {
         HttpApiManager.getInstance().getFeatureWeather()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonFertureWeatherBean>>>() {
+                .doOnNext(new Action1<DataBack<List<CommonFutureWeatherBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonFertureWeatherBean>> objectDataBack) {
+                    public void call(DataBack<List<CommonFutureWeatherBean>> objectDataBack) {
                         ErayicLog.i("getFeatureWeather", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
 

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="pinred">#ff4000</color>
+    <color name="pinblue">#00ccff</color>
+    <color name="green">#00ff99</color>
     <color name="white">#ffffff</color>
     <color name="skyblue">#4c638d</color>
     <color name="cyan">#1e8a75</color>

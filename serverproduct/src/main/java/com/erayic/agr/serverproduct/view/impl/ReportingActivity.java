@@ -1,33 +1,33 @@
 package com.erayic.agr.serverproduct.view.impl;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.base.BaseActivity;
+import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.config.PreferenceUtils;
+import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
+import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
+import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
-import com.erayic.agr.serverproduct.entity.BaseForecastInfo;
-import com.erayic.agr.serverproduct.entity.ForecastInfo;
-import com.erayic.agr.serverproduct.entity.ReportingInfo;
+import com.erayic.agr.serverproduct.adapter.entity.BaseForecastInfo;
+import com.erayic.agr.serverproduct.adapter.entity.FeatureForecastDatas;
+import com.erayic.agr.serverproduct.adapter.entity.RealTimeForecastInfo;
+import com.erayic.agr.serverproduct.adapter.entity.ReportingInfo;
+import com.erayic.agr.serverproduct.presenter.IReportingPresenter;
+import com.erayic.agr.serverproduct.presenter.impl.ReportingPresenter;
+import com.erayic.agr.serverproduct.view.IReportingInfoView;
 import com.erayic.agr.serverproduct.view.NoScrollWebView;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,14 +37,34 @@ import butterknife.BindView;
  */
 
 @Route(path = "/serverproduct/activity/ReportingActivity", name = "我的服务")
-public class ReportingActivity extends BaseActivity {
-
+public class ReportingActivity extends BaseActivity implements IReportingInfoView {
     @Autowired
     String serviceID;
+
+    @BindView(R2.id.serverproduct_reporting_webview)
+    NoScrollWebView webView;
+
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
-    @BindView(R2.id.forecast_reporting_webview)
-    NoScrollWebView webView;
+    @BindView(R2.id.serverproduct_rain_valuetext)
+    TextView rainTextView;
+    @BindView(R2.id.serverproduct_hum_valuetext)
+    TextView humTextView;
+    @BindView(R2.id.serverproduct_tmp_valuetext)
+    TextView tmpTextView;
+    @BindView(R2.id.serverproduct_base_valuetext)
+    TextView baseTextView;
+    @BindView(R2.id.serverproduct_fertilization_textview)
+    TextView fertilizationTextView;
+    @BindView(R2.id.serverproduct_picking_textview)
+    TextView pickingTextView;
+    @BindView(R2.id.serverproduct_spray_textview)
+    TextView sprayTextView;
+    @BindView(R2.id.serverproduct_irrigation_textview)
+    TextView irrigationTextView;
+
+    public BaseForecastInfo infos;
+    public IReportingPresenter reportingPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,72 +74,23 @@ public class ReportingActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        toolbar.setTitle("天气与农事");
+        toolbar.setTitle("农事气象");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDefaultTextEncodingName("utf-8");
         webView.addJavascriptInterface(new DataForJsInterface(), "Datas");
-        webView.loadUrl("file:///android_asset/ReportingTool.html");
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                webView.loadUrl("javascript:refershView()");
-            }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
     }
 
     @Override
     public void initData() {
-
-    }
-
-    public class DataForJsInterface {
-        public BaseForecastInfo infos;
-        public ReportingInfo reportingInfo;
-
-        public void getDatas() {
-            reportingInfo = new ReportingInfo();
-            reportingInfo.rainDatas = new double[]{2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3};
-            reportingInfo.tmpDatas = new double[]{2.0, 4.9, 4, 3, 5, 3.2, 3.3, 6, 5.2, 5, 4.1, 3.3};
-            reportingInfo.windDatas = new double[]{2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2};
-            reportingInfo.maxRainLabel = 300;
-            reportingInfo.minRainLabel = 0;
-            reportingInfo.rainYInterval = 50;
-        }
-
-        public void InitDatas() {
-            reportingInfo = new ReportingInfo();
-            reportingInfo.tmpDatas = new double[infos.forecastInfos.size()];
-            reportingInfo.rainDatas = new double[infos.forecastInfos.size()];
-            reportingInfo.windDatas = new double[infos.forecastInfos.size()];
-            for (int i = 0; i < infos.forecastInfos.size(); i++) {
-                reportingInfo.tmpDatas[i] = infos.forecastInfos.get(i).tmp;
-                reportingInfo.rainDatas[i] = infos.forecastInfos.get(i).rain;
-                reportingInfo.windDatas[i] = infos.forecastInfos.get(i).wind;
-            }
-        }
-
-        @JavascriptInterface
-        public String GetData() {
-//            initData();
-            getDatas();
-            String json = "";
-            Gson gson = new Gson();
-            json = gson.toJson(reportingInfo);
-            Log.v("wxk", json);
-            return json;
-        }
+        reportingPresenter = new ReportingPresenter(this);
+        infos = new BaseForecastInfo();
+        infos.setBaseName(PreferenceUtils.getParam("BaseName"));
+        reportingPresenter.getFeatureWeather();
+        reportingPresenter.getRealTimeWeather();
     }
 
     @Override
@@ -128,5 +99,115 @@ public class ReportingActivity extends BaseActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public class DataForJsInterface {
+
+        public ReportingInfo reportingInfo;
+
+        public void getDatas() {
+            reportingInfo = new ReportingInfo();
+            reportingInfo.setRainDatas(new double[]{2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3});
+            reportingInfo.setTmpDatas(new double[]{2.0, 4.9, 4, 3, 5, 3.2, 3.3, 6, 5.2, 5, 4.1, 3.3});
+            reportingInfo.setWindDatas(new double[]{2.0, 2.2, 3.3, 4.5, 6.3, 1.2, 2.3, 2.4, 2.0, 1.5, 2.0, 6.2});
+            reportingInfo.setMaxRainLabel(300);
+            reportingInfo.setMinRainLabel(0);
+            reportingInfo.setRainYInterval(50);
+        }
+
+        @JavascriptInterface
+        public String GetData() {
+            reportingInfo = new ReportingInfo(infos);
+            String json = "";
+            Gson gson = new Gson();
+            json = gson.toJson(reportingInfo);
+            return json;
+        }
+    }
+
+    @Override
+    public void showToast(String msg) {
+
+    }
+
+    private LoadingDialog dialog;
+
+    @Override
+    public void refreshRealDataView(CommonRealTimeWeatherBean bean) {
+        infos.setNowForecastInfo(new RealTimeForecastInfo(bean.getAppearTime(), bean.getRain_10M()
+                , bean.getWind_Max(), bean.getWindDirect_Max(), bean.getTemp_Max()
+                , bean.getTemp_Min(), bean.getHumi()));
+        RealTimeForecastInfo nowInfo = infos.getNowForecastInfo();
+        rainTextView.setText(String.valueOf(nowInfo.getRain_10M()) + "ml");
+        tmpTextView.setText(String.valueOf(nowInfo.getTemp_Max()) + "℃");
+        humTextView.setText(String.valueOf(nowInfo.getHumi()) + "%");
+        baseTextView.setText(infos.getBaseName());
+        setTextViewContent(fertilizationTextView,75);
+        setTextViewContent(pickingTextView,89);
+        setTextViewContent(sprayTextView,30);
+        setTextViewContent(irrigationTextView,20);
+    }
+
+    public void setTextViewContent(TextView tv, double score) {
+        if (score < 0 || score > 100) {
+            score=0;
+            tv.setTextColor(tv.getResources().getColor(R.color.pinred));
+        } else if (score < 60) {//不适宜
+            tv.setTextColor(tv.getResources().getColor(R.color.pinred));
+        } else if (60 <= score && score < 80) {//一般、不建议
+            tv.setTextColor(tv.getResources().getColor(R.color.pinblue));
+        } else if (80 <= score && score <= 100) {//适宜
+            tv.setTextColor(tv.getResources().getColor(R.color.green));
+        }
+        tv.setText(String.valueOf(score));
+    }
+    @Override
+    public void refreshFeatureDataView(List<CommonFutureWeatherBean> bean) {
+        FeatureForecastDatas featureForecastDatas = new FeatureForecastDatas();
+        infos.setFeatureForecastDatas(featureForecastDatas.InitFeature(bean));
+        webView.loadUrl("file:///android_asset/ReportingTool.html");
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                webView.loadUrl("javascript:refershView()");
+                dismissLoading();
+            }
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+    }
+
+    int index = 0;
+    @Override
+    public void showLoading() {
+        index++;
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (dialog == null)
+                    dialog = new LoadingDialog(ReportingActivity.this);
+                if (!dialog.isShowing()) {
+                    dialog.show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void dismissLoading() {
+        index--;
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (dialog == null)
+                    dialog = new LoadingDialog(ReportingActivity.this);
+                if (index == 0)
+                    dialog.dismiss();
+            }
+        });
     }
 }

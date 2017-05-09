@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 用于开启滑动返回功能的 Activity -->
+    <style name="AppTheme.ServerProductTransparent" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+</resources>

@@ -15,9 +15,14 @@ function refershView(){
 var json=window.Datas.GetData();
 var jsonData=eval('(' + json + ')');
 
+var xDatas=jsonData.xDatas;
 var maxRainlabel=jsonData.maxRainLabel;
 var rainYInterval=jsonData.rainYInterval;
 var minRainlabel=jsonData.minRainLabel;
+var maxWindlabel=jsonData.maxWindLabel;
+var windYInterval=jsonData.windYInterval;
+var minWindlabel=jsonData.minWindLabel;
+
 var rainDatas=jsonData.rainDatas;
 var windDatas=jsonData.windDatas;
 var tmpDatas=jsonData.tmpDatas;
@@ -32,7 +37,11 @@ var tmpDatas=jsonData.tmpDatas;
       var  option = {
     color: colors,
     title:{
-    text:'天气实况'
+    text:'24小时预报',
+    textStyle:{
+        fontSize:12,
+        textAlign:'left'
+    }
     },
     tooltip: {
         trigger: 'axis',
@@ -62,18 +71,19 @@ var tmpDatas=jsonData.tmpDatas;
                 alignWithLabel: true
             },
             interval:1,
-            data:['1时','2时','3时','4时','5时','6时','7时','8时','9时','10时','11时','12时','13时','14时','15时','16时','17时','18时','19时','20时','21时','22时','23时','24时']
+            data:xDatas
         }
     ],
     yAxis: [
         {
             type: 'value',
-            name: '风力',
-            min: 0,
-            max: 12,
+            name: '风力(m/s)',
+            min: minWindlabel,
+            max: maxWindlabel,
+            interval:windYInterval,
             position: 'right',
             axisLabel: {
-                formatter: '{value} 级'
+                formatter: '{value}'
             },
              axisLine: {
                 lineStyle: {
@@ -86,19 +96,19 @@ var tmpDatas=jsonData.tmpDatas;
         },
         {
             type: 'value',
-            name: '降水量',
+            name: '降水量(ml)',
             min: minRainlabel,
             max: maxRainlabel,
             interval:rainYInterval,
             position: 'right',
-            offset: 50,
+            offset: 60,
             axisLine: {
                 lineStyle: {
                     color: colors[1]
                 }
             },
             axisLabel: {
-                formatter: '{value} ml'
+                formatter: '{value} '
             },
             splitLine:{
                 show:false
@@ -106,7 +116,7 @@ var tmpDatas=jsonData.tmpDatas;
         },
         {
             type: 'value',
-            name: '温度',
+            name: '温度(℃)',
             min: 0,
             max: 35,
             interval:5,
@@ -117,7 +127,7 @@ var tmpDatas=jsonData.tmpDatas;
                 }
             },
             axisLabel: {
-                formatter: '{value} °C'
+                formatter: '{value}'
             }
         }
     ],

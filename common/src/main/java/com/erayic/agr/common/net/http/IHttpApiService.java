@@ -1,7 +1,7 @@
 package com.erayic.agr.common.net.http;
 
 import com.erayic.agr.common.net.DataBack;
-import com.erayic.agr.common.net.back.api.CommonFertureWeatherBean;
+import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
 
 import java.util.List;
@@ -31,6 +31,6 @@ public interface IHttpApiService {
      * @return DataBack
      */
     @GET("Weather/GetFeatureWeather")
-    Observable<DataBack<List<CommonFertureWeatherBean>>> getFeatureWeather();
+    Observable<DataBack<List<CommonFutureWeatherBean>>> getFeatureWeather();
 
 }
