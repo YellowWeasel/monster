@@ -179,6 +179,9 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
                 case "b759c79e-b365-4932-aab0-99ca72a35e04":
                     ARouter.getInstance().build("/serverproduct/activity/ReportingActivity").withString("serviceID", serviceID).navigation();
                     break;
+                case "2e205e96-89c3-4370-ab65-d117fdb4c12e":
+                    ARouter.getInstance().build("/serverproduct/activity/WeatherTenDayReportingActivity").withString("serviceID", serviceID).navigation();
+                    break;
                 default:
                     break;
             }

@@ -3,6 +3,9 @@ package com.erayic.agr.serverproduct.adapter.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +18,23 @@ public class WeatherTendayReportingData implements Parcelable {
     private String ConentTxt;
     private String Source;
     private String PubTime;
-    private List<WeatherTendayReportingData> ReportImg;
+    private List<TenDayReportingImageInfo> ReportImg;
+
+
+    public WeatherTendayReportingData() {
+    }
+
+    public WeatherTendayReportingData(CommonReportsByMonthBean bean) {
+        Title = bean.getTitle();
+        SummaryTxt = bean.getSummaryTxt();
+        ConentTxt = bean.getConentTxt();
+        Source = bean.getSource();
+        PubTime =bean.getPubTime();
+        ReportImg=new ArrayList<>();
+        for (CommonReportsByMonthBean.CommonReportImg img :bean.getReportImg()){
+            ReportImg.add(new TenDayReportingImageInfo(img.getImgTitle(),img.getImgUrl()));
+        }
+    }
 
     public WeatherTendayReportingData(Parcel in) {
         Title = in.readString();
@@ -23,7 +42,7 @@ public class WeatherTendayReportingData implements Parcelable {
         ConentTxt = in.readString();
         Source = in.readString();
         PubTime = in.readString();
-        ReportImg = in.createTypedArrayList(WeatherTendayReportingData.CREATOR);
+        ReportImg = in.createTypedArrayList(TenDayReportingImageInfo.CREATOR);
     }
     public static final Creator<WeatherTendayReportingData> CREATOR = new Creator<WeatherTendayReportingData>() {
         @Override
@@ -77,12 +96,16 @@ public class WeatherTendayReportingData implements Parcelable {
         PubTime = pubTime;
     }
 
-    public List<WeatherTendayReportingData> getReportImg() {
+    public List<TenDayReportingImageInfo> getReportImg() {
         return ReportImg;
     }
 
-    public void setReportImg(List<WeatherTendayReportingData> reportImg) {
+    public void setReportImg(List<TenDayReportingImageInfo> reportImg) {
         ReportImg = reportImg;
+    }
+
+    public static Creator<WeatherTendayReportingData> getCREATOR() {
+        return CREATOR;
     }
 
     @Override

@@ -2,43 +2,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/app_base_layout_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_margin="15dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:background="@color/contentbg"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/contentbg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:text="暂无数据"
+                    android:id="@+id/serverproduct_tendayreporting_title_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/fontcolor"
+                    android:textSize="@dimen/title" />
+            </LinearLayout>
 
             <TextView
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:text="2017年4月下旬农业气象旬报"
-                android:textColor="@color/fontcolor"
-                android:textSize="@dimen/title"
-                android:id="@+id/serverproduct_tendayreporting_title_textview"
+                android:id="@+id/serverproduct_tendayreporting_content_textview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <TextView
-            android:id="@+id/news_item_content_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lineSpacingExtra="2dp"
-            android:text="this is content, blablabla..."
-             />
+                android:layout_height="wrap_content"
+                android:background="@color/contentbg"
+                android:lineSpacingExtra="2dp"
+                android:padding="20dp"
+                android:textColor="@color/textfont"
+                android:textSize="@dimen/content" />
 
-            <ListView
+            <com.erayic.agr.serverproduct.view.custom.ScrollListView
+                android:layout_marginTop="20dp"
+                android:dividerHeight="5dp"
+                android:divider="@color/transparent"
                 android:id="@+id/serverproduct_tendayreporting_images_listview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </LinearLayout>
-     </ScrollView>
+    </ScrollView>
 </LinearLayout>

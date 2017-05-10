@@ -5,5 +5,5 @@ package com.erayic.agr.serverproduct.presenter;
  */
 
 public interface IWeatherTenDayReportingPresenter {
-        void  getWeatherTenDayReportingData();
+        void  getWeatherTenDayReportingData(int year,int month);
 }

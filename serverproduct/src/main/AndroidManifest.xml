@@ -7,6 +7,9 @@
         <activity
             android:name=".view.impl.ReportingActivity"
             android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.WeatherTenDayReportingActivity"
+            android:theme="@style/AppTheme.Transparent" />
     </application>
 
 </manifest>

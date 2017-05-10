@@ -22,6 +22,7 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
     <com.erayic.agr.common.view.PagerSlidingTabStrip
+        android:background="@color/white"
         android:id="@+id/serverproduct_tendayreporting_resource_tab"
         android:layout_width="match_parent"
         android:layout_height="48dip"

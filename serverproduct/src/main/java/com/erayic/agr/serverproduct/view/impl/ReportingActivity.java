@@ -105,16 +105,6 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
 
         public ReportingInfo reportingInfo;
 
-        public void getDatas() {
-            reportingInfo = new ReportingInfo();
-            reportingInfo.setRainDatas(new double[]{2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3});
-            reportingInfo.setTmpDatas(new double[]{2.0, 4.9, 4, 3, 5, 3.2, 3.3, 6, 5.2, 5, 4.1, 3.3});
-            reportingInfo.setWindDatas(new double[]{2.0, 2.2, 3.3, 4.5, 6.3, 1.2, 2.3, 2.4, 2.0, 1.5, 2.0, 6.2});
-            reportingInfo.setMaxRainLabel(300);
-            reportingInfo.setMinRainLabel(0);
-            reportingInfo.setRainYInterval(50);
-        }
-
         @JavascriptInterface
         public String GetData() {
             reportingInfo = new ReportingInfo(infos);

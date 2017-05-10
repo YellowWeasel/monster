@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="contentbg">#f0eff5</color>
+    <color name="textfont">#696a6c</color>
     <color name="pinred">#ff4000</color>
     <color name="pinblue">#00ccff</color>
     <color name="green">#00ff99</color>
@@ -8,5 +10,6 @@
     <color name="cyan">#1e8a75</color>
     <color name="toptitle">#374254</color>
     <color name="bgcolor">#999999</color>
-    <color name="fontcolor">#000000</color>
+    <color name="fontcolor">#ab000000</color>
+    <color name="transparent">#00000000</color>
 </resources>

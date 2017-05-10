@@ -11,6 +11,11 @@ public class TenDayReportingImageInfo implements Parcelable {
     private String ImgTitle;
     private String ImgUrl;
 
+    public TenDayReportingImageInfo(String imgTitle, String imgUrl) {
+        ImgTitle = imgTitle;
+        ImgUrl = imgUrl;
+    }
+
     protected TenDayReportingImageInfo(Parcel in) {
         ImgTitle = in.readString();
         ImgUrl = in.readString();
