@@ -48,24 +48,6 @@ public class PesticideInfoPresenterImpl implements IPesticideInfoPresenter {
     }
 
     @Override
-    public void addPesticide(CommonPesticideBean bean) {
-        pesticideInfoView.showLoading();
-        resourceModel.addPesticide(bean, new OnDataListener<Object>() {
-            @Override
-            public void success(Object response) {
-                pesticideInfoView.dismissLoading();
-                pesticideInfoView.saveSure();
-            }
-
-            @Override
-            public void fail(int errCode, String msg) {
-                pesticideInfoView.dismissLoading();
-                pesticideInfoView.showToast("错误代码：" + errCode + "\n描述：" + msg);
-            }
-        });
-    }
-
-    @Override
     public void getSpecifyResources(String resID, int type) {
         pesticideInfoView.showLoading();
         resourceModel.getSpecifyResourcesByPesticide(resID, type, new OnDataListener<CommonPesticideBean>() {
@@ -91,6 +73,44 @@ public class PesticideInfoPresenterImpl implements IPesticideInfoPresenter {
             public void success(Object response) {
                 pesticideInfoView.dismissLoading();
                 pesticideInfoView.showToast("删除成功");
+                pesticideInfoView.saveSure();
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
+                pesticideInfoView.dismissLoading();
+                pesticideInfoView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
+    }
+
+    @Override
+    public void savePesticide(CommonPesticideBean bean) {
+        pesticideInfoView.showLoading();
+        resourceModel.savePesticide(bean, new OnDataListener<Object>() {
+            @Override
+            public void success(Object response) {
+                pesticideInfoView.dismissLoading();
+                pesticideInfoView.showToast("保存生产资料成功");
+                pesticideInfoView.saveSure();
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
+                pesticideInfoView.dismissLoading();
+                pesticideInfoView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
+    }
+
+    @Override
+    public void savePesticideByUserDefine(CommonPesticideBean bean) {
+        pesticideInfoView.showLoading();
+        resourceModel.savePesticideByUserDefine(bean, new OnDataListener<Object>() {
+            @Override
+            public void success(Object response) {
+                pesticideInfoView.dismissLoading();
+                pesticideInfoView.showToast("保存生产资料成功");
                 pesticideInfoView.saveSure();
             }
 

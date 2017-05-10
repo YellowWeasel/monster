@@ -17,11 +17,6 @@ public interface IPesticideInfoPresenter {
     void pestilizerCheck(String pID);
 
     /**
-     * 增加农药
-     */
-    void addPesticide(CommonPesticideBean bean);
-
-    /**
      * 得到指定农药的信息
      */
     void getSpecifyResources(String resID,int type);
@@ -30,5 +25,15 @@ public interface IPesticideInfoPresenter {
      * 删除一个生产资料
      */
     void deleteResource(String resID,int type);
+
+    /**
+     * 保存农药
+     */
+    void savePesticide(CommonPesticideBean bean);
+
+    /**
+     * 保存一个自定义农药
+     */
+    void savePesticideByUserDefine(CommonPesticideBean bean);
 
 }

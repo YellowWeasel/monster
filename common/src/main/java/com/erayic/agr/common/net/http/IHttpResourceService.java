@@ -129,18 +129,6 @@ public interface IHttpResourceService {
     );
 
     /**
-     * 增加一个农药
-     *
-     * @param bean 农药实体类
-     * @return DataBack
-     */
-    @POST("Resource/AddPesticide")
-    Observable<DataBack<Object>> addPesticide(
-            @Body CommonPesticideBean bean
-    );
-
-
-    /**
      * 得到指定类型的生产资料集合
      *
      * @param type 生产资料类型（1：农药，2：肥料，3：饲料，4：种子）
@@ -235,8 +223,9 @@ public interface IHttpResourceService {
 
     /**
      * 保存一个自定义化肥
-     * @param resID 生产资料ID
-     * @param fertName 肥料名称
+     *
+     * @param resID        生产资料ID
+     * @param fertName     肥料名称
      * @param manufacturer 生产厂家
      * @return DataBack
      */
@@ -245,6 +234,33 @@ public interface IHttpResourceService {
             @Query("resID") String resID,
             @Query("fertname") String fertName,
             @Query("manufacturer") String manufacturer
+    );
+
+    /**
+     * 保存一个农药
+     * @param pest 农药（CommonPesticideBean）
+     * @return DataBack
+     */
+    @POST("Resource/SavePesticide")
+    Observable<DataBack<Object>> savePesticide(
+            @Body CommonPesticideBean pest
+    );
+
+    /**
+     * 保存一个自定义农药
+     *
+     * @param resID        生产资料ID（新建农药为null)
+     * @param pestname     农药名称
+     * @param manufacturer 生产厂家
+     * @param toxicity     毒性
+     * @return DataBack
+     */
+    @POST("Resource/SavePesticideByUserDefine")
+    Observable<DataBack<Object>> savePesticideByUserDefine(
+            @Query("resID") String resID,
+            @Query("pestname") String pestname,
+            @Query("manufacturer") String manufacturer,
+            @Query("toxicity") String toxicity
     );
 
 }

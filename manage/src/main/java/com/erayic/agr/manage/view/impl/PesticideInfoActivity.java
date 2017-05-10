@@ -5,9 +5,13 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.text.method.KeyListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -33,6 +37,8 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 作者：hejian
@@ -47,6 +53,14 @@ public class PesticideInfoActivity extends BaseActivity implements IPesticideInf
     Toolbar toolbar;
     @BindView(R2.id.manage_pesticide_RecyclerView)
     RecyclerView managePesticideRecyclerView;
+    @BindView(R2.id.manage_content_pid)
+    EditText manageContentPid;
+    @BindView(R2.id.manage_content_bt_query)
+    Button manageContentBtQuery;
+    @BindView(R2.id.manage_content_bt_manual)
+    Button manageContentBtManual;
+    @BindView(R2.id.manage_content_layout)
+    LinearLayout manageContentLayout;
 
     @Autowired
     boolean isAdd;//增加或者查看
@@ -55,9 +69,8 @@ public class PesticideInfoActivity extends BaseActivity implements IPesticideInf
     @Autowired
     String resName;//资源名称
 
-    boolean isUpdater;//是否在修改状态
-
-    CommonPesticideBean pesticideBean;
+    private boolean isUpdater;//是否在修改状态
+    private KeyListener keyListener;
 
     private LoadingDialog dialog;
 
@@ -84,22 +97,10 @@ public class PesticideInfoActivity extends BaseActivity implements IPesticideInf
         manager.setScrollEnabled(true);//滑动监听
         managePesticideRecyclerView.setLayoutManager(manager);
         adapter = new ManagePesticideInfoAdapter(PesticideInfoActivity.this, null);
-        adapter.setOnPesticideItemListener(new ManagePesticideInfoAdapter.OnPesticideItemListener() {
-            @Override
-            public void onSelect(View view, int position, String pesID) {
-                if (!TextUtils.isEmpty(pesID))
-                    if (isAdd) {
-                        presenter.pestilizerCheck(pesID);
-                    } else {
-                        showToast("不可操作");
-                    }
 
-                else
-                    showToast("请输入登记证号");
-            }
-        });
         managePesticideRecyclerView.setAdapter(adapter);
         managePesticideRecyclerView.addItemDecoration(new DividerItemDecoration(PesticideInfoActivity.this, DividerItemDecoration.VERTICAL_LIST));
+        keyListener = manageContentPid.getKeyListener();
     }
 
     @Override
@@ -107,54 +108,74 @@ public class PesticideInfoActivity extends BaseActivity implements IPesticideInf
         presenter = new PesticideInfoPresenterImpl(this);
         if (isAdd) {
             toolbar.setTitle("增加农药");
-            initAdd();
+            manageContentLayout.setVisibility(View.VISIBLE);
         } else {
             toolbar.setTitle(resName);
+            manageContentLayout.setVisibility(View.GONE);
             presenter.getSpecifyResources(resID, EnumResourceType.TYPE_PESTICIDE);
         }
 
+    }
+
+
+    @OnClick(R2.id.manage_content_bt_query)
+    public void onManageContentBtQueryClicked() {
+        if (!TextUtils.isEmpty(manageContentPid.getText().toString())) {
+            presenter.pestilizerCheck(manageContentPid.getText().toString());
+        } else {
+            showToast("请输入登记证号");
+        }
+    }
+
+    @OnClick(R2.id.manage_content_bt_manual)
+    public void onManageContentBtManualClicked() {
+        initAdd();
     }
 
     /**
      * 初始化为增加状态
      */
     private void initAdd() {
-        adapter.setEdit(true);
+        CommonPesticideBean bean = new CommonPesticideBean();
         List<ManagePesticideEntity> list = new ArrayList<>();
         //分割线
         ManagePesticideEntity entityDivider = new ManagePesticideEntity();
         entityDivider.setItemType(ManagePesticideEntity.TYPE_DIVIDER);
         list.add(entityDivider);
 
-        //农药登记证号
-        ManagePesticideEntity entityNum = new ManagePesticideEntity();
-        entityNum.setItemType(ManagePesticideEntity.TYPE_NUM);
-        entityNum.setName("登记证号");
-        Map<String, String> mapNum = new ArrayMap<>();
-        mapNum.put("key1", "");
-        entityNum.setSubMap(mapNum);
-        list.add(entityNum);
-
-        //分割线
-        list.add(entityDivider);
-
         //农药名称
-        ManagePesticideEntity entityName = new ManagePesticideEntity();
-        entityName.setItemType(ManagePesticideEntity.TYPE_NAME);
-        entityName.setName("农药名称");
-        Map<String, String> mapName = new ArrayMap<>();
-        mapName.put("key1", "");
-        entityName.setSubMap(mapName);
-        list.add(entityName);
-
+        {
+            ManagePesticideEntity entity = new ManagePesticideEntity();
+            entity.setItemType(ManagePesticideEntity.TYPE_IMPORT_NAME);
+            entity.setName("农药名称");
+            Map<String, String> map = new ArrayMap<>();
+            map.put("key1", "");
+            entity.setSubMap(map);
+            list.add(entity);
+        }
         //农药毒性
-        ManagePesticideEntity entityToxicity = new ManagePesticideEntity();
-        entityToxicity.setItemType(ManagePesticideEntity.TYPE_TOXICITY);
-        entityToxicity.setName("农药毒性");
-        Map<String, String> mapToxicity = new ArrayMap<>();
-        mapToxicity.put("key1", "");
-        entityToxicity.setSubMap(mapToxicity);
-        list.add(entityToxicity);
+        {
+            ManagePesticideEntity entity = new ManagePesticideEntity();
+            entity.setItemType(ManagePesticideEntity.TYPE_IMPORT_TOXICITY);
+            entity.setName("农药毒性");
+            Map<String, String> map = new ArrayMap<>();
+            map.put("key1", "");
+            entity.setSubMap(map);
+            list.add(entity);
+        }
+
+        //生产厂家
+        {
+            ManagePesticideEntity entity = new ManagePesticideEntity();
+            entity.setItemType(ManagePesticideEntity.TYPE_IMPORT_FACTORY);
+            entity.setName("生产厂家");
+            Map<String, String> map = new ArrayMap<>();
+            map.put("key1", "");
+            entity.setSubMap(map);
+            list.add(entity);
+        }
+        adapter.setKeyListener(keyListener);
+        adapter.setBean(bean);
         adapter.setNewData(list);
     }
 
@@ -187,140 +208,172 @@ public class PesticideInfoActivity extends BaseActivity implements IPesticideInf
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                pesticideBean = bean;
-                adapter.setEdit(false);//不可编辑状态
                 List<ManagePesticideEntity> list = new ArrayList<>();
                 //分割线
                 ManagePesticideEntity entityDivider = new ManagePesticideEntity();
                 entityDivider.setItemType(ManagePesticideEntity.TYPE_DIVIDER);
                 list.add(entityDivider);
 
-                //农药登记证号
-                if (bean.getPID() != null) {
-                    ManagePesticideEntity entityNum = new ManagePesticideEntity();
-                    entityNum.setItemType(ManagePesticideEntity.TYPE_NUM);
-                    entityNum.setName("登记证号");
-                    Map<String, String> mapNum = new ArrayMap<>();
-                    mapNum.put("key1", bean.getPID());
-                    entityNum.setSubMap(mapNum);
-                    list.add(entityNum);
-                    //分割线
-                    list.add(entityDivider);
-                }
-
-                //农药名称
-                if (bean.getRegisterName() != null) {
-                    ManagePesticideEntity entityName = new ManagePesticideEntity();
-                    entityName.setItemType(ManagePesticideEntity.TYPE_NAME);
-                    entityName.setName("农药名称");
-                    Map<String, String> mapName = new ArrayMap<>();
-                    mapName.put("key1", bean.getRegisterName());
-                    entityName.setSubMap(mapName);
-                    list.add(entityName);
-                }
-
-                //农药毒性
-                if (bean.getToxicity() != null) {
-                    ManagePesticideEntity entityToxicity = new ManagePesticideEntity();
-                    entityToxicity.setItemType(ManagePesticideEntity.TYPE_TOXICITY);
-                    entityToxicity.setName("农药毒性");
-                    Map<String, String> mapToxicity = new ArrayMap<>();
-                    mapToxicity.put("key1", bean.getToxicity());
-                    entityToxicity.setSubMap(mapToxicity);
-                    list.add(entityToxicity);
-                }
-
-                //农药剂型
-                if (bean.getFormulations() != null) {
-                    ManagePesticideEntity entityDosage = new ManagePesticideEntity();
-                    entityDosage.setItemType(ManagePesticideEntity.TYPE_DOSAGE);
-                    entityDosage.setName("农药剂型");
-                    Map<String, String> mapDosage = new ArrayMap<>();
-                    mapDosage.put("key1", bean.getFormulations());
-                    entityDosage.setSubMap(mapDosage);
-                    list.add(entityDosage);
-                }
-
-                //生产厂家
-                if (bean.getManufacturer() != null) {
-                    ManagePesticideEntity entityFactory = new ManagePesticideEntity();
-                    entityFactory.setItemType(ManagePesticideEntity.TYPE_FACTORY);
-                    entityFactory.setName("生产厂家");
-                    Map<String, String> mapFactory = new ArrayMap<>();
-                    mapFactory.put("key1", bean.getManufacturer());
-                    entityFactory.setSubMap(mapFactory);
-                    list.add(entityFactory);
-                    //分割线
-                    list.add(entityDivider);
-                }
-
-                //有效起始日
-                if (bean.getValidStart() != null) {
-                    ManagePesticideEntity entityStartDate = new ManagePesticideEntity();
-                    entityStartDate.setItemType(ManagePesticideEntity.TYPE_START_TIME);
-                    entityStartDate.setName("有效起始日");
-                    Map<String, String> mapStartDate = new ArrayMap<>();
-                    mapStartDate.put("key1", bean.getValidStart());
-                    entityStartDate.setSubMap(mapStartDate);
-                    list.add(entityStartDate);
-                }
-
-                //有效截止日
-                if (bean.getValidEnd() != null) {
-                    ManagePesticideEntity entityEndDate = new ManagePesticideEntity();
-                    entityEndDate.setItemType(ManagePesticideEntity.TYPE_END_TIME);
-                    entityEndDate.setName("有效截止日");
-                    Map<String, String> mapEndDate = new ArrayMap<>();
-                    mapEndDate.put("key1", bean.getValidEnd());
-                    entityEndDate.setSubMap(mapEndDate);
-                    list.add(entityEndDate);
-                    //分割线
-                    list.add(entityDivider);
-                }
-
-                //有效成分ADD
-                if (bean.getActives() != null && bean.getActives().size() > 0) {
-                    ManagePesticideEntity entityActiveAdd = new ManagePesticideEntity();
-                    entityActiveAdd.setItemType(ManagePesticideEntity.TYPE_ACTIVE_ADD);
-                    entityActiveAdd.setName("有效成分");
-                    list.add(entityActiveAdd);
-                    for (CommonPesticideBean.ActivesInfo activesInfo : bean.getActives()) {
-                        ManagePesticideEntity entityActive = new ManagePesticideEntity();
-                        entityActive.setItemType(ManagePesticideEntity.TYPE_ACTIVE);
-                        entityActive.setName("有效成分");
-                        Map<String, String> mapActive = new ArrayMap<>();
-                        mapActive.put("key1", activesInfo.getActiveName());
-                        mapActive.put("key2", activesInfo.getContent());
-                        entityActive.setSubMap(mapActive);
-                        list.add(entityActive);
+                if (bean.isReadOnly()) {
+                    //农药登记证号
+                    if (bean.getPID() != null) {
+                        ManagePesticideEntity entity = new ManagePesticideEntity();
+                        entity.setItemType(ManagePesticideEntity.TYPE_NUM);
+                        entity.setName("登记证号");
+                        Map<String, String> mapNum = new ArrayMap<>();
+                        mapNum.put("key1", bean.getPID());
+                        entity.setSubMap(mapNum);
+                        list.add(entity);
+                        //分割线
+                        list.add(entityDivider);
                     }
 
-                    //分割线
-                    list.add(entityDivider);
-                }
+                    //农药名称
+                    if (bean.getRegisterName() != null) {
+                        ManagePesticideEntity entity = new ManagePesticideEntity();
+                        entity.setItemType(ManagePesticideEntity.TYPE_NAME);
+                        entity.setName("农药名称");
+                        Map<String, String> mapName = new ArrayMap<>();
+                        mapName.put("key1", bean.getRegisterName());
+                        entity.setSubMap(mapName);
+                        list.add(entity);
+                    }
 
-                //用药指导ADD
-                if (bean.getApplys() != null && bean.getApplys().size() > 0) {
-                    ManagePesticideEntity entityMethodAdd = new ManagePesticideEntity();
-                    entityMethodAdd.setItemType(ManagePesticideEntity.TYPE_METHOD_ADD);
-                    entityMethodAdd.setName("用药量信息");
-                    list.add(entityMethodAdd);
+                    //农药毒性
+                    if (bean.getToxicity() != null) {
+                        ManagePesticideEntity entity = new ManagePesticideEntity();
+                        entity.setItemType(ManagePesticideEntity.TYPE_TOXICITY);
+                        entity.setName("农药毒性");
+                        Map<String, String> mapToxicity = new ArrayMap<>();
+                        mapToxicity.put("key1", bean.getToxicity());
+                        entity.setSubMap(mapToxicity);
+                        list.add(entity);
+                    }
 
+                    //农药剂型
+                    if (bean.getFormulations() != null) {
+                        ManagePesticideEntity entity = new ManagePesticideEntity();
+                        entity.setItemType(ManagePesticideEntity.TYPE_DOSAGE);
+                        entity.setName("农药剂型");
+                        Map<String, String> mapDosage = new ArrayMap<>();
+                        mapDosage.put("key1", bean.getFormulations());
+                        entity.setSubMap(mapDosage);
+                        list.add(entity);
+                    }
 
-                    for (CommonPesticideBean.ApplysInfo applysInfo : bean.getApplys()) {
-                        ManagePesticideEntity entityApply = new ManagePesticideEntity();
-                        entityApply.setItemType(ManagePesticideEntity.TYPE_METHOD);
-                        entityApply.setName("有效成分");
-                        Map<String, String> mapApply = new ArrayMap<>();
-                        mapApply.put("key1", applysInfo.getCrop());
-                        mapApply.put("key2", applysInfo.getPrevention());
-                        mapApply.put("key3", applysInfo.getDosage());
-                        mapApply.put("key4", applysInfo.getMethod());
-                        entityApply.setSubMap(mapApply);
-                        list.add(entityApply);
+                    //生产厂家
+                    if (bean.getManufacturer() != null) {
+                        ManagePesticideEntity entity = new ManagePesticideEntity();
+                        entity.setItemType(ManagePesticideEntity.TYPE_FACTORY);
+                        entity.setName("生产厂家");
+                        Map<String, String> mapFactory = new ArrayMap<>();
+                        mapFactory.put("key1", bean.getManufacturer());
+                        entity.setSubMap(mapFactory);
+                        list.add(entity);
+                        //分割线
+                        list.add(entityDivider);
+                    }
+
+                    //有效起始日
+                    if (bean.getValidStart() != null) {
+                        ManagePesticideEntity entity = new ManagePesticideEntity();
+                        entity.setItemType(ManagePesticideEntity.TYPE_START_TIME);
+                        entity.setName("有效起始日");
+                        Map<String, String> mapStartDate = new ArrayMap<>();
+                        mapStartDate.put("key1", bean.getValidStart());
+                        entity.setSubMap(mapStartDate);
+                        list.add(entity);
+                    }
+
+                    //有效截止日
+                    if (bean.getValidEnd() != null) {
+                        ManagePesticideEntity entity = new ManagePesticideEntity();
+                        entity.setItemType(ManagePesticideEntity.TYPE_END_TIME);
+                        entity.setName("有效截止日");
+                        Map<String, String> mapEndDate = new ArrayMap<>();
+                        mapEndDate.put("key1", bean.getValidEnd());
+                        entity.setSubMap(mapEndDate);
+                        list.add(entity);
+                        //分割线
+                        list.add(entityDivider);
+                    }
+
+                    //有效成分ADD
+                    if (bean.getActives() != null && bean.getActives().size() > 0) {
+                        ManagePesticideEntity entity = new ManagePesticideEntity();
+                        entity.setItemType(ManagePesticideEntity.TYPE_ACTIVE_ADD);
+                        entity.setName("有效成分");
+                        list.add(entity);
+                        for (CommonPesticideBean.ActivesInfo activesInfo : bean.getActives()) {
+                            ManagePesticideEntity entityActive = new ManagePesticideEntity();
+                            entityActive.setItemType(ManagePesticideEntity.TYPE_ACTIVE);
+                            entityActive.setName("有效成分");
+                            Map<String, String> mapActive = new ArrayMap<>();
+                            mapActive.put("key1", activesInfo.getActiveName());
+                            mapActive.put("key2", activesInfo.getContent());
+                            entityActive.setSubMap(mapActive);
+                            list.add(entityActive);
+                        }
+
+                        //分割线
+                        list.add(entityDivider);
+                    }
+
+                    //用药指导ADD
+                    if (bean.getApplys() != null && bean.getApplys().size() > 0) {
+                        ManagePesticideEntity entity = new ManagePesticideEntity();
+                        entity.setItemType(ManagePesticideEntity.TYPE_METHOD_ADD);
+                        entity.setName("用药量信息");
+                        list.add(entity);
+
+                        for (CommonPesticideBean.ApplysInfo applysInfo : bean.getApplys()) {
+                            ManagePesticideEntity entityApply = new ManagePesticideEntity();
+                            entityApply.setItemType(ManagePesticideEntity.TYPE_METHOD);
+                            entityApply.setName("有效成分");
+                            Map<String, String> mapApply = new ArrayMap<>();
+                            mapApply.put("key1", applysInfo.getCrop());
+                            mapApply.put("key2", applysInfo.getPrevention());
+                            mapApply.put("key3", applysInfo.getDosage());
+                            mapApply.put("key4", applysInfo.getMethod());
+                            entityApply.setSubMap(mapApply);
+                            list.add(entityApply);
+                        }
+                    }
+                } else {
+                    //农药名称
+                    {
+                        ManagePesticideEntity entity = new ManagePesticideEntity();
+                        entity.setItemType(ManagePesticideEntity.TYPE_IMPORT_NAME);
+                        entity.setName("农药名称");
+                        Map<String, String> map = new ArrayMap<>();
+                        map.put("key1", bean.getRegisterName() == null ? "" : bean.getRegisterName());
+                        entity.setSubMap(map);
+                        list.add(entity);
+                    }
+                    //农药毒性
+                    {
+                        ManagePesticideEntity entity = new ManagePesticideEntity();
+                        entity.setItemType(ManagePesticideEntity.TYPE_IMPORT_TOXICITY);
+                        entity.setName("农药毒性");
+                        Map<String, String> map = new ArrayMap<>();
+                        map.put("key1", bean.getToxicity() == null ? "" : bean.getToxicity());
+                        entity.setSubMap(map);
+                        list.add(entity);
+                    }
+
+                    //生产厂家
+                    {
+                        ManagePesticideEntity entity = new ManagePesticideEntity();
+                        entity.setItemType(ManagePesticideEntity.TYPE_IMPORT_FACTORY);
+                        entity.setName("生产厂家");
+                        Map<String, String> map = new ArrayMap<>();
+                        map.put("key1", bean.getManufacturer() == null ? "" : bean.getManufacturer());
+                        entity.setSubMap(map);
+                        list.add(entity);
                     }
                 }
                 adapter.setNewData(list);
+                adapter.setBean(bean);
             }
         });
     }
@@ -358,14 +411,18 @@ public class PesticideInfoActivity extends BaseActivity implements IPesticideInf
             modify.setVisible(false);
             delete.setVisible(false);
         } else {
-            adapter.setEdit(isUpdater);
-            adapter.notifyDataSetChanged();
             if (isUpdater) {
+                isUpdater = false;
+                adapter.setKeyListener(keyListener);
+                adapter.notifyDataSetChanged();
                 save.setVisible(true);
                 modify.setVisible(true);
                 modify.setTitle("取消编辑");
                 delete.setVisible(false);
             } else {
+                isUpdater = true;
+                adapter.setKeyListener(null);
+                adapter.notifyDataSetChanged();
                 save.setVisible(false);
                 modify.setVisible(true);
                 modify.setTitle("编辑");
@@ -380,20 +437,25 @@ public class PesticideInfoActivity extends BaseActivity implements IPesticideInf
         if (item.getItemId() == android.R.id.home) {//返回
             finish();
         } else if (item.getItemId() == R.id.action_manage_resource_save) {
-            presenter.addPesticide(pesticideBean);
-        } else if (item.getItemId() == R.id.action_manage_resource_update) {
-            if (pesticideBean.isReadOnly()) {
-                showToast("不可编辑");
+            if (!TextUtils.isEmpty(adapter.getBean().getRegisterName())) {
+                if (adapter.getBean().isReadOnly())
+                    presenter.savePesticide(adapter.getBean());
+                else
+                    presenter.savePesticideByUserDefine(adapter.getBean());
+
             } else {
-                isUpdater = !isUpdater;
-                adapter.setEdit(isUpdater);
+                showToast("请完善信息");
+            }
+        } else if (item.getItemId() == R.id.action_manage_resource_update) {
+            if (adapter.getBean() != null && !adapter.getBean().isReadOnly()) {
                 supportInvalidateOptionsMenu();
+            } else {
+                showToast("不可编辑");
             }
         } else if (item.getItemId() == R.id.action_manage_resource_delete) {
             presenter.deleteResource(resID, EnumResourceType.TYPE_PESTICIDE);
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }

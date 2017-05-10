@@ -93,13 +93,6 @@ public class HttpResourceManager {
     }
 
     /**
-     * 增加一个农药
-     */
-    public Observable addPesticide(CommonPesticideBean bean) {
-        return resourceService.addPesticide(bean);
-    }
-
-    /**
      * 得到指定类型的生产资料集合
      */
     public Observable getResourceByType(int type) {
@@ -151,9 +144,23 @@ public class HttpResourceManager {
     /**
      * 保存一个自定义肥料
      */
-    public Observable saveFertilizerByUserDefine(CommonFertilizerBean bean){
-        return resourceService.saveFertilizerByUserDefine(bean.getResID(),bean.getProductName(),bean.getManufacturer());
+    public Observable saveFertilizerByUserDefine(CommonFertilizerBean bean) {
+        return resourceService.saveFertilizerByUserDefine(bean.getResID(), bean.getProductName(), bean.getManufacturer());
     }
 
+    /**
+     * 保存农药
+     */
+    public Observable savePesticide(CommonPesticideBean bean) {
+        return resourceService.savePesticide(bean);
+    }
+
+    /**
+     * 保存一个自定义农药
+     */
+    public Observable savePesticideByUserDefine(CommonPesticideBean bean) {
+        return resourceService.savePesticideByUserDefine(bean.getResID() == null ? "" : bean.getResID(), bean.getRegisterName(),
+                bean.getManufacturer() == null ? "" : bean.getManufacturer(), bean.getToxicity() == null ? "" : bean.getToxicity());
+    }
 
 }

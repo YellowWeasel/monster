@@ -99,14 +99,10 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
                     boolean isOpen = mBooleanMap.get(section);
                     mBooleanMap.put(section, !isOpen);
                     notifyDataSetChanged();
-                }
-            }
-        });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onClick(v, list.get(section).getServiceID());
+                } else {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onClick(v, list.get(section).getServiceID(), null);
+                    }
                 }
             }
         });
@@ -136,7 +132,7 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onClick(v, list.get(section).getSpecifys().get(position).getServiceID());
+                    onItemClickListener.onClick(v, list.get(section).getServiceID(), list.get(section).getSpecifys().get(position).getServiceID());
                 }
             }
         });
@@ -149,6 +145,6 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
     }
 
     public interface OnItemClickListener {
-        void onClick(View v, String serviceID);
+        void onClick(View v, String serviceID, String subServiceID);
     }
 }

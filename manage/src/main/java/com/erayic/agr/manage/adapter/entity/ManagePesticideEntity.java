@@ -27,6 +27,10 @@ public class ManagePesticideEntity implements MultiItemEntity {
     public static final int TYPE_METHOD_ADD = 10;//用法ADD
     public static final int TYPE_METHOD = 11;//用法ADD
 
+    public static final int TYPE_IMPORT_NAME = 13;//农药名称(输入)
+    public static final int TYPE_IMPORT_FACTORY = 14;//生产厂家(输入)
+    public static final int TYPE_IMPORT_TOXICITY = 15;//毒性(输入)
+
     private String name;//标题名称
     private Map<String, String> subMap = new ArrayMap<>();//副标题名称(key:sub1,sub2...subN)
 

@@ -94,12 +94,6 @@ public class ServiceManageAdapter extends SectionedRecyclerViewAdapter<ServiceMa
             holder.serviceManageItemSwitch.setVisibility(View.VISIBLE);
             holder.serviceManageItemSwitch.setCheckedImmediately(list.get(section).isOwner());
         }
-        holder.serviceManageItemSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSwitchStatueListener.switchChecked(false, list.get(section).getServiceID(), section, -1, !list.get(section).isOwner());
-            }
-        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +101,8 @@ public class ServiceManageAdapter extends SectionedRecyclerViewAdapter<ServiceMa
                     boolean isOpen = mBooleanMap.get(section);
                     mBooleanMap.put(section, !isOpen);
                     notifyDataSetChanged();
+                } else {
+                    onSwitchStatueListener.switchChecked(false, list.get(section).getServiceID(), null, section, -1, !list.get(section).isOwner());
                 }
             }
         });
@@ -128,18 +124,22 @@ public class ServiceManageAdapter extends SectionedRecyclerViewAdapter<ServiceMa
         holder.serviceManageItemChildName.setText(list.get(section).getSpecifys().get(position).getSepcify());
         holder.serviceManageItemChildIcon.setVisibility(View.INVISIBLE);
         holder.serviceManageItemChildSwitch.setCheckedImmediately(list.get(section).getSpecifys().get(position).isOwner());
-        holder.serviceManageItemChildSwitch.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onSwitchStatueListener != null) {
-                    onSwitchStatueListener.switchChecked(true, list.get(section).getSpecifys().get(position).getServiceID(), section, position,
-                            !list.get(section).getSpecifys().get(position).isOwner());
-                }
+                onSwitchStatueListener.switchChecked(true, list.get(section).getServiceID(), list.get(section).getSpecifys().get(position).getServiceID(), section, position,
+                        !list.get(section).getSpecifys().get(position).isOwner());
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
             }
         });
     }
 
     public interface OnSwitchStatueListener {
-        void switchChecked(boolean isSub, String serviceID, int section, int position, boolean isChecked);
+        void switchChecked(boolean isSub, String serviceID, String subServiceID, int section, int position, boolean isChecked);
     }
 }

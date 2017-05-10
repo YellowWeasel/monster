@@ -219,43 +219,6 @@ public class ResourceModelImpl implements IResourceModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void addPesticide(CommonPesticideBean bean, final OnDataListener<Object> listener) {
-        HttpResourceManager.getInstance().addPesticide(bean)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
-                    @Override
-                    public void call(DataBack<Object> objectDataBack) {
-                        ErayicLog.i("addPesticide", ErayicGson.getJsonString(objectDataBack));
-                        if (objectDataBack.isSucess()) {
-                            listener.success(objectDataBack.getResult());
-                        } else {
-                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
-                        }
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<Object>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable) {
-                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
-                    }
-
-                    @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
-
-                    }
-                });
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
     public void getResourceByType(int type, final OnDataListener<List<CommonResourceBean>> listener) {
         HttpResourceManager.getInstance().getResourceByType(type)
                 .subscribeOn(Schedulers.newThread())
@@ -523,6 +486,80 @@ public class ResourceModelImpl implements IResourceModel {
                     @Override
                     public void call(DataBack<Object> objectDataBack) {
                         ErayicLog.i("saveFertilizerByUserDefine", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void savePesticide(CommonPesticideBean bean, final OnDataListener<Object> listener) {
+        HttpResourceManager.getInstance().savePesticide(bean)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<Object>>() {
+                    @Override
+                    public void call(DataBack<Object> objectDataBack) {
+                        ErayicLog.i("savePesticide", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void savePesticideByUserDefine(CommonPesticideBean bean, final OnDataListener<Object> listener) {
+        HttpResourceManager.getInstance().savePesticideByUserDefine(bean)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<Object>>() {
+                    @Override
+                    public void call(DataBack<Object> objectDataBack) {
+                        ErayicLog.i("savePesticideByUserDefine", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
                         } else {

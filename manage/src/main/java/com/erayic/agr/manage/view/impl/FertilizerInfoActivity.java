@@ -5,6 +5,7 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.text.method.KeyListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,9 +68,9 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
     String resName;//资源名称
 
     private boolean isUpdater;//是否在修改状态
-    private boolean isAuto;//是否查询回来的数据
 
     private LoadingDialog dialog;
+    private KeyListener keyListener;
 
     private IFertilizerInfoPresenter presenter;
     private ManageFertilizerInfoAdapter adapter;
@@ -97,6 +98,7 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
 
         manageFertilizerRecyclerView.setAdapter(adapter);
         manageFertilizerRecyclerView.addItemDecoration(new DividerItemDecoration(FertilizerInfoActivity.this, DividerItemDecoration.VERTICAL_LIST));
+        keyListener = manageContentPid.getKeyListener();
     }
 
     @Override
@@ -115,7 +117,6 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
     @OnClick(R2.id.manage_content_bt_query)
     public void onManageContentBtQueryClicked() {//查询输入
         if (!TextUtils.isEmpty(manageContentPid.getText().toString())) {
-            isAuto = true;
             presenter.fertilizerCheck(manageContentPid.getText().toString());
         } else {
             showToast("请输入登记证号");
@@ -124,7 +125,6 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
 
     @OnClick(R2.id.manage_content_bt_manual)
     public void onManageContentBtManualClicked() {//手动输入
-        isAuto = false;
         CommonFertilizerBean bean = new CommonFertilizerBean();
         List<ManageFertilizerEntity> list = new ArrayList<>();
         //分割线
@@ -146,10 +146,11 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
             ManageFertilizerEntity entity = new ManageFertilizerEntity();
             entity.setItemType(ManageFertilizerEntity.TYPE_IMPORT_MANUFACTURER);
             Map<String, String> map = new ArrayMap<>();
-            map.put("key1", bean.getManufacturer());
+            map.put("key1", "");
             entity.setSubMap(map);
             list.add(entity);
         }
+        adapter.setKeyListener(keyListener);
         adapter.setNewData(list);
         adapter.setBean(bean);
     }
@@ -189,75 +190,95 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
                 ManageFertilizerEntity entityDivider = new ManageFertilizerEntity();
                 entityDivider.setItemType(ManageFertilizerEntity.TYPE_DIVIDER);
                 list.add(entityDivider);
+                if (bean.isReadOnly()) {
+                    //产品PID
+                    if (bean.getPID() != null) {
+                        ManageFertilizerEntity entity = new ManageFertilizerEntity();
+                        entity.setItemType(ManageFertilizerEntity.TYPE_PID);
+                        Map<String, String> map = new ArrayMap<>();
+                        map.put("key1", bean.getPID());
+                        entity.setSubMap(map);
+                        list.add(entity);
+                    }
 
-                //产品PID
-                if (bean.getPID() != null) {
-                    ManageFertilizerEntity entity = new ManageFertilizerEntity();
-                    entity.setItemType(ManageFertilizerEntity.TYPE_PID);
-                    Map<String, String> map = new ArrayMap<>();
-                    map.put("key1", bean.getPID());
-                    entity.setSubMap(map);
-                    list.add(entity);
-                }
+                    //产品通用名称
+                    if (bean.getCommonName() != null) {
+                        ManageFertilizerEntity entity = new ManageFertilizerEntity();
+                        entity.setItemType(ManageFertilizerEntity.TYPE_COMMON_NAME);
+                        Map<String, String> map = new ArrayMap<>();
+                        map.put("key1", bean.getCommonName());
+                        entity.setSubMap(map);
+                        list.add(entity);
+                    }
 
-                //产品通用名称
-                if (bean.getCommonName() != null) {
-                    ManageFertilizerEntity entity = new ManageFertilizerEntity();
-                    entity.setItemType(ManageFertilizerEntity.TYPE_COMMON_NAME);
-                    Map<String, String> map = new ArrayMap<>();
-                    map.put("key1", bean.getCommonName());
-                    entity.setSubMap(map);
-                    list.add(entity);
-                }
+                    //产品商家名称
+                    if (bean.getProductName() != null) {
+                        ManageFertilizerEntity entity = new ManageFertilizerEntity();
+                        entity.setItemType(ManageFertilizerEntity.TYPE_PRODUCT_NAME);
+                        Map<String, String> map = new ArrayMap<>();
+                        map.put("key1", bean.getProductName());
+                        entity.setSubMap(map);
+                        list.add(entity);
+                    }
 
-                //产品商家名称
-                if (bean.getProductName() != null) {
-                    ManageFertilizerEntity entity = new ManageFertilizerEntity();
-                    entity.setItemType(ManageFertilizerEntity.TYPE_PRODUCT_NAME);
-                    Map<String, String> map = new ArrayMap<>();
-                    map.put("key1", bean.getProductName());
-                    entity.setSubMap(map);
-                    list.add(entity);
-                }
+                    //产品生产厂家
+                    if (bean.getManufacturer() != null) {
+                        ManageFertilizerEntity entity = new ManageFertilizerEntity();
+                        entity.setItemType(ManageFertilizerEntity.TYPE_MANUFACTURER);
+                        Map<String, String> map = new ArrayMap<>();
+                        map.put("key1", bean.getManufacturer());
+                        entity.setSubMap(map);
+                        list.add(entity);
+                    }
 
-                //产品生产厂家
-                if (bean.getManufacturer() != null) {
-                    ManageFertilizerEntity entity = new ManageFertilizerEntity();
-                    entity.setItemType(ManageFertilizerEntity.TYPE_MANUFACTURER);
-                    Map<String, String> map = new ArrayMap<>();
-                    map.put("key1", bean.getManufacturer());
-                    entity.setSubMap(map);
-                    list.add(entity);
-                }
+                    //产品适宜作物
+                    if (bean.getCrops() != null) {
+                        ManageFertilizerEntity entity = new ManageFertilizerEntity();
+                        entity.setItemType(ManageFertilizerEntity.TYPE_CROPS);
+                        Map<String, String> map = new ArrayMap<>();
+                        map.put("key1", bean.getCrops());
+                        entity.setSubMap(map);
+                        list.add(entity);
+                    }
 
-                //产品适宜作物
-                if (bean.getCrops() != null) {
-                    ManageFertilizerEntity entity = new ManageFertilizerEntity();
-                    entity.setItemType(ManageFertilizerEntity.TYPE_CROPS);
-                    Map<String, String> map = new ArrayMap<>();
-                    map.put("key1", bean.getCrops());
-                    entity.setSubMap(map);
-                    list.add(entity);
-                }
+                    //产品技术指标
+                    if (bean.getNorm() != null) {
+                        ManageFertilizerEntity entity = new ManageFertilizerEntity();
+                        entity.setItemType(ManageFertilizerEntity.TYPE_NORM);
+                        Map<String, String> map = new ArrayMap<>();
+                        map.put("key1", bean.getNorm());
+                        entity.setSubMap(map);
+                        list.add(entity);
+                    }
 
-                //产品技术指标
-                if (bean.getNorm() != null) {
-                    ManageFertilizerEntity entity = new ManageFertilizerEntity();
-                    entity.setItemType(ManageFertilizerEntity.TYPE_NORM);
-                    Map<String, String> map = new ArrayMap<>();
-                    map.put("key1", bean.getNorm());
-                    entity.setSubMap(map);
-                    list.add(entity);
-                }
-
-                //产品形态
-                if (bean.getShape() != null) {
-                    ManageFertilizerEntity entity = new ManageFertilizerEntity();
-                    entity.setItemType(ManageFertilizerEntity.TYPE_SHAPE);
-                    Map<String, String> map = new ArrayMap<>();
-                    map.put("key1", bean.getShape());
-                    entity.setSubMap(map);
-                    list.add(entity);
+                    //产品形态
+                    if (bean.getShape() != null) {
+                        ManageFertilizerEntity entity = new ManageFertilizerEntity();
+                        entity.setItemType(ManageFertilizerEntity.TYPE_SHAPE);
+                        Map<String, String> map = new ArrayMap<>();
+                        map.put("key1", bean.getShape());
+                        entity.setSubMap(map);
+                        list.add(entity);
+                    }
+                } else {
+                    //产品输入名称
+                    {
+                        ManageFertilizerEntity entity = new ManageFertilizerEntity();
+                        entity.setItemType(ManageFertilizerEntity.TYPE_IMPORT_NAME);
+                        Map<String, String> map = new ArrayMap<>();
+                        map.put("key1", bean.getProductName());
+                        entity.setSubMap(map);
+                        list.add(entity);
+                    }
+                    //生产厂家
+                    {
+                        ManageFertilizerEntity entity = new ManageFertilizerEntity();
+                        entity.setItemType(ManageFertilizerEntity.TYPE_IMPORT_MANUFACTURER);
+                        Map<String, String> map = new ArrayMap<>();
+                        map.put("key1", bean.getManufacturer());
+                        entity.setSubMap(map);
+                        list.add(entity);
+                    }
                 }
                 adapter.setNewData(list);
                 adapter.setBean(bean);
@@ -301,18 +322,20 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
         } else {
             if (isUpdater) {
                 isUpdater = false;
+                adapter.setKeyListener(keyListener);
+                adapter.notifyDataSetChanged();
                 save.setVisible(true);
                 modify.setVisible(true);
                 modify.setTitle("取消编辑");
                 delete.setVisible(false);
-                manageContentLayout.setVisibility(View.VISIBLE);
             } else {
                 isUpdater = true;
+                adapter.setKeyListener(null);
+                adapter.notifyDataSetChanged();
                 save.setVisible(false);
                 modify.setVisible(true);
                 modify.setTitle("编辑");
                 delete.setVisible(true);
-                manageContentLayout.setVisibility(View.GONE);
             }
         }
         return super.onPrepareOptionsMenu(menu);
@@ -324,7 +347,7 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
             finish();
         } else if (item.getItemId() == R.id.action_manage_resource_save) {
             if (!TextUtils.isEmpty(adapter.getBean().getProductName())) {
-                if (isAuto)
+                if (adapter.getBean().isReadOnly())
                     presenter.saveFertilizer(adapter.getBean());
                 else
                     presenter.saveFertilizerByUserDefine(adapter.getBean());

@@ -74,7 +74,7 @@ public class ServiceManageActivity extends BaseActivity implements IServiceManag
         adapter = new ServiceManageAdapter(ServiceManageActivity.this);
         adapter.setOnSwitchStatueListener(new ServiceManageAdapter.OnSwitchStatueListener() {
             @Override
-            public void switchChecked(boolean isSub, String serviceID, int section, int position, boolean isChecked) {
+            public void switchChecked(boolean isSub, String serviceID,String subServiceID, int section, int position, boolean isChecked) {
                 if (isChecked) {
                     switchGroupPosition = section;
                     switchChildPosition = position;

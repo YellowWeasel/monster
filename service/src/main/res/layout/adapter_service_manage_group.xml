@@ -39,7 +39,13 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            app:kswBackDrawable="@drawable/miui_back_drawable"
+            app:kswBackMeasureRatio="2"
+            app:kswThumbDrawable="@drawable/miui_thumb_drawable"
+            app:kswThumbHeight="18dp"
+            app:kswThumbWidth="18dp"
             android:checked="false"
+            android:enabled="false"
             />
 
         <ImageView

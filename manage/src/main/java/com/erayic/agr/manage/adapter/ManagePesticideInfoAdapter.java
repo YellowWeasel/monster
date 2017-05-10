@@ -2,7 +2,9 @@ package com.erayic.agr.manage.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.KeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.erayic.agr.common.net.back.CommonPesticideBean;
 import com.erayic.agr.common.util.ErayicNetDate;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.adapter.entity.ManagePesticideEntity;
@@ -36,22 +39,24 @@ public class ManagePesticideInfoAdapter extends BaseMultiItemQuickAdapter<Manage
 
     private Context context;
 
-    private boolean isEdit;//是否可写
-
-    private OnPesticideItemListener onPesticideItemListener;
     private KeyListener keyListener;//editText编辑状态
+    private CommonPesticideBean bean;
 
     public ManagePesticideInfoAdapter(Context context, List<ManagePesticideEntity> data) {
         super(data);
         this.context = context;
     }
 
-    public void setEdit(boolean edit) {
-        isEdit = edit;
+    public void setKeyListener(KeyListener keyListener) {
+        this.keyListener = keyListener;
     }
 
-    public void setOnPesticideItemListener(OnPesticideItemListener onPesticideItemListener) {
-        this.onPesticideItemListener = onPesticideItemListener;
+    public void setBean(CommonPesticideBean bean) {
+        this.bean = bean;
+    }
+
+    public CommonPesticideBean getBean() {
+        return bean;
     }
 
     @Override
@@ -60,11 +65,11 @@ public class ManagePesticideInfoAdapter extends BaseMultiItemQuickAdapter<Manage
             case ManagePesticideEntity.TYPE_DIVIDER:
                 return new ManageDividerViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_divider, parent, false));
             case ManagePesticideEntity.TYPE_NUM:
-                return new ManageContentEdit2ViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_edit_2, parent, false));
+                return new ManageContentTextViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_text, parent, false));
             case ManagePesticideEntity.TYPE_NAME:
-                return new ManageContentEdit1ViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_edit_1, parent, false));
+                return new ManageContentTextViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_text, parent, false));
             case ManagePesticideEntity.TYPE_TOXICITY:
-                return new ManageContentEdit1ViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_edit_1, parent, false));
+                return new ManageContentTextViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_text, parent, false));
             case ManagePesticideEntity.TYPE_DOSAGE:
                 return new ManageContentTextViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_text, parent, false));
             case ManagePesticideEntity.TYPE_FACTORY:
@@ -81,6 +86,12 @@ public class ManagePesticideInfoAdapter extends BaseMultiItemQuickAdapter<Manage
                 return new ManageContentTextViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_text, parent, false));
             case ManagePesticideEntity.TYPE_METHOD:
                 return new ManagePesticideMethodViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_pesticide_method, parent, false));
+            case ManagePesticideEntity.TYPE_IMPORT_NAME:
+                return new ManageContentEdit1ViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_edit_1, parent, false));
+            case ManagePesticideEntity.TYPE_IMPORT_FACTORY:
+                return new ManageContentEdit1ViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_edit_1, parent, false));
+            case ManagePesticideEntity.TYPE_IMPORT_TOXICITY:
+                return new ManageContentEdit1ViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_edit_1, parent, false));
             default:
                 return super.onCreateDefViewHolder(parent, viewType);
         }
@@ -93,49 +104,27 @@ public class ManagePesticideInfoAdapter extends BaseMultiItemQuickAdapter<Manage
             case ManagePesticideEntity.TYPE_DIVIDER:
                 break;
             case ManagePesticideEntity.TYPE_NUM:
-                if (helper instanceof ManageContentEdit2ViewHolder) {
-                    keyListener = ((ManageContentEdit2ViewHolder) helper).manageContentSubName.getKeyListener();
-                    if (isEdit) {
-                        ((ManageContentEdit2ViewHolder) helper).manageContentSubName.setKeyListener(keyListener);
-                    } else {
-                        ((ManageContentEdit2ViewHolder) helper).manageContentSubName.setKeyListener(null);
-                    }
-                    ((ManageContentEdit2ViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
-                    ((ManageContentEdit2ViewHolder) helper).manageContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
-                    ((ManageContentEdit2ViewHolder) helper).manageContentSubName.setText(TextUtils.isEmpty(item.getSubMap().get("key1")) ? "" : item.getSubMap().get("key1"));
-                    ((ManageContentEdit2ViewHolder) helper).manageContentButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (onPesticideItemListener != null)
-                                onPesticideItemListener.onSelect(v, helper.getAdapterPosition(), ((ManageContentEdit2ViewHolder) helper).manageContentSubName.getText().toString());
-                        }
-                    });
+                if (helper instanceof ManageContentTextViewHolder) {
+                    ((ManageContentTextViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
+                    ((ManageContentTextViewHolder) helper).manageContentGoto.setVisibility(View.GONE);
+                    ((ManageContentTextViewHolder) helper).manageContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
+                    ((ManageContentTextViewHolder) helper).manageContentSub.setText(TextUtils.isEmpty(item.getSubMap().get("key1")) ? "" : item.getSubMap().get("key1"));
                 }
                 break;
             case ManagePesticideEntity.TYPE_NAME:
-                if (helper instanceof ManageContentEdit1ViewHolder) {
-                    if (isEdit) {
-                        ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setKeyListener(keyListener);
-                    } else {
-                        ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setKeyListener(null);
-                    }
-                    ((ManageContentEdit1ViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
-                    ((ManageContentEdit1ViewHolder) helper).manageContentGoto.setVisibility(View.GONE);
-                    ((ManageContentEdit1ViewHolder) helper).manageContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
-                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setText(TextUtils.isEmpty(item.getSubMap().get("key1")) ? "" : item.getSubMap().get("key1"));
+                if (helper instanceof ManageContentTextViewHolder) {
+                    ((ManageContentTextViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
+                    ((ManageContentTextViewHolder) helper).manageContentGoto.setVisibility(View.GONE);
+                    ((ManageContentTextViewHolder) helper).manageContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
+                    ((ManageContentTextViewHolder) helper).manageContentSub.setText(TextUtils.isEmpty(item.getSubMap().get("key1")) ? "" : item.getSubMap().get("key1"));
                 }
                 break;
             case ManagePesticideEntity.TYPE_TOXICITY:
-                if (helper instanceof ManageContentEdit1ViewHolder) {
-                    if (isEdit) {
-                        ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setKeyListener(keyListener);
-                    } else {
-                        ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setKeyListener(null);
-                    }
-                    ((ManageContentEdit1ViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
-                    ((ManageContentEdit1ViewHolder) helper).manageContentGoto.setVisibility(View.GONE);
-                    ((ManageContentEdit1ViewHolder) helper).manageContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
-                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setText(TextUtils.isEmpty(item.getSubMap().get("key1")) ? "" : item.getSubMap().get("key1"));
+                if (helper instanceof ManageContentTextViewHolder) {
+                    ((ManageContentTextViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
+                    ((ManageContentTextViewHolder) helper).manageContentGoto.setVisibility(View.GONE);
+                    ((ManageContentTextViewHolder) helper).manageContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
+                    ((ManageContentTextViewHolder) helper).manageContentSub.setText(TextUtils.isEmpty(item.getSubMap().get("key1")) ? "" : item.getSubMap().get("key1"));
                 }
                 break;
             case ManagePesticideEntity.TYPE_DOSAGE:
@@ -212,13 +201,83 @@ public class ManagePesticideInfoAdapter extends BaseMultiItemQuickAdapter<Manage
                     ((ManagePesticideMethodViewHolder) helper).manageContentSubName4.setText(TextUtils.isEmpty(item.getSubMap().get("key4")) ? "" : item.getSubMap().get("key4"));
                 }
                 break;
+            case ManagePesticideEntity.TYPE_IMPORT_NAME:
+                if (helper instanceof ManageContentEdit1ViewHolder) {
+                    ((ManageContentEdit1ViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
+                    ((ManageContentEdit1ViewHolder) helper).manageContentGoto.setVisibility(View.GONE);
+                    ((ManageContentEdit1ViewHolder) helper).manageContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
+                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setKeyListener(keyListener);
+                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setText(TextUtils.isEmpty(item.getSubMap().get("key1")) ? "" : item.getSubMap().get("key1"));
+                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            bean.setRegisterName(s.toString());
+                        }
+                    });
+                }
+                break;
+            case ManagePesticideEntity.TYPE_IMPORT_FACTORY:
+                if (helper instanceof ManageContentEdit1ViewHolder) {
+                    ((ManageContentEdit1ViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
+                    ((ManageContentEdit1ViewHolder) helper).manageContentGoto.setVisibility(View.GONE);
+                    ((ManageContentEdit1ViewHolder) helper).manageContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
+                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setKeyListener(keyListener);
+                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setText(TextUtils.isEmpty(item.getSubMap().get("key1")) ? "" : item.getSubMap().get("key1"));
+                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            bean.setManufacturer(s.toString());
+                        }
+                    });
+                }
+                break;
+            case ManagePesticideEntity.TYPE_IMPORT_TOXICITY:
+                if (helper instanceof ManageContentEdit1ViewHolder) {
+                    ((ManageContentEdit1ViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
+                    ((ManageContentEdit1ViewHolder) helper).manageContentGoto.setVisibility(View.GONE);
+                    ((ManageContentEdit1ViewHolder) helper).manageContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
+                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setKeyListener(keyListener);
+                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setText(TextUtils.isEmpty(item.getSubMap().get("key1")) ? "" : item.getSubMap().get("key1"));
+                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            bean.setToxicity(s.toString());
+                        }
+                    });
+                }
+                break;
             default:
                 break;
         }
-    }
-
-    public interface OnPesticideItemListener {
-        //点击查询
-        void onSelect(View view, int position, String pesID);
     }
 }

@@ -174,13 +174,30 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
     private class OnItemClickListener implements ServiceEntranceAdapter.OnItemClickListener {
 
         @Override
-        public void onClick(View v, String serviceID) {
+        public void onClick(View v, String serviceID, String subServiceID) {
             switch (serviceID) {
                 case "b759c79e-b365-4932-aab0-99ca72a35e04":
                     ARouter.getInstance().build("/serverproduct/activity/ReportingActivity").withString("serviceID", serviceID).navigation();
                     break;
                 case "2e205e96-89c3-4370-ab65-d117fdb4c12e":
                     ARouter.getInstance().build("/serverproduct/activity/WeatherTenDayReportingActivity").withString("serviceID", serviceID).navigation();
+                    break;
+                case "3d8508bf-9b94-4b2c-86cb-d4e62663d25f"://价格动态服务
+                    switch (subServiceID == null ? "" : subServiceID) {
+                        case "e27c20c6-9994-452a-b32c-092cfb85fcf7"://芒果
+                            break;
+                        case "51c74d08-054b-47d3-92f0-1b7489b2f225"://苹果
+                            break;
+                        case "91efc1c1-ed58-40da-926d-79faf0351488"://白菜
+                            break;
+                        case "eda779ef-ef1c-4225-b563-83cd7c321776"://上海青
+                            break;
+                        case "dce3c919-5b0b-4b40-87b6-a29eac1080f8"://香蕉
+                            break;
+                        default:
+                            showToast("未支持的服务类型");
+                            break;
+                    }
                     break;
                 default:
                     break;

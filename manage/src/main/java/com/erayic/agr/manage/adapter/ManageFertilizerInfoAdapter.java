@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.KeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class ManageFertilizerInfoAdapter extends BaseMultiItemQuickAdapter<Manag
     private Context context;
 
     private CommonFertilizerBean bean;
+    private KeyListener keyListener = null;
 
     public ManageFertilizerInfoAdapter(Context context, List<ManageFertilizerEntity> data) {
         super(data);
@@ -38,6 +40,10 @@ public class ManageFertilizerInfoAdapter extends BaseMultiItemQuickAdapter<Manag
 
     public void setBean(CommonFertilizerBean bean) {
         this.bean = bean;
+    }
+
+    public void setKeyListener(KeyListener keyListener) {
+        this.keyListener = keyListener;
     }
 
     public CommonFertilizerBean getBean() {
@@ -85,6 +91,7 @@ public class ManageFertilizerInfoAdapter extends BaseMultiItemQuickAdapter<Manag
                     ((ManageContentEdit1ViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
                     ((ManageContentEdit1ViewHolder) helper).manageContentGoto.setVisibility(View.GONE);
                     ((ManageContentEdit1ViewHolder) helper).manageContentName.setText("化肥名称");
+                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setKeyListener(keyListener);
                     ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setText(TextUtils.isEmpty(item.getSubMap().get("key1")) ? "" : item.getSubMap().get("key1"));
                     ((ManageContentEdit1ViewHolder) helper).manageContentSubName.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -109,6 +116,7 @@ public class ManageFertilizerInfoAdapter extends BaseMultiItemQuickAdapter<Manag
                     ((ManageContentEdit1ViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
                     ((ManageContentEdit1ViewHolder) helper).manageContentGoto.setVisibility(View.GONE);
                     ((ManageContentEdit1ViewHolder) helper).manageContentName.setText("生产厂家");
+                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setKeyListener(keyListener);
                     ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setText(TextUtils.isEmpty(item.getSubMap().get("key1")) ? "" : item.getSubMap().get("key1"));
                     ((ManageContentEdit1ViewHolder) helper).manageContentSubName.addTextChangedListener(new TextWatcher() {
                         @Override

@@ -3,6 +3,8 @@ package com.erayic.agr.common.net.back;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.erayic.agr.common.net.back.enums.EnumResourceType;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,9 +28,7 @@ public class CommonPesticideBean implements Serializable {
     private List<ActivesInfo> Actives;//有效成分
     private List<ApplysInfo> Applys;//防治作物
     private String ResID = "00000000-0000-0000-0000-000000000000";//资源ID
-    private int Type = 1;//资源类型
-    private String Name;//资源名称
-    private String CommonDesc;
+    private int Type = EnumResourceType.TYPE_PESTICIDE;//资源类型
     private boolean IsReadOnly;//是否只读
 
     public static class ActivesInfo {
@@ -177,22 +177,6 @@ public class CommonPesticideBean implements Serializable {
 
     public void setType(int type) {
         Type = type;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getCommonDesc() {
-        return CommonDesc;
-    }
-
-    public void setCommonDesc(String commonDesc) {
-        CommonDesc = commonDesc;
     }
 
     public boolean isReadOnly() {
