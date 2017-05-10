@@ -93,24 +93,10 @@ public class HttpResourceManager {
     }
 
     /**
-     * 增加一个肥料
-     */
-    public Observable addFertilizer(CommonFertilizerBean bean) {
-        return resourceService.addFertilizer(bean);
-    }
-
-    /**
      * 增加一个农药
      */
     public Observable addPesticide(CommonPesticideBean bean) {
         return resourceService.addPesticide(bean);
-    }
-
-    /**
-     * 增加一个种子
-     */
-    public Observable addSeed(CommonSeedBean bean) {
-        return resourceService.addSeed(bean);
     }
 
     /**
@@ -135,6 +121,13 @@ public class HttpResourceManager {
     }
 
     /**
+     * 得到指定类型的生产资料(种子)
+     */
+    public Observable getSpecifyResourcesBySeed(String resID, int type) {
+        return resourceService.getSpecifyResourcesBySeed(resID, type);
+    }
+
+    /**
      * 删除一个生产资料
      */
     public Observable deleteResource(String resID, int type) {
@@ -142,10 +135,25 @@ public class HttpResourceManager {
     }
 
     /**
-     * 更新一个肥料
+     * 保存种子
      */
-    public Observable updateFertilizer(CommonFertilizerBean bean){
-        return resourceService.updateFertilizer(bean);
+    public Observable saveSeed(CommonSeedBean bean) {
+        return resourceService.saveSeed(bean.getResID(), bean.getProductName(), bean.getPID(), bean.getManufacturer());
     }
+
+    /**
+     * 保存肥料
+     */
+    public Observable saveFertilizer(CommonFertilizerBean bean) {
+        return resourceService.saveFertilizer(bean);
+    }
+
+    /**
+     * 保存一个自定义肥料
+     */
+    public Observable saveFertilizerByUserDefine(CommonFertilizerBean bean){
+        return resourceService.saveFertilizerByUserDefine(bean.getResID(),bean.getProductName(),bean.getManufacturer());
+    }
+
 
 }

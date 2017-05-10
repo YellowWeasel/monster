@@ -16,11 +16,6 @@ public interface IFertilizerInfoPresenter {
     void fertilizerCheck(String pID);
 
     /**
-     * 增加肥料
-     */
-    void addFertilizer(CommonFertilizerBean bean);
-
-    /**
      * 得到指定农药的信息
      */
     void getSpecifyResources(String resID, int type);
@@ -31,8 +26,13 @@ public interface IFertilizerInfoPresenter {
     void deleteResource(String resID, int type);
 
     /**
-     * 更新肥料
+     * 保存肥料
      */
-    void updateFertilizer(CommonFertilizerBean bean);
+    void saveFertilizer(CommonFertilizerBean bean);
+
+    /**
+     * 保存一个自定义肥料
+     */
+    void saveFertilizerByUserDefine(CommonFertilizerBean bean);
 
 }

@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/manage/manage.iml" filepath="$PROJECT_DIR$/manage/manage.iml" />
       <module fileurl="file://$PROJECT_DIR$/serverproduct/serverproduct.iml" filepath="$PROJECT_DIR$/serverproduct/serverproduct.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service.iml" filepath="$PROJECT_DIR$/service/service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unit/unit.iml" filepath="$PROJECT_DIR$/unit/unit.iml" />
     </modules>
   </component>
 </project>

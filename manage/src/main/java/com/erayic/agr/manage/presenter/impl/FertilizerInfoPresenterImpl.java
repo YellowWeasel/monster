@@ -44,25 +44,6 @@ public class FertilizerInfoPresenterImpl implements IFertilizerInfoPresenter {
     }
 
     @Override
-    public void addFertilizer(CommonFertilizerBean bean) {
-        fertilizerInfoView.showLoading();
-        resourceModel.addFertilizer(bean, new OnDataListener<Object>() {
-            @Override
-            public void success(Object response) {
-                fertilizerInfoView.dismissLoading();
-                fertilizerInfoView.showToast("保存成功");
-                fertilizerInfoView.saveSure();
-            }
-
-            @Override
-            public void fail(int errCode, String msg) {
-                fertilizerInfoView.dismissLoading();
-                fertilizerInfoView.showToast("错误代码：" + errCode + "\n描述：" + msg);
-            }
-        });
-    }
-
-    @Override
     public void getSpecifyResources(String resID, int type) {
         fertilizerInfoView.showLoading();
         resourceModel.getSpecifyResourcesByFertilizer(resID, type, new OnDataListener<CommonFertilizerBean>() {
@@ -100,13 +81,32 @@ public class FertilizerInfoPresenterImpl implements IFertilizerInfoPresenter {
     }
 
     @Override
-    public void updateFertilizer(CommonFertilizerBean bean) {
+    public void saveFertilizer(CommonFertilizerBean bean) {
         fertilizerInfoView.showLoading();
-        resourceModel.updateFertilizer(bean, new OnDataListener<Object>() {
+        resourceModel.saveFertilizer(bean, new OnDataListener<Object>() {
             @Override
             public void success(Object response) {
                 fertilizerInfoView.dismissLoading();
-                fertilizerInfoView.showToast("保存成功");
+                fertilizerInfoView.showToast("保存生产资料成功");
+                fertilizerInfoView.saveSure();
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
+                fertilizerInfoView.dismissLoading();
+                fertilizerInfoView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
+    }
+
+    @Override
+    public void saveFertilizerByUserDefine(CommonFertilizerBean bean) {
+        fertilizerInfoView.showLoading();
+        resourceModel.saveFertilizerByUserDefine(bean, new OnDataListener<Object>() {
+            @Override
+            public void success(Object response) {
+                fertilizerInfoView.dismissLoading();
+                fertilizerInfoView.showToast("保存生产资料成功");
                 fertilizerInfoView.saveSure();
             }
 

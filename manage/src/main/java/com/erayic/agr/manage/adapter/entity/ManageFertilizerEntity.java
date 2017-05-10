@@ -16,6 +16,7 @@ public class ManageFertilizerEntity implements MultiItemEntity {
 
     public static final int TYPE_DIVIDER = 0;//分割线
     public static final int TYPE_IMPORT_NAME = 1;//化肥名称（输入）
+    public static final int TYPE_IMPORT_MANUFACTURER = 2;//生产厂家（输入）
     public static final int TYPE_COMMON_NAME = 3;//产品通用名称
     public static final int TYPE_PRODUCT_NAME = 4;//产品商家名称
     public static final int TYPE_MANUFACTURER = 5;//生产厂家

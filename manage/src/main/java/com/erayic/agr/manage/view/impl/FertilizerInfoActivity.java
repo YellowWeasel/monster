@@ -66,7 +66,8 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
     @Autowired
     String resName;//资源名称
 
-    boolean isUpdater;//是否在修改状态
+    private boolean isUpdater;//是否在修改状态
+    private boolean isAuto;//是否查询回来的数据
 
     private LoadingDialog dialog;
 
@@ -114,6 +115,7 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
     @OnClick(R2.id.manage_content_bt_query)
     public void onManageContentBtQueryClicked() {//查询输入
         if (!TextUtils.isEmpty(manageContentPid.getText().toString())) {
+            isAuto = true;
             presenter.fertilizerCheck(manageContentPid.getText().toString());
         } else {
             showToast("请输入登记证号");
@@ -122,6 +124,7 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
 
     @OnClick(R2.id.manage_content_bt_manual)
     public void onManageContentBtManualClicked() {//手动输入
+        isAuto = false;
         CommonFertilizerBean bean = new CommonFertilizerBean();
         List<ManageFertilizerEntity> list = new ArrayList<>();
         //分割线
@@ -135,7 +138,15 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
             entity.setItemType(ManageFertilizerEntity.TYPE_IMPORT_NAME);
             Map<String, String> map = new ArrayMap<>();
             map.put("key1", "");
-            bean.setCommonName("");
+            entity.setSubMap(map);
+            list.add(entity);
+        }
+        //生产厂家
+        {
+            ManageFertilizerEntity entity = new ManageFertilizerEntity();
+            entity.setItemType(ManageFertilizerEntity.TYPE_IMPORT_MANUFACTURER);
+            Map<String, String> map = new ArrayMap<>();
+            map.put("key1", bean.getManufacturer());
             entity.setSubMap(map);
             list.add(entity);
         }
@@ -313,9 +324,10 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
             finish();
         } else if (item.getItemId() == R.id.action_manage_resource_save) {
             if (!TextUtils.isEmpty(adapter.getBean().getProductName())) {
-                if (isAdd)
-                    presenter.addFertilizer(adapter.getBean());
-
+                if (isAuto)
+                    presenter.saveFertilizer(adapter.getBean());
+                else
+                    presenter.saveFertilizerByUserDefine(adapter.getBean());
 
             } else {
                 showToast("请完善信息");

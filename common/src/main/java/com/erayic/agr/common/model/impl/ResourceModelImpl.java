@@ -219,43 +219,6 @@ public class ResourceModelImpl implements IResourceModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void addFertilizer(CommonFertilizerBean bean, final OnDataListener<Object> listener) {
-        HttpResourceManager.getInstance().addFertilizer(bean)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
-                    @Override
-                    public void call(DataBack<Object> objectDataBack) {
-                        ErayicLog.i("addFertilizer", ErayicGson.getJsonString(objectDataBack));
-                        if (objectDataBack.isSucess()) {
-                            listener.success(objectDataBack.getResult());
-                        } else {
-                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
-                        }
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<Object>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable) {
-                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
-                    }
-
-                    @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
-
-                    }
-                });
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
     public void addPesticide(CommonPesticideBean bean, final OnDataListener<Object> listener) {
         HttpResourceManager.getInstance().addPesticide(bean)
                 .subscribeOn(Schedulers.newThread())
@@ -264,43 +227,6 @@ public class ResourceModelImpl implements IResourceModel {
                     @Override
                     public void call(DataBack<Object> objectDataBack) {
                         ErayicLog.i("addPesticide", ErayicGson.getJsonString(objectDataBack));
-                        if (objectDataBack.isSucess()) {
-                            listener.success(objectDataBack.getResult());
-                        } else {
-                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
-                        }
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<Object>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable) {
-                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
-                    }
-
-                    @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
-
-                    }
-                });
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public void addSeed(CommonSeedBean bean, final OnDataListener<Object> listener) {
-        HttpResourceManager.getInstance().addSeed(bean)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
-                    @Override
-                    public void call(DataBack<Object> objectDataBack) {
-                        ErayicLog.i("addSeed", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
                         } else {
@@ -441,6 +367,43 @@ public class ResourceModelImpl implements IResourceModel {
 
     @SuppressWarnings("unchecked")
     @Override
+    public void getSpecifyResourcesBySeed(String resID, int type, final OnDataListener<CommonSeedBean> listener) {
+        HttpResourceManager.getInstance().getSpecifyResourcesBySeed(resID, type)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<CommonSeedBean>>() {
+                    @Override
+                    public void call(DataBack<CommonSeedBean> objectDataBack) {
+                        ErayicLog.i("getSpecifyResourcesBySeed", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
     public void deleteResource(String resID, int type, final OnDataListener<Object> listener) {
         HttpResourceManager.getInstance().deleteResource(resID, type)
                 .subscribeOn(Schedulers.newThread())
@@ -478,14 +441,88 @@ public class ResourceModelImpl implements IResourceModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void updateFertilizer(CommonFertilizerBean bean, final OnDataListener<Object> listener) {
-        HttpResourceManager.getInstance().updateFertilizer(bean)
+    public void saveSeed(CommonSeedBean bean, final OnDataListener<Object> listener) {
+        HttpResourceManager.getInstance().saveSeed(bean)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Action1<DataBack<Object>>() {
                     @Override
                     public void call(DataBack<Object> objectDataBack) {
-                        ErayicLog.i("updateFertilizer", ErayicGson.getJsonString(objectDataBack));
+                        ErayicLog.i("saveSeed", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void saveFertilizer(CommonFertilizerBean bean, final OnDataListener<Object> listener) {
+        HttpResourceManager.getInstance().saveFertilizer(bean)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<Object>>() {
+                    @Override
+                    public void call(DataBack<Object> objectDataBack) {
+                        ErayicLog.i("saveFertilizer", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void saveFertilizerByUserDefine(CommonFertilizerBean bean, final OnDataListener<Object> listener) {
+        HttpResourceManager.getInstance().saveFertilizerByUserDefine(bean)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<Object>>() {
+                    @Override
+                    public void call(DataBack<Object> objectDataBack) {
+                        ErayicLog.i("saveFertilizerByUserDefine", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
                         } else {

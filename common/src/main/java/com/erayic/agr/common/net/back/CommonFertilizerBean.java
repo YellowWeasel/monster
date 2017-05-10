@@ -1,5 +1,7 @@
 package com.erayic.agr.common.net.back;
 
+import com.erayic.agr.common.net.back.enums.EnumResourceType;
+
 /**
  * 作者：hejian
  * 邮箱：hkceey@outlook.com
@@ -9,7 +11,7 @@ package com.erayic.agr.common.net.back;
 public class CommonFertilizerBean {
 
     private String ResID = "00000000-0000-0000-0000-000000000000";
-    private int Type =2;
+    private int Type = EnumResourceType.TYPE_FERTILIZER;
 
     private String PID;//登记号
     private String CommonName;//产品通用名称

@@ -73,4 +73,6 @@ dependencies {
     compile 'com.kyleduo.switchbutton:library:1.4.5'
 //    EventBus
     compile 'org.greenrobot:eventbus:3.0.0'
+//    日期选择（https://github.com/codbking/PickTime）
+    compile 'com.github.codbking:PickTime:v1.0.1'
 }

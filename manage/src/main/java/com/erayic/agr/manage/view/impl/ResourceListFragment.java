@@ -80,6 +80,11 @@ public class ResourceListFragment extends BaseFragment implements IResourceListV
                     case EnumResourceType.TYPE_FEED://饲料
                         break;
                     case EnumResourceType.TYPE_SEED://种子
+                        ARouter.getInstance().build("/manage/activity/SeedInfoActivity")
+                                .withBoolean("isAdd", false)
+                                .withString("resID", bean.getResID())
+                                .withString("resName", bean.getName())
+                                .navigation();
                         break;
                 }
 

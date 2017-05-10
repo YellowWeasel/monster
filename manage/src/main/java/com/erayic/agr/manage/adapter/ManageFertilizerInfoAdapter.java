@@ -51,6 +51,8 @@ public class ManageFertilizerInfoAdapter extends BaseMultiItemQuickAdapter<Manag
                 return new ManageDividerViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_divider, parent, false));
             case ManageFertilizerEntity.TYPE_IMPORT_NAME:
                 return new ManageContentEdit1ViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_edit_1, parent, false));
+            case ManageFertilizerEntity.TYPE_IMPORT_MANUFACTURER:
+                return new ManageContentEdit1ViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_edit_1, parent, false));
             case ManageFertilizerEntity.TYPE_PID:
                 return new ManageContentTextViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_content_text, parent, false));
             case ManageFertilizerEntity.TYPE_COMMON_NAME:
@@ -98,6 +100,30 @@ public class ManageFertilizerInfoAdapter extends BaseMultiItemQuickAdapter<Manag
                         @Override
                         public void afterTextChanged(Editable s) {
                             bean.setProductName(s.toString());
+                        }
+                    });
+                }
+                break;
+            case ManageFertilizerEntity.TYPE_IMPORT_MANUFACTURER:
+                if (helper instanceof ManageContentEdit1ViewHolder) {
+                    ((ManageContentEdit1ViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
+                    ((ManageContentEdit1ViewHolder) helper).manageContentGoto.setVisibility(View.GONE);
+                    ((ManageContentEdit1ViewHolder) helper).manageContentName.setText("生产厂家");
+                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.setText(TextUtils.isEmpty(item.getSubMap().get("key1")) ? "" : item.getSubMap().get("key1"));
+                    ((ManageContentEdit1ViewHolder) helper).manageContentSubName.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            bean.setManufacturer(s.toString());
                         }
                     });
                 }

@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/manage" />
             <option value="$PROJECT_DIR$/serverproduct" />
             <option value="$PROJECT_DIR$/service" />
+            <option value="$PROJECT_DIR$/unit" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

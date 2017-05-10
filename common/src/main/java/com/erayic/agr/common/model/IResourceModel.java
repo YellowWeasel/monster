@@ -44,19 +44,9 @@ public interface IResourceModel extends IProvider {
     void pestilizerCheck(String pID, OnDataListener<CommonPesticideBean> listener);
 
     /**
-     * 增加一个肥料
-     */
-    void addFertilizer(CommonFertilizerBean bean, OnDataListener<Object> listener);
-
-    /**
      * 增加一个农药
      */
     void addPesticide(CommonPesticideBean bean, OnDataListener<Object> listener);
-
-    /**
-     * 增加一个种子
-     */
-    void addSeed(CommonSeedBean bean, OnDataListener<Object> listener);
 
     /**
      * 得到指定类型的生产资料集合
@@ -74,12 +64,27 @@ public interface IResourceModel extends IProvider {
     void getSpecifyResourcesByFertilizer(String resID, int type, OnDataListener<CommonFertilizerBean> listener);
 
     /**
+     * 得到指定类型的生产资料(种子)
+     */
+    void getSpecifyResourcesBySeed(String resID, int type, OnDataListener<CommonSeedBean> listener);
+
+    /**
      * 删除一个生产资料
      */
     void deleteResource(String resID, int type, OnDataListener<Object> listener);
 
     /**
-     * 更新一个肥料
+     * 保存种子
      */
-    void updateFertilizer(CommonFertilizerBean bean,OnDataListener<Object> listener);
+    void saveSeed(CommonSeedBean bean,OnDataListener<Object> listener);
+
+    /**
+     * 保存肥料
+     */
+    void saveFertilizer(CommonFertilizerBean bean,OnDataListener<Object> listener);
+
+    /**
+     * 保存一个自定义肥料
+     */
+    void  saveFertilizerByUserDefine(CommonFertilizerBean bean,OnDataListener<Object> listener);
 }

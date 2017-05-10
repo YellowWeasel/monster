@@ -129,17 +129,6 @@ public interface IHttpResourceService {
     );
 
     /**
-     * 增加一个肥料
-     *
-     * @param bean 肥料实体类
-     * @return DataBack
-     */
-    @POST("Resource/AddFertilizer")
-    Observable<DataBack<Object>> addFertilizer(
-            @Body CommonFertilizerBean bean
-    );
-
-    /**
      * 增加一个农药
      *
      * @param bean 农药实体类
@@ -150,16 +139,6 @@ public interface IHttpResourceService {
             @Body CommonPesticideBean bean
     );
 
-    /**
-     * 增加一个种子
-     *
-     * @param bean 种子实体类
-     * @return DataBack
-     */
-    @POST("Resource/AddSeed")
-    Observable<DataBack<Object>> addSeed(
-            @Body CommonSeedBean bean
-    );
 
     /**
      * 得到指定类型的生产资料集合
@@ -214,14 +193,58 @@ public interface IHttpResourceService {
     );
 
     /**
-     * 更新一个肥料
+     * 得到指定类型的生产资料详情(种子)
      *
-     * @param bean 肥料实体
+     * @param resID 生产资料ID
+     * @param type  生产资料类型（1：农药，2：肥料，3：饲料，4：种子）
      * @return DataBack
      */
-    @GET("Resource/UpdateFertilizer")
-    Observable<DataBack<Object>> updateFertilizer(
-            @Body CommonFertilizerBean bean
+    @GET("Resource/GetSpecifyResources")
+    Observable<DataBack<CommonSeedBean>> getSpecifyResourcesBySeed(
+            @Query("resID") String resID,
+            @Query("type") int type
+    );
+
+    /**
+     * 保存一个种子
+     *
+     * @param resID        资源ID
+     * @param seedName     种子名称
+     * @param pID          登记证号
+     * @param manufacturer 生产厂家
+     * @return DataBack
+     */
+    @POST("Resource/SaveSeed")
+    Observable<DataBack<Object>> saveSeed(
+            @Query("resID") String resID,
+            @Query("seedname") String seedName,
+            @Query("pID") String pID,
+            @Query("manufacturer") String manufacturer
+    );
+
+    /**
+     * 保存一个肥料
+     *
+     * @param fert 肥料实体
+     * @return DataBack
+     */
+    @POST("Resource/SaveFertilizer")
+    Observable<DataBack<Object>> saveFertilizer(
+            @Body CommonFertilizerBean fert
+    );
+
+    /**
+     * 保存一个自定义化肥
+     * @param resID 生产资料ID
+     * @param fertName 肥料名称
+     * @param manufacturer 生产厂家
+     * @return DataBack
+     */
+    @POST("Resource/SaveFertilizerByUserDefine")
+    Observable<DataBack<Object>> saveFertilizerByUserDefine(
+            @Query("resID") String resID,
+            @Query("fertname") String fertName,
+            @Query("manufacturer") String manufacturer
     );
 
 }
