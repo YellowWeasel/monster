@@ -2,6 +2,7 @@ package com.erayic.agr.serverproduct.view;
 
 import com.erayic.agr.serverproduct.adapter.entity.WeatherTendayReportingData;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -10,6 +11,7 @@ import java.util.List;
 
 public interface ITenDayReportingView {
     void refreshTenDayReportingDatas(List<WeatherTendayReportingData> beans);
+    void updateTenDayReportingDatas(Date date);
     void showLoading();
     void dismissLoading();
     void showToast();

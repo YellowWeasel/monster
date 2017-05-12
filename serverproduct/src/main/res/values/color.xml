@@ -11,5 +11,6 @@
     <color name="toptitle">#374254</color>
     <color name="bgcolor">#999999</color>
     <color name="fontcolor">#ab000000</color>
+    <color name="lightgreen">#ea21cfae</color>
     <color name="transparent">#00000000</color>
 </resources>

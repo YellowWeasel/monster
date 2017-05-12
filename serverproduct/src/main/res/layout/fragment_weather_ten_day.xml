@@ -52,6 +52,16 @@
                 android:id="@+id/serverproduct_tendayreporting_images_listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+            <TextView
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/serverproduct_tendayreporting_source_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:gravity="center_vertical"
+                android:textColor="@color/fontcolor"
+                android:textSize="@dimen/content" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

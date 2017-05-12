@@ -53,4 +53,26 @@ public class HttpApiManager {
     public Observable getWeatherTenDayReportsByMonth(int year, int month) {
         return apiService.getWeatherTenDayReportsByMonth(year, month);
     }
+
+    /**
+     * 获取价格动态
+     */
+    public Observable getDynamicPrices(int cropId,String start,String end) {
+        return apiService.getDynamicPrices(cropId,start,end);
+    }
+
+    /**
+     * 获取政策法规列表
+     */
+    public Observable getPoliciesRegulations(int pageIndex,int pageSize) {
+        return apiService.getPoliciesRegulations(pageIndex,pageSize);
+    }
+
+    /**
+     * 获取政策法规详情
+     */
+    public Observable getPoliciesRegulationsDetail(int Id) {
+        return apiService.getPoliciesRegulationsDetail(Id);
+    }
+
 }

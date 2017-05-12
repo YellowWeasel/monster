@@ -22,6 +22,7 @@ import com.erayic.agr.serverproduct.Constants;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
 import com.erayic.agr.serverproduct.adapter.entity.WeatherTendayReportingData;
+import com.erayic.agr.serverproduct.view.ITendayReportingUpdateView;
 
 import butterknife.BindView;
 
@@ -30,7 +31,7 @@ import butterknife.BindView;
  */
 
 @Route(path = "/serverproduct/fragment/WeatherTenDayReportingFragment", name = "旬报")
-public class WeatherTenDayReportingFragment extends BaseFragment {
+public class WeatherTenDayReportingFragment extends BaseFragment implements ITendayReportingUpdateView {
     @Autowired
     WeatherTendayReportingData reportingData;
     @BindView(R2.id.serverproduct_tendayreporting_images_listview)
@@ -39,7 +40,8 @@ public class WeatherTenDayReportingFragment extends BaseFragment {
     TextView titleTextView;
     @BindView(R2.id.serverproduct_tendayreporting_content_textview)
     TextView contentTextView;
-
+    @BindView(R2.id.serverproduct_tendayreporting_source_textview)
+    TextView sourceTextView;
     @Override
     protected int getLayoutId() {
 
@@ -48,12 +50,21 @@ public class WeatherTenDayReportingFragment extends BaseFragment {
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-
+        titleTextView.setFocusable(true);
+        titleTextView.setFocusableInTouchMode(true);
+        titleTextView.requestFocus();
     }
 
     @Override
     protected void initData() {
-        if (reportingData==null)return;
+        updateView();
+    }
+
+    public void updateView(){
+        if (reportingData==null){
+            resetView();
+            return;
+        }
         titleTextView.setText(reportingData.getTitle());
         contentTextView.setText("[摘要]\n\t\t\t" + Html.fromHtml("<b><tt>" + reportingData.getSummaryTxt() + "</tt></b>")
                 + "\n\n" + reportingData.getConentTxt());
@@ -62,6 +73,19 @@ public class WeatherTenDayReportingFragment extends BaseFragment {
         builder.setSpan(blackSpan, 0, ("[摘要]\n\t\t\t" + Html.fromHtml("<b><tt>" + reportingData.getSummaryTxt() + "</tt></b>")).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         contentTextView.setText(builder);
         reportingPics.setAdapter(new PicAdapter());
+        sourceTextView.setText("来源:\t"+reportingData.getSource());
+    }
+    public void resetView(){
+        titleTextView.setText("暂无数据");
+        contentTextView.setText("");
+        sourceTextView.setText("");
+        reportingPics.setAdapter(null);
+    }
+
+    @Override
+    public void updateReportingDatas(WeatherTendayReportingData data) {
+          this.reportingData=data;
+          updateView();
     }
 
     public class PicAdapter extends BaseAdapter {

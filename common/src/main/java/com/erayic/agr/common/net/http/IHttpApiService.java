@@ -2,7 +2,10 @@ package com.erayic.agr.common.net.http;
 
 import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
+import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
+import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsBean;
+import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsDetailBean;
 import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
 
 import java.util.List;
@@ -48,4 +51,32 @@ public interface IHttpApiService {
             @Query("month") int month
     );
 
+    /**
+     * 获取政策法规
+     * @return
+     */
+    @GET("MarketInfo/GetPoliciesList")
+    Observable<DataBack<List<CommonPoliciesRegulationsBean>>>  getPoliciesRegulations(
+            @Query("pageIndex")int pageIndex
+            ,@Query("pageSize")int pageSize
+    );
+
+    @GET("MarketInfo/GetPoliciesById")
+    Observable<DataBack<CommonPoliciesRegulationsDetailBean>>  getPoliciesRegulationsDetail(
+            @Query("Id")int Id
+    );
+
+    /**
+     * 获取价格动态
+     * @param cropId
+     * @param start
+     * @param end
+     * @return
+     */
+    @GET("MarketInfo/GetMarketPrice")
+    Observable<DataBack<CommonDynamicPriceBean>> getDynamicPrices(
+        @Query("cropId")int cropId,
+        @Query("start")String start,
+        @Query("end")String end
+    );
 }

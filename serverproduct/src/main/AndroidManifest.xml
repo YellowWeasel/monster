@@ -8,7 +8,16 @@
             android:name=".view.impl.ReportingActivity"
             android:theme="@style/AppTheme.Transparent" />
         <activity
-            android:name=".view.impl.WeatherTenDayReportingActivity"
+        android:name=".view.impl.WeatherTenDayReportingActivity"
+        android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.PoliciesRegulationsActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.DynamicPriceActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.PoliciesRegulationsDetailActivity"
             android:theme="@style/AppTheme.Transparent" />
     </application>
 

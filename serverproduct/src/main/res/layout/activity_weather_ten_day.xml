@@ -18,7 +18,12 @@
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay">
-
+            <ImageView
+                android:layout_marginLeft="200dp"
+                android:src="@drawable/image_serverproduct_menuicon"
+                android:id="@+id/serverproduct_tendayreporting_menu_imageview"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
     <com.erayic.agr.common.view.PagerSlidingTabStrip

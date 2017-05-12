@@ -25,7 +25,7 @@ import com.erayic.agr.serverproduct.adapter.entity.ReportingInfo;
 import com.erayic.agr.serverproduct.presenter.IReportingPresenter;
 import com.erayic.agr.serverproduct.presenter.impl.ReportingPresenter;
 import com.erayic.agr.serverproduct.view.IReportingInfoView;
-import com.erayic.agr.serverproduct.view.NoScrollWebView;
+import com.erayic.agr.serverproduct.view.custom.NoScrollWebView;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -36,7 +36,7 @@ import butterknife.BindView;
  * Created by wxk on 2017/5/4.
  */
 
-@Route(path = "/serverproduct/activity/ReportingActivity", name = "我的服务")
+@Route(path = "/serverproduct/activity/ReportingActivity", name = "农事气象")
 public class ReportingActivity extends BaseActivity implements IReportingInfoView {
     @Autowired
     String serviceID;

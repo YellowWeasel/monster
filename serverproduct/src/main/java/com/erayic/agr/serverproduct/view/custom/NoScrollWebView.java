@@ -1,14 +1,15 @@
-package com.erayic.agr.serverproduct.view;
+package com.erayic.agr.serverproduct.view.custom;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.Px;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.webkit.WebView;
 
 /**
- * Created by 23060 on 2017/5/4.
+ * Created by wxk on 2017/5/4.
  */
 
 public class NoScrollWebView extends WebView {
@@ -33,7 +34,7 @@ public class NoScrollWebView extends WebView {
         super(context, attrs, defStyleAttr, privateBrowsing);
     }
 
-    @Override
+        @Override
     public boolean onTouchEvent(MotionEvent arg0) {
         return false;
     }

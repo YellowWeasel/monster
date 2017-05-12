@@ -7,10 +7,12 @@ import com.erayic.agr.common.model.IApiModel;
 import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.ErrorCode;
 import com.erayic.agr.common.net.OnDataListener;
-import com.erayic.agr.common.net.back.CommonEntInfoBean;
 import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
+import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
+import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsDetailBean;
 import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
+import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsBean;
 import com.erayic.agr.common.net.http.manager.HttpApiManager;
 import com.erayic.agr.common.util.ErayicGson;
 import com.erayic.agr.common.util.ErayicLog;
@@ -117,6 +119,117 @@ public class ApiModelImpl implements IApiModel {
                     @Override
                     public void call(DataBack<List<CommonReportsByMonthBean>> objectDataBack) {
                         ErayicLog.i("getWeatherTenDayReportsByMonth", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getDynamicPrice(int cropId, String start, String end,final OnDataListener<CommonDynamicPriceBean> listener) {
+        HttpApiManager.getInstance().getDynamicPrices(cropId,start,end)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<CommonDynamicPriceBean>>() {
+                    @Override
+                    public void call(DataBack<CommonDynamicPriceBean> objectDataBack) {
+                        ErayicLog.i("getDynamicPrice", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getPoliciesRegulationsDetail(int Id,final OnDataListener<CommonPoliciesRegulationsDetailBean> listener) {
+        HttpApiManager.getInstance().getPoliciesRegulationsDetail(Id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<CommonPoliciesRegulationsDetailBean>>() {
+                    @Override
+                    public void call(DataBack<CommonPoliciesRegulationsDetailBean> objectDataBack) {
+                        ErayicLog.i("getPoliciesRegulationsDetail", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getPoliciesRegulations(int pageIndex, int pageSize,final OnDataListener<List<CommonPoliciesRegulationsBean>> listener) {
+        HttpApiManager.getInstance().getPoliciesRegulations(pageIndex,pageSize)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<List<CommonPoliciesRegulationsBean>>>() {
+                    @Override
+                    public void call(DataBack<List<CommonPoliciesRegulationsBean>> objectDataBack) {
+                        ErayicLog.i("getPoliciesRegulations", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
 
                             listener.success(objectDataBack.getResult());

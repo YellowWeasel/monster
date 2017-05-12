@@ -188,7 +188,8 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
                             break;
                         case "51c74d08-054b-47d3-92f0-1b7489b2f225"://苹果
                             break;
-                        case "91efc1c1-ed58-40da-926d-79faf0351488"://白菜
+                        case "91efc1c1-ed58-40da-926d-79faf0351488"://大白菜
+                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", serviceID).withString("cropId",subServiceID).navigation();
                             break;
                         case "eda779ef-ef1c-4225-b563-83cd7c321776"://上海青
                             break;
@@ -198,6 +199,9 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
                             showToast("未支持的服务类型");
                             break;
                     }
+                    break;
+                case "3fabad22-5e5f-4d76-9ddf-d3af850019de"://政策法规
+                    ARouter.getInstance().build("/serverproduct/activity/PoliciesRegulationsActivity").withString("serviceID", serviceID).navigation();
                     break;
                 default:
                     break;

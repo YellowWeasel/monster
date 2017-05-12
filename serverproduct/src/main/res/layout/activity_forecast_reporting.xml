@@ -158,9 +158,10 @@
 
                 </LinearLayout>
         </RelativeLayout>
-        <com.erayic.agr.serverproduct.view.NoScrollWebView
+        <com.erayic.agr.serverproduct.view.custom.NoScrollWebView
             android:id="@+id/serverproduct_reporting_webview"
             android:layout_weight="3"
+            android:scrollbars="none"
             android:layout_centerInParent="true"
             android:layout_width="match_parent"
             android:layout_height="0dp"/>
