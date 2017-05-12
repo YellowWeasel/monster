@@ -52,7 +52,7 @@ public class DynamicAveragePriceDatas {
                  strDate=national.get(i).getKey();
 
             }
-            xDatas[i]=(new SimpleDateFormat("M月dd日").
+            xDatas[i]=(new SimpleDateFormat("M.dd").
                     format(new Date(Long.valueOf(strDate.
                             substring(strDate.indexOf("(")+1,strDate.indexOf(")"))))));
         }
