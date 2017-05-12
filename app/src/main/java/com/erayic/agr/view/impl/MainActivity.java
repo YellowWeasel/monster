@@ -91,7 +91,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                         titleNormalIcons = new int[]{R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3};
                         titleSelectedIcons = new int[]{R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3};
                         fragments = new Fragment[]{(Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
-                                (Fragment) ARouter.getInstance().build("/unit/fragment/UnitFragment").withString("titleName", "管理单元").navigation(),
+                                (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "管理单元").navigation(),
                                 (Fragment) ARouter.getInstance().build("/service/fragment/ServiceEntranceFragment").withString("titleName", "我的服务").navigation(),
                                 (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
                     }
@@ -102,7 +102,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                         titleNormalIcons = new int[]{R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3};
                         titleSelectedIcons = new int[]{R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3};
                         fragments = new Fragment[]{(Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
-                                (Fragment) ARouter.getInstance().build("/unit/fragment/UnitFragment").withString("titleName", "管理单元").navigation(),
+                                (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "管理单元").navigation(),
                                 (Fragment) ARouter.getInstance().build("/service/fragment/ServiceEntranceFragment").withString("titleName", "我的服务").navigation(),
                                 (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
                     }

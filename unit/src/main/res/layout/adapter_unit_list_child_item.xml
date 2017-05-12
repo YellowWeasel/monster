@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.jpeng.jptabbar.JPTabBar
+        android:id="@+id/unit_list_item_tab"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        app:BadgePadding="4dp"
+        app:BadgeTextSize="10dp"
+        app:TabSelectBg="#fb8051"
+        app:TabAnimate="None" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/unit_list_item_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="5dp" />
+
+</LinearLayout>

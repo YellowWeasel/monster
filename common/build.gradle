@@ -67,7 +67,7 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
 //    图片加载技术
     compile 'com.github.bumptech.glide:glide:3.7.0'
-//    BaseRecyclerViewAdapterHelper RecyclerView的adapter封装
+//    BaseRecyclerViewAdapterHelper RecyclerView的adapter封装(https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.12'
 //    switchButton
     compile 'com.kyleduo.switchbutton:library:1.4.5'

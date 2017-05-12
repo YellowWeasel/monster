@@ -17,7 +17,7 @@ import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.CommonBaseInfoBean;
 import com.erayic.agr.common.net.back.CommonMapArrayBean;
-import com.erayic.agr.common.net.back.CommonUnitListBean;
+import com.erayic.agr.common.net.back.CommonResUnitListBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicEditDialog;
@@ -25,7 +25,6 @@ import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.adapter.ManageBaseInfoAdapter;
-import com.erayic.agr.manage.adapter.ManageMineItemAdapter;
 import com.erayic.agr.manage.adapter.entity.ManageBaseInfoEntity;
 import com.erayic.agr.manage.presenter.IBaseInfoPresenter;
 import com.erayic.agr.manage.presenter.impl.BaseInfoPresenterImpl;
@@ -33,7 +32,6 @@ import com.erayic.agr.manage.view.IBaseInfoView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 
@@ -165,7 +163,7 @@ public class BaseInfoActivity extends BaseActivity implements IBaseInfoView, Swi
                 entityBaseAddUnit.setSubName("添加");
                 list.add(entityBaseAddUnit);
                 //添加管理单元
-                for (CommonUnitListBean unitListBean : bean.getUnits()) {
+                for (CommonResUnitListBean unitListBean : bean.getUnits()) {
                     ManageBaseInfoEntity entityUnit = new ManageBaseInfoEntity();
                     entityUnit.setItemType(ManageBaseInfoEntity.TYPE_BASE_UNIT_NAME);
                     entityUnit.setName(unitListBean.getName());

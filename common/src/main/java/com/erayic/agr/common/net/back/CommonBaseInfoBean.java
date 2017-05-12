@@ -14,7 +14,7 @@ public class CommonBaseInfoBean {
     private String name;//基地名称
     private String descript;//基地描述
     private boolean isRegion;//是否上传位置
-    private List<CommonUnitListBean> units;//基地管理单元列表
+    private List<CommonResUnitListBean> units;//基地管理单元列表
 
     public String getBaseID() {
         return baseID;
@@ -48,11 +48,11 @@ public class CommonBaseInfoBean {
         isRegion = region;
     }
 
-    public List<CommonUnitListBean> getUnits() {
+    public List<CommonResUnitListBean> getUnits() {
         return units;
     }
 
-    public void setUnits(List<CommonUnitListBean> units) {
+    public void setUnits(List<CommonResUnitListBean> units) {
         this.units = units;
     }
 }

@@ -9,7 +9,7 @@ import java.util.Map;
  * 注解：
  */
 
-public class CommonUnitListBean {
+public class CommonResUnitListBean {
 
     private String UnitID;//管理单元ID
     private String Name;//管理单元名称

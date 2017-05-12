@@ -77,7 +77,7 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
     protected void initView(View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         EventBus.getDefault().register(this);// 注册EventBus
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("");
         toolbarTitleName.setText(titleName);
         if (PreferenceUtils.getParam("UserRole", 0) == 1) {
