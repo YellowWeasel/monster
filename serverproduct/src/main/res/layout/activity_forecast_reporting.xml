@@ -38,7 +38,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="32℃"
             android:textColor="@color/white"
             android:textSize="@dimen/maxtitle" />
 
@@ -88,7 +87,6 @@
                         android:id="@+id/serverproduct_rain_valuetext"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
-                        android:text="50ml"
                         android:textColor="@color/white" />
                 </LinearLayout>
             </LinearLayout>
@@ -124,7 +122,6 @@
                         android:id="@+id/serverproduct_hum_valuetext"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
-                        android:text="50%"
                         android:textColor="@color/white"
                         android:textSize="@dimen/content" />
                 </LinearLayout>

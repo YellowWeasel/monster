@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * Created by wxk on 2017/5/8.
  */
-public class PoliciesRegulationsDetailDatas{
+public class PoliciesRegulationsDetailDatas {
      private int Id;
      private String Title;
      private String TxtContent;
