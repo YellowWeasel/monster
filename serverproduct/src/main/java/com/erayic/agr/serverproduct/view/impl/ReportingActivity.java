@@ -23,7 +23,7 @@ import com.erayic.agr.serverproduct.adapter.entity.FutureForecastDatas;
 import com.erayic.agr.serverproduct.adapter.entity.RealTimeForecastInfo;
 import com.erayic.agr.serverproduct.adapter.entity.ReportingInfo;
 import com.erayic.agr.serverproduct.presenter.IReportingPresenter;
-import com.erayic.agr.serverproduct.presenter.impl.ReportingPresenter;
+import com.erayic.agr.serverproduct.presenter.impl.ReportingPresenterImpl;
 import com.erayic.agr.serverproduct.view.IReportingInfoView;
 import com.erayic.agr.serverproduct.view.custom.NoScrollWebView;
 import com.google.gson.Gson;
@@ -82,11 +82,12 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDefaultTextEncodingName("utf-8");
         webView.addJavascriptInterface(new DataForJsInterface(), "Datas");
+        refreshWebView();
     }
 
     @Override
     public void initData() {
-        reportingPresenter = new ReportingPresenter(this);
+        reportingPresenter = new ReportingPresenterImpl(this);
         infos = new BaseForecastInfo();
         infos.setBaseName(PreferenceUtils.getParam("BaseName"));
         reportingPresenter.getFeatureWeather();
@@ -132,15 +133,15 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
         tmpTextView.setText(String.valueOf(nowInfo.getTemp_Max()) + "℃");
         humTextView.setText(String.valueOf(nowInfo.getHumi()) + "%");
         baseTextView.setText(infos.getBaseName());
-        setTextViewContent(fertilizationTextView,75);
-        setTextViewContent(pickingTextView,89);
-        setTextViewContent(sprayTextView,30);
-        setTextViewContent(irrigationTextView,20);
+        setTextViewContent(fertilizationTextView, 75);
+        setTextViewContent(pickingTextView, 89);
+        setTextViewContent(sprayTextView, 30);
+        setTextViewContent(irrigationTextView, 20);
     }
 
     public void setTextViewContent(TextView tv, double score) {
         if (score < 0 || score > 100) {
-            score=0;
+            score = 0;
             tv.setTextColor(tv.getResources().getColor(R.color.pinred));
         } else if (score < 60) {//不适宜
             tv.setTextColor(tv.getResources().getColor(R.color.pinred));
@@ -151,10 +152,8 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
         }
         tv.setText(String.valueOf(score));
     }
-    @Override
-    public void refreshFeatureDataView(List<CommonFutureWeatherBean> bean) {
-        FutureForecastDatas featureForecastDatas = new FutureForecastDatas();
-        infos.setFeatureForecastDatas(featureForecastDatas.InitFeature(bean));
+
+    public void refreshWebView() {
         webView.loadUrl("file:///android_asset/ReportingTool.html");
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -163,6 +162,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
                 webView.loadUrl("javascript:refershView()");
                 dismissLoading();
             }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -171,7 +171,15 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
         });
     }
 
+    @Override
+    public void refreshFeatureDataView(List<CommonFutureWeatherBean> bean) {
+        FutureForecastDatas featureForecastDatas = new FutureForecastDatas();
+        infos.setFeatureForecastDatas(featureForecastDatas.InitFeature(bean));
+        refreshWebView();
+    }
+
     int index = 0;
+
     @Override
     public void showLoading() {
         index++;

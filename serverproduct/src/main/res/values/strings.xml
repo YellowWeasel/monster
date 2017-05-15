@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">serverproduct</string>
+    <drawable name="layoutonclick">@color/app_base_layout_background</drawable>
+    <drawable name="layoutunonclick">@color/white</drawable>
 </resources>

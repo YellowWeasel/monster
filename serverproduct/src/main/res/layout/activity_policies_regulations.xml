@@ -46,12 +46,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    <ListView
-        android:divider="@color/transparent"
-        android:dividerHeight="2dp"
-        android:background="@color/app_base_layout_background"
-        android:layout_marginTop="5dp"
-        android:id="@+id/serverproduct_policies_regulations_listview"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/serverproduct_policies_regulations_swipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/serverproduct_policies_regulations_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_base_layout_background"
+            android:clipToPadding="false"
+           />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

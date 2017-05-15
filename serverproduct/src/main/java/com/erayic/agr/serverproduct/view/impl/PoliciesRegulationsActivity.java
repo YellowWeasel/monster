@@ -1,53 +1,58 @@
 package com.erayic.agr.serverproduct.view.impl;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.common.base.BaseActivity;
+import com.erayic.agr.common.config.CustomLinearLayoutManager;
+import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
+import com.erayic.agr.serverproduct.adapter.PoliciesRegulationsAdapter;
 import com.erayic.agr.serverproduct.adapter.entity.PoliciesRegulationsDetailDatas;
 import com.erayic.agr.serverproduct.adapter.entity.PoliciesRegulationsTitleDatas;
 import com.erayic.agr.serverproduct.presenter.IPoliciesRegulationsPresenter;
-import com.erayic.agr.serverproduct.presenter.impl.PoliciesRegulationsPresenter;
+import com.erayic.agr.serverproduct.presenter.impl.PoliciesRegulationsPresenterImpl;
 import com.erayic.agr.serverproduct.view.IPoliciesRegulartionsView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by wxk on 2017/5/8.
  */
-@Route(path = "/serverproduct/activity/PoliciesRegulationsActivity",name = "政策法规")
-public class PoliciesRegulationsActivity extends BaseActivity implements IPoliciesRegulartionsView, AdapterView.OnItemClickListener {
-   @BindView(R2.id.serverproduct_polices_regulations_title_textview)
+@Route(path = "/serverproduct/activity/PoliciesRegulationsActivity", name = "政策法规")
+public class PoliciesRegulationsActivity extends BaseActivity implements IPoliciesRegulartionsView, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+    @BindView(R2.id.serverproduct_polices_regulations_title_textview)
     TextView titleTextView;
-   @BindView(R2.id.serverproduct_policies_regulations_listview)
-    ListView contentListView;
+
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
-    PoliciesRegulationAdapter adapter;
+    PoliciesRegulationsAdapter adapter;
     IPoliciesRegulationsPresenter presenter;
     List<PoliciesRegulationsTitleDatas> titleDatas;
-    int pageIndex;
-    int pageSize;
+    int pageIndex=1;
+    int pageSize=15;
+    @BindView(R2.id.serverproduct_policies_regulations_recycler)
+    RecyclerView serverproductPoliciesRegulationsRecycler;
+    @BindView(R2.id.serverproduct_policies_regulations_swipe)
+    SwipeRefreshLayout serverproductPoliciesRegulationsSwipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_policies_regulations);
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -57,27 +62,80 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        contentListView.setAdapter((adapter=new PoliciesRegulationAdapter()));
-        contentListView.setOnItemClickListener(this);
+        serverproductPoliciesRegulationsSwipe.setOnRefreshListener(this);
+        //使用线性布局管理器
+        CustomLinearLayoutManager manager = new CustomLinearLayoutManager(this);
+        manager.setScrollEnabled(true);//滑动监听
+        serverproductPoliciesRegulationsRecycler.setLayoutManager(manager);
+        serverproductPoliciesRegulationsRecycler.addItemDecoration(new PoliciesRegulationsAdapter.SpaceItemDecoration(5));
+        adapter=new PoliciesRegulationsAdapter(null);
+        adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+        adapter.setRegulationsItemClickListener(new PoliciesRegulationsAdapter.PoliciesRegulationsItemClickListener() {
+            @Override
+            public void doOnClick(View view, int Id) {
+                ARouter.getInstance().build("/serverproduct/activity/PoliciesRegulationsDetailActivity").withInt("Id",Id).navigation();
+            }
+        });
+        adapter.isFirstOnly(false);
+        serverproductPoliciesRegulationsRecycler.setAdapter(adapter);
+        adapter.setOnLoadMoreListener(this,serverproductPoliciesRegulationsRecycler);
     }
 
     @Override
     public void initData() {
-        presenter=new PoliciesRegulationsPresenter(this);
-        pageIndex=1;
-        pageSize=15;
-        presenter.getPoliciesRegulationsDatas(pageIndex,pageSize);
+        presenter = new PoliciesRegulationsPresenterImpl(this);
+        presenter.initPoliciesRegulationsDatas(pageSize);
     }
 
     @Override
     public void refreshPoliciesRegulartionsDataView(List<PoliciesRegulationsDetailDatas> mBeans) {
-          if (adapter!=null)adapter.notifyDataSetChanged();
+        if (adapter != null) adapter.notifyDataSetChanged();
     }
+
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PoliciesRegulationsDetailDatas item= (PoliciesRegulationsDetailDatas) parent.getItemAtPosition(position);
-                ARouter.getInstance().build("").withParcelable("mPoliciesRegulationsData",item).navigation();
-                this.finish();
+    public void openRefresh() {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (serverproductPoliciesRegulationsSwipe != null && !serverproductPoliciesRegulationsSwipe.isRefreshing())
+                    serverproductPoliciesRegulationsSwipe.setRefreshing(true);
+            }
+        });
+    }
+
+    @Override
+    public void clearRefresh() {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (serverproductPoliciesRegulationsSwipe != null && serverproductPoliciesRegulationsSwipe.isRefreshing())
+                    serverproductPoliciesRegulationsSwipe.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void refreshPoliciesRegulartionsView(List<PoliciesRegulationsTitleDatas> list) {
+                 adapter.setNewData(list);
+    }
+
+    @Override
+    public void loadMoreSure(final  List<PoliciesRegulationsTitleDatas> list) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.loadMoreComplete();//加载完成
+                if (list != null)
+                    adapter.addData(list);
+                if (list.size() < pageSize)
+                    adapter.loadMoreEnd();
+            }
+        });
+    }
+
+    @Override
+    public void loadMoreFailure() {
+        adapter.loadMoreFail();
     }
 
     @Override
@@ -88,35 +146,19 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
         return super.onOptionsItemSelected(item);
     }
 
-    public class  PoliciesRegulationAdapter extends BaseAdapter{
-        @Override
-        public int getCount() {
-            return (titleDatas ==null)?0: titleDatas.size();
-        }
-        @Override
-        public Object getItem(int position) {
-            return titleDatas.get(position);
-        }
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-        public class  ViewHolder{
-            TextView policiesTextView;
-        }
+    @Override
+    public void onRefresh() {
+        presenter.initPoliciesRegulationsDatas(pageSize);
+    }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-           ViewHolder holder;
-            if (convertView==null){
-                convertView= LayoutInflater.from(PoliciesRegulationsActivity.this).inflate(R.layout.policies_regulation_item,parent,false);
-                holder=new ViewHolder();
-                convertView.setTag(holder);
-            }else{
-                holder= (ViewHolder) convertView.getTag();
-            }
-            holder.policiesTextView.setText(titleDatas.get(position).getTitle());
-            return convertView;
-        }
+    @Override
+    public void onLoadMoreRequested() {
+        presenter.getPoliciesRegulationsDatas(adapter.getData().size()/pageSize+1,pageSize);
+        adapter.setEnableLoadMore(true);
+    }
+
+    @Override
+    public void showToast(String msg) {
+
     }
 }

@@ -10,11 +10,14 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.base.BaseActivity;
+import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
 import com.erayic.agr.serverproduct.adapter.entity.PoliciesRegulationsDetailDatas;
 import com.erayic.agr.serverproduct.presenter.IPoliciesRegulationsDetailPresenter;
-import com.erayic.agr.serverproduct.presenter.impl.PoliciesRegulationsDetailPresenter;
+import com.erayic.agr.serverproduct.presenter.impl.PoliciesRegulationsDetailPresenterImpl;
 import com.erayic.agr.serverproduct.view.IPoliciesRegulationDetailView;
 
 import butterknife.BindView;
@@ -64,30 +67,49 @@ public class PoliciesRegulationsDetailActivity extends BaseActivity implements I
     }
 
     public void refreshView() {
-        if (mPoliciesRegulationsData == null) return;
+        if (mPoliciesRegulationsData == null) {
+            titleTextView.setText("暂无数据");
+        }
         TextPaint paint = titleTextView.getPaint();
         paint.setFakeBoldText(true);
         titleTextView.setText(mPoliciesRegulationsData.getTitle());
         titleTextView.setTextColor(Color.parseColor("#000000"));
-        sourceTextView.setText("来源:\t" + mPoliciesRegulationsData.getInfoSource());
+        sourceTextView.setText((mPoliciesRegulationsData.getInfoSource()!=null)?"来源:\t" + mPoliciesRegulationsData.getInfoSource():null);
         publishDateTextView.setText(mPoliciesRegulationsData.getPublishTime());
         contentTextView.setText(mPoliciesRegulationsData.getTxtContent());
     }
-
+    LoadingDialog dialog;
     @Override
     public void initData() {
-        presenter = new PoliciesRegulationsDetailPresenter(this);
+        presenter = new PoliciesRegulationsDetailPresenterImpl(this);
         presenter.getPoliciesRegulationDetailDatas(Id);
     }
 
     @Override
-    public void showToast(String msg) {
-
+    public void showToast(final String msg) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ErayicToast.TextToast(PoliciesRegulationsDetailActivity.this,msg);
+            }
+        });
     }
 
     @Override
     public void refreshPoliciesRegulationDatas(PoliciesRegulationsDetailDatas datas) {
         mPoliciesRegulationsData = datas;
         refreshView();
+    }
+
+    @Override
+    public void showLoading() {
+        if (dialog==null)dialog=new LoadingDialog(this);
+        if (!dialog.isShowing())dialog.show();
+    }
+
+    @Override
+    public void dismissLoading() {
+        if (dialog==null)return;
+        if (dialog.isShowing())dialog.dismiss();
     }
 }

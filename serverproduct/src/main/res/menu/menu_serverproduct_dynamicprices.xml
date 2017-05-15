@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/serverproduct_dynamicprices_week"
+        android:title="一周"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/serverproduct_dynamicprices_halfmonth"
+        android:title="半个月"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/serverproduct_dynamicprices_month"
+        android:title="一个月"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/serverproduct_dynamicprices_season"
+        android:title="三个月"
+        app:showAsAction="never" />
+</menu>

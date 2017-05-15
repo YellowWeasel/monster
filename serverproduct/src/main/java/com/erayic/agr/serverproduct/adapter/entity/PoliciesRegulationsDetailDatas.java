@@ -4,56 +4,51 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsBean;
+import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsDetailBean;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by wxk on 2017/5/8.
  */
-public class PoliciesRegulationsDetailDatas implements Parcelable {
-     private int PoliciesId;
-     private String PID;
+public class PoliciesRegulationsDetailDatas{
+     private int Id;
      private String Title;
      private String TxtContent;
      private String infoSource;
      private String PublishTime;
-
-     public PoliciesRegulationsDetailDatas(CommonPoliciesRegulationsBean bean) {
-          this.PoliciesId=Integer.valueOf(bean.getPoliciesId());
-          this.PID=bean.getPID();
+     public PoliciesRegulationsDetailDatas(CommonPoliciesRegulationsDetailBean bean) {
+          this.Id=bean.getId();
           this.Title=bean.getTitle();
           this.TxtContent=bean.getTxtContent();
           this.infoSource=bean.getInfoSource();
-          this.PublishTime=bean.getPublishTime();
+          String strDate=bean.getPublishTime();
+          this.PublishTime=new SimpleDateFormat("yyyy-MM-dd HH:mm").
+                  format(new Date(Long.valueOf(strDate.
+                          substring(strDate.indexOf("(")+1,strDate.indexOf(")")))));
+
      }
 
-     protected PoliciesRegulationsDetailDatas(Parcel in) {
-          PoliciesId = in.readInt();
-          PID = in.readString();
-          Title = in.readString();
-          TxtContent = in.readString();
-          infoSource = in.readString();
-          PublishTime = in.readString();
+     public PoliciesRegulationsDetailDatas() {
      }
 
-     public static final Creator<PoliciesRegulationsDetailDatas> CREATOR = new Creator<PoliciesRegulationsDetailDatas>() {
-          @Override
-          public PoliciesRegulationsDetailDatas createFromParcel(Parcel in) {
-               return new PoliciesRegulationsDetailDatas(in);
-          }
-
-          @Override
-          public PoliciesRegulationsDetailDatas[] newArray(int size) {
-               return new PoliciesRegulationsDetailDatas[size];
-          }
-     };
-
-     public int getPoliciesId() {
-          return PoliciesId;
+     public PoliciesRegulationsDetailDatas(int id, String title, String txtContent,
+                                           String infoSource, String publishTime) {
+          Id = id;
+          Title = title;
+          TxtContent = txtContent;
+          this.infoSource = infoSource;
+          PublishTime = publishTime;
      }
 
-     public void setPoliciesId(int policiesId) {
-          PoliciesId = policiesId;
+     public int getId() {
+          return Id;
      }
 
+     public void setId(int id) {
+          Id = id;
+     }
 
      public String getTitle() {
           return Title;
@@ -85,43 +80,5 @@ public class PoliciesRegulationsDetailDatas implements Parcelable {
 
      public void setPublishTime(String publishTime) {
           PublishTime = publishTime;
-     }
-
-     public PoliciesRegulationsDetailDatas() {
-     }
-
-
-
-     public String getPID() {
-          return PID;
-     }
-
-     public void setPID(String PID) {
-          this.PID = PID;
-     }
-
-     public PoliciesRegulationsDetailDatas(int policiesId, String PID, String title,
-                                           String txtContent, String infoSource, String publishTime) {
-          PoliciesId = policiesId;
-          this.PID = PID;
-          Title = title;
-          TxtContent = txtContent;
-          this.infoSource = infoSource;
-          PublishTime = publishTime;
-     }
-
-     @Override
-     public int describeContents() {
-          return 0;
-     }
-
-     @Override
-     public void writeToParcel(Parcel dest, int flags) {
-          dest.writeInt(PoliciesId);
-          dest.writeString(PID);
-          dest.writeString(Title);
-          dest.writeString(TxtContent);
-          dest.writeString(infoSource);
-          dest.writeString(PublishTime);
      }
 }

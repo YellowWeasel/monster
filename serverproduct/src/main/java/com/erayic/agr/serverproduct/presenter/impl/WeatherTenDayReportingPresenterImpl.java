@@ -18,11 +18,11 @@ import java.util.List;
  * Created by 23060 on 2017/5/9.
  */
 
-public class WeatherTenDayReportingPresenter implements IWeatherTenDayReportingPresenter {
+public class WeatherTenDayReportingPresenterImpl implements IWeatherTenDayReportingPresenter {
     private ITenDayReportingView context;
     private IApiModel apiModel;
 
-    public WeatherTenDayReportingPresenter(ITenDayReportingView mContext) {
+    public WeatherTenDayReportingPresenterImpl(ITenDayReportingView mContext) {
         this.context = mContext;
         apiModel = new ApiModelImpl();
     }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+                <TextView
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:layout_weight="3"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:id="@+id/serverproduct_dynamic_price_item_date_textview"
+                    android:textColor="@color/textfont"
+                    android:textSize="@dimen/content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:layout_weight="5"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:id="@+id/serverproduct_dynamic_price_item_market_textview"
+                    android:textColor="@color/textfont"
+                    android:textSize="@dimen/content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="3"
+                    android:id="@+id/serverproduct_dynamic_price_item_pricevalue_textview"
+                    android:textColor="@color/textfont"
+                    android:textSize="@dimen/content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+</LinearLayout>

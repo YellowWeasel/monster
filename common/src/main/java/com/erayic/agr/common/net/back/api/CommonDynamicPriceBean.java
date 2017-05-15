@@ -48,7 +48,6 @@ public class CommonDynamicPriceBean {
         private String Key;
         private String Value;
 
-
         public DynamicPriceBean() {
         }
 
@@ -75,32 +74,59 @@ public class CommonDynamicPriceBean {
     }
  public    static class PrincipalMarketPrice{
            private String Key;
-           private List<DynamicPriceBean> priceBeens;
+          private MarketPriceInfo Value;
 
-        public PrincipalMarketPrice(String key, List<DynamicPriceBean> priceBeens) {
-            Key = key;
-            this.priceBeens = priceBeens;
-        }
+     public MarketPriceInfo getValue() {
+         return Value;
+     }
 
-        public PrincipalMarketPrice() {
-            priceBeens=new ArrayList<>();
-        }
+     public void setValue(MarketPriceInfo value) {
+         Value = value;
+     }
 
-        public String getKey() {
-            return Key;
-        }
+     public PrincipalMarketPrice() {
+     }
 
-        public void setKey(String key) {
-            Key = key;
-        }
+     public String getKey() {
+         return Key;
+     }
 
-        public List<DynamicPriceBean> getPriceBeens() {
-            return priceBeens;
-        }
+     public void setKey(String key) {
+         Key = key;
+     }
 
-        public void setPriceBeens(List<DynamicPriceBean> priceBeens) {
-            this.priceBeens = priceBeens;
-        }
-    }
+     public PrincipalMarketPrice(String key, MarketPriceInfo value) {
+         Key = key;
+         Value = value;
+     }
+ }
+ public static  class  MarketPriceInfo{
+     private String Key;
+     private String Value;
+
+     public String getKey() {
+         return Key;
+     }
+
+     public void setKey(String key) {
+         Key = key;
+     }
+
+     public String getValue() {
+         return Value;
+     }
+
+     public void setValue(String value) {
+         Value = value;
+     }
+
+     public MarketPriceInfo() {
+     }
+
+     public MarketPriceInfo(String key, String value) {
+         Key = key;
+         Value = value;
+     }
+ }
 
 }

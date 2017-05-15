@@ -10,4 +10,6 @@ import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
 public interface IDynamicPriceView extends IBaseView{
 
     void refreshDynamicPrice(CommonDynamicPriceBean bean);
+    void showLoading();
+    void dismissLoading();
 }

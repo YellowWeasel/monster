@@ -1,5 +1,7 @@
 package com.erayic.agr.serverproduct.adapter.entity;
 
+import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsBean;
+
 /**
  * Created by wxk on 2017/5/12.
  */
@@ -43,6 +45,13 @@ public class PoliciesRegulationsTitleDatas  {
     }
 
     public PoliciesRegulationsTitleDatas() {
+    }
+
+    public PoliciesRegulationsTitleDatas(CommonPoliciesRegulationsBean bean) {
+        this.Id=bean.getId();
+        this.Title=bean.getTitle();
+        this.InfoSource=bean.getInfoSource();
+        this.PublishTime=bean.getPublishTime();
     }
 
     public PoliciesRegulationsTitleDatas(int id, String title, String infoSource, String publishTime) {

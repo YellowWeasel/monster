@@ -6,4 +6,5 @@ package com.erayic.agr.serverproduct.presenter;
 
 public interface IPoliciesRegulationsPresenter {
     void getPoliciesRegulationsDatas(int pageIndex,int pageSize);
+    void initPoliciesRegulationsDatas(int pageSize);
 }

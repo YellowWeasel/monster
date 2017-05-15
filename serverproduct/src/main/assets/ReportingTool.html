@@ -15,17 +15,39 @@ function refershView(){
 var json=window.Datas.GetData();
 var jsonData=eval('(' + json + ')');
 
-var xDatas=jsonData.xDatas;
-var maxRainlabel=jsonData.maxRainLabel;
-var rainYInterval=jsonData.rainYInterval;
-var minRainlabel=jsonData.minRainLabel;
-var maxWindlabel=jsonData.maxWindLabel;
-var windYInterval=jsonData.windYInterval;
-var minWindlabel=jsonData.minWindLabel;
 
-var rainDatas=jsonData.rainDatas;
-var windDatas=jsonData.windDatas;
-var tmpDatas=jsonData.tmpDatas;
+var maxRainlabel=0;
+var rainYInterval=0;
+var minRainlabel=0;
+var maxWindlabel=0;
+var windYInterval=0;
+var minWindlabel=0;
+var maxTmplabel=0;
+var minTmplabel=0;
+var tmpYInterval=0;
+
+var xDatas=[];
+var rainDatas=[];
+var windDatas=[];
+var tmpDatas=[];
+
+if(jsonData!=null&&jsonData.rainDatas!=null&&jsonData.windDatas!=null&&jsonData.tmpDatas!=null){
+ xDatas=jsonData.xDatas;
+ maxRainlabel=jsonData.maxRainLabel;
+ rainYInterval=jsonData.rainYInterval;
+ minRainlabel=jsonData.minRainLabel;
+ maxWindlabel=jsonData.maxWindLabel;
+ windYInterval=jsonData.windYInterval;
+ minWindlabel=jsonData.minWindLabel;
+ maxTmplabel=jsonData.maxTmpLabel;
+ minTmplabel=jsonData.minTmpLabel;
+ tmpYInterval=jsonData.tmpYInterval;
+
+ rainDatas=jsonData.rainDatas;
+ windDatas=jsonData.windDatas;
+ tmpDatas=jsonData.tmpDatas;
+}
+
 
 // 基于准备好的dom，初始化echarts实例
  var myChart = echarts.init(document.getElementById('main'));
@@ -118,9 +140,9 @@ var tmpDatas=jsonData.tmpDatas;
         {
             type: 'value',
             name: '温度(℃)',
-            min: 0,
-            max: 40,
-            interval:5,
+            min: minTmplabel,
+            max: maxTmplabel,
+            interval:tmpYInterval,
             position: 'left',
             axisLine: {
                 lineStyle: {
@@ -155,9 +177,14 @@ var tmpDatas=jsonData.tmpDatas;
 
 // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
-        myChart.hideLoading();
+        if(rainDatas.length>0&&tmpDatas.length>0&&windDatas.length>0){
+             myChart.hideLoading();
+        }
 }
 
-    </script>
+
+
+
+</script>
 </body>
 </html>

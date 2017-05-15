@@ -9,4 +9,6 @@ import com.erayic.agr.serverproduct.adapter.entity.PoliciesRegulationsDetailData
 
 public interface IPoliciesRegulationDetailView extends IBaseView {
         void refreshPoliciesRegulationDatas(PoliciesRegulationsDetailDatas datas);
+        void showLoading();
+        void dismissLoading();
 }

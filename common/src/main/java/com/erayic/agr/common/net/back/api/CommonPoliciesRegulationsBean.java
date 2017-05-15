@@ -5,27 +5,17 @@ package com.erayic.agr.common.net.back.api;
  */
 
 public class CommonPoliciesRegulationsBean {
-    private String PoliciesId;
-    private String PID;
+   private int Id;
     private String Title;
-    private String TxtContent;
-    private String infoSource;
+    private String InfoSource;
     private String PublishTime;
 
-    public String getPoliciesId() {
-        return PoliciesId;
+    public int getId() {
+        return Id;
     }
 
-    public void setPoliciesId(String policiesId) {
-        PoliciesId = policiesId;
-    }
-
-    public String getPID() {
-        return PID;
-    }
-
-    public void setPID(String PID) {
-        this.PID = PID;
+    public void setId(int id) {
+        Id = id;
     }
 
     public String getTitle() {
@@ -36,20 +26,12 @@ public class CommonPoliciesRegulationsBean {
         Title = title;
     }
 
-    public String getTxtContent() {
-        return TxtContent;
-    }
-
-    public void setTxtContent(String txtContent) {
-        TxtContent = txtContent;
-    }
-
     public String getInfoSource() {
-        return infoSource;
+        return InfoSource;
     }
 
     public void setInfoSource(String infoSource) {
-        this.infoSource = infoSource;
+        InfoSource = infoSource;
     }
 
     public String getPublishTime() {
@@ -63,14 +45,10 @@ public class CommonPoliciesRegulationsBean {
     public CommonPoliciesRegulationsBean() {
     }
 
-    public CommonPoliciesRegulationsBean(String policiesId, String PID,
-                                         String title, String txtContent,
-                                         String infoSource, String publishTime) {
-        PoliciesId = policiesId;
-        this.PID = PID;
+    public CommonPoliciesRegulationsBean(int id, String title, String infoSource, String publishTime) {
+        Id = id;
         Title = title;
-        TxtContent = txtContent;
-        this.infoSource = infoSource;
+        InfoSource = infoSource;
         PublishTime = publishTime;
     }
 }

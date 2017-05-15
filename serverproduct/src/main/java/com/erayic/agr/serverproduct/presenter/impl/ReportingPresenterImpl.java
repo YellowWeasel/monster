@@ -16,9 +16,9 @@ import java.util.List;
  * Created by wxk on 2017/5/6
  */
 
-public class ReportingPresenter implements IReportingPresenter {
+public class ReportingPresenterImpl implements IReportingPresenter {
     private IReportingInfoView context;
-    public ReportingPresenter(IReportingInfoView mContext){
+    public ReportingPresenterImpl(IReportingInfoView mContext){
         this.context=mContext;
         apiModel=new ApiModelImpl();
     }

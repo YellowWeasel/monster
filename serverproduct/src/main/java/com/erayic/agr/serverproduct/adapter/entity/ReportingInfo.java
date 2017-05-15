@@ -29,17 +29,25 @@ public class ReportingInfo {
         setTmpDatas(new double[infos.getFeatureForecastDatas().getFeartureBeans().size()]);
         setRainDatas(new double[infos.getFeatureForecastDatas().getFeartureBeans().size()]);
         setWindDatas(new double[infos.getFeatureForecastDatas().getFeartureBeans().size()]);
+
+
         for (int i = 0; i < infos.getFeatureForecastDatas().getFeartureBeans().size(); i++) {
             tmpDatas[i] = Math.abs(infos.getFeatureForecastDatas().getFeartureBeans().get(i).getTemperature());
             rainDatas[i] = Math.abs(infos.getFeatureForecastDatas().getFeartureBeans().get(i).getRain());
             windDatas[i] = Math.abs(infos.getFeatureForecastDatas().getFeartureBeans().get(i).getWindSpeed());
+            if(i==0){
+                minRainLabel=rainDatas[i];
+                minTmpLabel=tmpDatas[i];
+                minWindLabel=windDatas[i];
+            }
             if (tmpDatas[i]>maxTmpLabel)maxTmpLabel=tmpDatas[i];
             if (tmpDatas[i]<minTmpLabel)minTmpLabel=tmpDatas[i];
             if (rainDatas[i]>maxRainLabel)maxRainLabel=rainDatas[i];
-            if (rainDatas[i]<minRainLabel&&rainDatas[i]>0)minRainLabel=rainDatas[i];
+            if (rainDatas[i]<minRainLabel)minRainLabel=rainDatas[i];
             if (windDatas[i]>maxWindLabel)maxWindLabel=windDatas[i];
-            if (windDatas[i]<minWindLabel&&windDatas[i]>0)minWindLabel=windDatas[i];
+            if (windDatas[i]<minWindLabel)minWindLabel=windDatas[i];
         }
+        formatDatas();
         for (int i=1;i< Constants.RAINLVL.length;i++){
                if (Constants.RAINLVL[i]>minRainLabel&&Constants.RAINLVL[i-1]<=minRainLabel){
                    minRainLabel=(Constants.RAINLVL[i-1]<0)?0:Constants.RAINLVL[i-1];
@@ -59,8 +67,30 @@ public class ReportingInfo {
             }
         }
         windYInterval=(maxWindLabel-minWindLabel)/5;
+
+        tmpYInterval=(maxTmpLabel-minTmpLabel)/5;
+
         xDatas=infos.getFeatureForecastDatas().getStrDates();
     }
+    public void formatDatas(){
+
+            for (int i=0;i<tmpDatas.length;i++){
+                if (Math.abs(tmpDatas[i])>50){
+                    if (i==0){
+                        tmpDatas[0]=(Math.abs(tmpDatas[i+1])<=50)?tmpDatas[i+1]:0;
+                    }else if(i==tmpDatas.length-1){
+                        tmpDatas[tmpDatas.length-1]=(Math.abs(tmpDatas[tmpDatas.length-2])<=50)?tmpDatas[tmpDatas.length-2]:0;
+                    }else{
+                        tmpDatas[i]=(Math.abs(tmpDatas[i-1])<=50&&Math.abs(tmpDatas[i+1])<=50)?
+                                (tmpDatas[i-1]+tmpDatas[i+1])/2:(Math.abs(tmpDatas[i-1])<=50)?
+                                tmpDatas[i-1]:tmpDatas[i+1];
+                    }
+                }
+            }
+    }
+
+
+
 
     public String[] getxDatas() {
         return xDatas;

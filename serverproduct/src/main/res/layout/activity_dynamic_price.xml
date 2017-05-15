@@ -35,11 +35,13 @@
             android:layout_height="wrap_content">
             <com.erayic.agr.common.view.CircleImageView
                 android:layout_gravity="center_vertical"
+                android:id="@+id/serverproduct_dynamic_price_type_imageview"
                 android:src="@drawable/image_serverproduct_dynamic_price_defaulticon"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                  />
             <TextView
+                android:id="@+id/serverproduct_dynamic_price_type_textview"
                 android:layout_gravity="center_vertical"
                 android:text="大白菜"
                 android:textSize="@dimen/content"
@@ -70,6 +72,7 @@
                    />
            </LinearLayout>
         <com.erayic.agr.serverproduct.view.custom.NoScrollWebView
+            android:scrollbars="none"
             android:id="@+id/serverproduct_dynamic_price_averageprice_webview"
             android:layout_width="match_parent"
             android:layout_height="200dp"/>
@@ -77,7 +80,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp">
@@ -92,9 +95,54 @@
                 android:layout_centerVertical="true"
                 />
         </LinearLayout>
-        <com.erayic.agr.serverproduct.view.custom.NoScrollWebView
-            android:id="@+id/serverproduct_dynamic_price_market_webview"
+        <LinearLayout
+            android:background="@color/white"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:layout_height="30dp">
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:text="日期"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_weight="3"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:textColor="@color/fontcolor"
+                android:textSize="@dimen/content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="市场名"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_weight="5"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:textColor="@color/fontcolor"
+                android:textSize="@dimen/content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginRight="10dp"
+                android:text="价格(元/kg)"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="3"
+                android:textColor="@color/fontcolor"
+                android:textSize="@dimen/content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+           <ListView
+               android:scrollbars="none"
+               android:divider="@color/transparent"
+               android:dividerHeight="1dp"
+               android:background="@color/app_base_layout_background"
+               android:id="@+id/serverproduct_dynamic_price_averageprice_listview"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"/>
     </LinearLayout>
 </LinearLayout>

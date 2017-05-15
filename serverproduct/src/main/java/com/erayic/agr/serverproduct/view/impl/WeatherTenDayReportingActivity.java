@@ -11,12 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.codbking.widget.bean.DateType;
 import com.erayic.agr.common.base.BaseActivity;
-import com.erayic.agr.common.net.back.enums.EnumResourceType;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.common.view.PagerSlidingTabStrip;
 import com.erayic.agr.serverproduct.DateFormatUtils;
@@ -24,7 +22,7 @@ import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
 import com.erayic.agr.serverproduct.adapter.entity.WeatherTendayReportingData;
 import com.erayic.agr.serverproduct.presenter.IWeatherTenDayReportingPresenter;
-import com.erayic.agr.serverproduct.presenter.impl.WeatherTenDayReportingPresenter;
+import com.erayic.agr.serverproduct.presenter.impl.WeatherTenDayReportingPresenterImpl;
 import com.erayic.agr.serverproduct.view.ITenDayReportingView;
 import com.erayic.agr.serverproduct.view.ITendayReportingUpdateView;
 import com.erayic.agr.serverproduct.view.custom.ReportingSortDailogManage;
@@ -169,7 +167,7 @@ public class WeatherTenDayReportingActivity extends BaseActivity implements ITen
         slidingTabStrip.setDividerColorResource(R.color.app_base_tab_strip_divider);//每个标签的分割线的颜色
         slidingTabStrip.setIndicatorHeight(10);//滑动条的高度
         slidingTabStrip.setUnderlineHeight(1);//滑动条所在的那个全宽线的高度
-        weatherTenDayReportingPresenter = new WeatherTenDayReportingPresenter(this);
+        weatherTenDayReportingPresenter = new WeatherTenDayReportingPresenterImpl(this);
         weatherTenDayReportingPresenter.getWeatherTenDayReportingData(year, month);
     }
 
