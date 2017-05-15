@@ -11,7 +11,7 @@ import java.util.List;
  * Created by wxk on 2017/5/13.
  */
 
-public class DynamicPricePrincipalMarketDatas {
+public class DynamicPricePrincipalMarketDatas  {
         private List<MarketPriceDatas> marketPriceDatasList;
 
     public DynamicPricePrincipalMarketDatas(CommonDynamicPriceBean bean) {
