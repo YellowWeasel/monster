@@ -52,7 +52,7 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_policies_regulations);
-        ButterKnife.bind(this);
+//        ButterKnife.bind(this);
     }
 
     @Override

@@ -69,7 +69,8 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_price);
-        ButterKnife.bind(this);
+//
+//        ButterKnife.bind(this);
     }
 
     @Override
