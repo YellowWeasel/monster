@@ -8,13 +8,14 @@
     <com.jpeng.jptabbar.JPTabBar
         android:id="@+id/unit_list_item_tab"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="60dp"
         android:background="#fff"
         app:BadgePadding="4dp"
         app:BadgeTextSize="10dp"
+        app:TabAnimate="None"
+        app:TabNormalColor="@color/app_base_text_title_1"
         app:TabSelectBg="#fb8051"
-        app:TabAnimate="None" />
+        app:TabSelectColor="#ffffff" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/unit_list_item_recyclerView"

@@ -14,10 +14,10 @@ import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.codbking.widget.bean.DateType;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.common.view.PagerSlidingTabStrip;
+import com.erayic.agr.common.view.codbking.bean.DateType;
 import com.erayic.agr.serverproduct.DateFormatUtils;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
@@ -144,7 +144,7 @@ public class WeatherTenDayReportingActivity extends BaseActivity implements ITen
             finish();
         } else if (item.getItemId() == R.id.serverproduct_tendayreporting_picktimer) {
             ReportingSortDailogManage.getInstance(this).
-                    setting(5,"已选日期", DateType.TYPE_YMD,"yyyy年 MM月 dd日").showDialog();
+                    setting(5,"已选日期", DateType.TYPE_YM,"yyyy年 MM月 ").showDialog();
         }
         return super.onOptionsItemSelected(item);
     }

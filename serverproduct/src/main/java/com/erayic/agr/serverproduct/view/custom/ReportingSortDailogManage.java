@@ -9,10 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.StyleRes;
 
-import com.codbking.widget.DatePickDialog;
-import com.codbking.widget.OnChangeLisener;
-import com.codbking.widget.OnSureLisener;
-import com.codbking.widget.bean.DateType;
+import com.erayic.agr.common.view.codbking.DatePickDialog;
+import com.erayic.agr.common.view.codbking.OnSureLisener;
+import com.erayic.agr.common.view.codbking.bean.DateType;
 import com.erayic.agr.serverproduct.view.ITenDayReportingView;
 import com.erayic.agr.serverproduct.view.impl.WeatherTenDayReportingActivity;
 
@@ -62,7 +61,7 @@ public class ReportingSortDailogManage {
          }
     }
 
-    public ReportingSortDailogManage setting(int showLimits, String title, DateType type,String messageFormat){
+    public ReportingSortDailogManage setting(int showLimits, String title, DateType type, String messageFormat){
         //设置上下年分限制
         datePickDialog.setYearLimt(showLimits);
         //设置标题

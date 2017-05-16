@@ -57,7 +57,7 @@ public class ProduceListActivity extends BaseActivity implements IProduceListVie
 
     @Override
     public void initView() {
-        toolbar.setTitle("基地信息");
+        toolbar.setTitle("产品信息");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

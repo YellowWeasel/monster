@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.net.back.ServiceBuyByUserBean;
 import com.erayic.agr.common.net.back.enums.EnumServiceType;
+import com.erayic.agr.common.util.ErayicLog;
 import com.erayic.agr.common.view.SectionedRecyclerViewAdapter;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.adapter.holder.ServiceManageChildViewHolder;

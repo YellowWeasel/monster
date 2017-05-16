@@ -1,15 +1,17 @@
 package com.erayic.agr.unit.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.util.DividerItemDecoration;
-import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.SectionedRecyclerViewAdapter;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.adapter.entity.UnitListItemByBatchEntity;
@@ -30,15 +32,24 @@ import java.util.List;
 public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListItemGroupViewHolder, UnitListItemChildViewHolder, RecyclerView.ViewHolder> {
 
     private final String[] titlesName = new String[]{"批次", "环境", "控制", "监控"};
-    private final int[] titleNormalIcons = new int[]{R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3};
-    private final int[] titleSelectedIcons = new int[]{R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3};
+    private final int[] titleNormalIcons = new int[]{R.drawable.image_unit_batch_nomal, R.drawable.image_unit_environment_nomal,
+            R.drawable.image_unit_control_nomal, R.drawable.image_unit_monitor_nomal};
+    private final int[] titleSelectedIcons = new int[]{R.drawable.image_unit_batch_press, R.drawable.image_unit_environment_press,
+            R.drawable.image_unit_control_press, R.drawable.image_unit_monitor_press};
 
     private Context context;
     private SparseBooleanArray mBooleanMap;
+    private int onItemPosition = -1;
+
+    private onItemScrollToPositionWithOffset onItemScrollToPositionWithOffset;
 
     public UnitListItemAdapter(Context context) {
         this.context = context;
         mBooleanMap = new SparseBooleanArray();
+    }
+
+    public void setOnItemScrollToPositionWithOffset(UnitListItemAdapter.onItemScrollToPositionWithOffset onItemScrollToPositionWithOffset) {
+        this.onItemScrollToPositionWithOffset = onItemScrollToPositionWithOffset;
     }
 
     @Override
@@ -76,13 +87,29 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
     }
 
     @Override
-    protected void onBindSectionHeaderViewHolder(UnitListItemGroupViewHolder holder, final int section) {
+    protected void onBindSectionHeaderViewHolder(final UnitListItemGroupViewHolder holder, final int section) {
+        holder.unitItemListIcon.setImageResource(mBooleanMap.get(section) ? R.drawable.image_unit_item_open : R.drawable.image_unit_item_close);
+        holder.serviceManageItemLayout.setBackground(ContextCompat.getDrawable(context, mBooleanMap.get(section) ? R.color.unit_colors_item_green : R.color.app_base_item_background));
+        holder.unitItemListName.setTextColor(ContextCompat.getColor(context, mBooleanMap.get(section) ? R.color.app_base_item_background : R.color.app_base_text_title_2));
+        holder.unitItemListName.setGravity(mBooleanMap.get(section) ? Gravity.CENTER : Gravity.CENTER_VERTICAL | Gravity.START);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isOpen = mBooleanMap.get(section);
+                holder.unitItemListIcon.setImageResource(isOpen ? R.drawable.image_unit_item_open : R.drawable.image_unit_item_close);
+                holder.serviceManageItemLayout.setBackground(ContextCompat.getDrawable(context, isOpen ? R.color.unit_colors_item_green : R.color.app_base_item_background));
+                holder.unitItemListName.setTextColor(ContextCompat.getColor(context, isOpen ? R.color.app_base_item_background : R.color.app_base_text_title_2));
+                holder.unitItemListName.setGravity(isOpen ? Gravity.CENTER : Gravity.CENTER_VERTICAL | Gravity.START);
                 mBooleanMap.put(section, !isOpen);
+                if (onItemPosition >= 0 && onItemPosition != section) {
+                    mBooleanMap.put(onItemPosition, false);
+                }
+                onItemPosition = section;
                 notifyDataSetChanged();
+                if (onItemScrollToPositionWithOffset!=null){
+                    onItemScrollToPositionWithOffset.scrollToPositionWithOffset(section);
+                }
+
             }
         });
     }
@@ -114,7 +141,10 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                 List<UnitListItemByBatchEntity> list = new ArrayList<>();
                 for (int i = 0; i < 10; i++) {
                     UnitListItemByBatchEntity entity = new UnitListItemByBatchEntity();
-                    entity.setItemType(UnitListItemByBatchEntity.TYPE_BATCH_ADD);
+                    if (i == 0)
+                        entity.setItemType(UnitListItemByBatchEntity.TYPE_BATCH_ADD);
+                    else
+                        entity.setItemType(UnitListItemByBatchEntity.TYPE_BATCH_CONTENT);
                     entity.setName(section + "");
                     entity.setSubName(index + "");
                     list.add(entity);
@@ -126,9 +156,13 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
             }
         });
         holder.unitListItemTab.setSelectTab(0);
+    }
 
-
-
+    /**
+     * 点击Item精准定位到具体头部位置
+     */
+    public interface onItemScrollToPositionWithOffset{
+        void scrollToPositionWithOffset(int position);
     }
 
 }

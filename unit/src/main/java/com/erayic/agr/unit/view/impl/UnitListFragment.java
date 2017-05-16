@@ -68,6 +68,12 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
         adapter = new UnitListItemAdapter(getActivity());
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 1);
         manager.setSpanSizeLookup(new SectionedSpanSizeLookup(adapter, manager));
+        adapter.setOnItemScrollToPositionWithOffset(new UnitListItemAdapter.onItemScrollToPositionWithOffset() {
+            @Override
+            public void scrollToPositionWithOffset(int position) {
+                unitListRecyclerView.smoothScrollToPosition(position);
+            }
+        });
         unitListRecyclerView.setLayoutManager(manager);
         unitListRecyclerView.setAdapter(adapter);
     }

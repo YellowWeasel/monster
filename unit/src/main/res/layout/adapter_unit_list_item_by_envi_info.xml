@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:foreground="?android:attr/selectableItemBackground"
     android:layout_width="match_parent"
-    android:background="@color/app_base_item_background"
+    android:background="@color/app_base_layout_background"
     android:layout_height="wrap_content">
 
     <TableRow
@@ -13,7 +13,7 @@
         android:minHeight="50dp"
         android:gravity="center_vertical">
 
-        <ImageView
+        <com.erayic.agr.common.view.CircleImageView
             android:id="@+id/unit_content_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -27,7 +27,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
             android:gravity="center_vertical|left"
-            android:text="新建一个批次"
+            android:text="空气温度："
             android:textColor="@color/app_base_text_title_1"
             android:textSize="16sp" />
 
@@ -37,14 +37,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:gravity="end"
+            android:gravity="start"
             android:textColor="@color/app_base_text_title_3"
             android:textSize="14sp" />
 
         <ImageView
-            android:id="@+id/unit_content_goto"
+            android:id="@+id/manage_content_goto"
             android:layout_width="15dp"
             android:layout_height="15dp"
+            android:visibility="gone"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             app:srcCompat="@drawable/app_base_default_right" />

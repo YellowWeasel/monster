@@ -2,6 +2,8 @@ package com.erayic.agr.unit.adapter.entity;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
+import java.util.Map;
+
 /**
  * 作者：hejian
  * 邮箱：hkceey@outlook.com
@@ -15,12 +17,13 @@ public class UnitListItemByBatchEntity implements MultiItemEntity {
 
     private String name;
     private String subName;
+    private Map<String,String> map;
 
     private int itemType;
 
     @Override
     public int getItemType() {
-        return 0;
+        return itemType;
     }
 
     public void setItemType(int itemType) {
@@ -41,5 +44,13 @@ public class UnitListItemByBatchEntity implements MultiItemEntity {
 
     public void setSubName(String subName) {
         this.subName = subName;
+    }
+
+    public Map<String, String> getMap() {
+        return map;
+    }
+
+    public void setMap(Map<String, String> map) {
+        this.map = map;
     }
 }
