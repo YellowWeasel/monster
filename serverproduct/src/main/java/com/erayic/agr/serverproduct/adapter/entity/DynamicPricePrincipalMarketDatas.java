@@ -42,7 +42,7 @@ public class DynamicPricePrincipalMarketDatas  {
             this.MarketName=value.getKey();
             this.Value=value.getValue().getValue();
             String strDate=value.getValue().getKey();
-            this.Date=new SimpleDateFormat("yyyy.MM.dd").
+            this.Date=new SimpleDateFormat("M月d日").
                     format(new Date(Long.valueOf(strDate.
                             substring(strDate.indexOf("(")+1,strDate.indexOf(")")))));
         }
@@ -77,5 +77,4 @@ public class DynamicPricePrincipalMarketDatas  {
                 Value = value;
             }
         }
-
 }

@@ -4,6 +4,7 @@ import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
 import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
+import com.erayic.agr.common.net.back.api.CommonMarketDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsBean;
 import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsDetailBean;
 import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
@@ -79,4 +80,21 @@ public interface IHttpApiService {
         @Query("start")String start,
         @Query("end")String end
     );
+
+    /**
+     * 获取指定市场价格
+     * @param cropId
+     * @param marketName
+     * @param start
+     * @param end
+     * @return
+     */
+    @GET("MarketInfo/GetPriceByMarketName")
+    Observable<DataBack<List<CommonMarketDynamicPriceBean>>> getDesignatedMarketDynamicPrices(
+            @Query("cropId") int cropId,
+            @Query("marketName")String marketName,
+            @Query("start")String start,
+            @Query("end")String end
+    );
+
 }

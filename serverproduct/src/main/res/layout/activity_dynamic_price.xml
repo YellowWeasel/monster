@@ -86,7 +86,7 @@
             android:layout_height="40dp">
             <TextView
                 android:layout_gravity="center_vertical"
-                android:text="主要市场价格"
+                android:text="主要市场最新价格"
                 android:textSize="@dimen/content"
                 android:textColor="@color/cyan"
                 android:layout_width="wrap_content"
@@ -103,9 +103,8 @@
             <TextView
                 android:layout_marginLeft="10dp"
                 android:text="日期"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:layout_weight="3"
+                android:maxLines="3"
+                android:layout_weight="2"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
                 android:textColor="@color/fontcolor"
@@ -130,7 +129,7 @@
                 android:maxLines="1"
                 android:gravity="center"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:textColor="@color/fontcolor"
                 android:textSize="@dimen/content"
                 android:layout_width="0dp"

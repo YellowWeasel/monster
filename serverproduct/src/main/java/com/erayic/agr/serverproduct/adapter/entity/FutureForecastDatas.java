@@ -3,6 +3,7 @@ package com.erayic.agr.serverproduct.adapter.entity;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,7 +40,7 @@ public class FutureForecastDatas {
             ca.add(Calendar.HOUR_OF_DAY, 1);
             strDates[i-1]=String.valueOf(ca.getTime().getHours())+"时";
             ForecastDatas foreDatas = new ForecastDatas();
-            foreDatas.setAppearTime(ca.getTime().toString());
+            foreDatas.setAppearTime(new SimpleDateFormat("dd日HH时").format(ca.getTime()));
             foreDatas.setHumi(GetDatas(ca.getTime(), beans, "0"));
             foreDatas.setRain(GetDatas(ca.getTime(), beans, "1"));
             foreDatas.setTemperature(GetDatas(ca.getTime(), beans, "2"));

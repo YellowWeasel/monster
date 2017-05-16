@@ -74,5 +74,10 @@ public class HttpApiManager {
     public Observable getPoliciesRegulationsDetail(int Id) {
         return apiService.getPoliciesRegulationsDetail(Id);
     }
-
+    /**
+     * 获取指定市场价格
+     */
+    public Observable getDesignatedMarketDynamicPrices(int cropId, String marketName,String start,String end) {
+        return apiService.getDesignatedMarketDynamicPrices(cropId,marketName,start,end);
+    }
 }

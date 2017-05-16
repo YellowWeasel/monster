@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewStub;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,7 +42,7 @@ import butterknife.ButterKnife;
  * Created by wxk on 2017/5/11.
  */
 @Route(path = "/serverproduct/activity/DynamicPriceActivity", name = "价格动态")
-public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceView {
+public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceView, AdapterView.OnItemClickListener {
     @Autowired
     int cropId;//7
     @Autowired
@@ -83,6 +85,7 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        marketPriceListView.setOnItemClickListener(this);
         serverproductDynamicPriceAveragepriceWebview.getSettings().setJavaScriptEnabled(true);
         serverproductDynamicPriceAveragepriceWebview.getSettings().setDefaultTextEncodingName("utf-8");
         serverproductDynamicPriceAveragepriceWebview.addJavascriptInterface(new DynamicPriceJsInterface(), "Datas");
@@ -115,7 +118,6 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
                 , new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
     }
 
-
     @Override
     public void initData() {
         adapter = new DynamicPricesAdapter(principalMarketDatas, this);
@@ -136,8 +138,6 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
             finish();
         } else if (item.getItemId() == R.id.serverproduct_dynamicprices_week) {
             dateInterval = 7;
-        } else if (item.getItemId() == R.id.serverproduct_dynamicprices_halfmonth) {
-            dateInterval = 15;
         } else if (item.getItemId() == R.id.serverproduct_dynamicprices_month) {
             dateInterval = 30;
         } else if (item.getItemId() == R.id.serverproduct_dynamicprices_season) {
@@ -203,6 +203,10 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
     protected void onDestroy() {
         super.onDestroy();
         dismissLoading();
+    }
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 
     public class DynamicPriceJsInterface {

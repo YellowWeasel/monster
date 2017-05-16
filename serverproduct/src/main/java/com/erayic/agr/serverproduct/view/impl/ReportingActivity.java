@@ -1,11 +1,17 @@
 package com.erayic.agr.serverproduct.view.impl;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -18,6 +24,7 @@ import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
+import com.erayic.agr.serverproduct.adapter.ForecastReportingAdapter;
 import com.erayic.agr.serverproduct.adapter.entity.BaseForecastInfo;
 import com.erayic.agr.serverproduct.adapter.entity.FutureForecastDatas;
 import com.erayic.agr.serverproduct.adapter.entity.RealTimeForecastInfo;
@@ -50,6 +57,8 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     TextView rainTextView;
     @BindView(R2.id.serverproduct_hum_valuetext)
     TextView humTextView;
+    @BindView(R2.id.serverproduct_wind_valuetext)
+    TextView windTextView;
     @BindView(R2.id.serverproduct_tmp_valuetext)
     TextView tmpTextView;
     @BindView(R2.id.serverproduct_base_valuetext)
@@ -62,14 +71,20 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     TextView sprayTextView;
     @BindView(R2.id.serverproduct_irrigation_textview)
     TextView irrigationTextView;
+    @BindView(R2.id.serverproduct_reporting_base_linearlayout)
+    LinearLayout parentLinearLayout;
+    @BindView(R2.id.serverproduct_reporting_listview)
+    ListView reportingListView;
 
     public BaseForecastInfo infos;
     public IReportingPresenter reportingPresenter;
+    ForecastReportingAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast_reporting);
+        setLayoutHeight();
     }
 
     @Override
@@ -84,9 +99,24 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
         webView.addJavascriptInterface(new DataForJsInterface(), "Datas");
         refreshWebView();
     }
+     public void setLayoutHeight(){
+         int stateHeight=-1;
+         int resourceId=getResources().getIdentifier("status_bar_height","dimen","android");
+         if (resourceId>0){
+             stateHeight=getResources().getDimensionPixelSize(resourceId);
+         }
+         WindowManager manager= (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+         Display defaultDisplay = manager.getDefaultDisplay();
+         ViewGroup.LayoutParams layoutParams = parentLinearLayout.getLayoutParams();
+         layoutParams.height=defaultDisplay.getHeight()-toolbar.getLayoutParams().height-stateHeight;
+         parentLinearLayout.setLayoutParams(layoutParams);
+     }
 
     @Override
     public void initData() {
+        adapter=new ForecastReportingAdapter(this);
+        reportingListView.setAdapter(adapter);
+
         reportingPresenter = new ReportingPresenterImpl(this);
         infos = new BaseForecastInfo();
         infos.setBaseName(PreferenceUtils.getParam("BaseName"));
@@ -132,6 +162,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
         rainTextView.setText(String.valueOf(nowInfo.getRain_10M()) + "ml");
         tmpTextView.setText(String.valueOf(nowInfo.getTemp_Max()) + "℃");
         humTextView.setText(String.valueOf(nowInfo.getHumi()) + "%");
+        windTextView.setText(String.valueOf(nowInfo.getWind_Max()+"m/s"));
         baseTextView.setText(infos.getBaseName());
         setTextViewContent(fertilizationTextView, 75);
         setTextViewContent(pickingTextView, 89);
@@ -175,6 +206,8 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     public void refreshFeatureDataView(List<CommonFutureWeatherBean> bean) {
         FutureForecastDatas featureForecastDatas = new FutureForecastDatas();
         infos.setFeatureForecastDatas(featureForecastDatas.InitFeature(bean));
+        adapter.setForecastDatas(featureForecastDatas);
+        adapter.notifyDataSetChanged();
         refreshWebView();
     }
 
@@ -208,4 +241,5 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
             }
         });
     }
+
 }

@@ -23,6 +23,8 @@ import butterknife.BindView;
 
 public class PoliciesRegulationsAdapter extends BaseQuickAdapter<PoliciesRegulationsTitleDatas, PoliciesRegulationsViewHolder> {
     PoliciesRegulationsItemClickListener regulationsItemClickListener;
+
+
     public PoliciesRegulationsAdapter(List<PoliciesRegulationsTitleDatas> data) {
         super(R.layout.policies_regulation_item, data);
     }

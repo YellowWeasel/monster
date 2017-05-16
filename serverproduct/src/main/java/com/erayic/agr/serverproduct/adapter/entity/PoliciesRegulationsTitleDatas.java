@@ -47,6 +47,7 @@ public class PoliciesRegulationsTitleDatas  {
     public PoliciesRegulationsTitleDatas() {
     }
 
+
     public PoliciesRegulationsTitleDatas(CommonPoliciesRegulationsBean bean) {
         this.Id=bean.getId();
         this.Title=bean.getTitle();

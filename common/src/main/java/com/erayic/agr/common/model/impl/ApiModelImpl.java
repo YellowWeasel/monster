@@ -10,6 +10,7 @@ import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
 import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
+import com.erayic.agr.common.net.back.api.CommonMarketDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsDetailBean;
 import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsBean;
@@ -230,6 +231,44 @@ public class ApiModelImpl implements IApiModel {
                     @Override
                     public void call(DataBack<List<CommonPoliciesRegulationsBean>> objectDataBack) {
                         ErayicLog.i("getPoliciesRegulations", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+
+    @Override
+    public void getDesignatedMarketDynamicPrices(int cropId, String marketName,String start,String end,final OnDataListener<List<CommonMarketDynamicPriceBean>> listener) {
+        HttpApiManager.getInstance().getDesignatedMarketDynamicPrices(cropId,marketName,start,end)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<List<CommonMarketDynamicPriceBean>>>() {
+                    @Override
+                    public void call(DataBack<List<CommonMarketDynamicPriceBean>> objectDataBack) {
+                        ErayicLog.i("getWeatherTenDayReportsByMonth", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
 
                             listener.success(objectDataBack.getResult());

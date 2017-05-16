@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/serverproduct_dynamicprices_week"
-        android:title="最近一周"
+        android:id="@+id/serverproduct_policies_province"
+        android:title="省内"
         app:showAsAction="never" />
     <item
-        android:id="@+id/serverproduct_dynamicprices_month"
-        android:title="最近一个月"
+        android:id="@+id/serverproduct_policies_national"
+        android:title="全国"
         app:showAsAction="never" />
     <item
-        android:id="@+id/serverproduct_dynamicprices_season"
-        android:title="最近三个月"
+        android:id="@+id/serverproduct_policies_all"
+        android:title="全部"
         app:showAsAction="never" />
 </menu>

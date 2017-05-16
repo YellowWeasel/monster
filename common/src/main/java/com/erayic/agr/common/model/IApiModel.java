@@ -5,6 +5,7 @@ import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
 import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
+import com.erayic.agr.common.net.back.api.CommonMarketDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsDetailBean;
 import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsBean;
@@ -47,4 +48,9 @@ public interface IApiModel extends IProvider {
      *   获取政策法规详情
      */
     void getPoliciesRegulationsDetail(int Id, OnDataListener<CommonPoliciesRegulationsDetailBean> listener);
+
+    /**
+     * 获取指定市场价格
+     */
+    void getDesignatedMarketDynamicPrices(int cropId, String marketName,String start,String end,final OnDataListener<List<CommonMarketDynamicPriceBean>> listener);
 }

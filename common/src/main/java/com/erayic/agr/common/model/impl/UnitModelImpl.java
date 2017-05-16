@@ -63,7 +63,6 @@ public class UnitModelImpl implements IUnitModel {
                     }
                 });
     }
-
     @Override
     public void init(Context context) {
 

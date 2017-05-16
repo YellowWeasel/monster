@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.erayic.agr.serverproduct.presenter.IPoliciesRegulationsPresenter;
 import com.erayic.agr.serverproduct.presenter.impl.PoliciesRegulationsPresenterImpl;
 import com.erayic.agr.serverproduct.view.IPoliciesRegulartionsView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,6 +49,8 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
     RecyclerView serverproductPoliciesRegulationsRecycler;
     @BindView(R2.id.serverproduct_policies_regulations_swipe)
     SwipeRefreshLayout serverproductPoliciesRegulationsSwipe;
+    int showType=0;
+    List<PoliciesRegulationsTitleDatas> policiesRegulationsTitleDatasList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +120,8 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
 
     @Override
     public void refreshPoliciesRegulartionsView(List<PoliciesRegulationsTitleDatas> list) {
-                 adapter.setNewData(list);
+                 policiesRegulationsTitleDatasList=list;
+                 adapter.setNewData(presenter.sortPoliciesRegulationsDatasByProvince("海南省",policiesRegulationsTitleDatasList,showType));
     }
 
     @Override
@@ -126,7 +131,11 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
             public void run() {
                 adapter.loadMoreComplete();//加载完成
                 if (list != null)
-                    adapter.addData(list);
+                    if (policiesRegulationsTitleDatasList==null){
+                        policiesRegulationsTitleDatasList=new ArrayList<>();
+                    }
+                    policiesRegulationsTitleDatasList.addAll(list);
+                    adapter.addData(presenter.sortPoliciesRegulationsDatasByProvince("海南省",list,showType));
                 if (list.size() < pageSize)
                     adapter.loadMoreEnd();
             }
@@ -139,10 +148,27 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_serverproduct_policiesregulation, menu);
+        return true;
+    }
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {//返回
             finish();
+        } else if (item.getItemId() == R.id.serverproduct_policies_province) {
+                showType=1;
+        } else if (item.getItemId() == R.id.serverproduct_policies_national) {
+                showType=2;
+        }else if (item.getItemId() == R.id.serverproduct_policies_all) {
+                showType=0;
         }
+
+
+        adapter.setNewData(presenter.
+                sortPoliciesRegulationsDatasByProvince("海南省",
+                        policiesRegulationsTitleDatasList,showType));
+        adapter.notifyDataSetChanged();
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -150,6 +176,7 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
     public void onRefresh() {
         presenter.initPoliciesRegulationsDatas(pageSize);
     }
+
 
     @Override
     public void onLoadMoreRequested() {

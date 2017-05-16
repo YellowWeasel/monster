@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -46,9 +47,6 @@ public class WeatherTenDayReportingActivity extends BaseActivity implements ITen
     ViewPager viewPager;
     @BindView(R2.id.serverproduct_tendayreporting_toolbar)
     Toolbar mToolbar;
-    @BindView(R2.id.serverproduct_tendayreporting_menu_imageview)
-    ImageView menuImageView;
-
     WeatherTenDayReporingViewPagerAdapter adapter;
 
 
@@ -115,7 +113,6 @@ public class WeatherTenDayReportingActivity extends BaseActivity implements ITen
     public void initView() {
 
         viewPager.setOffscreenPageLimit(2);
-        menuImageView.setOnClickListener(this);
         mToolbar.setTitle("旬报");
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
@@ -138,9 +135,16 @@ public class WeatherTenDayReportingActivity extends BaseActivity implements ITen
                 ,(WeatherTenDayReportingFragment) fragments[1],(WeatherTenDayReportingFragment) fragments[2]};
     }
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_serverproduct_tendayreporting, menu);
+        return true;
+    }
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {//返回
             finish();
+        } else if (item.getItemId() == R.id.serverproduct_tendayreporting_picktimer) {
+            ReportingSortDailogManage.getInstance(this).
+                    setting(5,"已选日期", DateType.TYPE_YMD,"yyyy年 MM月 dd日").showDialog();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -179,11 +183,6 @@ public class WeatherTenDayReportingActivity extends BaseActivity implements ITen
 
     @Override
     public void onClick(View v) {
-        int id=v.getId();
-        if (id==menuImageView.getId()){
-            ReportingSortDailogManage.getInstance(this).
-                    setting(5,"已选日期", DateType.TYPE_YMD,"yyyy年 MM月 dd日").showDialog();
-        }
     }
 
     @Override

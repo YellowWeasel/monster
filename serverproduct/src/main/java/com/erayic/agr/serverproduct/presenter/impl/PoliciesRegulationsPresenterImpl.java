@@ -76,4 +76,29 @@ public class PoliciesRegulationsPresenterImpl implements IPoliciesRegulationsPre
             }
         });
     }
+
+    @Override
+    public List<PoliciesRegulationsTitleDatas> sortPoliciesRegulationsDatasByProvince(String province, List<PoliciesRegulationsTitleDatas> titleDatasList,int sort) {
+        List<PoliciesRegulationsTitleDatas> datases=new ArrayList<>();
+        switch (sort){
+            case 0:
+                datases=titleDatasList;
+                break;
+            case 1:
+                for (PoliciesRegulationsTitleDatas titleDatas: titleDatasList){
+                    if (titleDatas.getInfoSource().contains(province)){
+                        datases.add(titleDatas);
+                    }
+                }
+                break;
+            case 2:
+                for (PoliciesRegulationsTitleDatas titleDatas: titleDatasList){
+                    if (!titleDatas.getInfoSource().contains(province)){
+                        datases.add(titleDatas);
+                    }
+                }
+                break;
+        }
+        return  datases;
+    }
 }
