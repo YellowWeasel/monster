@@ -74,7 +74,7 @@ public interface IHttpApiService {
      * @param end
      * @return
      */
-    @GET("MarketInfo/GetMarketPrice")
+    @GET("MarketInfo/GetMarketPrice1")
     Observable<DataBack<CommonDynamicPriceBean>> getDynamicPrices(
         @Query("cropId")int cropId,
         @Query("start")String start,

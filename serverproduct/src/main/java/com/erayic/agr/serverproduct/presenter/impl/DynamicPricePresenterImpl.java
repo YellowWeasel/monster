@@ -24,7 +24,7 @@ public class DynamicPricePresenterImpl implements IDynamicPricePresenter {
     }
 
     @Override
-    public void getDynamicPricePresenter(int cropId, String start, String end) {
+    public void getDynamicPricedatas(int cropId, String start, String end) {
         context.showLoading();
         apiModel.getDynamicPrice(cropId, start, end, new OnDataListener<CommonDynamicPriceBean>() {
             @Override

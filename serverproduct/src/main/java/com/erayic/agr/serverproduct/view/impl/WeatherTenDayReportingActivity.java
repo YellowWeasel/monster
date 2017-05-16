@@ -144,7 +144,7 @@ public class WeatherTenDayReportingActivity extends BaseActivity implements ITen
             finish();
         } else if (item.getItemId() == R.id.serverproduct_tendayreporting_picktimer) {
             ReportingSortDailogManage.getInstance(this).
-                    setting(5,"已选日期", DateType.TYPE_YM,"yyyy年 MM月 ").showDialog();
+                    setting(5,"已选日期", DateType.TYPE_YM,"yyyy年 MM月").showDialog();
         }
         return super.onOptionsItemSelected(item);
     }

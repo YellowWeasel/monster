@@ -121,7 +121,7 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
     @Override
     public void refreshPoliciesRegulartionsView(List<PoliciesRegulationsTitleDatas> list) {
                  policiesRegulationsTitleDatasList=list;
-                 adapter.setNewData(presenter.sortPoliciesRegulationsDatasByProvince("海南省",policiesRegulationsTitleDatasList,showType));
+                 adapter.setNewData(presenter.sortPoliciesRegulationsDatasByProvince("海南省",list,showType));
     }
 
     @Override
@@ -163,12 +163,12 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
                 showType=0;
         }
 
-
         adapter.setNewData(presenter.
                 sortPoliciesRegulationsDatasByProvince("海南省",
                         policiesRegulationsTitleDatasList,showType));
         adapter.notifyDataSetChanged();
-
+        serverproductPoliciesRegulationsRecycler.setSelected(true);
+        serverproductPoliciesRegulationsRecycler.smoothScrollToPosition(0);
         return super.onOptionsItemSelected(item);
     }
 
@@ -180,7 +180,7 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
 
     @Override
     public void onLoadMoreRequested() {
-        presenter.getPoliciesRegulationsDatas(adapter.getData().size()/pageSize+1,pageSize);
+        presenter.getPoliciesRegulationsDatas(policiesRegulationsTitleDatasList.size()/pageSize+1,pageSize);
         adapter.setEnableLoadMore(true);
     }
 

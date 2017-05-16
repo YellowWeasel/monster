@@ -19,6 +19,9 @@
         <activity
             android:name=".view.impl.PoliciesRegulationsDetailActivity"
             android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.DynamicPriceDetailActivity"
+            android:theme="@style/AppTheme.Transparent" />
     </application>
 
 </manifest>

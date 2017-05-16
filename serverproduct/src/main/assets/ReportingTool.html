@@ -11,7 +11,17 @@
 <div id="main" style="width:100%;height:190px;"></div>
 <script type="text/javascript">
 
-function refershView(){
+function startView(){
+    // 基于准备好的dom，初始化echarts实例
+ var myChart = echarts.init(document.getElementById('main'));
+ myChart.showLoading({
+    text:"加载数据中..."
+ });
+ refershView(myChart);
+}
+
+
+function refershView(myChart){
 var json=window.Datas.GetData();
 var jsonData=eval('(' + json + ')');
 
@@ -49,11 +59,7 @@ if(jsonData!=null&&jsonData.rainDatas!=null&&jsonData.windDatas!=null&&jsonData.
 }
 
 
-// 基于准备好的dom，初始化echarts实例
- var myChart = echarts.init(document.getElementById('main'));
- myChart.showLoading({
-    text:"加载数据中..."
- });
+
  var colors = ['#00a29a', '#6dabde', '#ea5514'];
         // 指定图表的配置项和数据
       var  option = {
@@ -178,12 +184,9 @@ if(jsonData!=null&&jsonData.rainDatas!=null&&jsonData.windDatas!=null&&jsonData.
 // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
         if(rainDatas.length>0&&tmpDatas.length>0&&windDatas.length>0){
-             myChart.hideLoading();
+        myChart.hideLoading();
         }
 }
-
-
-
 
 </script>
 </body>

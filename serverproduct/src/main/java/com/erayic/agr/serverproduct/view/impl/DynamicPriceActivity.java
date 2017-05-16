@@ -16,9 +16,11 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
+import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.serverproduct.R;
@@ -26,6 +28,7 @@ import com.erayic.agr.serverproduct.R2;
 import com.erayic.agr.serverproduct.adapter.DynamicPricesAdapter;
 import com.erayic.agr.serverproduct.adapter.entity.DynamicAveragePriceDatas;
 import com.erayic.agr.serverproduct.adapter.entity.DynamicPricePrincipalMarketDatas;
+import com.erayic.agr.serverproduct.adapter.entity.MarketInfoParamter;
 import com.erayic.agr.serverproduct.presenter.IDynamicPricePresenter;
 import com.erayic.agr.serverproduct.presenter.impl.DynamicPricePresenterImpl;
 import com.erayic.agr.serverproduct.view.IDynamicPriceView;
@@ -113,7 +116,7 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_MONTH, -dateInterval);
-        dynamicPricePresenter.getDynamicPricePresenter(7
+        dynamicPricePresenter.getDynamicPricedatas((cropId=7)
                 , new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime())
                 , new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
     }
@@ -206,7 +209,14 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, -dateInterval);
 
+        DynamicPricePrincipalMarketDatas.MarketPriceDatas marketPriceDatas= (DynamicPricePrincipalMarketDatas.MarketPriceDatas) parent.getItemAtPosition(position);
+        ARouter.getInstance().build("/serverproduct/activity/DynamicPriceDetailActivity").withParcelable("paramter",new MarketInfoParamter(cropId,marketPriceDatas.getMarketName(),new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime())
+                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()))).navigation();
     }
 
     public class DynamicPriceJsInterface {

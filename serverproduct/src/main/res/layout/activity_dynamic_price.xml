@@ -72,6 +72,8 @@
                    />
            </LinearLayout>
         <com.erayic.agr.serverproduct.view.custom.NoScrollWebView
+            android:layout_margin="5dp"
+            android:background="@drawable/layout_shape_all"
             android:scrollbars="none"
             android:id="@+id/serverproduct_dynamic_price_averageprice_webview"
             android:layout_width="match_parent"
@@ -136,10 +138,10 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
            <ListView
+               android:background="@color/white"
                android:scrollbars="none"
                android:divider="@color/transparent"
                android:dividerHeight="1dp"
-               android:background="@color/app_base_layout_background"
                android:id="@+id/serverproduct_dynamic_price_averageprice_listview"
                android:layout_width="match_parent"
                android:layout_height="match_parent"/>

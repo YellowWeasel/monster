@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:weightSum="2"
+    android:background="@color/app_base_layout_background"
     android:theme="@style/AppTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -20,8 +22,26 @@
             app:contentInsetStart="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/serverproduct_dynamic_price_detail_viewpager"
+    <LinearLayout
+        android:background="@color/app_base_layout_background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/serverproduct_dynamic_price_detail_title_textview"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/content"
+            android:textColor="@color/cyan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            />
+    </LinearLayout>
+
+    <com.erayic.agr.serverproduct.view.custom.NoScrollWebView
+        android:layout_weight="1"
+        android:id="@+id/serverproduct_dynamic_price_detail_webview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none" />
 </LinearLayout>

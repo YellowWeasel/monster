@@ -2,6 +2,7 @@ package com.erayic.agr.serverproduct.adapter.entity;
 
 import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,11 +41,15 @@ public class DynamicPricePrincipalMarketDatas  {
 
         public MarketPriceDatas(CommonDynamicPriceBean.PrincipalMarketPrice value) {
             this.MarketName=value.getKey();
-            this.Value=value.getValue().getValue();
+            this.Value=format2(value.getValue().getValue());
             String strDate=value.getValue().getKey();
             this.Date=new SimpleDateFormat("M月d日").
                     format(new Date(Long.valueOf(strDate.
                             substring(strDate.indexOf("(")+1,strDate.indexOf(")")))));
+        }
+        public  String format2(String value) {
+            BigDecimal format=new BigDecimal(value);
+            return format.setScale(1,BigDecimal.ROUND_HALF_UP).toString();
         }
 
         public String getDate() {

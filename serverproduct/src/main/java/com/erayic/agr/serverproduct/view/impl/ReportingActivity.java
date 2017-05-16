@@ -190,7 +190,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                webView.loadUrl("javascript:refershView()");
+                webView.loadUrl("javascript:startView()");
                 dismissLoading();
             }
 
