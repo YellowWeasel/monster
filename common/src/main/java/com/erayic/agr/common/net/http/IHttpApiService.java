@@ -51,7 +51,6 @@ public interface IHttpApiService {
             @Query("year") int year,
             @Query("month") int month
     );
-
     /**
      * 获取政策法规
      * @return
@@ -61,12 +60,10 @@ public interface IHttpApiService {
             @Query("pageIndex")int pageIndex
             ,@Query("pageSize")int pageSize
     );
-
     @GET("MarketInfo/GetPoliciesById")
     Observable<DataBack<CommonPoliciesRegulationsDetailBean>>  getPoliciesRegulationsDetail(
             @Query("Id")int Id
     );
-
     /**
      * 获取价格动态
      * @param cropId
@@ -74,13 +71,12 @@ public interface IHttpApiService {
      * @param end
      * @return
      */
-    @GET("MarketInfo/GetMarketPrice1")
+    @GET("MarketInfo/GetMarketPrice")
     Observable<DataBack<CommonDynamicPriceBean>> getDynamicPrices(
         @Query("cropId")int cropId,
         @Query("start")String start,
         @Query("end")String end
     );
-
     /**
      * 获取指定市场价格
      * @param cropId
@@ -96,5 +92,4 @@ public interface IHttpApiService {
             @Query("start")String start,
             @Query("end")String end
     );
-
 }
