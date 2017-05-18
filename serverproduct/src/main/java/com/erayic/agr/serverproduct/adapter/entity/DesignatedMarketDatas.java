@@ -12,25 +12,22 @@ import java.util.List;
  */
 
 public class DesignatedMarketDatas {
-        private String marketName;
-        private String cropName;
-        private String[] xDatas;
+    private String marketName;
+    private String cropName;
+    private String[] xDatas;
     private String[] marketDatas;
 
-    public DesignatedMarketDatas(List<CommonMarketDynamicPriceBean> beans,String mMarketName) {
-        this.marketName=mMarketName;
-        if (beans==null)return;
-        xDatas=new String[beans.size()];
-        marketDatas=new String[beans.size()];
-        SimpleDateFormat format= new SimpleDateFormat("M月d日");
-        for (int i=0;i<beans.size();i++){
-            String strDate=beans.get(i).getKey();
-            xDatas[i]=format.
-                    format(new Date(Long.valueOf(strDate.
-                            substring(strDate.indexOf("(")+1,strDate.indexOf(")")))));
-            marketDatas[i]=beans.get(i).getValue();
+    public DesignatedMarketDatas(MarketDynamicPriceDatas beans, String mMarketName) {
+        this.marketName = mMarketName;
+        if (beans == null&&beans.getPriceDatasList()!=null) return;
+        xDatas = new String[beans.getPriceDatasList().size()];
+        marketDatas = new String[beans.getPriceDatasList().size()];
+        SimpleDateFormat format = new SimpleDateFormat("M月d日");
+        for (int i = 0; i < beans.getPriceDatasList().size(); i++) {
+            xDatas[i] = beans.getPriceDatasList().get(i).getKey();
+            marketDatas[i] = beans.getPriceDatasList().get(i).getValue();
         }
-        cropName="大白菜";
+        cropName = "大白菜";
     }
 
     public String getCropName() {

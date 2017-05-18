@@ -45,6 +45,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/serverproduct_tmp_valuetext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,26 +54,105 @@
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="@dimen/maxtitle" />
+        <TextView
+            android:layout_below="@id/serverproduct_tmp_valuetext"
+            android:id="@+id/serverproduct_clock_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/mincontent" />
 
         <ImageView
             android:id="@+id/serverproduct_forecast_imageview"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
             android:src="@drawable/image_serverproduct_sunny_icon" />
 
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/serverproduct_reporting_realtime_linearlayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
             android:orientation="vertical">
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/serverproduct_wind_imageview"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/image_serverproduct_wind_icon" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:maxLines="1"
+                            android:id="@+id/serverproduct_windlvl_titletext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="风力:"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/mincontent" />
+
+                        <TextView
+                            android:layout_marginLeft="2dp"
+                            android:maxLines="1"
+                            android:id="@+id/serverproduct_windlvl_valuetext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/content" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginTop="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:maxLines="1"
+                            android:id="@+id/serverproduct_windspeed_titletext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="风速:"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/mincontent" />
+
+                        <TextView
+                            android:layout_marginLeft="2dp"
+                            android:maxLines="1"
+                            android:id="@+id/serverproduct_windspeed_valuetext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/mincontent" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -88,18 +168,25 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:layout_weight="1"
+                        android:textSize="@dimen/mincontent"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
                         android:maxLines="1"
-                        android:id="@+id/serverproduct_rain_titletext"
+                        android:id="@+id/serverproduct_rain_lvl_textview"
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:text="降雨量"
+                        android:layout_height="0dp"
                         android:textColor="@color/white" />
 
                     <TextView
+                        android:layout_weight="1"
+                        android:textSize="@dimen/mincontent"
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal"
                         android:maxLines="1"
                         android:id="@+id/serverproduct_rain_valuetext"
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
+                        android:layout_height="0dp"
                         android:textColor="@color/white" />
                 </LinearLayout>
             </LinearLayout>
@@ -140,67 +227,88 @@
                         android:textSize="@dimen/content" />
                 </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/serverproduct_wind_wind_imageview"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/image_serverproduct_wind_icon" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="3dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:maxLines="1"
-                        android:id="@+id/serverproduct_wind_titletext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:text="风力"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/content" />
-
-                    <TextView
-                        android:maxLines="1"
-                        android:id="@+id/serverproduct_wind_valuetext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/content" />
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:layout_below="@id/serverproduct_forecast_imageview"
             android:id="@+id/serverproduct_reporting_bottom_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:orientation="horizontal"
-            android:paddingRight="30dp">
-
-            <ImageView
-                android:id="@+id/serverproduct_position_imageview"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:gravity="center"
                 android:layout_gravity="center"
-                android:src="@drawable/image_serverproduct_position_icon" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/serverproduct_position_imageview"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/image_serverproduct_position_icon" />
+
+                <TextView
+                    android:maxLines="1"
+                    android:id="@+id/serverproduct_base_valuetext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="未知基地"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/title" />
+            </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:weightSum="5"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+             <TextView
+                 android:gravity="center"
+            android:text="经度:"
+            android:textColor="@color/white"
+            android:textSize="@dimen/content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/serverproduct_reporting_lon_textview"
+                android:maxLines="1"
+                android:text="0.000"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
 
             <TextView
-                android:id="@+id/serverproduct_base_valuetext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="海口基地"
+                android:layout_marginLeft="15dp"
+                android:text="纬度:"
                 android:textColor="@color/white"
-                android:textSize="@dimen/title" />
+                android:textSize="@dimen/content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/serverproduct_reporting_lat_textview"
+                android:maxLines="1"
+                android:text="0.000"
+                android:textColor="@color/white"
+                android:textSize="@dimen/content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
                 </LinearLayout>
         </RelativeLayout>
@@ -222,11 +330,11 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:textColor="@color/white"
-            android:textSize="@dimen/title"
+            android:textSize="@dimen/content"
             android:text="农事建议"
             android:id="@+id/serverproduct_reporting_textview"
             android:layout_width="wrap_content"
-            android:layout_height="30dp" />
+            android:layout_height="40dp" />
     </LinearLayout>
         <LinearLayout
             android:background="@color/bgcolor"
@@ -265,7 +373,6 @@
                                     android:layout_height="match_parent" />
                                 <TextView
                                     android:id="@+id/serverproduct_fertilization_textview"
-                                    android:maxLines="1"
                                     android:layout_marginLeft="3dp"
                                     android:textSize="@dimen/content"
                                     android:gravity="center"
@@ -299,7 +406,6 @@
                                 android:layout_height="match_parent" />
                             <TextView
                                 android:id="@+id/serverproduct_picking_textview"
-                                android:maxLines="1"
                                 android:layout_marginLeft="3dp"
                                 android:textSize="@dimen/content"
                                 android:gravity="center"
@@ -328,7 +434,6 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp" />
                     <TextView
-                        android:maxLines="1"
                         android:layout_marginLeft="3dp"
                         android:text="打药指数"
                         android:textSize="@dimen/content"
@@ -339,7 +444,6 @@
                         android:layout_height="match_parent" />
                     <TextView
                         android:id="@+id/serverproduct_spray_textview"
-                        android:maxLines="1"
                         android:layout_marginLeft="3dp"
                         android:textSize="@dimen/content"
                         android:gravity="center"
@@ -374,7 +478,6 @@
                             />
                         <TextView
                         android:id="@+id/serverproduct_irrigation_textview"
-                        android:maxLines="1"
                         android:layout_marginLeft="3dp"
                         android:textSize="@dimen/content"
                         android:gravity="center"
@@ -399,13 +502,13 @@
                 android:gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/white"
-                android:textSize="@dimen/title"
+                android:textSize="@dimen/content"
                 android:text="未来24小时天气详情"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp" />
+                android:layout_height="40dp" />
         </LinearLayout>
         <LinearLayout
-            android:background="@color/white"
+            android:background="@color/app_base_layout_background"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="30dp">

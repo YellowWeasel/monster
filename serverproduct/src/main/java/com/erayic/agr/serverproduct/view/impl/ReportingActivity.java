@@ -3,8 +3,12 @@ package com.erayic.agr.serverproduct.view.impl;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.Display;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
@@ -21,9 +25,14 @@ import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
+import com.erayic.agr.common.util.ErayicNetDate;
+import com.erayic.agr.common.util.ErayicTextUtil;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.serverproduct.Constants;
+import com.erayic.agr.serverproduct.DateFormatUtils;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
+import com.erayic.agr.serverproduct.TextUtils;
 import com.erayic.agr.serverproduct.adapter.ForecastReportingAdapter;
 import com.erayic.agr.serverproduct.adapter.entity.BaseForecastInfo;
 import com.erayic.agr.serverproduct.adapter.entity.FutureForecastDatas;
@@ -32,10 +41,13 @@ import com.erayic.agr.serverproduct.adapter.entity.ReportingInfo;
 import com.erayic.agr.serverproduct.presenter.IReportingPresenter;
 import com.erayic.agr.serverproduct.presenter.impl.ReportingPresenterImpl;
 import com.erayic.agr.serverproduct.view.IReportingInfoView;
+import com.erayic.agr.serverproduct.view.IShowClockView;
 import com.erayic.agr.serverproduct.view.custom.NoScrollWebView;
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
 import java.util.List;
+import java.util.Timer;
 
 import butterknife.BindView;
 
@@ -44,7 +56,7 @@ import butterknife.BindView;
  */
 
 @Route(path = "/serverproduct/activity/ReportingActivity", name = "农事气象")
-public class ReportingActivity extends BaseActivity implements IReportingInfoView {
+public class ReportingActivity extends BaseActivity implements IReportingInfoView,IShowClockView {
     @Autowired
     String serviceID;
 
@@ -53,12 +65,18 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
 
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
+    @BindView(R2.id.serverproduct_rain_lvl_textview)
+    TextView rainLvlTextView;
     @BindView(R2.id.serverproduct_rain_valuetext)
     TextView rainTextView;
     @BindView(R2.id.serverproduct_hum_valuetext)
     TextView humTextView;
-    @BindView(R2.id.serverproduct_wind_valuetext)
-    TextView windTextView;
+
+    @BindView(R2.id.serverproduct_windlvl_valuetext)
+    TextView windLvlTextView;
+    @BindView(R2.id.serverproduct_windspeed_valuetext)
+    TextView windSpeedTextView;
+
     @BindView(R2.id.serverproduct_tmp_valuetext)
     TextView tmpTextView;
     @BindView(R2.id.serverproduct_base_valuetext)
@@ -67,14 +85,23 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     TextView fertilizationTextView;
     @BindView(R2.id.serverproduct_picking_textview)
     TextView pickingTextView;
+    @BindView(R2.id.serverproduct_clock_text)
+    TextView clockTextview;
+    @BindView(R2.id.serverproduct_reporting_lon_textview)
+    TextView baseLonTextView;
+    @BindView(R2.id.serverproduct_reporting_lat_textview)
+    TextView baseLatTextView;
     @BindView(R2.id.serverproduct_spray_textview)
     TextView sprayTextView;
     @BindView(R2.id.serverproduct_irrigation_textview)
     TextView irrigationTextView;
+
     @BindView(R2.id.serverproduct_reporting_base_linearlayout)
     LinearLayout parentLinearLayout;
     @BindView(R2.id.serverproduct_reporting_listview)
     ListView reportingListView;
+    @BindView(R2.id.serverproduct_reporting_realtime_linearlayout)
+    LinearLayout realtimeLinearlayout;
 
     public BaseForecastInfo infos;
     public IReportingPresenter reportingPresenter;
@@ -89,11 +116,14 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
 
     @Override
     public void initView() {
-        toolbar.setTitle("农事气象");
+        toolbar.setTitle("实况天气");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        baseLonTextView.setText(TextUtils.FormatNumber(PreferenceUtils.getParam("BaseLon"),4));
+        baseLatTextView.setText(TextUtils.FormatNumber(PreferenceUtils.getParam("BaseLat"),4));
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDefaultTextEncodingName("utf-8");
         webView.addJavascriptInterface(new DataForJsInterface(), "Datas");
@@ -111,15 +141,15 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
          layoutParams.height=defaultDisplay.getHeight()-toolbar.getLayoutParams().height-stateHeight;
          parentLinearLayout.setLayoutParams(layoutParams);
      }
-
     @Override
     public void initData() {
+        DateFormatUtils.showClock(100,"yyyy-MM-dd HH:mm",this);
         adapter=new ForecastReportingAdapter(this);
         reportingListView.setAdapter(adapter);
-
         reportingPresenter = new ReportingPresenterImpl(this);
         infos = new BaseForecastInfo();
         infos.setBaseName(PreferenceUtils.getParam("BaseName"));
+        baseTextView.setText(PreferenceUtils.getParam("BaseName"));
         reportingPresenter.getFeatureWeather();
         reportingPresenter.getRealTimeWeather();
     }
@@ -130,6 +160,16 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showClock(final String strDate) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                clockTextview.setText(strDate);
+            }
+        });
     }
 
     public class DataForJsInterface {
@@ -147,6 +187,12 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DateFormatUtils.release();
+    }
+
+    @Override
     public void showToast(String msg) {
 
     }
@@ -159,29 +205,56 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
                 , bean.getWind_Max(), bean.getWindDirect_Max(), bean.getTemp_Max()
                 , bean.getTemp_Min(), bean.getHumi()));
         RealTimeForecastInfo nowInfo = infos.getNowForecastInfo();
-        rainTextView.setText(String.valueOf(nowInfo.getRain_10M()) + "ml");
+        rainLvlTextView.setText(Constants.getRainLvlTitle(nowInfo.getRain_10M()));
+        if (!Constants.getRainLvlTitle(nowInfo.getRain_10M()).equals("晴")){
+            rainTextView.setText(String.valueOf(nowInfo.getRain_10M()) + "mm/10min");
+        }
+        tmpTextView.setVisibility(View.VISIBLE);
         tmpTextView.setText(String.valueOf(nowInfo.getTemp_Max()) + "℃");
         humTextView.setText(String.valueOf(nowInfo.getHumi()) + "%");
-        windTextView.setText(String.valueOf(nowInfo.getWind_Max()+"m/s"));
-        baseTextView.setText(infos.getBaseName());
+
+        String windLvl=Constants.getWindLvlTitle(nowInfo.getWind_Max());
+        windLvlTextView.setText(windLvl);
+        if (windLvl.equals("—")){
+            windSpeedTextView.setText("—");
+        }else{
+            windSpeedTextView.setText(String.valueOf(nowInfo.getWind_Max()+"m/s"));
+        }
+
+        realtimeLinearlayout.setVisibility(View.VISIBLE);
         setTextViewContent(fertilizationTextView, 75);
         setTextViewContent(pickingTextView, 89);
         setTextViewContent(sprayTextView, 30);
         setTextViewContent(irrigationTextView, 20);
     }
 
-    public void setTextViewContent(TextView tv, double score) {
-        if (score < 0 || score > 100) {
-            score = 0;
+    public void setTextViewContent(TextView tv, int score) {
+        String strSocre="";
+        if (score <=0 || score > 100) {
+            strSocre="—";
             tv.setTextColor(tv.getResources().getColor(R.color.pinred));
         } else if (score < 60) {//不适宜
+            strSocre=String.valueOf(score)+"\n"+"(不适宜)";
             tv.setTextColor(tv.getResources().getColor(R.color.pinred));
         } else if (60 <= score && score < 80) {//一般、不建议
+            strSocre=String.valueOf(score)+"\n"+"(适宜)";
             tv.setTextColor(tv.getResources().getColor(R.color.pinblue));
         } else if (80 <= score && score <= 100) {//适宜
+            strSocre=String.valueOf(score)+"\n"+"(很适宜)";
             tv.setTextColor(tv.getResources().getColor(R.color.green));
         }
-        tv.setText(String.valueOf(score));
+        int start=strSocre.indexOf("(");
+        int end=strSocre.length();
+        Spannable textSpan=new SpannableString(strSocre);
+        textSpan.setSpan(new AbsoluteSizeSpan(sp2px(25)),0,start,Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        textSpan.setSpan(new AbsoluteSizeSpan(sp2px(15)),start,end,Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+        tv.setText(textSpan);
+    }
+
+    public  int sp2px(float spValue) {
+        final float fontScale = getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
     }
 
     public void refreshWebView() {

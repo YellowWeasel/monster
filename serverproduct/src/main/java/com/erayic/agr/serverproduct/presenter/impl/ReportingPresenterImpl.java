@@ -58,6 +58,7 @@ public class ReportingPresenterImpl implements IReportingPresenter {
                         }
                     });
                 }
+
                 @Override
                 public void fail(int errCode, String msg) {
                     context.dismissLoading();

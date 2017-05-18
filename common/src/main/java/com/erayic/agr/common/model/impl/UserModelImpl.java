@@ -53,6 +53,8 @@ public class UserModelImpl implements IUserModel {
                             PreferenceUtils.putParam("ExpireTime", objectDataBack.getResult().getAPP().getExpireTime());
                             PreferenceUtils.putParam("RegisterTime", objectDataBack.getResult().getAPP().getRegisterTime());
                             PreferenceUtils.putParam("Status", objectDataBack.getResult().getAPP().getStatus());
+                            PreferenceUtils.putParam("BaseLon", String.valueOf(objectDataBack.getResult().getBasePos().getLon()));
+                            PreferenceUtils.putParam("BaseLat",String.valueOf( objectDataBack.getResult().getBasePos().getLat()));
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());

@@ -43,13 +43,13 @@ public class DynamicPricePrincipalMarketDatas  {
             this.MarketName=value.getKey();
             this.Value=format2(value.getValue().getValue());
             String strDate=value.getValue().getKey();
-            this.Date=new SimpleDateFormat("M月d日").
+            this.Date=new SimpleDateFormat("MM.dd").
                     format(new Date(Long.valueOf(strDate.
                             substring(strDate.indexOf("(")+1,strDate.indexOf(")")))));
         }
         public  String format2(String value) {
             BigDecimal format=new BigDecimal(value);
-            return format.setScale(1,BigDecimal.ROUND_HALF_UP).toString();
+            return format.setScale(2,BigDecimal.ROUND_HALF_UP).toString();
         }
 
         public String getDate() {

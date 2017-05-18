@@ -2,5 +2,6 @@
 <resources>
     <dimen name="maxtitle">30sp</dimen>
     <dimen name="content">16sp</dimen>
+    <dimen name="mincontent">12sp</dimen>
     <dimen name="title">20sp</dimen>
 </resources>

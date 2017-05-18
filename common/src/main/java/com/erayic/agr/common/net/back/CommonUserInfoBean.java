@@ -20,7 +20,15 @@ public class CommonUserInfoBean {
     private boolean IsWeixin;//是否绑定微信
     private int Role = -1;//角色
     private APPInfo APP;//APP信息
+    private BasePos BasePos;//基地地址详情
 
+    public CommonUserInfoBean.BasePos getBasePos() {
+        return BasePos;
+    }
+
+    public void setBasePos(CommonUserInfoBean.BasePos basePos) {
+        BasePos = basePos;
+    }
 
     public String getUserID() {
         return UserID;
@@ -119,6 +127,46 @@ public class CommonUserInfoBean {
     public void setTelNum(String telNum) {
         TelNum = telNum;
     }
+
+    public static  class  BasePos{
+        private double Lon;
+        private double Lat;
+        private double Elv;
+
+        public BasePos() {
+        }
+
+        public double getLon() {
+            return Lon;
+        }
+
+        public void setLon(double lon) {
+            Lon = lon;
+        }
+
+        public double getLat() {
+            return Lat;
+        }
+
+        public void setLat(double lat) {
+            Lat = lat;
+        }
+
+        public double getElv() {
+            return Elv;
+        }
+
+        public void setElv(double elv) {
+            Elv = elv;
+        }
+
+        public BasePos(double lon, double lat, double elv) {
+            Lon = lon;
+            Lat = lat;
+            Elv = elv;
+        }
+    }
+
 
     public static class APPInfo {
         private String ExpireTime = "";//到期时间

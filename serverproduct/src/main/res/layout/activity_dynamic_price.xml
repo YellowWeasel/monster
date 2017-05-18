@@ -138,6 +138,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
            <ListView
+               android:layout_marginTop="2dp"
                android:background="@color/white"
                android:scrollbars="none"
                android:divider="@color/transparent"

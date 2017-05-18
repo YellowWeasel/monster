@@ -1,10 +1,12 @@
 package com.erayic.agr.serverproduct.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.erayic.agr.serverproduct.R;
@@ -49,19 +51,25 @@ public class DynamicPricesAdapter extends BaseAdapter {
         TextView marketNameTextView;
         TextView priceValueTextView;
         TextView dateTextView;
+        LinearLayout serverproduct_dynamic_price_linearlayout;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView==null){
-            convertView= LayoutInflater.from(context).inflate(R.layout.dynamic_prices_childitem,parent,false);
+            convertView= LayoutInflater.from(context).inflate(R.layout.dynamic_prices_item,parent,false);
             viewHolder=new ViewHolder();
             viewHolder.marketNameTextView= (TextView) convertView.findViewById(R.id.serverproduct_dynamic_price_item_market_textview);
             viewHolder.priceValueTextView= (TextView) convertView.findViewById(R.id.serverproduct_dynamic_price_item_pricevalue_textview);
             viewHolder.dateTextView= (TextView) convertView.findViewById(R.id.serverproduct_dynamic_price_item_date_textview);
+            viewHolder.serverproduct_dynamic_price_linearlayout= (LinearLayout) convertView.findViewById(R.id.serverproduct_dynamic_price_linearlayout);
             convertView.setTag(viewHolder);
         }else{
             viewHolder= (ViewHolder) convertView.getTag();
+        }
+        viewHolder.serverproduct_dynamic_price_linearlayout.setBackgroundColor(Color.parseColor("#ffffff"));
+        if (position%2==1){
+            viewHolder.serverproduct_dynamic_price_linearlayout.setBackgroundColor(Color.parseColor("#efeff4"));
         }
         DynamicPricePrincipalMarketDatas.MarketPriceDatas marketPriceDatas = principalMarketDatasList.getMarketPriceDatasList().get(position);
         viewHolder.marketNameTextView.setText(marketPriceDatas.getMarketName());

@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
 import com.erayic.agr.serverproduct.adapter.PoliciesRegulationsAdapter;
@@ -35,8 +36,6 @@ import butterknife.ButterKnife;
  */
 @Route(path = "/serverproduct/activity/PoliciesRegulationsActivity", name = "政策法规")
 public class PoliciesRegulationsActivity extends BaseActivity implements IPoliciesRegulartionsView, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
-    @BindView(R2.id.serverproduct_polices_regulations_title_textview)
-    TextView titleTextView;
 
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
@@ -49,7 +48,7 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
     RecyclerView serverproductPoliciesRegulationsRecycler;
     @BindView(R2.id.serverproduct_policies_regulations_swipe)
     SwipeRefreshLayout serverproductPoliciesRegulationsSwipe;
-    int showType=0;
+    int showType=1;
     List<PoliciesRegulationsTitleDatas> policiesRegulationsTitleDatasList;
 
     @Override
@@ -185,7 +184,12 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
     }
 
     @Override
-    public void showToast(String msg) {
-
+    public void showToast(final String msg) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ErayicToast.TextToast(PoliciesRegulationsActivity.this,msg);
+            }
+        });
     }
 }

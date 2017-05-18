@@ -13,16 +13,20 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.base.BaseActivity;
+import com.erayic.agr.common.net.back.api.CommonMarketDynamicPriceBean;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
+import com.erayic.agr.serverproduct.adapter.DynamicPricesDetailAdapter;
 import com.erayic.agr.serverproduct.adapter.entity.DesignatedMarketDatas;
+import com.erayic.agr.serverproduct.adapter.entity.MarketDynamicPriceDatas;
 import com.erayic.agr.serverproduct.adapter.entity.MarketInfoParamter;
 import com.erayic.agr.serverproduct.presenter.IDynamicPriceDetailPresenter;
 import com.erayic.agr.serverproduct.presenter.IPoliciesRegulationsDetailPresenter;
@@ -30,6 +34,9 @@ import com.erayic.agr.serverproduct.presenter.impl.DynamicPriceDetailPresenterIm
 import com.erayic.agr.serverproduct.presenter.impl.PoliciesRegulationsDetailPresenterImpl;
 import com.erayic.agr.serverproduct.view.IDynamicPriceDetailView;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -46,11 +53,19 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
     TextView marketTitle;
     @BindView(R2.id.serverproduct_dynamic_price_detail_webview)
     WebView dynamicDetailPriceWebView;
+    @BindView(R2.id.serverproduct_dynamic_price_detail_averageprice_listview)
+    ListView detailListView;
+
     IDynamicPriceDetailPresenter presenter;
     DesignatedMarketDatas marketDatas;
+    DynamicPricesDetailAdapter adapter;
+    MarketDynamicPriceDatas marketDynamicPriceDatasList;
 
     @Override
     public void initData() {
+        adapter = new DynamicPricesDetailAdapter(marketDynamicPriceDatasList, this);
+        detailListView.setAdapter(adapter);
+
         if (paramter == null) return;
         marketTitle.setText(paramter.getMarketName());
         presenter.getMarketDatas(paramter.getCropId(),
@@ -96,8 +111,11 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
     }
 
     @Override
-    public void refreshMarketDynamicPrices(DesignatedMarketDatas datas) {
-        this.marketDatas = datas;
+    public void refreshMarketDynamicPrices(MarketDynamicPriceDatas beans) {
+        this.marketDynamicPriceDatasList=beans;
+        adapter.setMarketDynamicPriceDatas(this.marketDynamicPriceDatasList);
+        adapter.notifyDataSetChanged();
+        this.marketDatas = new DesignatedMarketDatas(beans,paramter.getMarketName());
         refreshWebView();
     }
 
@@ -129,7 +147,7 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
 
     @Override
     public void showToast(String msg) {
-        ErayicToast.TextToast(this,msg);
+        ErayicToast.TextToast(this, msg);
     }
 
     public class DynamicPriceDetailJsInterface {

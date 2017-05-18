@@ -23,29 +23,7 @@
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-    <LinearLayout
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="60dp">
-        <ImageView
-            android:src="@drawable/image_serverproduct_policies_regulation_icon"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_vertical"
-            android:id="@+id/serverproduct_polices_regulations_title_imageview"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
-        <TextView
-            android:id="@+id/serverproduct_polices_regulations_title_textview"
-            android:layout_marginLeft="5dp"
-            android:text="政策法规"
-            android:gravity="center"
-            android:layout_gravity="center_vertical"
-            android:textSize="@dimen/title"
-            android:textColor="@color/cyan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/serverproduct_policies_regulations_swipe"
         android:layout_width="match_parent"

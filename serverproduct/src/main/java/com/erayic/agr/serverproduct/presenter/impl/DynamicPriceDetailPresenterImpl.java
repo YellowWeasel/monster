@@ -8,6 +8,7 @@ import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonMarketDynamicPriceBean;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.serverproduct.adapter.entity.DesignatedMarketDatas;
+import com.erayic.agr.serverproduct.adapter.entity.MarketDynamicPriceDatas;
 import com.erayic.agr.serverproduct.presenter.IDynamicPriceDetailPresenter;
 import com.erayic.agr.serverproduct.presenter.IDynamicPricePresenter;
 import com.erayic.agr.serverproduct.view.IDynamicPriceDetailView;
@@ -38,7 +39,7 @@ public class DynamicPriceDetailPresenterImpl implements IDynamicPriceDetailPrese
                   MainLooperManage.runOnUiThread(new Runnable() {
                       @Override
                       public void run() {
-                          context.refreshMarketDynamicPrices(new DesignatedMarketDatas(response,marketName));
+                          context.refreshMarketDynamicPrices(new MarketDynamicPriceDatas(response));
                           context.dismissLoading();
                       }
                   });
