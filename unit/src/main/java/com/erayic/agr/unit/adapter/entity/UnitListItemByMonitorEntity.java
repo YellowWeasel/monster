@@ -10,16 +10,14 @@ import java.util.Map;
  * 注解：
  */
 
-public class UnitListItemByControlEntity implements MultiItemEntity {
+public class UnitListItemByMonitorEntity implements MultiItemEntity {
 
-    public static final int TYPE_ITEM_EQU = 0;//设备
-    public static final int TYPE_ITEM_ST = 1;//启停
-    public static final int TYPE_ITEM_PN = 2;//正反转
-    public static final int TYPE_NO_EQU = 3;//没有任何设备
+    public static final int TYPE_NO_DATA = 0;//无数据
+    public static final int TYPE_MONITOR = 1;//监控
 
     private String name;
     private String subName;
-    private Map<String, Object> map;
+    private Map<String ,Object> map;
 
     private int itemType;
 

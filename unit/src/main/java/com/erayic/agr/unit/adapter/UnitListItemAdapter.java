@@ -2,25 +2,31 @@ package com.erayic.agr.unit.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
+import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.view.SectionedRecyclerViewAdapter;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.adapter.entity.UnitListItemByBatchEntity;
+import com.erayic.agr.unit.adapter.entity.UnitListItemByControlEntity;
+import com.erayic.agr.unit.adapter.entity.UnitListItemByEnvironmentEntity;
+import com.erayic.agr.unit.adapter.entity.UnitListItemByMonitorEntity;
 import com.erayic.agr.unit.adapter.holder.UnitListItemChildViewHolder;
 import com.erayic.agr.unit.adapter.holder.UnitListItemGroupViewHolder;
 import com.jpeng.jptabbar.OnTabSelectListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -41,11 +47,19 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
     private SparseBooleanArray mBooleanMap;
     private int onItemPosition = -1;
 
+    private List<CommonUnitListBean> list;
+
     private onItemScrollToPositionWithOffset onItemScrollToPositionWithOffset;
+
+    private UnitListItemByBatchAdapter.OnItemBatchClickListener onItemBatchClickListener;
 
     public UnitListItemAdapter(Context context) {
         this.context = context;
         mBooleanMap = new SparseBooleanArray();
+    }
+
+    public void setList(List<CommonUnitListBean> list) {
+        this.list = list;
     }
 
     public void setOnItemScrollToPositionWithOffset(UnitListItemAdapter.onItemScrollToPositionWithOffset onItemScrollToPositionWithOffset) {
@@ -54,7 +68,7 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
 
     @Override
     protected int getSectionCount() {
-        return 10;
+        return list == null ? 0 : list.size();
     }
 
     @Override
@@ -64,6 +78,10 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
             count = 0;
         }
         return count;
+    }
+
+    public void setOnItemBatchClickListener(UnitListItemByBatchAdapter.OnItemBatchClickListener onItemBatchClickListener) {
+        this.onItemBatchClickListener = onItemBatchClickListener;
     }
 
     @Override
@@ -106,7 +124,7 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                 }
                 onItemPosition = section;
                 notifyDataSetChanged();
-                if (onItemScrollToPositionWithOffset!=null){
+                if (onItemScrollToPositionWithOffset != null) {
                     onItemScrollToPositionWithOffset.scrollToPositionWithOffset(section);
                 }
 
@@ -136,23 +154,199 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
         holder.unitListItemTab.setTabListener(new OnTabSelectListener() {//设置点击TabBar事件的观察者
             @Override
             public void onTabSelect(int index) {
-//                ErayicToast.TextToast(context, section + "  " + index);
+                switch (index) {
+                    case 0://批次
+                    {
+                        List<UnitListItemByBatchEntity> listBatch = new ArrayList<>();
+                        for (CommonUnitListBean.UnitBatchListBean bean : list.get(section).getBatchs()) {
+                            UnitListItemByBatchEntity entity = new UnitListItemByBatchEntity();
+                            entity.setItemType(UnitListItemByBatchEntity.TYPE_BATCH_CONTENT);
+                            entity.setName(TextUtils.isEmpty(bean.getProductName()) ? "未命名" : bean.getProductName());
+                            Map<String, String> map = new ArrayMap<>();
+                            map.put("BatchID", bean.getBatchID());
+                            map.put("Icon", bean.getIcon());
+                            map.put("StartTime", bean.getStartTime());
+                            map.put("Mature", bean.getMature());
+                            entity.setMap(map);
+                            listBatch.add(entity);
+                        }
+                        {
+                            UnitListItemByBatchEntity entity = new UnitListItemByBatchEntity();
+                            entity.setItemType(UnitListItemByBatchEntity.TYPE_BATCH_ADD);
+                            entity.setName("新建一个批次");
+                            listBatch.add(entity);
+                        }
+                        UnitListItemByBatchAdapter adapter = new UnitListItemByBatchAdapter(context, null, list.get(section).getUnitID());
+                        adapter.setOnItemBatchClickListener(onItemBatchClickListener);
+                        holder.unitListItemRecyclerView.setAdapter(adapter);
+                        adapter.setNewData(listBatch);
+                    }
+                    break;
+                    case 1://环境
+                    {
+                        List<UnitListItemByEnvironmentEntity> listEnvi = new ArrayList<>();
+                        for (int i = 0; i < 7; i++) {
+                            UnitListItemByEnvironmentEntity entity = new UnitListItemByEnvironmentEntity();
+                            switch (i) {
+                                case 0://空气温度
+                                {
+                                    entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_AIR_TEM);
+                                    entity.setName("空气温度：");
+                                    entity.setSubName("" + list.get(section).getEnvInfo().getTemp() + "℃");
+                                    listEnvi.add(entity);
+                                }
+                                break;
+                                case 1://空气湿度
+                                {
+                                    entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_AIR_HUM);
+                                    entity.setName("空气湿度：");
+                                    entity.setSubName(list.get(section).getEnvInfo().getHumi() + "％");
+                                    listEnvi.add(entity);
+                                }
+                                break;
+                                case 2://土壤温度
+                                {
+                                    entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_SOIL_TEM);
+                                    entity.setName("土壤温度：");
+                                    entity.setSubName(list.get(section).getEnvInfo().getTempSoil() + "℃");
+                                    listEnvi.add(entity);
+                                }
+                                break;
+                                case 3://土壤湿度
+                                {
+                                    entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_SOIL_HUM);
+                                    entity.setName("土壤湿度：");
+                                    entity.setSubName(list.get(section).getEnvInfo().getHumiSoil() + "％");
+                                    listEnvi.add(entity);
+                                }
+                                break;
+                                case 4://降水量
+                                {
+                                    entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_WATER);
+                                    entity.setName("降水量(1H)：");
+                                    entity.setSubName(list.get(section).getEnvInfo().getRain_1H() + "ml");
+                                    listEnvi.add(entity);
+                                }
+                                break;
+                                case 5://光照强度
+                                {
+                                    entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_ILL);
+                                    entity.setName("光照强度：");
+                                    entity.setSubName(list.get(section).getEnvInfo().getIllumination() + "lux");
+                                    listEnvi.add(entity);
+                                }
+                                break;
+                                case 6://风力
+                                {
+                                    entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_WIND);
+                                    entity.setName("风力：");
+                                    entity.setSubName(list.get(section).getEnvInfo().getWind_Max() + "m/s");
+                                    listEnvi.add(entity);
+                                }
+                                break;
+                                default:
+                                    break;
+                            }
+                        }
+                        UnitListItemByEnvironmentAdapter adapter = new UnitListItemByEnvironmentAdapter(context, null);
+                        holder.unitListItemRecyclerView.setAdapter(adapter);
+                        adapter.setNewData(listEnvi);
+                    }
+                    break;
+                    case 2://控制
+                    {
+                        List<UnitListItemByControlEntity> listControl = new ArrayList<>();
+                        if (list.get(section).getRemoteCtrl() != null && !TextUtils.isEmpty(list.get(section).getRemoteCtrl().getSerialNum())) {
+                            {
+                                UnitListItemByControlEntity entity = new UnitListItemByControlEntity();
+                                entity.setItemType(UnitListItemByControlEntity.TYPE_ITEM_EQU);
+                                entity.setName(TextUtils.isEmpty(list.get(section).getRemoteCtrl().getSerialNum()) ? "" : list.get(section).getRemoteCtrl().getSerialNum());
+                                Map<String, Object> map = new ArrayMap<>();
+                                map.put("Name", TextUtils.isEmpty(list.get(section).getRemoteCtrl().getName()) ? "未命名" : list.get(section).getRemoteCtrl().getName());
+                                map.put("Mode", TextUtils.isEmpty(list.get(section).getRemoteCtrl().getMode()) ? "未知" : list.get(section).getRemoteCtrl().getMode());
+                                map.put("Tempeture", list.get(section).getRemoteCtrl().getTempeture() + "℃");
+                                map.put("Status", TextUtils.isEmpty(list.get(section).getRemoteCtrl().getStatus()) ? "未知" : list.get(section).getRemoteCtrl().getStatus());
+                                entity.setMap(map);
+                                listControl.add(entity);
+                            }
+                            for (CommonUnitListBean.UnitListCtrlItemsBean bean : list.get(section).getRemoteCtrl().getCtrlItems()) {
+                                switch (bean.getRelayType()) {
+                                    case 1://启停
+                                    {
+                                        UnitListItemByControlEntity entity = new UnitListItemByControlEntity();
+                                        entity.setItemType(UnitListItemByControlEntity.TYPE_ITEM_ST);
+                                        entity.setName(TextUtils.isEmpty(bean.getName()) ? "未命名" : bean.getName());
+                                        entity.setSubName(TextUtils.isEmpty(bean.getStatusDesc()) ? "未知" : bean.getStatusDesc());
+                                        Map<String, Object> map = new ArrayMap<>();
+                                        map.put("SerialNum", bean.getSerialNum());
+                                        map.put("Status", bean.getStatus());
+                                        map.put("PassNum", bean.getPassNum());
+                                        map.put("Category", bean.getCategory());
+                                        map.put("RelayType", bean.getRelayType());
+                                        entity.setMap(map);
+                                        listControl.add(entity);
+                                    }
+                                    break;
+                                    case 2://正反转
+                                    {
+                                        UnitListItemByControlEntity entity = new UnitListItemByControlEntity();
+                                        entity.setItemType(UnitListItemByControlEntity.TYPE_ITEM_PN);
+                                        entity.setName(TextUtils.isEmpty(bean.getName()) ? "未命名" : bean.getName());
+                                        entity.setSubName(TextUtils.isEmpty(bean.getStatusDesc()) ? "未知" : bean.getStatusDesc());
+                                        Map<String, Object> map = new ArrayMap<>();
+                                        map.put("SerialNum", bean.getSerialNum());
+                                        map.put("Status", bean.getStatus());
+                                        map.put("PassNum", bean.getPassNum());
+                                        map.put("Category", bean.getCategory());
+                                        map.put("RelayType", bean.getRelayType());
+                                        entity.setMap(map);
+                                        listControl.add(entity);
+                                    }
+                                    break;
+                                    default:
+                                        break;
+                                }
+                            }
 
-                List<UnitListItemByBatchEntity> list = new ArrayList<>();
-                for (int i = 0; i < 10; i++) {
-                    UnitListItemByBatchEntity entity = new UnitListItemByBatchEntity();
-                    if (i == 0)
-                        entity.setItemType(UnitListItemByBatchEntity.TYPE_BATCH_ADD);
-                    else
-                        entity.setItemType(UnitListItemByBatchEntity.TYPE_BATCH_CONTENT);
-                    entity.setName(section + "");
-                    entity.setSubName(index + "");
-                    list.add(entity);
+                        } else {
+                            UnitListItemByControlEntity entity = new UnitListItemByControlEntity();
+                            entity.setItemType(UnitListItemByControlEntity.TYPE_NO_EQU);
+                            entity.setName("系统检测到当前地块无控制设备，请联系我们");
+                            listControl.add(entity);
+                        }
+                        UnitListItemByControlAdapter adapter = new UnitListItemByControlAdapter(context, null);
+                        holder.unitListItemRecyclerView.setAdapter(adapter);
+                        adapter.setNewData(listControl);
+                    }
+                    break;
+                    case 3://监控
+                    {
+                        List<UnitListItemByMonitorEntity> listMonitor = new ArrayList<>();
+                        if (list.get(section).getMonitors() != null && list.get(section).getMonitors().size() > 0) {
+
+                            for (CommonUnitListBean.UnitListMonitorsBean bean : list.get(section).getMonitors()) {
+                                UnitListItemByMonitorEntity entity = new UnitListItemByMonitorEntity();
+                                entity.setItemType(UnitListItemByMonitorEntity.TYPE_MONITOR);
+                                entity.setName(TextUtils.isEmpty(bean.getName()) ? "未命名" : bean.getName());
+                                Map<String, Object> map = new ArrayMap<>();
+                                map.put("SerialNum", bean.getSerialNum());
+                                map.put("EquipmentType", bean.getEquipmentType());
+                                entity.setMap(map);
+                                listMonitor.add(entity);
+                            }
+                        } else {
+                            UnitListItemByMonitorEntity entity = new UnitListItemByMonitorEntity();
+                            entity.setItemType(UnitListItemByMonitorEntity.TYPE_NO_DATA);
+                            entity.setName("系统检测到当前地块无视频监控设备，请联系我们");
+                            listMonitor.add(entity);
+                        }
+                        UnitListItemByMonitorAdapter adapter = new UnitListItemByMonitorAdapter(context, null);
+                        holder.unitListItemRecyclerView.setAdapter(adapter);
+                        adapter.setNewData(listMonitor);
+                    }
+                    break;
                 }
 
-                UnitListItemByBatchAdapter adapter = new UnitListItemByBatchAdapter(context, null);
-                holder.unitListItemRecyclerView.setAdapter(adapter);
-                adapter.setNewData(list);
             }
         });
         holder.unitListItemTab.setSelectTab(0);
@@ -161,7 +355,7 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
     /**
      * 点击Item精准定位到具体头部位置
      */
-    public interface onItemScrollToPositionWithOffset{
+    public interface onItemScrollToPositionWithOffset {
         void scrollToPositionWithOffset(int position);
     }
 

@@ -10,15 +10,15 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="50dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:minHeight="40dp">
 
         <com.erayic.agr.common.view.CircleImageView
             android:id="@+id/unit_content_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            app:srcCompat="@drawable/app_base_android_1"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginLeft="20dp"
+            app:srcCompat="@drawable/app_base_android_1" />
 
         <TextView
             android:id="@+id/unit_content_name"
@@ -45,9 +45,9 @@
             android:id="@+id/manage_content_goto"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:visibility="gone"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
+            android:visibility="gone"
             app:srcCompat="@drawable/app_base_default_right" />
 
     </TableRow>

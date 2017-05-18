@@ -2,24 +2,22 @@ package com.erayic.agr.unit.adapter.entity;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
-import java.util.Map;
-
 /**
  * 作者：hejian
  * 邮箱：hkceey@outlook.com
  * 注解：
  */
 
-public class UnitListItemByControlEntity implements MultiItemEntity {
+public class UnitAddBatchItemEntity implements MultiItemEntity {
 
-    public static final int TYPE_ITEM_EQU = 0;//设备
-    public static final int TYPE_ITEM_ST = 1;//启停
-    public static final int TYPE_ITEM_PN = 2;//正反转
-    public static final int TYPE_NO_EQU = 3;//没有任何设备
+    public static final int TYPE_PRODUCT = 0;//产品
+    public static final int TYPE_SEED = 1;//种苗
+    public static final int TYPE_AREA = 2;//面积
+    public static final int TYPE_DATE = 3;//时间
+    public static final int TYPE_PERSONNEL = 4;//种植人员
 
     private String name;
     private String subName;
-    private Map<String, Object> map;
 
     private int itemType;
 
@@ -46,13 +44,5 @@ public class UnitListItemByControlEntity implements MultiItemEntity {
 
     public void setSubName(String subName) {
         this.subName = subName;
-    }
-
-    public Map<String, Object> getMap() {
-        return map;
-    }
-
-    public void setMap(Map<String, Object> map) {
-        this.map = map;
     }
 }

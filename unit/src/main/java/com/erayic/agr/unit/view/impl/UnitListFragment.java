@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseFragment;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
@@ -18,6 +19,7 @@ import com.erayic.agr.common.view.SectionedSpanSizeLookup;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.R2;
 import com.erayic.agr.unit.adapter.UnitListItemAdapter;
+import com.erayic.agr.unit.adapter.UnitListItemByBatchAdapter;
 import com.erayic.agr.unit.presenter.IUnitListPresenter;
 import com.erayic.agr.unit.presenter.impl.UnitListPresenterImpl;
 import com.erayic.agr.unit.view.IUnitListView;
@@ -74,6 +76,17 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
                 unitListRecyclerView.smoothScrollToPosition(position);
             }
         });
+        adapter.setOnItemBatchClickListener(new UnitListItemByBatchAdapter.OnItemBatchClickListener() {
+            @Override
+            public void onBatchInfo(String batchID) {
+                showToast("暂未实现");
+            }
+
+            @Override
+            public void onAddBatch(String unitID) {
+                ARouter.getInstance().build("/unit/activity/AddBatchActivity").withString("unitID", unitID).navigation();
+            }
+        });
         unitListRecyclerView.setLayoutManager(manager);
         unitListRecyclerView.setAdapter(adapter);
     }
@@ -112,8 +125,14 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
     }
 
     @Override
-    public void refreshUnitView(List<CommonUnitListBean> list) {
-
+    public void refreshUnitView(final List<CommonUnitListBean> list) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.setList(list);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

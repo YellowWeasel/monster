@@ -21,8 +21,8 @@
 
             <com.erayic.agr.common.view.CircleImageView
                 android:id="@+id/unit_content_icon"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 app:srcCompat="@drawable/app_base_android_1" />
@@ -68,12 +68,14 @@
             android:orientation="horizontal">
 
             <com.erayic.agr.common.view.CircleImageView
+                android:id="@+id/unit_content_start"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_marginRight="10dp"
                 app:srcCompat="@drawable/app_base_android_1" />
 
             <com.erayic.agr.common.view.CircleImageView
+                android:visibility="invisible"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_marginLeft="10dp"
@@ -81,6 +83,7 @@
                 app:srcCompat="@drawable/app_base_android_1" />
 
             <com.erayic.agr.common.view.CircleImageView
+                android:id="@+id/unit_content_stop"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_marginLeft="10dp"
