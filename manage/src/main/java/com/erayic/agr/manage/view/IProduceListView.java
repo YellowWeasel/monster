@@ -24,7 +24,7 @@ public interface IProduceListView extends IBaseView {
     void clearRefresh();
 
     /**
-     * 刷新人员列表
+     * 刷新产品列表
      */
     void refreshPersonnelView(List<CommonProduceListBean> list);
 

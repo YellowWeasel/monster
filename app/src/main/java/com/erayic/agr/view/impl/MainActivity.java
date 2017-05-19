@@ -13,6 +13,7 @@ import com.erayic.agr.R;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.config.PreferenceUtils;
+import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.presenter.IMainPresenter;
 import com.erayic.agr.presenter.impl.MainPresenterImpl;
@@ -87,22 +88,28 @@ public class MainActivity extends BaseActivity implements IMainView {
                 switch (PreferenceUtils.getParam("UserRole", 0)) {
                     case 1://管理员
                     {
-                        titlesName = new String[]{"首页", "管理单元", "信息服务", "我的"};
-                        titleNormalIcons = new int[]{R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3};
-                        titleSelectedIcons = new int[]{R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3};
+                        titlesName = new String[]{"首页", "管理", "作业", "服务", "我的"};
+                        titleNormalIcons = new int[]{R.drawable.app_base_default_index_press, R.drawable.app_base_default_unit_press, R.drawable.app_base_default_job_press,
+                                R.drawable.app_base_default_service_press, R.drawable.app_base_default_mine_press};
+                        titleSelectedIcons = new int[]{R.drawable.app_base_default_index_nomal, R.drawable.app_base_default_unit_nomal, R.drawable.app_base_default_job_nomal,
+                                R.drawable.app_base_default_service_nomal, R.drawable.app_base_default_mine_nomal};
                         fragments = new Fragment[]{(Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
-                                (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "管理单元").navigation(),
+                                (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "生产管理").navigation(),
+                                (Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
                                 (Fragment) ARouter.getInstance().build("/service/fragment/ServiceEntranceFragment").withString("titleName", "我的服务").navigation(),
                                 (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
                     }
                     break;
                     case 9://用户
                     {
-                        titlesName = new String[]{"首页", "管理单元", "信息服务", "我的"};
-                        titleNormalIcons = new int[]{R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3};
-                        titleSelectedIcons = new int[]{R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3, R.drawable.app_base_android_3};
+                        titlesName = new String[]{"首页", "管理", "作业", "服务", "我的"};
+                        titleNormalIcons = new int[]{R.drawable.app_base_default_index_press, R.drawable.app_base_default_unit_press, R.drawable.app_base_default_job_press,
+                                R.drawable.app_base_default_service_press, R.drawable.app_base_default_mine_press};
+                        titleSelectedIcons = new int[]{R.drawable.app_base_default_index_nomal, R.drawable.app_base_default_unit_nomal, R.drawable.app_base_default_job_nomal,
+                                R.drawable.app_base_default_service_nomal, R.drawable.app_base_default_mine_nomal};
                         fragments = new Fragment[]{(Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
-                                (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "管理单元").navigation(),
+                                (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "生产管理").navigation(),
+                                (Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
                                 (Fragment) ARouter.getInstance().build("/service/fragment/ServiceEntranceFragment").withString("titleName", "我的服务").navigation(),
                                 (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
                     }
@@ -132,6 +139,11 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
+    public void loadingError() {
+        ErayicStack.getInstance().finishAllActivity();//退出所有页面（获取用户信息失败）
+    }
+
+    @Override
     protected void setStatusBar() {
         StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, null);
     }
@@ -145,5 +157,6 @@ public class MainActivity extends BaseActivity implements IMainView {
             }
         });
     }
+
 
 }

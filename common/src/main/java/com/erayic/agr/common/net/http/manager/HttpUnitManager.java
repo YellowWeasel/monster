@@ -38,4 +38,11 @@ public class HttpUnitManager {
     public Observable getAllUnit(int type) {
         return unitService.getAllUnit(type);
     }
+
+    /**
+     * 新建一个批次
+     */
+    public Observable createBatch(String proID, String seedID,String seedName, String quantity, int unit, String stTime, String ope, String unitID, int unitType) {
+        return unitService.createBatch(proID, seedID,seedName, quantity, unit, stTime, ope, unitID, unitType);
+    }
 }

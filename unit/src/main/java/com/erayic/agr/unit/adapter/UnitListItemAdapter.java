@@ -110,6 +110,7 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
         holder.serviceManageItemLayout.setBackground(ContextCompat.getDrawable(context, mBooleanMap.get(section) ? R.color.unit_colors_item_green : R.color.app_base_item_background));
         holder.unitItemListName.setTextColor(ContextCompat.getColor(context, mBooleanMap.get(section) ? R.color.app_base_item_background : R.color.app_base_text_title_2));
         holder.unitItemListName.setGravity(mBooleanMap.get(section) ? Gravity.CENTER : Gravity.CENTER_VERTICAL | Gravity.START);
+        holder.unitItemListName.setText(list.get(section).getUnitName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

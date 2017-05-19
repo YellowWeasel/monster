@@ -6,7 +6,7 @@ package com.erayic.agr.manage.presenter;
  * 注解：
  */
 
-public interface IUserSelectPresenter {
+public interface ISelectUserPresenter {
 
     void getAllUserBySpecifyBase(String baseID);
 

@@ -16,7 +16,14 @@
             android:id="@+id/main_view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/main_tab_bar" />
+            android:layout_above="@+id/useless_divider" />
+
+        <View
+            android:id="@+id/useless_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/main_tab_bar"
+            android:background="@color/app_base_layout_background" />
 
         <com.jpeng.jptabbar.JPTabBar
             android:id="@+id/main_tab_bar"

@@ -15,6 +15,14 @@ import java.util.List;
 
 public interface IUnitModel extends IProvider {
 
+    /**
+     * 得到管理单元列表
+     */
     void getAllUnit(int type,OnDataListener<List<CommonUnitListBean>> listener);
+
+    /**
+     * 新建一个批次
+     */
+    void createBatch(String proID, String seedID,String seedName, String quantity, int unit, String stTime, String ope, String unitID, int unitType,OnDataListener<Object> listener);
 
 }
