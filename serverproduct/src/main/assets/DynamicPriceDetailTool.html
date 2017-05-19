@@ -39,7 +39,7 @@ if(jsonData!=null&&jsonData.cropName!=null){
     cropName=jsonData.cropName;
 }
 
- var colors = ['#00a29a', '#ea5514', '#6dabde'];
+ var colors = [ '#ea5514','#00a29a', '#6dabde'];
         // 指定图表的配置项和数据
       var  option = {
     color: colors,
@@ -71,7 +71,7 @@ if(jsonData!=null&&jsonData.cropName!=null){
     legend: {
         data:[{
         name:cropName,
-        color:colors[1]
+        color:colors[0]
         }]}
     ,
     xAxis: [
@@ -105,7 +105,7 @@ if(jsonData!=null&&jsonData.cropName!=null){
             data:marketDatas,
             lineStyle:{
                 normal:{
-                   color:colors[1]
+                   color:colors[0]
                 }
             }
         }

@@ -1,10 +1,13 @@
 package com.erayic.agr.serverproduct.adapter.entity;
 
 import com.erayic.agr.common.net.back.api.CommonMarketDynamicPriceBean;
+import com.erayic.agr.serverproduct.Constants;
+import com.erayic.agr.serverproduct.DateFormatUtils;
 import com.erayic.agr.serverproduct.TextUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -25,10 +28,13 @@ public class MarketDynamicPriceDatas {
 
     public MarketDynamicPriceDatas(List<CommonMarketDynamicPriceBean> beans) {
         this.priceDatasList=new ArrayList<>();
+        Collections.sort(beans, DateFormatUtils.dateComparator);
         for (CommonMarketDynamicPriceBean bean :beans){
             priceDatasList.add(new priceDatas(bean));
         }
     }
+
+
 
     public static  class  priceDatas{
         private String Key;

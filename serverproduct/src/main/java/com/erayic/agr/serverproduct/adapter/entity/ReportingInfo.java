@@ -25,13 +25,14 @@ public class ReportingInfo {
     }
 
     public ReportingInfo(BaseForecastInfo infos) {
+        if (infos==null||infos.getFeatureForecastDatas()==null||infos.getFeatureForecastDatas().getFeartureBeans()==null)return ;
         setxDatas(new String[24]);
-        setTmpDatas(new double[infos.getFeatureForecastDatas().getFeartureBeans().size()]);
-        setRainDatas(new double[infos.getFeatureForecastDatas().getFeartureBeans().size()]);
-        setWindDatas(new double[infos.getFeatureForecastDatas().getFeartureBeans().size()]);
+        int size=getSize(infos);
+        setTmpDatas(new double[size]);
+        setRainDatas(new double[size]);
+        setWindDatas(new double[size]);
 
-
-        for (int i = 0; i < infos.getFeatureForecastDatas().getFeartureBeans().size(); i++) {
+        for (int i = 0; i < size; i++) {
             tmpDatas[i] = Math.abs(infos.getFeatureForecastDatas().getFeartureBeans().get(i).getTemperature());
             rainDatas[i] = Math.abs(infos.getFeatureForecastDatas().getFeartureBeans().get(i).getRain());
             windDatas[i] = Math.abs(infos.getFeatureForecastDatas().getFeartureBeans().get(i).getWindSpeed());
@@ -72,6 +73,15 @@ public class ReportingInfo {
 
         xDatas=infos.getFeatureForecastDatas().getStrDates();
     }
+        public int getSize(BaseForecastInfo infos){
+            for (int i=0;i<infos.getFeatureForecastDatas().getFeartureBeans().size();i++){
+                FutureForecastDatas.ForecastDatas forecastDatas = infos.getFeatureForecastDatas().getFeartureBeans().get(i);
+                if (forecastDatas.getHumi()==0&&forecastDatas.getTemperature()==0&&forecastDatas.getRain()==0&&forecastDatas.getWindSpeed()==0){
+                    return i;
+                }
+            }
+            return infos.getFeatureForecastDatas().getFeartureBeans().size();
+        }
     public void formatDatas(){
 
             for (int i=0;i<tmpDatas.length;i++){

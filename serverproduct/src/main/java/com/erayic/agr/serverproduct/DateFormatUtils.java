@@ -1,12 +1,15 @@
 package com.erayic.agr.serverproduct;
 
+import android.support.v7.util.SortedList;
 import android.util.Log;
 
+import com.erayic.agr.common.net.back.api.CommonMarketDynamicPriceBean;
 import com.erayic.agr.common.util.ErayicLog;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.serverproduct.view.IShowClockView;
 
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,6 +34,20 @@ public class DateFormatUtils {
             return 0;
         }
     }
+    public static Comparator<CommonMarketDynamicPriceBean> dateComparator=new Comparator<CommonMarketDynamicPriceBean>() {
+        @Override
+        public int compare(CommonMarketDynamicPriceBean o1, CommonMarketDynamicPriceBean o2) {
+            double date1=Double.valueOf(o1.getKey().substring(o1.getKey().indexOf("(")+1,o1.getKey().indexOf(")")));
+            double date2=Double.valueOf(o2.getKey().substring(o1.getKey().indexOf("(")+1,o2.getKey().indexOf(")")));
+            if (date1>date2){
+                return 1;
+            }else if(date1<date2){
+                return -1;
+            }
+            return 0;
+        }
+    };
+
     public static  void   showClock(long deloy,String formattype,final IShowClockView mContext){
         if (timer==null){
             timer=new Timer();

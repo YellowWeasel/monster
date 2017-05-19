@@ -41,11 +41,11 @@ public class FutureForecastDatas {
             strDates[i-1]=String.valueOf(ca.getTime().getHours())+"时";
             ForecastDatas foreDatas = new ForecastDatas();
             foreDatas.setAppearTime(new SimpleDateFormat("HH:00").format(ca.getTime()));
-            foreDatas.setHumi(GetDatas(ca.getTime(), beans, "0"));
-            foreDatas.setRain(GetDatas(ca.getTime(), beans, "1"));
-            foreDatas.setTemperature(GetDatas(ca.getTime(), beans, "2"));
-            foreDatas.setWindSpeed(GetDatas(ca.getTime(), beans, "3"));
-            foreDatas.setWindDirect(GetDatas(ca.getTime(), beans, "4"));
+                foreDatas.setHumi(GetDatas(ca.getTime(), beans, "0"));
+                foreDatas.setRain(GetDatas(ca.getTime(), beans, "1"));
+                foreDatas.setTemperature(GetDatas(ca.getTime(), beans, "2"));
+                foreDatas.setWindSpeed(GetDatas(ca.getTime(), beans, "3"));
+                foreDatas.setWindDirect(GetDatas(ca.getTime(), beans, "4"));
             this.FeartureBeans.add(foreDatas);
         }
         return this;
