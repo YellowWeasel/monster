@@ -15,11 +15,12 @@ public class ManageSelectEntity implements MultiItemEntity {
     public static final int TYPE_SELECT_FERTILIZER = 3;//选择肥料
     public static final int TYPE_SELECT_PESTICIDE = 4;//选择农药
     public static final int TYPE_SELECT_SEED = 5;//选择种苗
+    public static final int TYPE_SELECT_WORK = 6;//选择工作
 
     private String icon;//头像
     private String name;//名称
     private String subName;//副名称
-    private String ID;//
+    private Object ID;//
     private boolean isCheck;//是否选择
 
     private int itemType;
@@ -57,11 +58,11 @@ public class ManageSelectEntity implements MultiItemEntity {
         this.subName = subName;
     }
 
-    public String getID() {
+    public Object getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(Object ID) {
         this.ID = ID;
     }
 

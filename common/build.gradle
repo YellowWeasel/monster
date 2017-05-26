@@ -68,11 +68,13 @@ dependencies {
 //    图片加载技术
     compile 'com.github.bumptech.glide:glide:3.7.0'
 //    BaseRecyclerViewAdapterHelper RecyclerView的adapter封装(https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.12'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.17'
 //    switchButton
     compile 'com.kyleduo.switchbutton:library:1.4.5'
 //    EventBus
     compile 'org.greenrobot:eventbus:3.0.0'
 //    日期选择（https://github.com/codbking/PickTime）
 //    compile 'com.github.codbking:PickTime:v1.0.1'
+//    弹出框（https://github.com/saiwu-bigkoo/Android-AlertView）
+    compile 'com.bigkoo:alertview:1.0.3'
 }

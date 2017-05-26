@@ -47,4 +47,5 @@ dependencies {
     compile project(path: ':manage')
     compile project(path: ':serverproduct')
     compile project(path: ':unit')
+    compile project(path: ':jobs')
 }

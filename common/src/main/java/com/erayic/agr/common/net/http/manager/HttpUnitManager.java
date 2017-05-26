@@ -33,16 +33,23 @@ public class HttpUnitManager {
     }
 
     /**
-     * 得到管理单元列表
+     * 得到管理单元列表（含所有信息）
      */
     public Observable getAllUnit(int type) {
         return unitService.getAllUnit(type);
     }
 
     /**
+     * 得到管理单元列表（只有单元列表）
+     */
+    public Observable getAllUnitByBase(int type) {
+        return unitService.getAllUnitByBase(type);
+    }
+
+    /**
      * 新建一个批次
      */
-    public Observable createBatch(String proID, String seedID,String seedName, String quantity, int unit, String stTime, String ope, String unitID, int unitType) {
-        return unitService.createBatch(proID, seedID,seedName, quantity, unit, stTime, ope, unitID, unitType);
+    public Observable createBatch(String proID, String seedID, String seedName, String quantity, int unit, String stTime, String ope, String unitID, int unitType) {
+        return unitService.createBatch(proID, seedID, seedName, quantity, unit, stTime, ope, unitID, unitType);
     }
 }

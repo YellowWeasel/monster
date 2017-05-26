@@ -2,6 +2,7 @@ package com.erayic.agr.common.net.http;
 
 import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
+import com.erayic.agr.common.net.back.unit.CommonUnitListByBaseBean;
 
 import java.util.List;
 
@@ -18,13 +19,24 @@ import rx.Observable;
 public interface IHttpUnitService {
 
     /**
-     * 得到管理单元列表
+     * 得到管理单元列表（含所有信息）
      *
      * @param type 管理单元类型（UnitType）
      * @return DataBack
      */
     @GET("Unit/GetAllUnit")
     Observable<DataBack<List<CommonUnitListBean>>> getAllUnit(
+            @Query("type") int type
+    );
+
+    /**
+     * 得到管理单元列表（只有单元列表）
+     *
+     * @param type 管理单元类型（UnitType）
+     * @return DataBack
+     */
+    @GET("Unit/GetAllUnitByBase")
+    Observable<DataBack<List<CommonUnitListByBaseBean>>> getAllUnitByBase(
             @Query("type") int type
     );
 

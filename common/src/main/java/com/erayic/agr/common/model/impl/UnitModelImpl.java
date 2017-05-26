@@ -8,6 +8,7 @@ import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.ErrorCode;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
+import com.erayic.agr.common.net.back.unit.CommonUnitListByBaseBean;
 import com.erayic.agr.common.net.http.manager.HttpUnitManager;
 import com.erayic.agr.common.util.ErayicGson;
 import com.erayic.agr.common.util.ErayicLog;
@@ -24,7 +25,7 @@ import rx.schedulers.Schedulers;
  * 邮箱：hkceey@outlook.com
  * 注解：
  */
-@Route(path = "/common/model/unit", name = "用户相关数据接口实现")
+@Route(path = "/common/model/unit", name = "管理单元相关数据接口实现")
 public class UnitModelImpl implements IUnitModel {
     @SuppressWarnings("unchecked")
     @Override
@@ -36,6 +37,44 @@ public class UnitModelImpl implements IUnitModel {
                     @Override
                     public void call(DataBack<List<CommonUnitListBean>> objectDataBack) {
                         ErayicLog.i("getAllUnit", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void getAllUnitByBase(int type, final OnDataListener<List<CommonUnitListByBaseBean>> listener) {
+        HttpUnitManager.getInstance().getAllUnitByBase(type)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<List<CommonUnitListByBaseBean>>>() {
+                    @Override
+                    public void call(DataBack<List<CommonUnitListByBaseBean>> objectDataBack) {
+                        ErayicLog.i("getAllUnitByBase", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
 
                             listener.success(objectDataBack.getResult());

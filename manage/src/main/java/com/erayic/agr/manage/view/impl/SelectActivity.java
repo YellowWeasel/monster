@@ -22,12 +22,17 @@ import com.erayic.agr.common.net.back.CommonProduceListBean;
 import com.erayic.agr.common.net.back.CommonResourceBean;
 import com.erayic.agr.common.net.back.enums.EnumRequestType;
 import com.erayic.agr.common.net.back.enums.EnumResourceType;
+import com.erayic.agr.common.net.back.enums.EnumTipType;
 import com.erayic.agr.common.net.back.enums.EnumUserRole;
+import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
+import com.erayic.agr.common.net.back.unit.CommonUnitListByBaseBean;
+import com.erayic.agr.common.net.back.work.CommonWorkListBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.adapter.ManageSelectAdapter;
+import com.erayic.agr.manage.adapter.entity.ManageNoticeEntity;
 import com.erayic.agr.manage.adapter.entity.ManageSelectEntity;
 import com.erayic.agr.manage.presenter.ISelectPresenter;
 import com.erayic.agr.manage.presenter.impl.SelectPresenterImpl;
@@ -131,6 +136,15 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
             case EnumRequestType.TYPE_RETURN_SEED:
                 presenter.getResourceByType(EnumResourceType.TYPE_SEED);
                 break;
+            case EnumRequestType.TYPE_RETURN_WORK:
+                presenter.getJobList();
+                break;
+            case EnumRequestType.TYPE_RETURN_UNIT:
+                presenter.getUnitList();
+                break;
+            case EnumRequestType.TYPE_RETURN_NOTICE:
+                presenter.getNoticeList();
+                break;
         }
 
     }
@@ -228,6 +242,69 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
     }
 
     @Override
+    public void refreshWorkView(final List<CommonWorkListBean> list) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                List<ManageSelectEntity> listResource = new ArrayList<>();
+                for (CommonWorkListBean bean : list) {
+                    ManageSelectEntity entity = new ManageSelectEntity();
+                    entity.setItemType(ManageSelectEntity.TYPE_SELECT_USER);
+                    entity.setID(bean.getJobID());
+                    entity.setName(bean.getJobName());
+                    entity.setSubName("");
+                    listResource.add(entity);
+                }
+                adapter.setNewData(listResource);
+            }
+        });
+    }
+
+    @Override
+    public void refreshUnitView(final List<CommonUnitListByBaseBean> list) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                List<ManageSelectEntity> listResource = new ArrayList<>();
+                for (CommonUnitListByBaseBean bean : list) {
+                    ManageSelectEntity entity = new ManageSelectEntity();
+                    entity.setItemType(ManageSelectEntity.TYPE_SELECT_USER);
+                    entity.setID(bean.getUnitID());
+                    entity.setName(bean.getName());
+                    if (bean.getWorkers() != null && bean.getWorkers().size() > 0) {
+                        String s = "";
+                        for (CommonUnitListByBaseBean.WorkersInfo workersInfo : bean.getWorkers()) {
+                            s += workersInfo.getValue() + " ";
+                        }
+                        entity.setSubName(s);
+                    }
+                    listResource.add(entity);
+                }
+                adapter.setNewData(listResource);
+            }
+        });
+    }
+
+    @Override
+    public void refreshNoticeView(final List<ManageNoticeEntity> list) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                List<ManageSelectEntity> listResource = new ArrayList<>();
+                for (ManageNoticeEntity bean : list) {
+                    ManageSelectEntity entity = new ManageSelectEntity();
+                    entity.setItemType(ManageSelectEntity.TYPE_SELECT_USER);
+                    entity.setID(bean.getType());
+                    entity.setName(bean.getName());
+                    entity.setSubName("");
+                    listResource.add(entity);
+                }
+                adapter.setNewData(listResource);
+            }
+        });
+    }
+
+    @Override
     public void showToast(final String msg) {
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
@@ -243,18 +320,47 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
             finish();
         } else if (item.getItemId() == R.id.action_manage_sure) {
             HashMap<String, Object> map = new HashMap<>();
-            for (ManageSelectEntity entity : adapter.getData()) {
-                if (entity.isCheck()) {
-                    map.put(entity.getID(), entity.getName());
-                }
-            }
-            if (map.size() == 0) {
-                showToast("您还未选择");
-            } else {
-                Intent intent = new Intent();
-                intent.putExtra("map",map);
-                setResult(selectType, intent);
-                SelectActivity.this.finish();
+            switch (selectType) {
+                case EnumRequestType.TYPE_RETURN_NOTICE://通知
+                    int id = 0;
+                    for (ManageSelectEntity entity : adapter.getData()) {
+                        if (entity.isCheck()) {
+                            if (entity.getID() instanceof Integer) {
+                                int idBuffer = Integer.valueOf(entity.getID().toString());
+                                if (idBuffer == 0) {
+                                    id = 0;
+                                    break;
+                                } else {
+                                    id += idBuffer;
+                                }
+                            }
+                        }
+                    }
+                    map.put(id + "", EnumTipType.getTypeDes(id));
+                    if (map.size() == 0) {
+                        showToast("您还未选择");
+                    } else {
+                        Intent intent = new Intent();
+                        intent.putExtra("map", map);
+                        setResult(selectType, intent);
+                        SelectActivity.this.finish();
+                    }
+                    break;
+                default:
+                    for (ManageSelectEntity entity : adapter.getData()) {
+                        if (entity.isCheck()) {
+                            map.put(entity.getID().toString(), entity.getName());
+                        }
+                    }
+                    if (map.size() == 0) {
+                        showToast("您还未选择");
+                    } else {
+                        Intent intent = new Intent();
+                        intent.putExtra("map", map);
+                        setResult(selectType, intent);
+                        SelectActivity.this.finish();
+                    }
+                    break;
             }
         }
         return super.onOptionsItemSelected(item);

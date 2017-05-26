@@ -1,6 +1,7 @@
 package com.erayic.agr.manage.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,8 @@ public class ManageSelectAdapter extends BaseMultiItemQuickAdapter<ManageSelectE
                 return new ManageSelectContentViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_select_content_1, parent, false));
             case ManageSelectEntity.TYPE_SELECT_SEED://种子
                 return new ManageSelectContentViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_select_content_1, parent, false));
+            case ManageSelectEntity.TYPE_SELECT_WORK://工作
+                return new ManageSelectContentViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_manage_select_content_1, parent, false));
         }
         return super.onCreateDefViewHolder(parent, viewType);
     }
@@ -54,12 +57,12 @@ public class ManageSelectAdapter extends BaseMultiItemQuickAdapter<ManageSelectE
         switch (helper.getItemViewType()) {
             case ManageSelectEntity.TYPE_SELECT_USER://用户
                 if (helper instanceof ManageSelectContentViewHolder) {
-                    ((ManageSelectContentViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
-                    Glide.with(context)
-                            .load(item.getIcon())
-                            .placeholder(R.drawable.app_base_default_plant)//待加载时显示
-                            .error(R.drawable.app_base_default_plant)//加载错误时显示
-                            .into(((ManageSelectContentViewHolder) helper).manageContentIcon);
+                    ((ManageSelectContentViewHolder) helper).manageContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon));
+//                    Glide.with(context)
+//                            .load(item.getIcon())
+//                            .placeholder(R.drawable.app_base_default_plant)//待加载时显示
+//                            .error(R.drawable.app_base_default_plant)//加载错误时显示
+//                            .into(((ManageSelectContentViewHolder) helper).manageContentIcon);
                     ((ManageSelectContentViewHolder) helper).manageContentName.setText(item.getName());
                     ((ManageSelectContentViewHolder) helper).manageContentSub.setText(item.getSubName());
                     ((ManageSelectContentViewHolder) helper).manageContentCheck.setChecked(item.isCheck());
@@ -90,7 +93,7 @@ public class ManageSelectAdapter extends BaseMultiItemQuickAdapter<ManageSelectE
                 break;
             case ManageSelectEntity.TYPE_SELECT_PRODUCT://产品
                 if (helper instanceof ManageSelectContentViewHolder) {
-                    ((ManageSelectContentViewHolder) helper).manageContentIcon.setVisibility(View.VISIBLE);
+//                    ((ManageSelectContentViewHolder) helper).manageContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon));
                     Glide.with(context)
                             .load(item.getIcon())
                             .placeholder(R.drawable.app_base_default_plant)//待加载时显示
@@ -127,12 +130,12 @@ public class ManageSelectAdapter extends BaseMultiItemQuickAdapter<ManageSelectE
                 break;
             case ManageSelectEntity.TYPE_SELECT_FERTILIZER://化肥
                 if (helper instanceof ManageSelectContentViewHolder) {
-                    ((ManageSelectContentViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
-                    Glide.with(context)
-                            .load(item.getIcon())
-                            .placeholder(R.drawable.app_base_default_plant)//待加载时显示
-                            .error(R.drawable.app_base_default_plant)//加载错误时显示
-                            .into(((ManageSelectContentViewHolder) helper).manageContentIcon);
+                    ((ManageSelectContentViewHolder) helper).manageContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon));
+//                    Glide.with(context)
+//                            .load(item.getIcon())
+//                            .placeholder(R.drawable.app_base_default_plant)//待加载时显示
+//                            .error(R.drawable.app_base_default_plant)//加载错误时显示
+//                            .into(((ManageSelectContentViewHolder) helper).manageContentIcon);
                     ((ManageSelectContentViewHolder) helper).manageContentName.setText(item.getName());
                     ((ManageSelectContentViewHolder) helper).manageContentSub.setText(item.getSubName());
                     ((ManageSelectContentViewHolder) helper).manageContentCheck.setChecked(item.isCheck());
@@ -163,12 +166,12 @@ public class ManageSelectAdapter extends BaseMultiItemQuickAdapter<ManageSelectE
                 break;
             case ManageSelectEntity.TYPE_SELECT_PESTICIDE://农药
                 if (helper instanceof ManageSelectContentViewHolder) {
-                    ((ManageSelectContentViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
-                    Glide.with(context)
-                            .load(item.getIcon())
-                            .placeholder(R.drawable.app_base_default_plant)//待加载时显示
-                            .error(R.drawable.app_base_default_plant)//加载错误时显示
-                            .into(((ManageSelectContentViewHolder) helper).manageContentIcon);
+                    ((ManageSelectContentViewHolder) helper).manageContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon));
+//                    Glide.with(context)
+//                            .load(item.getIcon())
+//                            .placeholder(R.drawable.app_base_default_plant)//待加载时显示
+//                            .error(R.drawable.app_base_default_plant)//加载错误时显示
+//                            .into(((ManageSelectContentViewHolder) helper).manageContentIcon);
                     ((ManageSelectContentViewHolder) helper).manageContentName.setText(item.getName());
                     ((ManageSelectContentViewHolder) helper).manageContentSub.setText(item.getSubName());
                     ((ManageSelectContentViewHolder) helper).manageContentCheck.setChecked(item.isCheck());
@@ -199,12 +202,48 @@ public class ManageSelectAdapter extends BaseMultiItemQuickAdapter<ManageSelectE
                 break;
             case ManageSelectEntity.TYPE_SELECT_SEED://种子
                 if (helper instanceof ManageSelectContentViewHolder) {
-                    ((ManageSelectContentViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
-                    Glide.with(context)
-                            .load(item.getIcon())
-                            .placeholder(R.drawable.app_base_default_plant)//待加载时显示
-                            .error(R.drawable.app_base_default_plant)//加载错误时显示
-                            .into(((ManageSelectContentViewHolder) helper).manageContentIcon);
+                    ((ManageSelectContentViewHolder) helper).manageContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon));
+//                    Glide.with(context)
+//                            .load(item.getIcon())
+//                            .placeholder(R.drawable.app_base_default_plant)//待加载时显示
+//                            .error(R.drawable.app_base_default_plant)//加载错误时显示
+//                            .into(((ManageSelectContentViewHolder) helper).manageContentIcon);
+                    ((ManageSelectContentViewHolder) helper).manageContentName.setText(item.getName());
+                    ((ManageSelectContentViewHolder) helper).manageContentSub.setText(item.getSubName());
+                    ((ManageSelectContentViewHolder) helper).manageContentCheck.setChecked(item.isCheck());
+                    ((ManageSelectContentViewHolder) helper).itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (isRadio) {
+                                if (position != -1) {
+                                    getData().get(position).setCheck(!getData().get(position).isCheck());
+                                    notifyItemChanged(position);
+                                }
+                                position = helper.getAdapterPosition();
+                                getData().get(position).setCheck(!getData().get(position).isCheck());
+                                notifyItemChanged(position);
+                            } else {
+                                getData().get(helper.getAdapterPosition()).setCheck(!getData().get(helper.getAdapterPosition()).isCheck());
+                                notifyItemChanged(helper.getAdapterPosition());
+                            }
+                        }
+                    });
+                    ((ManageSelectContentViewHolder) helper).itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            return true;
+                        }
+                    });
+                }
+                break;
+            case ManageSelectEntity.TYPE_SELECT_WORK://工作
+                if (helper instanceof ManageSelectContentViewHolder) {
+                    ((ManageSelectContentViewHolder) helper).manageContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon));
+//                    Glide.with(context)
+//                            .load(item.getIcon())
+//                            .placeholder(R.drawable.app_base_default_plant)//待加载时显示
+//                            .error(R.drawable.app_base_default_plant)//加载错误时显示
+//                            .into(((ManageSelectContentViewHolder) helper).manageContentIcon);
                     ((ManageSelectContentViewHolder) helper).manageContentName.setText(item.getName());
                     ((ManageSelectContentViewHolder) helper).manageContentSub.setText(item.getSubName());
                     ((ManageSelectContentViewHolder) helper).manageContentCheck.setChecked(item.isCheck());

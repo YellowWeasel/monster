@@ -4,6 +4,10 @@ import com.erayic.agr.common.base.IBaseView;
 import com.erayic.agr.common.net.back.CommonPersonnelBean;
 import com.erayic.agr.common.net.back.CommonProduceListBean;
 import com.erayic.agr.common.net.back.CommonResourceBean;
+import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
+import com.erayic.agr.common.net.back.unit.CommonUnitListByBaseBean;
+import com.erayic.agr.common.net.back.work.CommonWorkListBean;
+import com.erayic.agr.manage.adapter.entity.ManageNoticeEntity;
 
 import java.util.List;
 
@@ -39,5 +43,20 @@ public interface ISelectView extends IBaseView {
      * 刷新人员信息
      */
     void refreshUserView(List<CommonPersonnelBean> list);
+
+    /**
+     * 刷新预设工作信息
+     */
+    void refreshWorkView(List<CommonWorkListBean> list);
+
+    /**
+     * 刷新管理单元列表
+     */
+    void refreshUnitView(List<CommonUnitListByBaseBean> list);
+
+    /**
+     * 刷新通知方式列表
+     */
+    void refreshNoticeView(List<ManageNoticeEntity> list);
 
 }

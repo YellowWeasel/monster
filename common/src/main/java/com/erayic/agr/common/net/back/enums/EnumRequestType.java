@@ -13,6 +13,9 @@ public class EnumRequestType {
     public static final int TYPE_RETURN_FERTILIZER = 9903;//选择肥料
     public static final int TYPE_RETURN_PESTICIDE = 9904;//选择农药
     public static final int TYPE_RETURN_SEED = 9905;//选择种苗
+    public static final int TYPE_RETURN_WORK = 9906;//选择工作
+    public static final int TYPE_RETURN_UNIT = 9907;//选择管理单元
+    public static final int TYPE_RETURN_NOTICE = 9908;//通知方式
 
     public static String getTypeDes(int type) {
         switch (type) {
@@ -26,6 +29,12 @@ public class EnumRequestType {
                 return "选择农药";
             case TYPE_RETURN_SEED:
                 return "选择种苗";
+            case TYPE_RETURN_WORK:
+                return "选择工作";
+            case TYPE_RETURN_UNIT:
+                return "选择管理单元";
+            case TYPE_RETURN_NOTICE:
+                return "选择通知方式";
             default:
                 return "未知";
         }

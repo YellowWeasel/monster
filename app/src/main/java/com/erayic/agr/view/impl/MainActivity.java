@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                                 R.drawable.app_base_default_service_nomal, R.drawable.app_base_default_mine_nomal};
                         fragments = new Fragment[]{(Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
                                 (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "生产管理").navigation(),
-                                (Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
+                                (Fragment) ARouter.getInstance().build("/jobs/fragment/JobsListFragment").withString("titleName", "今日作业").navigation(),
                                 (Fragment) ARouter.getInstance().build("/service/fragment/ServiceEntranceFragment").withString("titleName", "我的服务").navigation(),
                                 (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
                     }
@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                                 R.drawable.app_base_default_service_nomal, R.drawable.app_base_default_mine_nomal};
                         fragments = new Fragment[]{(Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
                                 (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "生产管理").navigation(),
-                                (Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
+                                (Fragment) ARouter.getInstance().build("/jobs/fragment/JobsListFragment").withString("titleName", "今日作业").navigation(),
                                 (Fragment) ARouter.getInstance().build("/service/fragment/ServiceEntranceFragment").withString("titleName", "我的服务").navigation(),
                                 (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
                     }

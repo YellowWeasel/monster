@@ -23,4 +23,19 @@ public interface ISelectPresenter {
      */
     void getAllUserByBase(String baseID);
 
+    /**
+     * 得到已定义作业列表
+     */
+    void getJobList();
+
+    /**
+     * 得到所有管理单元列表
+     */
+    void getUnitList();
+
+    /**
+     * 得到所有通知方式
+     */
+    void getNoticeList();
+
 }
