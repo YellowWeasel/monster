@@ -28,4 +28,31 @@ public interface IHttpUnitService {
             @Query("type") int type
     );
 
+    /**
+     * 新建一个批次
+     *
+     * @param proID    产品ID
+     * @param seedID   种苗ID
+     * @param seedName 种苗名称
+     * @param quantity 种植数量
+     * @param unit     种植数量单位（1:亩,2;个数）
+     * @param stTime   种植时间
+     * @param ope      操作者用户ID
+     * @param unitID   隶属管理单元ID
+     * @param unitType 隶属类型（1：基地，2：地块，3：塘，4：栏）
+     * @return DataBack
+     */
+    @GET("Unit/CreateBatch")
+    Observable<DataBack<Object>> createBatch(
+            @Query("proID") String proID,
+            @Query("seedID") String seedID,
+            @Query("seedName") String seedName,
+            @Query("quantity") String quantity,
+            @Query("unit") int unit,
+            @Query("stTime") String stTime,
+            @Query("ope") String ope,
+            @Query("unitID") String unitID,
+            @Query("unitType") int unitType
+    );
+
 }

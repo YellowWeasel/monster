@@ -8,10 +8,10 @@ import java.util.List;
 /**
  * 作者：hejian
  * 邮箱：hkceey@outlook.com
- * 注解：
+ * 注解：选择用户
  */
 
-public interface IUserSelectView extends IBaseView{
+public interface ISelectUserView extends IBaseView{
 
     /**
      * 开启刷新

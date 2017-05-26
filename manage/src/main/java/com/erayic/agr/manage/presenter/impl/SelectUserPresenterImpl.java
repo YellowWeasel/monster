@@ -5,8 +5,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.model.IUserModel;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.CommonPersonnelBean;
-import com.erayic.agr.manage.presenter.IUserSelectPresenter;
-import com.erayic.agr.manage.view.IUserSelectView;
+import com.erayic.agr.manage.presenter.ISelectUserPresenter;
+import com.erayic.agr.manage.view.ISelectUserView;
 
 import java.util.List;
 
@@ -16,13 +16,13 @@ import java.util.List;
  * 注解：
  */
 
-public class UserSelectPresenterImpl implements IUserSelectPresenter {
+public class SelectUserPresenterImpl implements ISelectUserPresenter {
 
-    private IUserSelectView userSelectView;
+    private ISelectUserView userSelectView;
     @Autowired
     IUserModel userModel;
 
-    public UserSelectPresenterImpl(IUserSelectView userSelectView){
+    public SelectUserPresenterImpl(ISelectUserView userSelectView){
         this.userSelectView = userSelectView;
         ARouter.getInstance().inject(this);
     }

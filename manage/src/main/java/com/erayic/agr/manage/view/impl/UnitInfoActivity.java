@@ -316,7 +316,7 @@ public class UnitInfoActivity extends BaseActivity implements IUnitInfoView, Swi
                     showToast("未实现");
                     break;
                 case ManageUnitInfoEntity.TYPE_UNIT_WORK://选择负责人
-                    ARouter.getInstance().build("/manage/activity/UserSelectActivity").withString("baseID", baseID).navigation();
+                    ARouter.getInstance().build("/manage/activity/SelectUserActivity").withString("baseID", baseID).navigation();
                     break;
                 case ManageUnitInfoEntity.TYPE_UNIT_GREEN://类型
                 {

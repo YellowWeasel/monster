@@ -29,7 +29,7 @@
             android:name=".view.impl.UnitInfoActivity"
             android:theme="@style/AppTheme.Transparent" />
         <activity
-            android:name=".view.impl.UserSelectActivity"
+            android:name=".view.impl.SelectUserActivity"
             android:theme="@style/AppTheme.Transparent" />
         <activity
             android:name=".view.impl.ResourceActivity"
@@ -42,6 +42,9 @@
             android:theme="@style/AppTheme.Transparent" />
         <activity
             android:name=".view.impl.SeedInfoActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.SelectActivity"
             android:theme="@style/AppTheme.Transparent" />
     </application>
 

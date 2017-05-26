@@ -9,4 +9,20 @@ import com.erayic.agr.common.base.IBaseView;
  */
 
 public interface IAddBatchView extends IBaseView {
+
+    /**
+     * 显示加载Dialog
+     */
+    void showLoading();
+
+    /**
+     * 隐藏加载Dialog
+     */
+    void dismissLoading();
+
+    /**
+     * 增加批次成功
+     */
+    void addBatchSure();
+
 }

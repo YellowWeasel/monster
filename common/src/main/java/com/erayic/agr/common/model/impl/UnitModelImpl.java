@@ -63,6 +63,45 @@ public class UnitModelImpl implements IUnitModel {
                     }
                 });
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void createBatch(String proID, String seedID,String seedName, String quantity, int unit, String stTime, String ope, String unitID, int unitType, final OnDataListener<Object> listener) {
+        HttpUnitManager.getInstance().createBatch(proID, seedID,seedName, quantity, unit, stTime, ope, unitID, unitType)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<Object>>() {
+                    @Override
+                    public void call(DataBack<Object> objectDataBack) {
+                        ErayicLog.i("createBatch", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
     @Override
     public void init(Context context) {
 

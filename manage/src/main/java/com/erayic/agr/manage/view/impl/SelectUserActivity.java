@@ -11,25 +11,21 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.CommonPersonnelBean;
-import com.erayic.agr.common.net.back.CommonUserInfoBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
-import com.erayic.agr.common.util.ErayicLog;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
-import com.erayic.agr.manage.adapter.ManagePersonnelItemAdapter;
 import com.erayic.agr.manage.adapter.ManageUserCheckItemAdapter;
 import com.erayic.agr.manage.event.UserCheckEvent;
-import com.erayic.agr.manage.presenter.IUserSelectPresenter;
-import com.erayic.agr.manage.presenter.impl.UserSelectPresenterImpl;
-import com.erayic.agr.manage.view.IUserSelectView;
+import com.erayic.agr.manage.presenter.ISelectUserPresenter;
+import com.erayic.agr.manage.presenter.impl.SelectUserPresenterImpl;
+import com.erayic.agr.manage.view.ISelectUserView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -43,8 +39,8 @@ import butterknife.BindView;
  * 邮箱：hkceey@outlook.com
  * 注解：
  */
-@Route(path = "/manage/activity/UserSelectActivity", name = "根据基地ID获取基地的所有人员")
-public class UserSelectActivity extends BaseActivity implements IUserSelectView, SwipeRefreshLayout.OnRefreshListener {
+@Route(path = "/manage/activity/SelectUserActivity", name = "根据基地ID获取基地的所有人员")
+public class SelectUserActivity extends BaseActivity implements ISelectUserView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
@@ -56,7 +52,7 @@ public class UserSelectActivity extends BaseActivity implements IUserSelectView,
     @Autowired
     String baseID;//基地ID
 
-    private IUserSelectPresenter presenter;
+    private ISelectUserPresenter presenter;
     private ManageUserCheckItemAdapter adapter;
 
     @Override
@@ -75,10 +71,10 @@ public class UserSelectActivity extends BaseActivity implements IUserSelectView,
         manageUserSwipe.setOnRefreshListener(this);
 
         //使用线性布局管理器
-        CustomLinearLayoutManager manager = new CustomLinearLayoutManager(UserSelectActivity.this);
+        CustomLinearLayoutManager manager = new CustomLinearLayoutManager(SelectUserActivity.this);
         manager.setScrollEnabled(true);//滑动监听
         manageUserRecyclerView.setLayoutManager(manager);
-        adapter = new ManageUserCheckItemAdapter(UserSelectActivity.this, null);
+        adapter = new ManageUserCheckItemAdapter(SelectUserActivity.this, null);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -94,12 +90,12 @@ public class UserSelectActivity extends BaseActivity implements IUserSelectView,
             }
         });
         manageUserRecyclerView.setAdapter(adapter);
-        manageUserRecyclerView.addItemDecoration(new DividerItemDecoration(UserSelectActivity.this, DividerItemDecoration.VERTICAL_LIST));
+        manageUserRecyclerView.addItemDecoration(new DividerItemDecoration(SelectUserActivity.this, DividerItemDecoration.VERTICAL_LIST));
     }
 
     @Override
     public void initData() {
-        presenter = new UserSelectPresenterImpl(this);
+        presenter = new SelectUserPresenterImpl(this);
         onRefresh();
     }
 

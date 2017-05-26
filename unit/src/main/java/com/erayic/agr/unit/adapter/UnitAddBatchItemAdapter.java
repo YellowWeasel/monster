@@ -44,7 +44,7 @@ public class UnitAddBatchItemAdapter extends BaseMultiItemQuickAdapter<UnitAddBa
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, UnitAddBatchItemEntity item) {
+    protected void convert(final BaseViewHolder helper, final UnitAddBatchItemEntity item) {
         switch (helper.getItemViewType()) {
             case UnitAddBatchItemEntity.TYPE_PRODUCT://产品
                 if (helper instanceof UnitAddBatchItemViewHolder) {
@@ -61,13 +61,13 @@ public class UnitAddBatchItemAdapter extends BaseMultiItemQuickAdapter<UnitAddBa
             case UnitAddBatchItemEntity.TYPE_AREA://面积
                 if (helper instanceof UnitAddBatchItemViewHolder) {
                     ((UnitAddBatchItemViewHolder) helper).unitContentName.setText(TextUtils.isEmpty(item.getName()) ? "种植面积" : item.getName());
-                    ((UnitAddBatchItemViewHolder) helper).unitContentSubName.setText(TextUtils.isEmpty(item.getSubName()) ? "" : item.getSubName());
+                    ((UnitAddBatchItemViewHolder) helper).unitContentSubName.setText("" + (TextUtils.isEmpty(item.getSubName()) ? "" : item.getSubName()) + "(亩)");
                 }
                 break;
             case UnitAddBatchItemEntity.TYPE_DATE://时间
                 if (helper instanceof UnitAddBatchItemViewHolder) {
                     ((UnitAddBatchItemViewHolder) helper).unitContentName.setText(TextUtils.isEmpty(item.getName()) ? "种植时间" : item.getName());
-                    ((UnitAddBatchItemViewHolder) helper).unitContentSubName.setText("" + (TextUtils.isEmpty(item.getSubName()) ? "" : item.getSubName()) + "(亩)");
+                    ((UnitAddBatchItemViewHolder) helper).unitContentSubName.setText(TextUtils.isEmpty(item.getSubName()) ? "" : item.getSubName());
                 }
                 break;
             case UnitAddBatchItemEntity.TYPE_PERSONNEL://种植人员
@@ -83,7 +83,7 @@ public class UnitAddBatchItemAdapter extends BaseMultiItemQuickAdapter<UnitAddBa
             @Override
             public void onClick(View v) {
                 if (onBatchClickListener != null)
-                    onBatchClickListener.onClick(v, helper.getItemViewType(), helper.getAdapterPosition());
+                    onBatchClickListener.onClick(v, item, helper.getAdapterPosition());
             }
         });
         helper.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -95,6 +95,6 @@ public class UnitAddBatchItemAdapter extends BaseMultiItemQuickAdapter<UnitAddBa
     }
 
     public interface OnBatchItemClickListener {
-        void onClick(View view, int itemType, int position);
+        void onClick(View view, UnitAddBatchItemEntity entity, int position);
     }
 }

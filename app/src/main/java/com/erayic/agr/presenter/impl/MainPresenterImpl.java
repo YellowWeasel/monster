@@ -21,8 +21,6 @@ public class MainPresenterImpl implements IMainPresenter {
     private IMainView mainView;
     @Autowired
     IUserModel userModel;
-//    @Autowired
-//    IApiModel apiModel;
 
     public MainPresenterImpl(IMainView mainView) {
         this.mainView = mainView;
@@ -41,6 +39,7 @@ public class MainPresenterImpl implements IMainPresenter {
             @Override
             public void fail(int errCode, String msg) {
                 mainView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+                mainView.loadingError();
             }
         });
     }

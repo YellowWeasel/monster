@@ -18,6 +18,7 @@ public class UnitAddBatchItemEntity implements MultiItemEntity {
 
     private String name;
     private String subName;
+    private String value;
 
     private int itemType;
 
@@ -44,5 +45,13 @@ public class UnitAddBatchItemEntity implements MultiItemEntity {
 
     public void setSubName(String subName) {
         this.subName = subName;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }
