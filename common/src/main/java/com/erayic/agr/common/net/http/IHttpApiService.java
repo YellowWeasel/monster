@@ -2,6 +2,8 @@ package com.erayic.agr.common.net.http;
 
 import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
+import com.erayic.agr.common.net.back.api.CommonAgriculturalInfoBean;
+import com.erayic.agr.common.net.back.api.CommonAgriculturalinfoDetailBean;
 import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonMarketDynamicPriceBean;
@@ -75,7 +77,8 @@ public interface IHttpApiService {
     Observable<DataBack<CommonDynamicPriceBean>> getDynamicPrices(
         @Query("cropId")int cropId,
         @Query("start")String start,
-        @Query("end")String end
+        @Query("end")String end,
+        @Query("serverId") String serviceId
     );
     /**
      * 获取指定市场价格
@@ -90,6 +93,29 @@ public interface IHttpApiService {
             @Query("cropId") int cropId,
             @Query("marketName")String marketName,
             @Query("start")String start,
-            @Query("end")String end
+            @Query("end")String end,
+            @Query("serverId") String serviceId
+    );
+
+    /**
+     * 获取农业资讯列表
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @GET("MarketInfo/GetAgriInfoList")
+    Observable<DataBack<List<CommonAgriculturalInfoBean>>> getAgriculturalInfos(
+            @Query("pageIndex") int pageIndex,
+            @Query("pageSize")int pageSize
+    );
+
+    /**
+     * 获取农业资讯详情
+     * @param Id
+     * @return
+     */
+    @GET("MarketInfo/GetAgriInfoById")
+    Observable<DataBack<CommonAgriculturalinfoDetailBean>> getAgriculturalDetailInfos(
+            @Query("Id") int Id
     );
 }

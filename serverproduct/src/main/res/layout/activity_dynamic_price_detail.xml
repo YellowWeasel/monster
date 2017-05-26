@@ -38,7 +38,14 @@
             android:textColor="@color/cyan"
             android:textSize="@dimen/content" />
     </LinearLayout>
-
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <com.erayic.agr.serverproduct.view.custom.NoScrollWebView
         android:layout_weight="1"
         android:id="@+id/serverproduct_dynamic_price_detail_webview"
@@ -92,7 +99,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-        <ListView
+        <com.erayic.agr.serverproduct.view.custom.ScrollListView
             android:layout_marginTop="2dp"
             android:background="@color/white"
             android:scrollbars="none"
@@ -102,5 +109,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
-
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

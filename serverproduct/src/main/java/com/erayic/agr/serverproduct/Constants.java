@@ -13,7 +13,7 @@ public class Constants {
         public static  String getRainLvlTitle(double value){
                 for (int i=0;i<RAINLVL10MIN.length;i++){
                         if (value<=RAINLVL10MIN[i]){
-                                return (i!=0)?RAINLVLTITLE[i]+"级":RAINLVLTITLE[0];
+                                return RAINLVLTITLE[i];
                         }
                 }
                 return "—";
@@ -21,7 +21,7 @@ public class Constants {
         public static  String  getWindLvlTitle(double value){
                 for (int i=0;i<WINDLVL.length;i++){
                         if (value<=WINDLVL[i]){
-                                return String.valueOf(i);
+                                return String.valueOf(i)+"级";
                         }
                 }
                 return "—";

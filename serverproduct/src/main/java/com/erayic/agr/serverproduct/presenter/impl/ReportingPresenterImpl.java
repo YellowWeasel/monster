@@ -1,6 +1,7 @@
 package com.erayic.agr.serverproduct.presenter.impl;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.model.IApiModel;
 import com.erayic.agr.common.model.impl.ApiModelImpl;
@@ -20,7 +21,7 @@ public class ReportingPresenterImpl implements IReportingPresenter {
     private IReportingInfoView context;
     public ReportingPresenterImpl(IReportingInfoView mContext){
         this.context=mContext;
-        apiModel=new ApiModelImpl();
+        ARouter.getInstance().inject(this);
     }
     @Autowired
     IApiModel apiModel;

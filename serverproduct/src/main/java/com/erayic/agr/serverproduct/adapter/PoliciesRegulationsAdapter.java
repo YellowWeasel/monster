@@ -52,20 +52,4 @@ public class PoliciesRegulationsAdapter extends BaseQuickAdapter<PoliciesRegulat
     public static interface PoliciesRegulationsItemClickListener{
         void doOnClick(View view,int Id);
     }
-    public static  class  SpaceItemDecoration extends RecyclerView.ItemDecoration{
-        int topSpace;
-        public SpaceItemDecoration(int mTopSpace) {
-            topSpace=mTopSpace;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-            if (parent.getChildAdapterPosition(view)==0){
-                outRect.top=30;
-                return;
-            }
-            outRect.top=topSpace;
-        }
-    }
 }

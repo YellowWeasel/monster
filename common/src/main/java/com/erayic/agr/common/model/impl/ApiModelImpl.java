@@ -8,6 +8,8 @@ import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.ErrorCode;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
+import com.erayic.agr.common.net.back.api.CommonAgriculturalInfoBean;
+import com.erayic.agr.common.net.back.api.CommonAgriculturalinfoDetailBean;
 import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonMarketDynamicPriceBean;
@@ -149,8 +151,8 @@ public class ApiModelImpl implements IApiModel {
     }
 
     @Override
-    public void getDynamicPrice(int cropId, String start, String end,final OnDataListener<CommonDynamicPriceBean> listener) {
-        HttpApiManager.getInstance().getDynamicPrices(cropId,start,end)
+    public void getDynamicPrice(int cropId, String start, String end,String serviceId,final OnDataListener<CommonDynamicPriceBean> listener) {
+        HttpApiManager.getInstance().getDynamicPrices(cropId,start,end,serviceId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Action1<DataBack<CommonDynamicPriceBean>>() {
@@ -259,10 +261,9 @@ public class ApiModelImpl implements IApiModel {
                 });
     }
 
-
     @Override
-    public void getDesignatedMarketDynamicPrices(int cropId, String marketName,String start,String end,final OnDataListener<List<CommonMarketDynamicPriceBean>> listener) {
-        HttpApiManager.getInstance().getDesignatedMarketDynamicPrices(cropId,marketName,start,end)
+    public void getDesignatedMarketDynamicPrices(int cropId, String marketName,String start,String end,String serviceId,final OnDataListener<List<CommonMarketDynamicPriceBean>> listener) {
+        HttpApiManager.getInstance().getDesignatedMarketDynamicPrices(cropId,marketName,start,end,serviceId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Action1<DataBack<List<CommonMarketDynamicPriceBean>>>() {
@@ -297,6 +298,78 @@ public class ApiModelImpl implements IApiModel {
                 });
     }
 
+    @Override
+    public void getAgriculturalDetailInfos(int Id,final OnDataListener<CommonAgriculturalinfoDetailBean> listener) {
+        HttpApiManager.getInstance().getAgriculturalDetailInfos(Id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<CommonAgriculturalinfoDetailBean>>() {
+                    @Override
+                    public void call(DataBack<CommonAgriculturalinfoDetailBean> objectDataBack) {
+                        ErayicLog.i("getAgriculturalDetailInfos", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+    @Override
+    public void getAgriculturalInfos(int pageIndex,int pageSize,final OnDataListener<List<CommonAgriculturalInfoBean>> listener) {
+        HttpApiManager.getInstance().getAgriculturalInfos(pageIndex,pageSize)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<List<CommonAgriculturalInfoBean>>>() {
+                    @Override
+                    public void call(DataBack<List<CommonAgriculturalInfoBean>> objectDataBack) {
+                        ErayicLog.i("getAgriculturalInfos", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
     @Override
     public void init(Context context) {
 

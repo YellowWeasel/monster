@@ -34,8 +34,6 @@ public class MarketDynamicPriceDatas {
         }
     }
 
-
-
     public static  class  priceDatas{
         private String Key;
         private String Value;

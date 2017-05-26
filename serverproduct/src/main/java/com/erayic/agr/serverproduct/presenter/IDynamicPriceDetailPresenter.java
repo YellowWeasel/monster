@@ -5,5 +5,5 @@ package com.erayic.agr.serverproduct.presenter;
  */
 
 public interface IDynamicPriceDetailPresenter {
-    void getMarketDatas(int cropId,String marketName, String start, String end);
+    void getMarketDatas(int cropId,String marketName, String start, String end,String serviceId);
 }

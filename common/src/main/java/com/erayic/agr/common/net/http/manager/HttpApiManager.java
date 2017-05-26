@@ -32,7 +32,6 @@ public class HttpApiManager {
         }
         return manager;
     }
-
     /**
      * 得到气象实况信息
      */
@@ -46,28 +45,24 @@ public class HttpApiManager {
     public Observable getFeatureWeather() {
         return apiService.getFeatureWeather();
     }
-
     /**
      * 获取农业气象旬报
      */
     public Observable getWeatherTenDayReportsByMonth(int year, int month) {
         return apiService.getWeatherTenDayReportsByMonth(year, month);
     }
-
     /**
      * 获取价格动态
      */
-    public Observable getDynamicPrices(int cropId,String start,String end) {
-        return apiService.getDynamicPrices(cropId,start,end);
+    public Observable getDynamicPrices(int cropId,String start,String end,String serviceId) {
+        return apiService.getDynamicPrices(cropId,start,end,serviceId);
     }
-
     /**
      * 获取政策法规列表
      */
     public Observable getPoliciesRegulations(int pageIndex,int pageSize) {
         return apiService.getPoliciesRegulations(pageIndex,pageSize);
     }
-
     /**
      * 获取政策法规详情
      */
@@ -77,7 +72,19 @@ public class HttpApiManager {
     /**
      * 获取指定市场价格
      */
-    public Observable getDesignatedMarketDynamicPrices(int cropId, String marketName,String start,String end) {
-        return apiService.getDesignatedMarketDynamicPrices(cropId,marketName,start,end);
+    public Observable getDesignatedMarketDynamicPrices(int cropId, String marketName,String start,String end,String serviceId) {
+        return apiService.getDesignatedMarketDynamicPrices(cropId,marketName,start,end,serviceId);
+    }
+    /**
+     * 获取农业资讯列表
+     */
+    public Observable getAgriculturalInfos(int pageIndex,int pageSize) {
+        return apiService.getAgriculturalInfos(pageIndex,pageSize);
+    }
+    /**
+     * 获取农业资讯列表
+     */
+    public Observable getAgriculturalDetailInfos(int Id) {
+        return apiService.getAgriculturalDetailInfos(Id);
     }
 }

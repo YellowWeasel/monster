@@ -24,6 +24,7 @@ import com.erayic.agr.serverproduct.adapter.entity.PoliciesRegulationsTitleDatas
 import com.erayic.agr.serverproduct.presenter.IPoliciesRegulationsPresenter;
 import com.erayic.agr.serverproduct.presenter.impl.PoliciesRegulationsPresenterImpl;
 import com.erayic.agr.serverproduct.view.IPoliciesRegulartionsView;
+import com.erayic.agr.serverproduct.view.custom.SpaceItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,7 @@ public class PoliciesRegulationsActivity extends BaseActivity implements IPolici
         CustomLinearLayoutManager manager = new CustomLinearLayoutManager(this);
         manager.setScrollEnabled(true);//滑动监听
         serverproductPoliciesRegulationsRecycler.setLayoutManager(manager);
-        serverproductPoliciesRegulationsRecycler.addItemDecoration(new PoliciesRegulationsAdapter.SpaceItemDecoration(5));
+        serverproductPoliciesRegulationsRecycler.addItemDecoration(new SpaceItemDecoration(5));
         adapter=new PoliciesRegulationsAdapter(null);
         adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         adapter.setRegulationsItemClickListener(new PoliciesRegulationsAdapter.PoliciesRegulationsItemClickListener() {

@@ -47,6 +47,8 @@ import butterknife.ButterKnife;
 @Route(path = "/serverproduct/activity/DynamicPriceActivity", name = "价格动态")
 public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceView, AdapterView.OnItemClickListener {
     @Autowired
+    String serviceID;
+    @Autowired
     int cropId;//7
     @Autowired
     String cropIconUrl;
@@ -118,7 +120,7 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
         calendar.add(Calendar.DAY_OF_MONTH, -dateInterval);
         dynamicPricePresenter.getDynamicPricedatas((cropId=7)
                 , new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime())
-                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
+                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()),serviceID);
     }
 
     @Override
@@ -216,7 +218,7 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
 
         DynamicPricePrincipalMarketDatas.MarketPriceDatas marketPriceDatas= (DynamicPricePrincipalMarketDatas.MarketPriceDatas) parent.getItemAtPosition(position);
         ARouter.getInstance().build("/serverproduct/activity/DynamicPriceDetailActivity").withParcelable("paramter",new MarketInfoParamter(cropId,marketPriceDatas.getMarketName(),new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime())
-                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()))).navigation();
+                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()))).withString("serviceID",serviceID).navigation();
     }
 
     public class DynamicPriceJsInterface {

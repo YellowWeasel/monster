@@ -1,5 +1,7 @@
 package com.erayic.agr.serverproduct.presenter.impl;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.model.IApiModel;
 import com.erayic.agr.common.model.impl.ApiModelImpl;
@@ -19,11 +21,12 @@ import java.util.List;
 
 public class PoliciesRegulationsPresenterImpl implements IPoliciesRegulationsPresenter {
     private IPoliciesRegulartionsView context;
-    private IApiModel apiModel;
+    @Autowired
+    IApiModel apiModel;
 
     public PoliciesRegulationsPresenterImpl(IPoliciesRegulartionsView context) {
         this.context = context;
-        apiModel=new ApiModelImpl();
+        ARouter.getInstance().inject(this);
     }
 
     @Override

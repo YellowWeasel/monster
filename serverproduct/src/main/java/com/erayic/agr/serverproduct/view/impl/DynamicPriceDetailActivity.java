@@ -46,6 +46,8 @@ import butterknife.BindView;
 @Route(path = "/serverproduct/activity/DynamicPriceDetailActivity", name = "市场价格动态详情")
 public class DynamicPriceDetailActivity extends BaseActivity implements IDynamicPriceDetailView {
     @Autowired
+    String serviceID;
+    @Autowired
     MarketInfoParamter paramter;
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
@@ -69,7 +71,7 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
         if (paramter == null) return;
         marketTitle.setText(paramter.getMarketName());
         presenter.getMarketDatas(paramter.getCropId(),
-                paramter.getMarketName(), paramter.getStart(), paramter.getEnd());
+                paramter.getMarketName(), paramter.getStart(), paramter.getEnd(),serviceID);
     }
 
     @Override
