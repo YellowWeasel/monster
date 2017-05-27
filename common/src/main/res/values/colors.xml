@@ -43,4 +43,11 @@
     <color name="ui_btn_background_orange">#fba621</color>
     <!--标题滑动栏背景颜色-->
     <color name="background_tab_pressed">#6633B5E5</color>
+
+    <!--日历控件 calendar start-->
+    <color name="calendar_bg_color">#FFFFFF</color>
+    <color name="holiday_text_color">#9082BD</color>
+    <color name="select_circle_color">#374254</color>
+    <color name="colorBackground">#F0F1F5</color>
+    <!--日历控件 calendar end-->
 </resources>

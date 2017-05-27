@@ -3,6 +3,7 @@ package com.erayic.agr.common.model;
 import com.alibaba.android.arouter.facade.template.IProvider;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.work.CommonJobInfoBean;
+import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
 import com.erayic.agr.common.net.back.work.CommonWorkInfoBean;
 import com.erayic.agr.common.net.back.work.CommonWorkListBean;
 
@@ -40,5 +41,10 @@ public interface IWorkModel extends IProvider {
      * 增加一个工作安排
      */
     void addSchedule(CommonJobInfoBean bean,OnDataListener<Object> listener);
+
+    /**
+     *得到指定用户、指定日期的工作安排
+     */
+    void getDayWorkJobByUser(String specifyDay,OnDataListener<CommonJobsInfoBean> listener);
 
 }

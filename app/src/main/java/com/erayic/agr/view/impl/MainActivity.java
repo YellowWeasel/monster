@@ -15,6 +15,7 @@ import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.NoScrollViewPager;
 import com.erayic.agr.presenter.IMainPresenter;
 import com.erayic.agr.presenter.impl.MainPresenterImpl;
 import com.erayic.agr.view.IMainView;
@@ -34,7 +35,7 @@ import butterknife.BindView;
 @Route(path = "/main/Activity/MainActivity", name = "APP主承载页面")
 public class MainActivity extends BaseActivity implements IMainView {
     @BindView(R.id.main_view_pager)
-    ViewPager mainViewPager;
+    NoScrollViewPager mainViewPager;
     @BindView(R.id.main_tab_bar)
     JPTabBar mainTabBar;
 
@@ -57,6 +58,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         //传入一定要集成继承ViewPager
         mainTabBar.setContainer(mainViewPager);
+        mainViewPager.setNoScroll(true);//不可滑动
         mainTabBar.setTabListener(new OnTabSelectListener() {//TabBar回调事件
             @Override
             public void onTabSelect(int index) {
@@ -134,6 +136,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                     }
                 };
                 mainViewPager.setAdapter(adapter);
+                mainViewPager.setOffscreenPageLimit(4);//预加载前4个页面。避免卡顿
             }
         });
     }

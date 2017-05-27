@@ -8,6 +8,7 @@ import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.ErrorCode;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.work.CommonJobInfoBean;
+import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
 import com.erayic.agr.common.net.back.work.CommonWorkInfoBean;
 import com.erayic.agr.common.net.back.work.CommonWorkListBean;
 import com.erayic.agr.common.net.http.manager.HttpWorkManager;
@@ -187,6 +188,43 @@ public class WorkModelImpl implements IWorkModel {
                     @Override
                     public void call(DataBack<Object> objectDataBack) {
                         ErayicLog.i("addSchedule", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                        //System.out.println(throwable);
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> objectDataBack) {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void getDayWorkJobByUser(String specifyDay, final OnDataListener<CommonJobsInfoBean> listener) {
+        HttpWorkManager.getInstance().getDayWorkJobByUser(specifyDay)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<DataBack<CommonJobsInfoBean>>() {
+                    @Override
+                    public void call(DataBack<CommonJobsInfoBean> objectDataBack) {
+                        ErayicLog.i("getDayWorkJobByUser", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
                         } else {

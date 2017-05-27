@@ -49,7 +49,7 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
 
     private List<CommonUnitListBean> list;
 
-    private onItemScrollToPositionWithOffset onItemScrollToPositionWithOffset;
+    private OnItemScrollToPositionWithOffset onItemScrollToPositionWithOffset;
 
     private UnitListItemByBatchAdapter.OnItemBatchClickListener onItemBatchClickListener;
 
@@ -62,7 +62,7 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
         this.list = list;
     }
 
-    public void setOnItemScrollToPositionWithOffset(UnitListItemAdapter.onItemScrollToPositionWithOffset onItemScrollToPositionWithOffset) {
+    public void setOnItemScrollToPositionWithOffset(OnItemScrollToPositionWithOffset onItemScrollToPositionWithOffset) {
         this.onItemScrollToPositionWithOffset = onItemScrollToPositionWithOffset;
     }
 
@@ -356,7 +356,7 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
     /**
      * 点击Item精准定位到具体头部位置
      */
-    public interface onItemScrollToPositionWithOffset {
+    public interface OnItemScrollToPositionWithOffset {
         void scrollToPositionWithOffset(int position);
     }
 

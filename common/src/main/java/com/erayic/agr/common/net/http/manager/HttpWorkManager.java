@@ -69,4 +69,11 @@ public class HttpWorkManager {
         return workService.addSchedule(bean);
     }
 
+    /**
+     * 得到指定用户、指定日期的工作安排
+     */
+    public Observable getDayWorkJobByUser(String specifyDay) {
+        return workService.getDayWorkJobByUser(specifyDay);
+    }
+
 }

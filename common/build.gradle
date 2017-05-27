@@ -77,4 +77,7 @@ dependencies {
 //    compile 'com.github.codbking:PickTime:v1.0.1'
 //    弹出框（https://github.com/saiwu-bigkoo/Android-AlertView）
     compile 'com.bigkoo:alertview:1.0.3'
+//    日期
+    compile 'joda-time:joda-time:2.9.4'
+
 }

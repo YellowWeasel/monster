@@ -4,4 +4,15 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="statusbar_view_height">0dp</dimen>
+
+    <!--日历控件calendar start-->
+    <dimen name="week_bar_height">26dp</dimen>
+    <dimen name="week_calendar_height">48dp</dimen>
+    <dimen name="month_calendar_height">288dp</dimen>
+    <dimen name="calendar_min_distance">5dp</dimen>
+    <dimen name="auto_scroll_distance">15dp</dimen>
+    <integer name="calendar_week_text_size">11</integer>
+    <integer name="calendar_text_size">15</integer>
+    <!--日历控件calendar end-->
+
 </resources>

@@ -2,6 +2,7 @@ package com.erayic.agr.common.net.http;
 
 import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.back.work.CommonJobInfoBean;
+import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
 import com.erayic.agr.common.net.back.work.CommonWorkInfoBean;
 import com.erayic.agr.common.net.back.work.CommonWorkListBean;
 
@@ -70,6 +71,17 @@ public interface IHttpWorkService {
     @POST("Work/AddSchedule")
     Observable<DataBack<Object>> addSchedule(
             @Body CommonJobInfoBean schedule
+    );
+
+    /**
+     * 得到指定用户、指定日期的工作安排
+     *
+     * @param specifyDay 指定日期
+     * @return DataBack
+     */
+    @GET("Work/GetDayWorkJobByUser")
+    Observable<DataBack<CommonJobsInfoBean>> getDayWorkJobByUser(
+            @Query("specifyDay") String specifyDay
     );
 
 }

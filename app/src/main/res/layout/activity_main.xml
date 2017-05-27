@@ -1,40 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
     tools:context="com.erayic.agr.view.impl.WelcomeActivity">
 
-    <RelativeLayout
+
+    <com.erayic.agr.common.view.NoScrollViewPager
+        android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/main_view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/useless_divider" />
+    <View
+        android:id="@+id/useless_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/app_base_layout_background" />
 
-        <View
-            android:id="@+id/useless_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_above="@+id/main_tab_bar"
-            android:background="@color/app_base_layout_background" />
-
-        <com.jpeng.jptabbar.JPTabBar
-            android:id="@+id/main_tab_bar"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_alignParentBottom="true"
-            android:background="#fff"
-            app:BadgePadding="4dp"
-            app:BadgeTextSize="10dp"
-            app:TabAnimate="Jump" />
-    </RelativeLayout>
-
-
-</android.support.design.widget.CoordinatorLayout>
+    <com.jpeng.jptabbar.JPTabBar
+        android:id="@+id/main_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#fff"
+        app:BadgePadding="4dp"
+        app:BadgeTextSize="10dp"
+        app:TabAnimate="Jump" />
+</LinearLayout>
