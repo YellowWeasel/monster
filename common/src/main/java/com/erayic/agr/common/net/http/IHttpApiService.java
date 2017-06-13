@@ -13,9 +13,9 @@ import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * 作者：hejian
@@ -31,7 +31,7 @@ public interface IHttpApiService {
      * @return DataBack
      */
     @GET("Weather/GetRealTimeWeather")
-    Observable<DataBack<CommonRealTimeWeatherBean>> getRealTimeWeather();
+    Flowable<DataBack<CommonRealTimeWeatherBean>> getRealTimeWeather();
 
     /**
      * 得到未来24小时气象信息
@@ -39,7 +39,7 @@ public interface IHttpApiService {
      * @return DataBack
      */
     @GET("Weather/GetFeatureWeather")
-    Observable<DataBack<List<CommonFutureWeatherBean>>> getFeatureWeather();
+    Flowable<DataBack<List<CommonFutureWeatherBean>>> getFeatureWeather();
 
     /**
      * 获取农业气象旬报
@@ -49,7 +49,7 @@ public interface IHttpApiService {
      * @return
      */
     @GET("Weather/GetWeatherTenDayReportsByMonth")
-    Observable<DataBack<List<CommonReportsByMonthBean>>> getWeatherTenDayReportsByMonth(
+    Flowable<DataBack<List<CommonReportsByMonthBean>>> getWeatherTenDayReportsByMonth(
             @Query("year") int year,
             @Query("month") int month
     );
@@ -58,12 +58,12 @@ public interface IHttpApiService {
      * @return
      */
     @GET("MarketInfo/GetPoliciesList")
-    Observable<DataBack<List<CommonPoliciesRegulationsBean>>>  getPoliciesRegulations(
+    Flowable<DataBack<List<CommonPoliciesRegulationsBean>>>  getPoliciesRegulations(
             @Query("pageIndex")int pageIndex
             ,@Query("pageSize")int pageSize
     );
     @GET("MarketInfo/GetPoliciesById")
-    Observable<DataBack<CommonPoliciesRegulationsDetailBean>>  getPoliciesRegulationsDetail(
+    Flowable<DataBack<CommonPoliciesRegulationsDetailBean>>  getPoliciesRegulationsDetail(
             @Query("Id")int Id
     );
     /**
@@ -74,7 +74,7 @@ public interface IHttpApiService {
      * @return
      */
     @GET("MarketInfo/GetMarketPrice")
-    Observable<DataBack<CommonDynamicPriceBean>> getDynamicPrices(
+    Flowable<DataBack<CommonDynamicPriceBean>> getDynamicPrices(
         @Query("cropId")int cropId,
         @Query("start")String start,
         @Query("end")String end,
@@ -89,7 +89,7 @@ public interface IHttpApiService {
      * @return
      */
     @GET("MarketInfo/GetPriceByMarketName")
-    Observable<DataBack<List<CommonMarketDynamicPriceBean>>> getDesignatedMarketDynamicPrices(
+    Flowable<DataBack<List<CommonMarketDynamicPriceBean>>> getDesignatedMarketDynamicPrices(
             @Query("cropId") int cropId,
             @Query("marketName")String marketName,
             @Query("start")String start,
@@ -104,7 +104,7 @@ public interface IHttpApiService {
      * @return
      */
     @GET("MarketInfo/GetAgriInfoList")
-    Observable<DataBack<List<CommonAgriculturalInfoBean>>> getAgriculturalInfos(
+    Flowable<DataBack<List<CommonAgriculturalInfoBean>>> getAgriculturalInfos(
             @Query("pageIndex") int pageIndex,
             @Query("pageSize")int pageSize
     );
@@ -115,7 +115,7 @@ public interface IHttpApiService {
      * @return
      */
     @GET("MarketInfo/GetAgriInfoById")
-    Observable<DataBack<CommonAgriculturalinfoDetailBean>> getAgriculturalDetailInfos(
+    Flowable<DataBack<CommonAgriculturalinfoDetailBean>> getAgriculturalDetailInfos(
             @Query("Id") int Id
     );
 }

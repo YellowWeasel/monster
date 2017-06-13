@@ -14,12 +14,15 @@ import com.erayic.agr.common.net.http.manager.HttpUserManager;
 import com.erayic.agr.common.util.ErayicGson;
 import com.erayic.agr.common.util.ErayicLog;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 作者：hejian
@@ -32,12 +35,13 @@ public class UserModelImpl implements IUserModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getUserInfo(final OnDataListener<CommonUserInfoBean> listener) {
+
         HttpUserManager.getInstance().getUserInfo()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<CommonUserInfoBean>>() {
+                .doOnNext(new Consumer<DataBack<CommonUserInfoBean>>() {
                     @Override
-                    public void call(DataBack<CommonUserInfoBean> objectDataBack) {
+                    public void accept(@NonNull DataBack<CommonUserInfoBean> objectDataBack) throws Exception {
                         ErayicLog.i("getUserInfo", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             PreferenceUtils.putParam("UserID", objectDataBack.getResult().getUserID());
@@ -62,20 +66,24 @@ public class UserModelImpl implements IUserModel {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<CommonUserInfoBean>>() {
+                .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<CommonUserInfoBean> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -85,12 +93,13 @@ public class UserModelImpl implements IUserModel {
     @SuppressWarnings("unchecked")
     @Override
     public void updateUserName(final String newName, final OnDataListener<Object> listener) {
+
         HttpUserManager.getInstance().updateUserName(newName)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("updateUserName", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -103,18 +112,22 @@ public class UserModelImpl implements IUserModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -123,15 +136,15 @@ public class UserModelImpl implements IUserModel {
     @SuppressWarnings("unchecked")
     @Override
     public void updateUserIcon(byte[] icon, final OnDataListener<Object> listener) {
+
         HttpUserManager.getInstance().updateUserIcon(icon)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("updateUserIcon", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -141,18 +154,22 @@ public class UserModelImpl implements IUserModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -161,15 +178,15 @@ public class UserModelImpl implements IUserModel {
     @SuppressWarnings("unchecked")
     @Override
     public void setPassword(String pass, final OnDataListener<Object> listener) {
+
         HttpUserManager.getInstance().setPassword(pass)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("setPassword", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -179,18 +196,22 @@ public class UserModelImpl implements IUserModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -199,15 +220,15 @@ public class UserModelImpl implements IUserModel {
     @SuppressWarnings("unchecked")
     @Override
     public void GetAllUserByBase(final OnDataListener<List<CommonPersonnelBean>> listener) {
+
         HttpUserManager.getInstance().GetAllUserByBase()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonPersonnelBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonPersonnelBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonPersonnelBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<CommonPersonnelBean>> objectDataBack) throws Exception {
                         ErayicLog.i("GetAllUserByBase", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -217,18 +238,22 @@ public class UserModelImpl implements IUserModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -237,15 +262,15 @@ public class UserModelImpl implements IUserModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getAllUserBySpecifyBase(String baseID, final OnDataListener<List<CommonPersonnelBean>> listener) {
+
         HttpUserManager.getInstance().getAllUserBySpecifyBase(baseID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonPersonnelBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonPersonnelBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonPersonnelBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<CommonPersonnelBean>> objectDataBack) throws Exception {
                         ErayicLog.i("getAllUserBySpecifyBase", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -255,18 +280,22 @@ public class UserModelImpl implements IUserModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -275,15 +304,15 @@ public class UserModelImpl implements IUserModel {
     @SuppressWarnings("unchecked")
     @Override
     public void UpdateTel(String newTel, String oriTel, String verifyNum, final OnDataListener<Object> listener) {
+
         HttpUserManager.getInstance().UpdateTel(newTel, oriTel, verifyNum)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("UpdateTel", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -293,18 +322,22 @@ public class UserModelImpl implements IUserModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -312,12 +345,13 @@ public class UserModelImpl implements IUserModel {
     @SuppressWarnings("unchecked")
     @Override
     public void updateUserInfo(String userID, String name, String tel, int role, final OnDataListener<Object> listener) {
+
         HttpUserManager.getInstance().updateUserInfo(userID, name, tel, role)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("updateUserInfo", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -329,18 +363,22 @@ public class UserModelImpl implements IUserModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -348,12 +386,13 @@ public class UserModelImpl implements IUserModel {
     @SuppressWarnings("unchecked")
     @Override
     public void deleteUser(String userID, final OnDataListener<Object> listener) {
+
         HttpUserManager.getInstance().deleteUser(userID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("UpdateTel", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -365,18 +404,22 @@ public class UserModelImpl implements IUserModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -384,12 +427,13 @@ public class UserModelImpl implements IUserModel {
     @SuppressWarnings("unchecked")
     @Override
     public void sendInvite(String tel, String name, int role, final OnDataListener<Object> listener) {
+
         HttpUserManager.getInstance().sendInvite(tel, name, role)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("sendInvite", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -401,18 +445,22 @@ public class UserModelImpl implements IUserModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });

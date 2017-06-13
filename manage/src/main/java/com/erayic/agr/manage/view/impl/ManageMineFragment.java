@@ -129,6 +129,13 @@ public class ManageMineFragment extends BaseFragment implements IMineView {
         entityGoods.setName("产品");
         entityGoods.setIcon(R.drawable.image_manage_goods_icon);
         list.add(entityGoods);
+        //设置作业
+        ManageMineEntity entityWork = new ManageMineEntity();
+        entityWork.setItemType(ManageMineEntity.TYPE_CONTENT);
+        entityWork.setToUrl("/jobs/activity/AdvanceWorkActivity");
+        entityWork.setName("预设作业");
+        entityWork.setIcon(R.drawable.image_manage_goods_icon);
+        list.add(entityWork);
         //设置生产资料
         ManageMineEntity entityMaterial = new ManageMineEntity();
         entityMaterial.setItemType(ManageMineEntity.TYPE_CONTENT);

@@ -22,7 +22,7 @@ public class CalendarUtils {
     public static synchronized CalendarUtils getInstance(Context context) {
         if (sUtils == null) {
             sUtils = new CalendarUtils();
-            initAllHolidays(context);
+//            initAllHolidays(context);
         }
         return sUtils;
     }

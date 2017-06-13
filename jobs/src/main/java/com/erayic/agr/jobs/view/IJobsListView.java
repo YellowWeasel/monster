@@ -1,7 +1,8 @@
 package com.erayic.agr.jobs.view;
 
 import com.erayic.agr.common.base.IBaseView;
-import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
+import com.erayic.agr.common.net.back.work.CommonJobsListManagerBean;
+import com.erayic.agr.common.net.back.work.CommonJobsListUserBean;
 
 /**
  * 作者：hejian
@@ -12,8 +13,10 @@ import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
 public interface IJobsListView extends IBaseView {
 
     /**
-     * 查询数据成功
+     * 查询用户数据成功
      */
-    void selectSure(CommonJobsInfoBean bean);
+    void selectUserSure(CommonJobsListUserBean bean);
+
+    void selectManagerSure(CommonJobsListManagerBean bean);
 
 }

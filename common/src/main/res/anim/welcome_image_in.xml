@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!--
+<scale>标签为缩放节点
+
+android:fromXscale="1.0" 表示开始时X轴缩放比例为 1.0 (原图大小 * 1.0 为原图大小)
+
+android:toXscale="0.0"表示结束时X轴缩放比例为0.0(原图大小 *0.0 为缩小到看不见)
+
+android:fromYscale="1.0" 表示开始时Y轴缩放比例为 1.0 (原图大小 * 1.0 为原图大小)
+
+android:toYscale="0.0"表示结束时Y轴缩放比例为0.0(原图大小 *0.0 为缩小的看不到了)
+
+android:pivotX="50%" X轴缩放的位置为中心点
+
+android:pivotY="50%" Y轴缩放的位置为中心点
+
+android:duration="2000" 动画播放时间 这里是2000毫秒也就是2秒
+
+
+
+
+    -->
+    <scale
+        android:duration="2000"
+        android:fromXScale="1.0"
+        android:fromYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale="1.2"
+        android:toYScale="1.2" >
+    </scale>
+    <!--
+<rotate>标签为旋转节点
+
+Tween一共为我们提供了3种动画渲染模式。
+
+android:interpolator="@android:anim/accelerate_interpolator" 设置动画渲染器为加速动画(动画播放中越来越快)
+
+android:interpolator="@android:anim/decelerate_interpolator" 设置动画渲染器为减速动画(动画播放中越来越慢)
+
+android:interpolator="@android:anim/accelerate_decelerate_interpolator" 设置动画渲染器为先加速在减速(开始速度最快 逐渐减慢)
+
+如果不写的话 默认为匀速运动
+
+android:fromDegrees="+360"设置动画开始的角度
+
+android:toDegrees="0"设置动画结束的角度
+
+
+
+    -->
+    <!--<rotate-->
+        <!--android:duration="2000"-->
+        <!--android:fromDegrees="+360"-->
+        <!--android:interpolator="@android:anim/accelerate_interpolator"-->
+        <!--android:pivotX="50%"-->
+        <!--android:pivotY="50%"-->
+        <!--android:repeatCount="0"-->
+        <!--android:toDegrees="0" />-->
+    <!--
+<alpha>标签为alpha透明度节点
+
+android:fromAlpha="1.0" 设置动画起始透明度为1.0 表示完全不透明
+
+android:toAlpha="0.0"设置动画结束透明度为0.0 表示完全透明
+
+也就是说alpha的取值范围为0.0 - 1.0 之间
+    -->
+    <!--<alpha-->
+        <!--android:duration="2000"-->
+        <!--android:fromAlpha="0.0"-->
+        <!--android:repeatCount="0"-->
+        <!--android:toAlpha="1.0" >-->
+    <!--</alpha>-->
+
+    <!--
+<translate>标签为移动节点
+
+android:repeatCount="infinite" 设置动画为循环播放，这里可以写具体的int数值，
+设置动画播放几次，但是它记录次数是从0开始数的，比如这里设置为2 那么动画从0开始数数0 、1、 2 、实际上是播放了3次。
+
+
+    -->
+   <!--  <translate
+        android:duration="2000"
+        android:fromXDelta="0"
+        android:fromYDelta="0"
+        android:repeatCount="infinite"
+        android:toXDelta="320"
+        android:toYDelta="480" /> -->
+
+</set>

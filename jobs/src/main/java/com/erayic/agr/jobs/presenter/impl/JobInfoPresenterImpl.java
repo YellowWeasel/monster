@@ -8,6 +8,8 @@ import com.erayic.agr.common.net.back.work.CommonJobInfoBean;
 import com.erayic.agr.jobs.presenter.IJobInfoPresenter;
 import com.erayic.agr.jobs.view.IJobInfoView;
 
+import java.util.List;
+
 /**
  * 作者：hejian
  * 邮箱：hkceey@outlook.com
@@ -26,9 +28,9 @@ public class JobInfoPresenterImpl implements IJobInfoPresenter {
     }
 
     @Override
-    public void addSchedule(CommonJobInfoBean bean) {
+    public void saveSchedule(CommonJobInfoBean bean, List<String> unitIDs) {
         jobInfoView.showLoading();
-        workModel.addSchedule(bean, new OnDataListener<Object>() {
+        workModel.saveSchedule(bean, unitIDs, new OnDataListener<Object>() {
             @Override
             public void success(Object response) {
                 jobInfoView.dismissLoading();

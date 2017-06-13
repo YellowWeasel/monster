@@ -1,6 +1,6 @@
 package com.erayic.agr.common.base;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.config.PreferenceUtils;
@@ -11,10 +11,10 @@ import cn.bingoogolapple.swipebacklayout.BGASwipeBackManager;
 /**
  * 作者：hejian
  * 邮箱：hkceey@outlook.com
- * 注解：
+ * 注解：MultiDexApplication解决64K问题
  */
 
-public abstract class BaseApplication extends Application {
+public abstract class BaseApplication extends MultiDexApplication {
 
     @Override
     public void onCreate() {
@@ -54,5 +54,12 @@ public abstract class BaseApplication extends Application {
     private void initConfig() {
 //        UserProgramConfigManage.init(getApplicationContext());
         PreferenceUtils.initialize(getApplicationContext());
+    }
+
+    /**
+     * 初始化图片选择库
+     */
+    private void initPictureSelector(){
+
     }
 }

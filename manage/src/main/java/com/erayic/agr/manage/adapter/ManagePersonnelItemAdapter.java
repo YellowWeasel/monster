@@ -29,7 +29,7 @@ public class ManagePersonnelItemAdapter extends BaseQuickAdapter<CommonPersonnel
     @Override
     protected void convert(ManageContentTextViewHolder helper, CommonPersonnelBean item) {
         helper.manageContentName.setText(item.getName());
-        helper.manageContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon));
+        helper.manageContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon_green));
         helper.manageContentSub.setText(EnumUserRole.getRoleDes(item.getRole()));
     }
 }

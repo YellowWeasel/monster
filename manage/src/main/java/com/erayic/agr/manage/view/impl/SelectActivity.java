@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
@@ -92,18 +93,28 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
         manager.setScrollEnabled(true);//滑动监听
         manageRecyclerView.setLayoutManager(manager);
         adapter = new ManageSelectAdapter(SelectActivity.this, null, isRadio);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        adapter.setOnAddClickListener(new ManageSelectAdapter.OnAddClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                CommonPersonnelBean bean = (CommonPersonnelBean) adapter.getData().get(position);
-//                bean.setCheck(!bean.isCheck());
-//                adapter.setData(position, bean);
-            }
-        });
-        adapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                return true;
+            public void onAddClick(View view) {
+                switch (selectType) {
+                    case EnumRequestType.TYPE_RETURN_PRODUCT:
+                        break;
+                    case EnumRequestType.TYPE_RETURN_USER:
+                        break;
+                    case EnumRequestType.TYPE_RETURN_FERTILIZER:
+                        break;
+                    case EnumRequestType.TYPE_RETURN_PESTICIDE:
+                        break;
+                    case EnumRequestType.TYPE_RETURN_SEED:
+                        break;
+                    case EnumRequestType.TYPE_RETURN_WORK:
+                        ARouter.getInstance().build("/jobs/activity/WorkInfoActivity").withString("strTitle", "增加预设作业").withBoolean("isAdd", true).navigation();
+                        break;
+                    case EnumRequestType.TYPE_RETURN_UNIT:
+                        break;
+                    case EnumRequestType.TYPE_RETURN_NOTICE:
+                        break;
+                }
             }
         });
         manageRecyclerView.setAdapter(adapter);
@@ -255,6 +266,14 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
                     entity.setSubName("");
                     listResource.add(entity);
                 }
+                //新增
+                {
+                    ManageSelectEntity entity = new ManageSelectEntity();
+                    entity.setItemType(ManageSelectEntity.TYPE_SELECT_ADD);
+                    entity.setName("添加作业");
+                    entity.setSubName("");
+                    listResource.add(entity);
+                }
                 adapter.setNewData(listResource);
             }
         });
@@ -279,6 +298,9 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
                         entity.setSubName(s);
                     }
                     listResource.add(entity);
+                }
+                {
+                    //新增
                 }
                 adapter.setNewData(listResource);
             }

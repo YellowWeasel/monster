@@ -21,6 +21,7 @@ import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.util.ErayicRegularly;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.index.R;
 import com.erayic.agr.index.R2;
 import com.erayic.agr.index.presenter.IRegisterByEntPresenter;
@@ -41,7 +42,7 @@ import butterknife.OnClick;
 public class RegisterByEntActivity extends BaseActivity implements IRegisterByEntView {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.index_register_ent_phone)
     EditText indexRegisterEntPhone;
     @BindView(R2.id.index_register_ent_entName)
@@ -150,7 +151,7 @@ public class RegisterByEntActivity extends BaseActivity implements IRegisterByEn
             }
         }, 6, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //设置文字的前景色
-        spannableString.setSpan(new ForegroundColorSpan(Color.RED), 6, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(0xff2bb8aa), 6, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         //设置下划线文字
         spannableString.setSpan(new UnderlineSpan(), 11, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -162,7 +163,7 @@ public class RegisterByEntActivity extends BaseActivity implements IRegisterByEn
             }
         }, 11, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //设置文字的前景色
-        spannableString.setSpan(new ForegroundColorSpan(Color.RED), 11, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(0xff2bb8aa), 11, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannableString;
     }
 

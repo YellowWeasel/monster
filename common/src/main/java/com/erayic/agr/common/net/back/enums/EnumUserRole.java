@@ -8,18 +8,15 @@ package com.erayic.agr.common.net.back.enums;
 
 public class EnumUserRole {
 
-    public static final int Role_BaseManager = 0;//基地管理者
-    public static final int Role_ProcManager = 1;//生产管理者
+    public static final int Role_Manager = 1;//基地管理者
     public static final int Role_Usage = 9;//生产者
 
     public static String getRoleDes(int role) {
         switch (role) {
-            case Role_BaseManager:
-                return "基地管理者";
-            case Role_ProcManager:
-                return "生产管理者";
+            case Role_Manager:
+                return "基地管理员";
             case Role_Usage:
-                return "生产者";
+                return "基地生产者";
             default:
                 return "未知用户";
         }

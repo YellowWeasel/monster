@@ -21,6 +21,7 @@ import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.util.ErayicRegularly;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.index.R;
 import com.erayic.agr.index.R2;
 import com.erayic.agr.index.presenter.IRegisterByUserPresenter;
@@ -40,7 +41,7 @@ import butterknife.OnClick;
 @Route(path = "/index/Activity/RegisterByUserActivity", name = "用户注册")
 public class RegisterByUserActivity extends BaseActivity implements IRegisterByUserView {
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.index_register_user_phone)
     EditText indexRegisterUserPhone;
     @BindView(R2.id.index_register_user_code)
@@ -168,7 +169,7 @@ public class RegisterByUserActivity extends BaseActivity implements IRegisterByU
             }
         }, 6, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //设置文字的前景色
-        spannableString.setSpan(new ForegroundColorSpan(Color.RED), 6, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(0xff2bb8aa), 6, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         //设置下划线文字
         spannableString.setSpan(new UnderlineSpan(), 11, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -180,7 +181,7 @@ public class RegisterByUserActivity extends BaseActivity implements IRegisterByU
             }
         }, 11, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         //设置文字的前景色
-        spannableString.setSpan(new ForegroundColorSpan(Color.RED), 11, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(0xff2bb8aa), 11, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannableString;
     }
 

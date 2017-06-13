@@ -89,11 +89,9 @@ public class PersonnelInfoActivity extends BaseActivity implements IPersonnelInf
         if (!isAdd) {
             managePersonnelInfoName.setText(TextUtils.isEmpty(bean.getName()) ? "" : bean.getName());
             managePersonnelInfoTel.setText(TextUtils.isEmpty(bean.getTel()) ? "" : bean.getTel());
-            if (bean.getRole() == EnumUserRole.Role_BaseManager) {
+            if (bean.getRole() == EnumUserRole.Role_Manager) {
                 managePersonnelInfoGroup.setVisibility(View.GONE);
-                managePersonnelInfoName.append("(企业联系人)");
-            } else if (bean.getRole() == EnumUserRole.Role_ProcManager) {
-                managePersonnelInfoAdmin.setChecked(true);
+                managePersonnelInfoName.append("(基地管理员)");
             } else if (bean.getRole() == EnumUserRole.Role_Usage) {
                 managePersonnelInfoProducer.setChecked(true);
             }

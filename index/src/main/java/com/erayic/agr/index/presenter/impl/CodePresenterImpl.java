@@ -4,7 +4,6 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.model.IIndexModel;
-import com.erayic.agr.common.model.impl.IndexModelImpl;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.index.presenter.ICodePresenter;
 import com.erayic.agr.index.view.ICodeView;
@@ -44,7 +43,7 @@ public class CodePresenterImpl implements ICodePresenter {
 
     @Override
     public void checkTelVerify(String tel, String verifyCode) {
-        indexModel.checkTelVerify(AgrConstant.AGR_PLANT_APPID, tel, AgrConstant.Test_PHONE, verifyCode, new OnDataListener<Object>() {
+        indexModel.checkTelVerify(AgrConstant.AGR_APPID, tel, AgrConstant.Test_PHONE, verifyCode, new OnDataListener<Object>() {
             @Override
             public void success(Object response) {
                 codeView.showToast("校验成功，正在返回重新登录");

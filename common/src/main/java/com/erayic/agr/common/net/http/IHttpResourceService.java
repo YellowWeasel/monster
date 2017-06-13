@@ -10,11 +10,11 @@ import com.erayic.agr.common.net.back.CommonSeedBean;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * 作者：hejian
@@ -31,7 +31,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Produce/CreateProduct")
-    Observable<DataBack<Object>> createProduct(
+    Flowable<DataBack<Object>> createProduct(
             @Query("productName") String productName
     );
 
@@ -41,7 +41,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Produce/GetAllProduct")
-    Observable<DataBack<List<CommonProduceListBean>>> getAllProduct();
+    Flowable<DataBack<List<CommonProduceListBean>>> getAllProduct();
 
     /**
      * 得到指定行业产品分类
@@ -50,7 +50,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Produce/GetAllProductClassic")
-    Observable<DataBack<List<CommonProduceListBean>>> getAllProductClassic(
+    Flowable<DataBack<List<CommonProduceListBean>>> getAllProductClassic(
             @Query("type") int type
     );
 
@@ -61,7 +61,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Produce/GetProductDetail")
-    Observable<DataBack<Object>> getProductDetail(
+    Flowable<DataBack<Object>> getProductDetail(
             @Query("proID") String proID
     );
 
@@ -75,7 +75,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Produce/UpdateProduct")
-    Observable<DataBack<Object>> updateProduct(
+    Flowable<DataBack<Object>> updateProduct(
             @Query("proID") String proID,
             @Query("productName") String productName,
             @Query("classicID") int classicID,
@@ -89,7 +89,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Produce/DeleteProduct")
-    Observable<DataBack<Object>> deleteProduct(
+    Flowable<DataBack<Object>> deleteProduct(
             @Query("proID") String proID
     );
 
@@ -101,7 +101,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @POST("Produce/UpdateProductIcon")
-    Observable<DataBack<Object>> updateProductIcon(
+    Flowable<DataBack<Object>> updateProductIcon(
             @Query("proID") String proID,
             @Body CommonByteArrayBean bean
     );
@@ -113,7 +113,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Resource/FertilizerCheck")
-    Observable<DataBack<CommonFertilizerBean>> fertilizerCheck(
+    Flowable<DataBack<CommonFertilizerBean>> fertilizerCheck(
             @Query("pID") String pID
     );
 
@@ -124,7 +124,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Resource/PestilizerCheck")
-    Observable<DataBack<CommonPesticideBean>> pestilizerCheck(
+    Flowable<DataBack<CommonPesticideBean>> pestilizerCheck(
             @Query("pID") String pID
     );
 
@@ -135,7 +135,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Resource/GetResourceByType")
-    Observable<DataBack<List<CommonResourceBean>>> getResourceByType(
+    Flowable<DataBack<List<CommonResourceBean>>> getResourceByType(
             @Query("type") int type
     );
 
@@ -147,7 +147,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Resource/DeleteResource")
-    Observable<DataBack<CommonPesticideBean>> deleteResource(
+    Flowable<DataBack<CommonPesticideBean>> deleteResource(
             @Query("resID") String resID,
             @Query("type") int type
     );
@@ -161,7 +161,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Resource/GetSpecifyResources")
-    Observable<DataBack<CommonPesticideBean>> getSpecifyResourcesByPesticide(
+    Flowable<DataBack<CommonPesticideBean>> getSpecifyResourcesByPesticide(
             @Query("resID") String resID,
             @Query("type") int type
     );
@@ -175,7 +175,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Resource/GetSpecifyResources")
-    Observable<DataBack<CommonFertilizerBean>> getSpecifyResourcesByFertilizer(
+    Flowable<DataBack<CommonFertilizerBean>> getSpecifyResourcesByFertilizer(
             @Query("resID") String resID,
             @Query("type") int type
     );
@@ -188,7 +188,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Resource/GetSpecifyResources")
-    Observable<DataBack<CommonSeedBean>> getSpecifyResourcesBySeed(
+    Flowable<DataBack<CommonSeedBean>> getSpecifyResourcesBySeed(
             @Query("resID") String resID,
             @Query("type") int type
     );
@@ -203,7 +203,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @POST("Resource/SaveSeed")
-    Observable<DataBack<Object>> saveSeed(
+    Flowable<DataBack<Object>> saveSeed(
             @Query("resID") String resID,
             @Query("seedname") String seedName,
             @Query("pID") String pID,
@@ -217,7 +217,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @POST("Resource/SaveFertilizer")
-    Observable<DataBack<Object>> saveFertilizer(
+    Flowable<DataBack<Object>> saveFertilizer(
             @Body CommonFertilizerBean fert
     );
 
@@ -230,7 +230,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @POST("Resource/SaveFertilizerByUserDefine")
-    Observable<DataBack<Object>> saveFertilizerByUserDefine(
+    Flowable<DataBack<Object>> saveFertilizerByUserDefine(
             @Query("resID") String resID,
             @Query("fertname") String fertName,
             @Query("manufacturer") String manufacturer
@@ -242,7 +242,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @POST("Resource/SavePesticide")
-    Observable<DataBack<Object>> savePesticide(
+    Flowable<DataBack<Object>> savePesticide(
             @Body CommonPesticideBean pest
     );
 
@@ -256,7 +256,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @POST("Resource/SavePesticideByUserDefine")
-    Observable<DataBack<Object>> savePesticideByUserDefine(
+    Flowable<DataBack<Object>> savePesticideByUserDefine(
             @Query("resID") String resID,
             @Query("pestname") String pestname,
             @Query("manufacturer") String manufacturer,

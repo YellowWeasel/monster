@@ -18,6 +18,7 @@ import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.net.back.ServiceBuyByUserBean;
 import com.erayic.agr.common.net.back.enums.EnumServiceType;
+import com.erayic.agr.common.net.back.enums.EnumUserRole;
 import com.erayic.agr.common.util.ErayicLog;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.SectionedSpanSizeLookup;
@@ -80,7 +81,7 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
 //        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle("");
         toolbarTitleName.setText(titleName);
-        if (PreferenceUtils.getParam("UserRole", 0) == 1) {
+        if (PreferenceUtils.getParam("UserRole", 0) == EnumUserRole.Role_Manager) {
             toolbarTitleImg.setVisibility(View.VISIBLE);
         } else {
             toolbarTitleImg.setVisibility(View.GONE);
@@ -189,7 +190,7 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
                         case "51c74d08-054b-47d3-92f0-1b7489b2f225"://苹果
                             break;
                         case "91efc1c1-ed58-40da-926d-79faf0351488"://大白菜
-                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withString("cropId",subServiceID).navigation();
+                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withString("cropId", subServiceID).navigation();
                             break;
                         case "eda779ef-ef1c-4225-b563-83cd7c321776"://上海青
                             break;

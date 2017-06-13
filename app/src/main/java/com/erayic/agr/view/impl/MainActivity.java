@@ -1,5 +1,9 @@
 package com.erayic.agr.view.impl;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,6 +17,7 @@ import com.erayic.agr.R;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.config.PreferenceUtils;
+import com.erayic.agr.common.service.ErayicService;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.NoScrollViewPager;
@@ -139,6 +144,24 @@ public class MainActivity extends BaseActivity implements IMainView {
                 mainViewPager.setOffscreenPageLimit(4);//预加载前4个页面。避免卡顿
             }
         });
+
+        //启动JobScheduler
+        JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        JobInfo jobInfo = new JobInfo.Builder(1, new ComponentName(getPackageName(), ErayicService.class.getName()))
+                .setPeriodic(2000)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .build();
+        jobScheduler.schedule(jobInfo);
+//        startService(new Intent(this, ErayicService.class));//启动服务
+//        JobInfo.Builder builder = new JobInfo.Builder(1, new ComponentName(this, ErayicService.class));
+//        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);//设置需要的网络条件，默认NETWORK_TYPE_NONE
+//        builder.setPersisted(true);//设备重启之后你的任务是否还要继续执行
+////        builder.setMinimumLatency(3000);// 设置任务运行最少延迟时间
+////        builder.setOverrideDeadline(50000);// 设置deadline，若到期还没有达到规定的条件则会开始执行
+//        builder.setRequiresCharging(true);// 设置是否充电的条件,默认false
+//        builder.setRequiresDeviceIdle(false);// 设置手机是否空闲的条件,默认false
+//        builder.setPeriodic(1000);//设置间隔时间 该方法不能和setMinimumLatency、setOverrideDeadline这两个同时调用，否则会报错“java.lang.IllegalArgumentException: Can't call setMinimumLatency() on a periodic job”，或者报错“java.lang.IllegalArgumentException: Can't call setOverrideDeadline() on a periodic job”。
+
     }
 
     @Override

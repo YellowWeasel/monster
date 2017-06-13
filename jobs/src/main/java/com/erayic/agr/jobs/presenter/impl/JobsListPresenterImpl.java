@@ -4,13 +4,11 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.model.IWorkModel;
 import com.erayic.agr.common.net.OnDataListener;
-import com.erayic.agr.common.net.back.work.CommonJobInfoBean;
-import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
+import com.erayic.agr.common.net.back.enums.EnumUnitType;
+import com.erayic.agr.common.net.back.work.CommonJobsListManagerBean;
+import com.erayic.agr.common.net.back.work.CommonJobsListUserBean;
 import com.erayic.agr.jobs.presenter.IJobsListPresenter;
 import com.erayic.agr.jobs.view.IJobsListView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 作者：hejian
@@ -31,24 +29,73 @@ public class JobsListPresenterImpl implements IJobsListPresenter {
 
     @Override
     public void getDayWorkJobByUser(String specifyDay) {
-        workModel.getDayWorkJobByUser(specifyDay, new OnDataListener<CommonJobsInfoBean>() {
+        workModel.getDayWorkJobByUser(specifyDay, new OnDataListener<CommonJobsListUserBean>() {
             @Override
-            public void success(CommonJobsInfoBean response) {
-                List<CommonJobsInfoBean.JobsInfo> list = new ArrayList<CommonJobsInfoBean.JobsInfo>();
-                for (int i = 0; i < 5; i++) {
-                    CommonJobsInfoBean.JobsInfo jobsInfo = new CommonJobsInfoBean.JobsInfo();
-                    jobsInfo.setTestName(i + "测试名称");
-                    List<CommonJobsInfoBean.childJobInfo> childList = new ArrayList<CommonJobsInfoBean.childJobInfo>();
-                    for (int j = 0; j < 10; j++) {
-                        CommonJobsInfoBean.childJobInfo childJobInfo = new CommonJobsInfoBean.childJobInfo();
-                        childJobInfo.setTestChildName("10:" + i + "" + j);
-                        childList.add(childJobInfo);
+            public void success(CommonJobsListUserBean response) {
+//                List<CommonJobsListUserBean.JobsInfo> list = new ArrayList<CommonJobsListUserBean.JobsInfo>();
+//                for (int i = 0; i < 5; i++) {
+//                    CommonJobsListUserBean.JobsInfo jobsInfo = new CommonJobsListUserBean.JobsInfo();
+//                    jobsInfo.setTestName(i + "测试名称");
+//                    List<CommonJobsListUserBean.childJobInfo> childList = new ArrayList<CommonJobsListUserBean.childJobInfo>();
+//                    for (int j = 0; j < 10; j++) {
+//                        CommonJobsListUserBean.childJobInfo childJobInfo = new CommonJobsListUserBean.childJobInfo();
+//                        childJobInfo.setTestChildName("10:" + i + "" + j);
+//                        childList.add(childJobInfo);
+//                    }
+//                    jobsInfo.setChildJobInfos(childList);
+//                    list.add(jobsInfo);
+//                }
+//                response.setJobs(list);
+                for (int i = 0; i < response.getJobs().size(); i++) {
+                    int rate = 0;
+                    for (CommonJobsListUserBean.JobsContents contents : response.getJobs().get(i).getContents()) {
+                        if (contents.isFinish())
+                            rate++;
                     }
-                    jobsInfo.setChildJobInfos(childList);
-                    list.add(jobsInfo);
+                    if (response.getJobs().size() > 0)
+                        if (rate == response.getJobs().get(i).getContents().size())
+                            response.getJobs().get(i).setPercentage(100);
+                        else {
+                            double d = (double) rate / response.getJobs().get(i).getContents().size();
+                            response.getJobs().get(i).setPercentage((int) (d * 100));
+                        }
+                    else
+                        response.getJobs().get(i).setPercentage(0);
                 }
-                response.setJobs(list);
-                jobsListView.selectSure(response);
+
+
+                jobsListView.selectUserSure(response);
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
+                jobsListView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
+    }
+
+    @Override
+    public void getDayWorkJobByManager(String specifyDay) {
+        workModel.getDayWorkJobByManager(specifyDay, EnumUnitType.TYPE_PLOTS, new OnDataListener<CommonJobsListManagerBean>() {
+            @Override
+            public void success(CommonJobsListManagerBean response) {
+                for (int i = 0; i < response.getJobs().size(); i++) {
+                    int rate = 0;
+                    for (CommonJobsListManagerBean.JobsEntity contents : response.getJobs().get(i).getJobs()) {
+                        if (contents.isFinish())
+                            rate++;
+                    }
+                    if (response.getJobs().size() > 0)
+                        if (rate == response.getJobs().get(i).getJobs().size())
+                            response.getJobs().get(i).setPercentage(100);
+                        else {
+                            double d = (double) rate / response.getJobs().get(i).getJobs().size();
+                            response.getJobs().get(i).setPercentage((int) (d * 100));
+                        }
+                    else
+                        response.getJobs().get(i).setPercentage(0);
+                }
+                jobsListView.selectManagerSure(response);
             }
 
             @Override

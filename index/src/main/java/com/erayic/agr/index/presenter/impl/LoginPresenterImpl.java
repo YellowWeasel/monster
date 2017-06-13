@@ -4,7 +4,6 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.model.IIndexModel;
-import com.erayic.agr.common.model.impl.IndexModelImpl;
 import com.erayic.agr.common.net.ErrorCode;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.index.presenter.ILoginPresenter;
@@ -32,7 +31,7 @@ public class LoginPresenterImpl implements ILoginPresenter {
     @Override
     public void login(String tel, String pass) {
         loginView.showLoading();
-        indexModel.login(AgrConstant.AGR_PLANT_APPID, tel, pass, AgrConstant.Test_PHONE, new OnDataListener<Object>() {
+        indexModel.login(AgrConstant.AGR_APPID, tel, pass, AgrConstant.Test_PHONE, new OnDataListener<Object>() {
             @Override
             public void success(Object response) {
                 loginView.dismissLoading();

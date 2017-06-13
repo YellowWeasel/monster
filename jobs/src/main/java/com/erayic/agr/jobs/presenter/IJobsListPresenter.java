@@ -9,8 +9,13 @@ package com.erayic.agr.jobs.presenter;
 public interface IJobsListPresenter {
 
     /**
-     * 得到指定用户、指定日期的工作安排
+     * 得到指定用户、指定日期的工作安排（用户）
      */
     void getDayWorkJobByUser(String specifyDay);
+
+    /**
+     * 得到指定用户、指定日期的工作安排（管理员）
+     */
+    void getDayWorkJobByManager(String specifyDay);
 
 }

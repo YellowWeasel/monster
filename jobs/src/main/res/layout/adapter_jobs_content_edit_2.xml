@@ -9,7 +9,7 @@
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
         <ImageView
@@ -26,37 +26,46 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
             android:gravity="center_vertical|left"
-            android:text="购买记录"
+            android:text="操作名称"
             android:textColor="@color/app_base_text_title_1"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/jobs_content_subName"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:gravity="center_vertical|left"
             android:layout_weight="1"
-            android:text="购买记录"
-            android:textColor="@color/app_base_text_title_2"
-            android:textSize="16sp" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/jobs_content_prop"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/app_base_edit_back_gray"
-            android:inputType="text|textPhonetic"
-            android:textColor="@color/app_base_text_title_2"
-            android:hint="规范"
-            android:gravity="center"
-            android:textColorHint="@color/app_base_text_title_3"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/jobs_content_subName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical|start"
+                android:text="购买记录"
+                android:textColor="@color/app_base_text_title_2"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/jobs_content_prop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/app_base_edit_back_gray"
+                android:gravity="center|start"
+                android:hint="规范"
+                android:inputType="text|textPhonetic"
+                android:textColor="@color/app_base_text_title_2"
+                android:textColorHint="@color/app_base_text_title_3"
+                android:textSize="16sp" />
+        </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/jobs_content_delete"

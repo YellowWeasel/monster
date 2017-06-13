@@ -32,6 +32,10 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="WelcomeStyle" parent="android:Theme">
+        <item name="android:windowBackground">@drawable/image_app_welcome_bg</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <!--<item name="android:textColorPrimary">@color/app_base_text_title_1</item>-->

@@ -7,11 +7,12 @@ import com.erayic.agr.common.util.ErayicLog;
 
 import java.io.IOException;
 
+import io.reactivex.Flowable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import okhttp3.Interceptor;
 import okhttp3.Response;
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * 作者：Hkceey
@@ -36,20 +37,36 @@ public class ReceivedCookiesInterceptor implements Interceptor {
         if (!originalResponse.headers("Set-Cookie").isEmpty()) {
             final StringBuffer cookieBuffer = new StringBuffer();
             //RxJava
-            Observable.from(originalResponse.headers("Set-Cookie"))
-                    .map(new Func1<String, String>() {
+//            Observable.from(originalResponse.headers("Set-Cookie"))
+//                    .map(new Func1<String, String>() {
+//                        @Override
+//                        public String call(String s) {
+//                            String[] cookieArray = s.split(";");
+//                            return cookieArray[0];
+//                        }
+//                    })
+//                    .subscribe(new Action1<String>() {
+//                        @Override
+//                        public void call(String cookie) {
+//                            cookieBuffer.append(cookie).append(";");
+//                        }
+//                    });
+
+            Flowable.fromIterable(originalResponse.headers("Set-Cookie"))
+                    .map(new Function<String, String>() {
                         @Override
-                        public String call(String s) {
+                        public String apply(@NonNull String s) throws Exception {
                             String[] cookieArray = s.split(";");
                             return cookieArray[0];
                         }
                     })
-                    .subscribe(new Action1<String>() {
+                    .subscribe(new Consumer<String>() {
                         @Override
-                        public void call(String cookie) {
+                        public void accept(@NonNull String cookie) throws Exception {
                             cookieBuffer.append(cookie).append(";");
                         }
                     });
+
             SharedPreferences sharedPreferences = context.getSharedPreferences("cookie", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("cookie", cookieBuffer.toString());

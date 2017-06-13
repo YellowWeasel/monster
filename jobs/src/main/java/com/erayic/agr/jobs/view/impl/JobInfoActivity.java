@@ -17,6 +17,7 @@ import com.bigkoo.alertview.OnItemClickListener;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.net.back.CommonMapArrayBean;
 import com.erayic.agr.common.net.back.enums.EnumRequestType;
 import com.erayic.agr.common.net.back.work.CommonJobInfoBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
@@ -239,7 +240,7 @@ public class JobInfoActivity extends BaseActivity implements IJobInfoView {
 
     private void saveData() {
         infoBean = new CommonJobInfoBean();
-        List<String> list = new ArrayList<>();
+        List<String> listUnitIDs = new ArrayList<>();
         for (JobInfoEntity entity : adapter.getData()) {
             switch (entity.getItemType()) {
                 case JobInfoEntity.TYPE_JOB_WORK:
@@ -250,7 +251,7 @@ public class JobInfoActivity extends BaseActivity implements IJobInfoView {
                     infoBean.setJobID(entity.getID().toString());
                     break;
                 case JobInfoEntity.TYPE_JOB_UNIT:
-                    list.add(entity.getID().toString());
+                    listUnitIDs.add(entity.getID().toString());
                     break;
                 case JobInfoEntity.TYPE_JOB_DATE:
                     if (TextUtils.isEmpty(entity.getSubName())) {
@@ -279,14 +280,11 @@ public class JobInfoActivity extends BaseActivity implements IJobInfoView {
                     break;
             }
         }
-        if (list.size() == 0) {
+        if (listUnitIDs.size() == 0) {
             showToast("请至少添加一个管理单元");
             return;
-        } else {
-            infoBean.setUnitIDs(list);
         }
-        presenter.addSchedule(infoBean);
-
+        presenter.saveSchedule(infoBean, listUnitIDs);
     }
 
     @Override
@@ -413,7 +411,7 @@ public class JobInfoActivity extends BaseActivity implements IJobInfoView {
                                 JobInfoEntity entity = adapter.getData().get(i);
                                 if (entity.getItemType() == JobInfoEntity.TYPE_JOB_NOTICE) {
                                     entity.setSubName(entry.getValue().toString());
-                                    entity.setID(entry.getKey());
+                                    entity.setID(Integer.valueOf(entry.getKey().toString()).intValue());
                                 }
                                 adapter.notifyItemChanged(i);
                             }

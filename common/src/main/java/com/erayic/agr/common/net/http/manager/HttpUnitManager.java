@@ -3,7 +3,7 @@ package com.erayic.agr.common.net.http.manager;
 import com.erayic.agr.common.net.http.HttpRetrofit;
 import com.erayic.agr.common.net.http.IHttpUnitService;
 
-import rx.Observable;
+import io.reactivex.Flowable;
 
 /**
  * 作者：hejian
@@ -35,21 +35,21 @@ public class HttpUnitManager {
     /**
      * 得到管理单元列表（含所有信息）
      */
-    public Observable getAllUnit(int type) {
+    public Flowable getAllUnit(int type) {
         return unitService.getAllUnit(type);
     }
 
     /**
      * 得到管理单元列表（只有单元列表）
      */
-    public Observable getAllUnitByBase(int type) {
+    public Flowable getAllUnitByBase(int type) {
         return unitService.getAllUnitByBase(type);
     }
 
     /**
      * 新建一个批次
      */
-    public Observable createBatch(String proID, String seedID, String seedName, String quantity, int unit, String stTime, String ope, String unitID, int unitType) {
+    public Flowable createBatch(String proID, String seedID, String seedName, String quantity, int unit, String stTime, String ope, String unitID, int unitType) {
         return unitService.createBatch(proID, seedID, seedName, quantity, unit, stTime, ope, unitID, unitType);
     }
 }

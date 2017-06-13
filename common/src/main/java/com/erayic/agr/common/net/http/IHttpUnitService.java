@@ -6,9 +6,9 @@ import com.erayic.agr.common.net.back.unit.CommonUnitListByBaseBean;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * 作者：hejian
@@ -25,7 +25,7 @@ public interface IHttpUnitService {
      * @return DataBack
      */
     @GET("Unit/GetAllUnit")
-    Observable<DataBack<List<CommonUnitListBean>>> getAllUnit(
+    Flowable<DataBack<List<CommonUnitListBean>>> getAllUnit(
             @Query("type") int type
     );
 
@@ -36,7 +36,7 @@ public interface IHttpUnitService {
      * @return DataBack
      */
     @GET("Unit/GetAllUnitByBase")
-    Observable<DataBack<List<CommonUnitListByBaseBean>>> getAllUnitByBase(
+    Flowable<DataBack<List<CommonUnitListByBaseBean>>> getAllUnitByBase(
             @Query("type") int type
     );
 
@@ -55,7 +55,7 @@ public interface IHttpUnitService {
      * @return DataBack
      */
     @GET("Unit/CreateBatch")
-    Observable<DataBack<Object>> createBatch(
+    Flowable<DataBack<Object>> createBatch(
             @Query("proID") String proID,
             @Query("seedID") String seedID,
             @Query("seedName") String seedName,

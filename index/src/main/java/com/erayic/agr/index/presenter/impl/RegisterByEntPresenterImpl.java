@@ -5,7 +5,6 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.model.IIndexModel;
-import com.erayic.agr.common.model.impl.IndexModelImpl;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.index.presenter.IRegisterByEntPresenter;
 import com.erayic.agr.index.view.IRegisterByEntView;
@@ -29,7 +28,7 @@ public class RegisterByEntPresenterImpl implements IRegisterByEntPresenter {
 
     @Override
     public void enterpriseRegister(String phone, String name, String entName, String password, String verCode) {
-        indexModel.enterpriseRegister(entName, name, password, phone, AgrConstant.AGR_PLANT_APPID, AgrConstant.Test_PHONE, verCode, new OnDataListener<Object>() {
+        indexModel.enterpriseRegister(entName, name, password, phone, AgrConstant.AGR_APPID, AgrConstant.Test_PHONE, verCode, new OnDataListener<Object>() {
             @Override
             public void success(Object response) {
                 registerByEntView.registerSure();
