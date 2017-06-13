@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.facade.template.IInterceptor;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.util.ErayicLog;
+import com.erayic.agr.common.util.ErayicApp;
 
 /**
  * 作者：hejian
@@ -23,12 +24,19 @@ public class LoginInterceptor implements IInterceptor {
     @Override
     public void process(Postcard postcard, final InterceptorCallback callback) {
         if (postcard.getPath().equals("/main/Activity/MainActivity")) {
-            if (PreferenceUtils.getParam("AutoLogin", false)) {
-                ErayicLog.d("LoginInterceptor:::通过登陆拦截器");
-                callback.onContinue(postcard);//处理完成 交还控制权
+            if (PreferenceUtils.getParam("versionCode", 0) >= ErayicApp.getVersionCode(context)) {
+                if (PreferenceUtils.getParam("AutoLogin", false)) {
+                    ErayicLog.d("LoginInterceptor:::通过登陆拦截器");
+                    callback.onContinue(postcard);//处理完成 交还控制权
+                } else {
+                    ErayicLog.e("LoginInterceptor:::未通过登陆拦截器，跳转登陆页面");
+                    ARouter.getInstance().build("/index/Activity/LoginActivity")
+                            .navigation();//跳转到登陆页面
+                    callback.onInterrupt(null);
+                }
             } else {
-                ErayicLog.e("LoginInterceptor:::未通过登陆拦截器，跳转登陆页面");
-                ARouter.getInstance().build("/index/Activity/LoginActivity")
+                ErayicLog.e("LoginInterceptor:::未通过引导拦截器，跳转引导页面");
+                ARouter.getInstance().build("/common/activity/AgrIntroActivity")
                         .navigation();//跳转到登陆页面
                 callback.onInterrupt(null);
             }

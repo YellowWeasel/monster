@@ -40,6 +40,16 @@ public class ErayicNetDate {
      */
 
     /**
+     * 将.net服务器的时间转为Long
+     */
+    public static long getLongDates(String netDate) {
+        String regEx = "[^0-9]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(netDate);
+        return Long.parseLong(m.replaceAll("").trim());
+    }
+
+    /**
      * 将服务器时间/Date(XXXXXXXXXXX)/转换为年月日时分秒
      */
     public static String getStringDates(String arg) {

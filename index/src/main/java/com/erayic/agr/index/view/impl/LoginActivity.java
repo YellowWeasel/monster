@@ -1,6 +1,8 @@
 package com.erayic.agr.index.view.impl;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +22,7 @@ import com.erayic.agr.index.R2;
 import com.erayic.agr.index.presenter.ILoginPresenter;
 import com.erayic.agr.index.presenter.impl.LoginPresenterImpl;
 import com.erayic.agr.index.view.ILoginView;
+import com.jaeger.library.StatusBarUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,8 +37,6 @@ import butterknife.OnClick;
 @Route(path = "/index/Activity/LoginActivity", name = "登陆")
 public class LoginActivity extends BaseActivity implements ILoginView {
 
-    @BindView(R2.id.toolbar)
-    Toolbar toolbar;
     @BindView(R2.id.index_login_et_tel)
     EditText indexLoginEtTel;
     @BindView(R2.id.index_login_et_pass)
@@ -46,11 +47,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     TextView indexLoginTvRegister;
     @BindView(R2.id.login_tv_agreements)
     TextView loginTvAgreements;
-    //    private Toolbar toolbar;
-//
-//    private EditText index_login_et_tel, index_login_et_pass;
-//    private TextView index_login_tv_register;
-//    private Button index_login_btn_login;
+
     private LoadingDialog dialog;
 
     private ILoginPresenter presenter;
@@ -63,9 +60,17 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @Override
     public void initView() {
-        toolbar.setTitle("登陆");
-        setSupportActionBar(toolbar);
+        Drawable drawableTel = ContextCompat.getDrawable(this,R.drawable.image_index_login_tel);
+        Drawable drawablePass = ContextCompat.getDrawable(this,R.drawable.image_index_login_pass);
+        drawableTel.setBounds(0, 0, 60, 60);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        drawablePass.setBounds(0, 0, 60, 40);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
+        indexLoginEtTel.setCompoundDrawables(drawableTel,null,null,null);
+        indexLoginEtPass.setCompoundDrawables(drawablePass,null,null,null);
+    }
 
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setTranslucentForCoordinatorLayout(this, StatusBarUtil.DEFAULT_STATUS_BAR_ALPHA);
     }
 
     @Override

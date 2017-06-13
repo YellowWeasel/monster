@@ -27,7 +27,7 @@
                 android:id="@+id/unit_item_list_icon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                app:srcCompat="@drawable/app_base_image_item_icon" />
+                app:srcCompat="@drawable/app_base_image_item_icon_green" />
         </LinearLayout>
 
 

@@ -8,11 +8,11 @@ import com.erayic.agr.common.net.back.CommonUnitInfoBean;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * 作者：hejian
@@ -29,7 +29,7 @@ public interface IHttpManageService {
      * @return DataBack
      */
     @GET("EntBase/GetEntInfo")
-    Observable<DataBack<CommonEntInfoBean>> getEntInfo();
+    Flowable<DataBack<CommonEntInfoBean>> getEntInfo();
 
     /**
      * 更新企业名称
@@ -38,7 +38,7 @@ public interface IHttpManageService {
      * @return DataBack
      */
     @GET("EntBase/UpadteEntName")
-    Observable<DataBack<Object>> updateEntName(
+    Flowable<DataBack<Object>> updateEntName(
             @Query("newEntName") String newEntName
     );
 
@@ -48,7 +48,7 @@ public interface IHttpManageService {
      * @return DataBack
      */
     @GET("EntBase/GetBaseByEnt")
-    Observable<DataBack<List<CommonBaseListBean>>> getBaseByEnt();
+    Flowable<DataBack<List<CommonBaseListBean>>> getBaseByEnt();
 
     /**
      * 增加一个企业基地
@@ -57,7 +57,7 @@ public interface IHttpManageService {
      * @return DataBack
      */
     @GET("EntBase/AddBaseByEnt")
-    Observable<DataBack<Object>> addBaseByEnt(
+    Flowable<DataBack<Object>> addBaseByEnt(
             @Query("baseName") String baseName
     );
 
@@ -68,7 +68,7 @@ public interface IHttpManageService {
      * @return DataBack
      */
     @GET("EntBase/ChangeBase")
-    Observable<DataBack<Object>> changeBase(
+    Flowable<DataBack<Object>> changeBase(
             @Query("newBaseID") String newBaseID
     );
 
@@ -78,7 +78,7 @@ public interface IHttpManageService {
      * @return DataBack
      */
     @POST("EntBase/SetBasePostition")
-    Observable<DataBack<Object>> setBasePostition(
+    Flowable<DataBack<Object>> setBasePostition(
             @Query("baseID") String baseID,
             @Body Object object
     );
@@ -91,7 +91,7 @@ public interface IHttpManageService {
      * @return DataBack
      */
     @GET("EntBase/GetBaseInfo")
-    Observable<DataBack<CommonBaseInfoBean>> getBaseInfo(
+    Flowable<DataBack<CommonBaseInfoBean>> getBaseInfo(
             @Query("type") int type,
             @Query("baseID") String baseID
     );
@@ -105,7 +105,7 @@ public interface IHttpManageService {
      * @return
      */
     @GET("Unit/AddUnit")
-    Observable<DataBack<Object>> addUnit(
+    Flowable<DataBack<Object>> addUnit(
             @Query("baseID") String baseID,
             @Query("unitName") String unitName,
             @Query("type") int type
@@ -120,7 +120,7 @@ public interface IHttpManageService {
      * @return DataBack
      */
     @GET("EntBase/UpdateBaseInfo")
-    Observable<DataBack<Object>> updateBaseInfo(
+    Flowable<DataBack<Object>> updateBaseInfo(
             @Query("baseID") String baseID,
             @Query("baseName") String baseName,
             @Query("descript") String descript
@@ -134,7 +134,7 @@ public interface IHttpManageService {
      * @return
      */
     @GET("Unit/GetUnitDetailInfo")
-    Observable<DataBack<CommonUnitInfoBean>> getUnitDetailInfo(
+    Flowable<DataBack<CommonUnitInfoBean>> getUnitDetailInfo(
             @Query("unitID") String unitID,
             @Query("type") int type
     );
@@ -151,7 +151,7 @@ public interface IHttpManageService {
      * @return DataBack
      */
     @POST("Unit/UpdateBlockInfo")
-    Observable<DataBack<Object>> updateBlockInfo(
+    Flowable<DataBack<Object>> updateBlockInfo(
             @Query("unitID") String unitID,
             @Query("unitName") String unitName,
             @Query("area") double area,

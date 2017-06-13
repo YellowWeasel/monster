@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="#efefef"
     android:foreground="?android:attr/selectableItemBackground"
     tools:context=".view.impl.RegisterByEntActivity">
 
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         app:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
+        <com.erayic.agr.common.view.tooblbar.ErayicToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -27,75 +27,98 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/app_base_layout_background"
+        android:background="#efefef"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/app_base_item_background"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/index_register_ent_phone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:drawableLeft="@drawable/app_base_android_4"
+                android:layout_marginTop="5dp"
+                android:background="@color/app_base_item_background"
                 android:ems="10"
-                android:hint="请输入手机号码"
+                android:hint="手机号码（登陆账号）"
                 android:inputType="phone"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@color/app_base_text_title_1"
+                android:textColorHint="@color/app_base_text_title_3"
                 android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/index_register_ent_entName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:drawableLeft="@drawable/app_base_android_4"
+                android:layout_marginTop="5dp"
+                android:background="@color/app_base_item_background"
                 android:ems="10"
-                android:hint="企业or基地名称"
+                android:hint="企业名称"
                 android:inputType="text"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@color/app_base_text_title_1"
+                android:textColorHint="@color/app_base_text_title_3"
                 android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/index_register_ent_userName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:drawableLeft="@drawable/app_base_android_4"
+                android:layout_marginTop="5dp"
+                android:background="@color/app_base_item_background"
                 android:ems="10"
                 android:hint="真实姓名"
                 android:inputType="text"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@color/app_base_text_title_1"
+                android:textColorHint="@color/app_base_text_title_3"
                 android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/index_register_ent_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:drawableLeft="@drawable/app_base_android_4"
+                android:layout_marginTop="5dp"
+                android:background="@color/app_base_item_background"
                 android:ems="10"
                 android:hint="登陆密码"
                 android:inputType="textPassword"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@color/app_base_text_title_1"
+                android:textColorHint="@color/app_base_text_title_3"
                 android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_marginTop="5dp"
+                android:background="@color/app_base_item_background"
+                android:orientation="horizontal"
+                android:textColor="@color/app_base_text_title_1"
+                android:textColorHint="@color/app_base_text_title_3">
 
                 <EditText
                     android:id="@+id/index_register_ent_verCode"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/app_base_android_4"
+                    android:background="@null"
                     android:ems="6"
                     android:hint="验证码"
                     android:inputType="number"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:textColor="@color/app_base_text_title_1"
+                    android:textColorHint="@color/app_base_text_title_3"
                     android:textSize="16sp" />
 
                 <Button
@@ -116,7 +139,7 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center_vertical"
                 android:text="注册代表同意服务条款和隐私政策"
                 android:textSize="14sp" />
@@ -125,8 +148,8 @@
                 android:id="@+id/index_register_ent_register"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/btn_shape_green"
                 android:foreground="?android:attr/selectableItemBackground"

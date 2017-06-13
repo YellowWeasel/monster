@@ -41,13 +41,24 @@
             android:textColor="@color/app_base_text_title_3"
             android:textSize="14sp" />
 
-        <ImageView
-            android:id="@+id/jobs_content_goto"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+        <com.erayic.agr.common.view.progress.BGAProgressBar
+            android:id="@+id/jobs_content_progress"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="40dp"
-            app:srcCompat="@drawable/app_base_default_right" />
+            android:layout_marginRight="20dp"
+            android:progress="95"
+            app:bga_pb_isCapRounded="false"
+            app:bga_pb_isHiddenText="false"
+            app:bga_pb_mode="circle"
+            app:bga_pb_reachedColor="#1f8875"
+            app:bga_pb_reachedHeight="2dp"
+            app:bga_pb_textColor="#1f8875"
+            app:bga_pb_textMargin="10dp"
+            app:bga_pb_textSize="10sp"
+            app:bga_pb_unReachedColor="#ECF0F1"
+            app:bga_pb_unReachedHeight="1dp" />
 
     </TableRow>
 

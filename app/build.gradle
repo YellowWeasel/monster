@@ -5,10 +5,14 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.erayic.agr"
-        minSdkVersion 18
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+
+        // Enabling multidex support. 解决64Kdex问题
+        multiDexEnabled true
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {

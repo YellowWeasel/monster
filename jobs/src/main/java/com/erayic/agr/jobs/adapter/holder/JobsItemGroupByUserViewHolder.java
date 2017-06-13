@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.erayic.agr.jobs.R;
+import com.erayic.agr.common.view.progress.BGAProgressBar;
 import com.erayic.agr.jobs.R2;
 
 import butterknife.BindView;
@@ -25,8 +25,10 @@ public class JobsItemGroupByUserViewHolder extends BaseViewHolder {
     public TextView jobsContentName;
     @BindView(R2.id.jobs_content_sub)
     public TextView jobsContentSub;
-    @BindView(R2.id.jobs_content_goto)
-    public ImageView jobsContentGoto;
+//    @BindView(R2.id.jobs_content_goto)
+//    public ImageView jobsContentGoto;
+    @BindView(R2.id.jobs_content_progress)
+    public BGAProgressBar jobsContentProgress;
 
     public JobsItemGroupByUserViewHolder(View view) {
         super(view);

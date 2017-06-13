@@ -13,16 +13,36 @@
         android:gravity="center_vertical"
         android:minHeight="50dp">
 
-        <TextView
-            android:id="@+id/jobs_content_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center_vertical|left"
-            android:text="10:38"
-            android:textColor="@color/app_base_text_title_1"
-            android:textSize="16sp" />
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/jobs_content_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="10:38"
+                android:textColor="@color/app_base_text_title_1"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/jobs_content_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="已完成"
+                android:textColor="@color/app_base_text_title_1"
+                android:textSize="12sp" />
+        </LinearLayout>
+
 
         <RelativeLayout
             android:layout_width="20dp"
@@ -44,16 +64,40 @@
                 app:srcCompat="@drawable/image_jobs_item_child_round" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/jobs_content_sub"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:gravity="left|top"
-            android:text="111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
-            android:textColor="@color/app_base_text_title_3"
-            android:textSize="14sp" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/jobs_content_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:lines="1"
+                android:ellipsize="end"
+                android:text="管理单元名称"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/app_base_text_title_1"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/jobs_content_sub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="left|top"
+                android:text="111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+                android:textColor="@color/app_base_text_title_3"
+                android:textSize="14sp" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/jobs_content_goto"
@@ -65,7 +109,8 @@
 
     </TableRow>
 
-    <View  android:layout_height="1px"
+    <View
         android:layout_width="match_parent"
-        android:background="@color/app_base_tab_strip_divider"/>
+        android:layout_height="1px"
+        android:background="@color/app_base_tab_strip_divider" />
 </LinearLayout>

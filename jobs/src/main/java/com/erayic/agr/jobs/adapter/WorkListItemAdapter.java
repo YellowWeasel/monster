@@ -33,7 +33,7 @@ public class WorkListItemAdapter extends BaseQuickAdapter<CommonWorkListBean, Jo
 
     @Override
     protected void convert(JobsContentText1ViewHolder helper, final CommonWorkListBean item) {
-        helper.jobsContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon));
+        helper.jobsContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon_green));
         helper.jobsContentName.setText(item.getJobName());
         helper.jobsContentSub.setText("");
         helper.itemView.setOnClickListener(new View.OnClickListener() {

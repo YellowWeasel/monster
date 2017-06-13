@@ -26,6 +26,10 @@ public class JobsItemChildByUserViewHolder extends BaseViewHolder {
     public TextView jobsContentSub;
     @BindView(R2.id.jobs_content_goto)
     public ImageView jobsContentGoto;
+    @BindView(R2.id.jobs_content_status)
+    public TextView jobsContentStatus;
+    @BindView(R2.id.jobs_content_unit)
+    public TextView jobsContentUnit;
 
     public JobsItemChildByUserViewHolder(View view) {
         super(view);

@@ -19,13 +19,15 @@ import com.erayic.agr.common.net.http.manager.HttpServerManager;
 import com.erayic.agr.common.util.ErayicGson;
 import com.erayic.agr.common.util.ErayicLog;
 
-import java.util.List;
-import java.util.Map;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 作者：hejian
@@ -38,15 +40,15 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getAllSystemServiceByUser(final OnDataListener<List<ServiceBuyByUserBean>> listener) {
+
         HttpServerManager.getInstance().getAllSystemServiceByUser()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<ServiceBuyByUserBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<ServiceBuyByUserBean>>>() {
                     @Override
-                    public void call(DataBack<List<ServiceBuyByUserBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<ServiceBuyByUserBean>> objectDataBack) throws Exception {
                         ErayicLog.i("getAllServiceByUser", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -54,20 +56,24 @@ public class ServerModelImpl implements IServerModel {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<List<ServiceBuyByUserBean>>>() {
+                .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<List<ServiceBuyByUserBean>> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -76,12 +82,13 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getAllSystemServiceByEnt(final OnDataListener<ServiceSystemBean> listener) {
+
         HttpServerManager.getInstance().getAllSystemServiceByEnt()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<ServiceSystemBean>>() {
+                .doOnNext(new Consumer<DataBack<ServiceSystemBean>>() {
                     @Override
-                    public void call(DataBack<ServiceSystemBean> objectDataBack) {
+                    public void accept(@NonNull DataBack<ServiceSystemBean> objectDataBack) throws Exception {
                         ErayicLog.i("getAllSystemServiceByEnt", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -91,20 +98,24 @@ public class ServerModelImpl implements IServerModel {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<ServiceSystemBean>>() {
+                .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<ServiceSystemBean> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -113,12 +124,13 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getSpecifyServiceByEnt(String serviceID, final OnDataListener<ServiceInfoByEntBean> listener) {
+
         HttpServerManager.getInstance().getSpecifyServiceByEnt(serviceID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<ServiceInfoByEntBean>>() {
+                .doOnNext(new Consumer<DataBack<ServiceInfoByEntBean>>() {
                     @Override
-                    public void call(DataBack<ServiceInfoByEntBean> objectDataBack) {
+                    public void accept(@NonNull DataBack<ServiceInfoByEntBean> objectDataBack) throws Exception {
                         ErayicLog.i("getSpecifyServiceByEnt", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -128,20 +140,24 @@ public class ServerModelImpl implements IServerModel {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<ServiceInfoByEntBean>>() {
+                .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<ServiceInfoByEntBean> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -150,12 +166,13 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getAllPriceByService(String serviceID, final OnDataListener<List<CommonPriceBean>> listener) {
+
         HttpServerManager.getInstance().getAllPriceByService(serviceID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonPriceBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonPriceBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonPriceBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<CommonPriceBean>> objectDataBack) throws Exception {
                         ErayicLog.i("getAllPriceByService", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -165,20 +182,24 @@ public class ServerModelImpl implements IServerModel {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<List<CommonPriceBean>>>() {
+                .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<List<CommonPriceBean>> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -187,12 +208,13 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getBelongSubService(String serviceID, final OnDataListener<List<Object>> listener) {
+
         HttpServerManager.getInstance().getBelongSubService(serviceID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<Object>>>() {
+                .doOnNext(new Consumer<DataBack<List<Object>>>() {
                     @Override
-                    public void call(DataBack<List<Object>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<Object>> objectDataBack) throws Exception {
                         ErayicLog.i("getBelongSubService", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -202,20 +224,24 @@ public class ServerModelImpl implements IServerModel {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<List<Object>>>() {
+                .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<List<Object>> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -224,12 +250,13 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void orderServiceByBuyOfEnt(String serviceID, int priceID, List<CommonSubServiceBean> subServiceIDs, int payMode, final OnDataListener<Object> listener) {
+
         HttpServerManager.getInstance().orderServiceByBuyOfEnt(serviceID, priceID, subServiceIDs, payMode)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("orderServiceByBuyOfEnt", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -241,18 +268,22 @@ public class ServerModelImpl implements IServerModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -261,12 +292,13 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void orderServiceByBuyOfEntUser(String serviceID, final OnDataListener<Object> listener) {
+
         HttpServerManager.getInstance().orderServiceByBuyOfEntUser(serviceID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("orderServiceByBuyOfEntUser", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -278,18 +310,22 @@ public class ServerModelImpl implements IServerModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -298,12 +334,13 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void cancelUserService(String serviceID, final OnDataListener<Object> listener) {
+
         HttpServerManager.getInstance().cancelUserService(serviceID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("cancelUserService", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -315,18 +352,22 @@ public class ServerModelImpl implements IServerModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -338,9 +379,9 @@ public class ServerModelImpl implements IServerModel {
         HttpServerManager.getInstance().getUnPayOrderListByUser()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonOrderBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonOrderBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonOrderBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<CommonOrderBean>> objectDataBack) throws Exception {
                         ErayicLog.i("orderServiceByBuyOfEnt", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -350,20 +391,24 @@ public class ServerModelImpl implements IServerModel {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<List<CommonOrderBean>>>() {
+                .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<List<CommonOrderBean>> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -372,12 +417,13 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getRderDetailBySubInfo(String subServiceID, final OnDataListener<List<CommonSubServiceBean>> listener) {
+
         HttpServerManager.getInstance().getRderDetailBySubInfo(subServiceID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonSubServiceBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonSubServiceBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonSubServiceBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<CommonSubServiceBean>> objectDataBack) throws Exception {
                         ErayicLog.i("getRderDetailBySubInfo", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -387,20 +433,24 @@ public class ServerModelImpl implements IServerModel {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<List<CommonSubServiceBean>>>() {
+                .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<List<CommonSubServiceBean>> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -409,12 +459,13 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getInvoiceTitleInfo(final OnDataListener<CommonInvoiceBean> listener) {
+
         HttpServerManager.getInstance().getInvoiceTitleInfo()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<CommonInvoiceBean>>() {
+                .doOnNext(new Consumer<DataBack<CommonInvoiceBean>>() {
                     @Override
-                    public void call(DataBack<CommonInvoiceBean> objectDataBack) {
+                    public void accept(@NonNull DataBack<CommonInvoiceBean> objectDataBack) throws Exception {
                         ErayicLog.i("getInvoiceTitleInfo", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -424,20 +475,24 @@ public class ServerModelImpl implements IServerModel {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<CommonInvoiceBean>>() {
+                .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<CommonInvoiceBean> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -449,9 +504,9 @@ public class ServerModelImpl implements IServerModel {
         HttpServerManager.getInstance().updateInvoiceInfo(bean)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("updateInvoiceInfo", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -463,18 +518,22 @@ public class ServerModelImpl implements IServerModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -483,12 +542,13 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getSpecifyOrderDetail(String orderID, final OnDataListener<CommonOrderBean> listener) {
+
         HttpServerManager.getInstance().getSpecifyOrderDetail(orderID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<CommonOrderBean>>() {
+                .doOnNext(new Consumer<DataBack<CommonOrderBean>>() {
                     @Override
-                    public void call(DataBack<CommonOrderBean> objectDataBack) {
+                    public void accept(@NonNull DataBack<CommonOrderBean> objectDataBack) throws Exception {
                         ErayicLog.i("getSpecifyOrderDetail", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -498,20 +558,24 @@ public class ServerModelImpl implements IServerModel {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<CommonOrderBean>>() {
+                .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<CommonOrderBean> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -520,12 +584,13 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void cancelOrderByEntUser(String orderID, final OnDataListener<Object> listener) {
+
         HttpServerManager.getInstance().cancelOrderByEntUser(orderID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("cancelOrderByEntUser", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -537,18 +602,22 @@ public class ServerModelImpl implements IServerModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -557,12 +626,13 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void requestInvoice(CommonWcfInvoiceBean orderIDs, final OnDataListener<Object> listener) {
+
         HttpServerManager.getInstance().requestInvoice(orderIDs)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("requestInvoice", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -574,18 +644,22 @@ public class ServerModelImpl implements IServerModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -594,12 +668,13 @@ public class ServerModelImpl implements IServerModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getHistoryOrderListByUser(int pageNum, int pageSize, final OnDataListener<List<CommonOrderBean>> listener) {
+
         HttpServerManager.getInstance().getHistoryOrderListByUser(pageNum,pageSize)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonOrderBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonOrderBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonOrderBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<CommonOrderBean>> objectDataBack) throws Exception {
                         ErayicLog.i("getHistoryOrderListByUser", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -609,20 +684,24 @@ public class ServerModelImpl implements IServerModel {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DataBack<List<CommonOrderBean>>>() {
+                .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<List<CommonOrderBean>> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });

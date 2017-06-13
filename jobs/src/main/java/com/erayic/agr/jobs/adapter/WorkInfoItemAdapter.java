@@ -1,6 +1,7 @@
 package com.erayic.agr.jobs.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -133,7 +134,12 @@ public class WorkInfoItemAdapter extends BaseMultiItemQuickAdapter<WorkInfoEntit
                     ((JobsContentEdit2ViewHolder) helper).jobsContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
                     ((JobsContentEdit2ViewHolder) helper).jobsContentSubName.setText(TextUtils.isEmpty(item.getSubName()) ? "" : item.getSubName());
                     ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setKeyListener(keyListener);
-                    if (keyListener == null){
+                    ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setHint("施肥量");
+                    Drawable textImg = ContextCompat.getDrawable(context, R.drawable.image_jobs_pick_kg);
+                    textImg.setBounds(0, 0, textImg.getMinimumWidth(), textImg.getMinimumHeight());
+                    ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setCompoundDrawables(null, null, textImg, null);
+//                    ((JobsContentEdit2ViewHolder) helper).jobsContentProp.
+                    if (keyListener == null) {
                         ((JobsContentEdit2ViewHolder) helper).jobsContentDelete.setVisibility(View.INVISIBLE);
                     }
                     ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setText(TextUtils.isEmpty(item.getSubProp()) ? "" : item.getSubProp());
@@ -173,8 +179,9 @@ public class WorkInfoItemAdapter extends BaseMultiItemQuickAdapter<WorkInfoEntit
                     ((JobsContentEdit2ViewHolder) helper).jobsContentIcon.setVisibility(View.GONE);
                     ((JobsContentEdit2ViewHolder) helper).jobsContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
                     ((JobsContentEdit2ViewHolder) helper).jobsContentSubName.setText(TextUtils.isEmpty(item.getSubName()) ? "" : item.getSubName());
+                    ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setHint("配比");
                     ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setKeyListener(keyListener);
-                    if (keyListener == null){
+                    if (keyListener == null) {
                         ((JobsContentEdit2ViewHolder) helper).jobsContentDelete.setVisibility(View.INVISIBLE);
                     }
                     ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setText(TextUtils.isEmpty(item.getSubProp()) ? "" : item.getSubProp());
@@ -215,10 +222,10 @@ public class WorkInfoItemAdapter extends BaseMultiItemQuickAdapter<WorkInfoEntit
                     ((JobsContentEdit2ViewHolder) helper).jobsContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
                     ((JobsContentEdit2ViewHolder) helper).jobsContentSubName.setText("");
                     ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setKeyListener(keyListener);
-                    if (keyListener == null){
+                    if (keyListener == null) {
                         ((JobsContentEdit2ViewHolder) helper).jobsContentDelete.setVisibility(View.INVISIBLE);
                     }
-                    ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setVisibility(View.INVISIBLE);
+                    ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setVisibility(View.GONE);
                     ((JobsContentEdit2ViewHolder) helper).jobsContentDelete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -240,26 +247,10 @@ public class WorkInfoItemAdapter extends BaseMultiItemQuickAdapter<WorkInfoEntit
                     ((JobsContentEdit2ViewHolder) helper).jobsContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
                     ((JobsContentEdit2ViewHolder) helper).jobsContentSubName.setText("");
                     ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setKeyListener(keyListener);
-                    if (keyListener == null){
+                    if (keyListener == null) {
                         ((JobsContentEdit2ViewHolder) helper).jobsContentDelete.setVisibility(View.INVISIBLE);
                     }
-                    ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setText(TextUtils.isEmpty(item.getSubProp()) ? "" : item.getSubProp());
-                    ((JobsContentEdit2ViewHolder) helper).jobsContentProp.addTextChangedListener(new TextWatcher() {
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                        }
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                        }
-
-                        @Override
-                        public void afterTextChanged(Editable s) {
-                            item.setSubProp(s.toString());
-                        }
-                    });
+                    ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setVisibility(View.GONE);
                     ((JobsContentEdit2ViewHolder) helper).jobsContentDelete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

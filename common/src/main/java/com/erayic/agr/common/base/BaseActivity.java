@@ -80,7 +80,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BGASwipe
      * 初始化状态栏
      */
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.app_base_bar_background));
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.app_base_bar_background),StatusBarUtil.DEFAULT_STATUS_BAR_ALPHA);
     }
 
     /**

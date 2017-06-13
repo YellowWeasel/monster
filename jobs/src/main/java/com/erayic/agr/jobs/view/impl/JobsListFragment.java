@@ -1,13 +1,9 @@
 package com.erayic.agr.jobs.view.impl;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -15,7 +11,10 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseFragment;
 import com.erayic.agr.common.config.MainLooperManage;
-import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
+import com.erayic.agr.common.config.PreferenceUtils;
+import com.erayic.agr.common.net.back.enums.EnumUserRole;
+import com.erayic.agr.common.net.back.work.CommonJobsListManagerBean;
+import com.erayic.agr.common.net.back.work.CommonJobsListUserBean;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.SectionedSpanSizeLookup;
 import com.erayic.agr.common.view.calendar.OnCalendarClickListener;
@@ -50,10 +49,10 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
     TextView toolbarTitleName;
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
-    //    @BindView(R2.id.jobs_list_RecyclerView)
+
     ScheduleRecyclerView jobsListRecyclerView;
     @BindView(R2.id.toolbar_title_img)
-    ImageView toolbarTitleImg;
+    TextView toolbarTitleImg;
     @BindView(R2.id.slSchedule)
     ScheduleLayout slSchedule;
 
@@ -75,25 +74,32 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
             public void onClickDate(int year, int month, int day) {
                 DateTime dateTime = new DateTime(year, month + 1, day, 0, 0);
                 toolbarTitleName.setText(dateTime.toString("yyyy-MM-dd"));
-                presenter.getDayWorkJobByUser(dateTime.toString("yyyy-MM-dd"));
+                requestDayWork(dateTime.toString("yyyy-MM-dd"));
             }
 
             @Override
             public void onPageChange(int year, int month, int day) {
                 DateTime dateTime = new DateTime(year, month + 1, day, 0, 0);
                 toolbarTitleName.setText(dateTime.toString("yyyy-MM-dd"));
-                presenter.getDayWorkJobByUser(dateTime.toString("yyyy-MM-dd"));
+                requestDayWork(dateTime.toString("yyyy-MM-dd"));
             }
         });
         jobsListRecyclerView = slSchedule.getSchedulerRecyclerView();
         slSchedule.getMonthCalendar().setTodayToView();//跳转到今天
-        adapter = new JobsListItemAdapter(getActivity(), null);
+        adapter = new JobsListItemAdapter(getActivity(), null, PreferenceUtils.getParam("UserRole", 0));
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 1);
         manager.setSpanSizeLookup(new SectionedSpanSizeLookup(adapter, manager));
         adapter.setOnItemScrollToPositionWithOffset(new JobsListItemAdapter.OnItemScrollToPositionWithOffset() {
             @Override
             public void scrollToPositionWithOffset(int position) {
                 jobsListRecyclerView.smoothScrollToPosition(position);//指定头部显示
+            }
+        });
+        adapter.setOnItemInfoClickListener(new JobsListItemAdapter.OnItemInfoClickListener() {
+            @Override
+            public void onClick(View view, String schID, String unitID, String JobName, boolean isFinish) {
+                ARouter.getInstance().build("/jobs/activity/JobsInfoActivity")
+                        .withString("schID", schID).withString("unitID", unitID).withString("strTitle", JobName).withBoolean("isFinish", isFinish).navigation();
             }
         });
         jobsListRecyclerView.setLayoutManager(manager);
@@ -104,44 +110,54 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
     protected void initData() {
         toolbarTitleName.setText(new DateTime().toString("yyyy-MM-dd"));
         presenter = new JobsListPresenterImpl(this);
-        presenter.getDayWorkJobByUser(new DateTime().toString("yyyy-MM-dd"));
+        requestDayWork(new DateTime().toString("yyyy-MM-dd"));
+    }
+
+    private void requestDayWork(String specifyDay) {
+        switch (PreferenceUtils.getParam("UserRole", 0)) {
+            case EnumUserRole.Role_Manager://管理员
+            {
+                presenter.getDayWorkJobByManager(specifyDay);
+            }
+            break;
+            case EnumUserRole.Role_Usage://用户
+            {
+                presenter.getDayWorkJobByUser(specifyDay);
+            }
+            break;
+        }
     }
 
     @OnClick(R2.id.toolbar_title_img)
     public void onViewClicked() {
-        showPopupMenu(toolbarTitleImg);
+        ARouter.getInstance().build("/jobs/activity/JobInfoActivity").withString("strTitle", "增加工作安排").withBoolean("isAdd", true).navigation();
     }
 
 
-    private void showPopupMenu(View view) {
-        // View当前PopupMenu显示的相对View的位置
-        PopupMenu popupMenu = new PopupMenu(getActivity(), view);
-        // menu布局
-        popupMenu.getMenuInflater().inflate(R.menu.menu_jobs_list_view, popupMenu.getMenu());
-        // menu的item点击事件
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.action_bar_jobs_work) {//工作安排
-                    ARouter.getInstance().build("/jobs/activity/ArrangeJobActivity").navigation();
-                } else if (item.getItemId() == R.id.action_bar_jobs_advance) {//作业预设
-                    ARouter.getInstance().build("/jobs/activity/AdvanceWorkActivity").navigation();
-                } else if (item.getItemId() == R.id.action_bar_jobs_history) {//历史查询
-
-                }
-                return false;
-            }
-        });
-        // PopupMenu关闭事件
-        popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
-            @Override
-            public void onDismiss(PopupMenu menu) {
-//                Toast.makeText(getApplicationContext(), "关闭PopupMenu", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        popupMenu.show();
-    }
+//    private void showPopupMenu(View view) {
+//        // View当前PopupMenu显示的相对View的位置
+//        PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+//        // menu布局
+//        popupMenu.getMenuInflater().inflate(R.menu.menu_jobs_list_view, popupMenu.getMenu());
+//        // menu的item点击事件
+//        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                if (item.getItemId() == R.id.action_bar_jobs_work) {//工作安排
+//                    ARouter.getInstance().build("/jobs/activity/JobInfoActivity").withString("strTitle", "增加工作安排").withBoolean("isAdd", true).navigation();
+//                }
+//                return false;
+//            }
+//        });
+//        // PopupMenu关闭事件
+//        popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+//            @Override
+//            public void onDismiss(PopupMenu menu) {
+////                Toast.makeText(getApplicationContext(), "关闭PopupMenu", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        popupMenu.show();
+//    }
 
     @Override
     public void showToast(final String msg) {
@@ -154,11 +170,22 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
     }
 
     @Override
-    public void selectSure(final CommonJobsInfoBean bean) {
+    public void selectUserSure(final CommonJobsListUserBean bean) {
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                adapter.setList(bean.getJobs());
+                adapter.setUserList(bean.getJobs());
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void selectManagerSure(final CommonJobsListManagerBean bean) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.setManagerList(bean.getJobs());
                 adapter.notifyDataSetChanged();
             }
         });

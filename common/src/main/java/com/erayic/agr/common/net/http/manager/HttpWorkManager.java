@@ -1,11 +1,14 @@
 package com.erayic.agr.common.net.http.manager;
 
 import com.erayic.agr.common.net.back.work.CommonJobInfoBean;
+import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
 import com.erayic.agr.common.net.back.work.CommonWorkInfoBean;
 import com.erayic.agr.common.net.http.HttpRetrofit;
 import com.erayic.agr.common.net.http.IHttpWorkService;
 
-import rx.Observable;
+import java.util.List;
+
+import io.reactivex.Flowable;
 
 /**
  * 作者：hejian
@@ -37,43 +40,64 @@ public class HttpWorkManager {
     /**
      * 得到所有已定义作业列表
      */
-    public Observable getJobList() {
+    public Flowable getJobList() {
         return workService.getJobList();
     }
 
     /**
      * 保存一个自定义作业
      */
-    public Observable updateJob(CommonWorkInfoBean bean) {
+    public Flowable updateJob(CommonWorkInfoBean bean) {
         return workService.updateJob(bean);
     }
 
     /**
      * 删除一个自定义作业
      */
-    public Observable deleteJob(String jobID) {
+    public Flowable deleteJob(String jobID) {
         return workService.deleteJob(jobID);
     }
 
     /**
      * 得到指定预定义作业详情
      */
-    public Observable getJobDetails(String jobID) {
+    public Flowable getJobDetails(String jobID) {
         return workService.getJobDetails(jobID);
     }
 
     /**
      * 增加一个工作安排
      */
-    public Observable addSchedule(CommonJobInfoBean bean) {
-        return workService.addSchedule(bean);
+    public Flowable saveSchedule(CommonJobInfoBean bean, List<String> unitIDs) {
+        return workService.saveSchedule(bean, unitIDs);
     }
 
     /**
      * 得到指定用户、指定日期的工作安排
      */
-    public Observable getDayWorkJobByUser(String specifyDay) {
+    public Flowable getDayWorkJobByUser(String specifyDay) {
         return workService.getDayWorkJobByUser(specifyDay);
+    }
+
+    /**
+     * 得到指定工作安排详情
+     */
+    public Flowable getDayWorkDetail(String schID, String unitID, int unitType) {
+        return workService.getDayWorkDetail(schID, unitID, unitType);
+    }
+
+    /**
+     * 执行工作安排
+     */
+    public Flowable executeDayWork(String schID, String unitID, int unitType, List<String> batchIDs, CommonJobsInfoBean.RecordsInfo recoder) {
+        return workService.executeDayWork(schID, unitID, unitType, batchIDs, recoder);
+    }
+
+    /**
+     * 得到管理者指定日期的工作安排
+     */
+    public Flowable getDayWorkJobByManager(String specifyDay, int type) {
+        return workService.getDayWorkJobByManager(specifyDay, type);
     }
 
 }

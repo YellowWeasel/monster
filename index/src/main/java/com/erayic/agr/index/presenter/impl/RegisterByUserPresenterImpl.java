@@ -4,7 +4,6 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.model.IIndexModel;
-import com.erayic.agr.common.model.impl.IndexModelImpl;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.index.presenter.IRegisterByUserPresenter;
 import com.erayic.agr.index.view.IRegisterByUserView;
@@ -28,7 +27,7 @@ public class RegisterByUserPresenterImpl implements IRegisterByUserPresenter {
 
     @Override
     public void userByInvite(String pass, String tel, String code, String verifyNum) {
-        indexModel.userByInvite(AgrConstant.AGR_PLANT_APPID, pass, tel, code, AgrConstant.Test_PHONE, verifyNum, new OnDataListener<Object>() {
+        indexModel.userByInvite(AgrConstant.AGR_APPID, pass, tel, code, AgrConstant.Test_PHONE, verifyNum, new OnDataListener<Object>() {
             @Override
             public void success(Object response) {
                 registerByUserView.registerSure();

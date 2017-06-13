@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -56,7 +56,7 @@ public class HttpRetrofit {
                     if (receivedCookiesRetrofit == null) {
                         receivedCookiesRetrofit = new Retrofit.Builder()
                                 .addConverterFactory(GsonConverterFactory.create())
-                                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                                 .baseUrl(AgrConstant.WEB_SERVER_URL)
                                 .client(new OkHttpClient.Builder()
                                         .retryOnConnectionFailure(true)
@@ -84,7 +84,7 @@ public class HttpRetrofit {
                     if (sendCookiesRetrofit == null) {
                         sendCookiesRetrofit = new Retrofit.Builder()
                                 .addConverterFactory(GsonConverterFactory.create())
-                                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                                 .baseUrl(AgrConstant.WEB_SERVER_URL)
                                 .client(new OkHttpClient.Builder()
                                         .retryOnConnectionFailure(true)
@@ -112,7 +112,7 @@ public class HttpRetrofit {
                     if (noCookiesRetrofit == null) {
                         noCookiesRetrofit = new Retrofit.Builder()
                                 .addConverterFactory(GsonConverterFactory.create())
-                                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                                 .baseUrl(AgrConstant.WEB_SERVER_URL)
                                 .client(new OkHttpClient.Builder()
                                         .retryOnConnectionFailure(true)

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_bar_jobs_arrange_job"
-        android:title="增加工作安排"
+        android:id="@+id/action_bar_jobs_jobs_submit"
+        android:title="提交"
         app:showAsAction="always" />
 </menu>

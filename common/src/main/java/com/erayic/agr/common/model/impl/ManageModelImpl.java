@@ -12,18 +12,19 @@ import com.erayic.agr.common.net.back.CommonBaseInfoBean;
 import com.erayic.agr.common.net.back.CommonBaseListBean;
 import com.erayic.agr.common.net.back.CommonEntInfoBean;
 import com.erayic.agr.common.net.back.CommonUnitInfoBean;
-import com.erayic.agr.common.net.back.IndexLoginBean;
-import com.erayic.agr.common.net.http.manager.HttpIndexManager;
 import com.erayic.agr.common.net.http.manager.HttpManageManager;
 import com.erayic.agr.common.util.ErayicGson;
 import com.erayic.agr.common.util.ErayicLog;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 作者：hejian
@@ -42,15 +43,15 @@ public class ManageModelImpl implements IManageModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getEntInfo(final OnDataListener<CommonEntInfoBean> listener) {
+
         HttpManageManager.getInstance().getEntInfo()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<CommonEntInfoBean>>() {
+                .doOnNext(new Consumer<DataBack<CommonEntInfoBean>>() {
                     @Override
-                    public void call(DataBack<CommonEntInfoBean> objectDataBack) {
+                    public void accept(@NonNull DataBack<CommonEntInfoBean> objectDataBack) throws Exception {
                         ErayicLog.i("getEntInfo", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -60,18 +61,22 @@ public class ManageModelImpl implements IManageModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -80,12 +85,13 @@ public class ManageModelImpl implements IManageModel {
     @SuppressWarnings("unchecked")
     @Override
     public void updateEntName(final String newEntName, final OnDataListener<Object> listener) {
+
         HttpManageManager.getInstance().updateEntName(newEntName)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("updateEntName", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             PreferenceUtils.putParam("EntName", newEntName);
@@ -98,18 +104,22 @@ public class ManageModelImpl implements IManageModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -118,12 +128,13 @@ public class ManageModelImpl implements IManageModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getBaseByEnt(final OnDataListener<List<CommonBaseListBean>> listener) {
+
         HttpManageManager.getInstance().getBaseByEnt()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonBaseListBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonBaseListBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonBaseListBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<CommonBaseListBean>> objectDataBack) throws Exception {
                         ErayicLog.i("getBaseByEnt", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -135,18 +146,22 @@ public class ManageModelImpl implements IManageModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -155,12 +170,13 @@ public class ManageModelImpl implements IManageModel {
     @SuppressWarnings("unchecked")
     @Override
     public void addBaseByEnt(String newBaseName, final OnDataListener<Object> listener) {
+
         HttpManageManager.getInstance().addBaseByEnt(newBaseName)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("addBaseByEnt", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -172,18 +188,22 @@ public class ManageModelImpl implements IManageModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -192,12 +212,13 @@ public class ManageModelImpl implements IManageModel {
     @SuppressWarnings("unchecked")
     @Override
     public void changeBase(String newBaseID, final OnDataListener<Object> listener) {
+
         HttpManageManager.getInstance().changeBase(newBaseID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("changeBase", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -209,18 +230,22 @@ public class ManageModelImpl implements IManageModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -232,9 +257,9 @@ public class ManageModelImpl implements IManageModel {
         HttpManageManager.getInstance().getBaseInfo(baseID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<CommonBaseInfoBean>>() {
+                .doOnNext(new Consumer<DataBack<CommonBaseInfoBean>>() {
                     @Override
-                    public void call(DataBack<CommonBaseInfoBean> objectDataBack) {
+                    public void accept(@NonNull DataBack<CommonBaseInfoBean> objectDataBack) throws Exception {
                         ErayicLog.i("getBaseInfo", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -246,18 +271,22 @@ public class ManageModelImpl implements IManageModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -269,9 +298,9 @@ public class ManageModelImpl implements IManageModel {
         HttpManageManager.getInstance().addUnit(baseID, unitName)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("addUnit", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -283,18 +312,22 @@ public class ManageModelImpl implements IManageModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -303,12 +336,13 @@ public class ManageModelImpl implements IManageModel {
     @SuppressWarnings("unchecked")
     @Override
     public void updateBaseInfo(String baseID, String baseName, String descript, final OnDataListener<Object> listener) {
+
         HttpManageManager.getInstance().updateBaseInfo(baseID, baseName, descript)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("updateBaseInfo", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -320,18 +354,22 @@ public class ManageModelImpl implements IManageModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -340,12 +378,13 @@ public class ManageModelImpl implements IManageModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getUnitDetailInfo(String unitID, int type, final OnDataListener<CommonUnitInfoBean> listener) {
+
         HttpManageManager.getInstance().getUnitDetailInfo(unitID, type)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<CommonUnitInfoBean>>() {
+                .doOnNext(new Consumer<DataBack<CommonUnitInfoBean>>() {
                     @Override
-                    public void call(DataBack<CommonUnitInfoBean> objectDataBack) {
+                    public void accept(@NonNull DataBack<CommonUnitInfoBean> objectDataBack) throws Exception {
                         ErayicLog.i("getUnitDetailInfo", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -357,18 +396,22 @@ public class ManageModelImpl implements IManageModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -377,12 +420,13 @@ public class ManageModelImpl implements IManageModel {
     @SuppressWarnings("unchecked")
     @Override
     public void updateBlockInfo(String unitID, String unitName, double area, List<String> regions, List<String> workes, boolean isGreenhouse, final OnDataListener<Object> listener) {
+
         HttpManageManager.getInstance().updateBlockInfo(unitID, unitName, area, regions, workes, isGreenhouse)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("updateBlockInfo", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -394,18 +438,22 @@ public class ManageModelImpl implements IManageModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });

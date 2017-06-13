@@ -3,11 +3,20 @@ package com.erayic.agr.common.net.http;
 import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.back.IndexLoginBean;
 import com.erayic.agr.common.net.back.IndexRegisterUserBean;
+import com.erayic.agr.common.net.back.img.CommonRequestImage;
+import com.erayic.agr.common.net.back.img.CommonResultImage;
 
+import java.util.Map;
+
+import io.reactivex.Flowable;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
-import rx.Observable;
+import retrofit2.http.QueryMap;
 
 /**
  * 作者：hejian
@@ -27,7 +36,7 @@ public interface IHttpIndexService {
      * @return DataBack
      */
     @GET("Basic/Login")
-    Observable<DataBack<IndexLoginBean>> login(
+    Flowable<DataBack<IndexLoginBean>> login(
             @Query("appID") String appID,
             @Query("tel") String tel,
             @Query("pass") String pass,
@@ -47,7 +56,7 @@ public interface IHttpIndexService {
      * @return DataBack
      */
     @POST("Basic/FristRegister")
-    Observable<DataBack<Object>> firstRegister(
+    Flowable<DataBack<Object>> firstRegister(
             @Query("baseName") String baseName,
             @Query("name") String name,
             @Query("pass") String pass,
@@ -68,7 +77,7 @@ public interface IHttpIndexService {
      * @return DataBack
      */
     @POST("EntBase/EntRegister")
-    Observable<DataBack<Object>> entRegister(
+    Flowable<DataBack<Object>> entRegister(
             @Query("baseName") String baseName,
             @Query("userID") String userID,
             @Query("appID") String appID,
@@ -88,7 +97,7 @@ public interface IHttpIndexService {
      * @return DataBack
      */
     @POST("Basic/UserInviteByTel")
-    Observable<DataBack<Object>> userInviteByTel(
+    Flowable<DataBack<Object>> userInviteByTel(
             @Query("appID") String appID,
             @Query("pass") String pass,
             @Query("tel") String tel,
@@ -109,7 +118,7 @@ public interface IHttpIndexService {
      * @return DataBack
      */
     @POST("Basic/UserInviteByUserID")
-    Observable<DataBack<Object>> userInviteByUserID(
+    Flowable<DataBack<Object>> userInviteByUserID(
             @Query("appID") String appID,
             @Query("userID") String userID,
             @Query("tel") String tel,
@@ -126,7 +135,7 @@ public interface IHttpIndexService {
      * @return DataBack
      */
     @GET("Basic/UserVerify")
-    Observable<DataBack<IndexRegisterUserBean>> userVerify(
+    Flowable<DataBack<IndexRegisterUserBean>> userVerify(
             @Query("tel") String tel,
             @Query("pass") String pass
     );
@@ -138,7 +147,7 @@ public interface IHttpIndexService {
      * @return DataBack
      */
     @GET("Basic/SendTelVerify")
-    Observable<DataBack<Object>> sendTelVerify(
+    Flowable<DataBack<Object>> sendTelVerify(
             @Query("tel") String tel
     );
 
@@ -152,13 +161,22 @@ public interface IHttpIndexService {
      * @return
      */
     @GET("Basic/TelVerify")
-    Observable<DataBack<Object>> checkTelVerify(
+    Flowable<DataBack<Object>> checkTelVerify(
             @Query("appID") String appID,
             @Query("tel") String tel,
             @Query("code") String code,
             @Query("verifyNum") String verifyNum
     );
 
+    /**
+     * 上传图片
+     *
+     * @return DataBack
+     */
+    @POST("Basic/UploadImg")
+    Flowable<DataBack<CommonResultImage>> uploadImg(
+            @Body CommonRequestImage image
+    );
 
 
 }

@@ -30,7 +30,7 @@ public class ManageBaseListAdapter extends BaseQuickAdapter<CommonBaseListBean, 
     @Override
     protected void convert(ManageContentTextViewHolder helper, CommonBaseListBean item) {
         helper.manageContentName.setText(TextUtils.isEmpty(item.getBaseName()) ? "未命名" : item.getBaseName());
-        helper.manageContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon));
+        helper.manageContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon_green));
         if (item.getBaseID().equals(PreferenceUtils.getParam("ActiveBaseID"))) {
             helper.manageContentSub.setText("当前基地");
         }

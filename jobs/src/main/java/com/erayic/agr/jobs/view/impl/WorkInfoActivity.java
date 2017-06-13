@@ -1,5 +1,6 @@
 package com.erayic.agr.jobs.view.impl;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,7 @@ import com.erayic.agr.common.net.back.work.CommonWorkInfoBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.ErayicEditDialog;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.jobs.R;
 import com.erayic.agr.jobs.R2;
@@ -95,44 +97,64 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
         adapter.setOnWorkClickListener(new WorkInfoItemAdapter.OnWorkClickListener() {
             @Override
             public void onAddWork(View view, int position) {
-                new AlertView("工作类型", null, "取消", null,
-                        new String[]{"施肥", "打药", "采摘", "其他"},
-                        WorkInfoActivity.this, AlertView.Style.ActionSheet, new OnItemClickListener() {
-                    public void onItemClick(Object o, int position) {
-                        switch (position) {
-                            case 0://施肥
-                                ARouter.getInstance().build("/manage/activity/SelectActivity")
-                                        .withBoolean("isRadio", true)
-                                        .withInt("selectType", EnumRequestType.TYPE_RETURN_FERTILIZER)
-                                        .navigation(WorkInfoActivity.this, ACTIVITY_REQUEST);
+                if (isAdd)
+                    new AlertView("工作类型", null, "取消", null,
+                            new String[]{"施肥", "打药", "采摘", "其他"},
+                            WorkInfoActivity.this, AlertView.Style.ActionSheet, new OnItemClickListener() {
+                        public void onItemClick(Object o, int position) {
+                            switch (position) {
+                                case 0://施肥
+                                    ARouter.getInstance().build("/manage/activity/SelectActivity")
+                                            .withBoolean("isRadio", true)
+                                            .withInt("selectType", EnumRequestType.TYPE_RETURN_FERTILIZER)
+                                            .navigation(WorkInfoActivity.this, ACTIVITY_REQUEST);
+                                    break;
+                                case 1://打药
+                                    ARouter.getInstance().build("/manage/activity/SelectActivity")
+                                            .withBoolean("isRadio", true)
+                                            .withInt("selectType", EnumRequestType.TYPE_RETURN_PESTICIDE)
+                                            .navigation(WorkInfoActivity.this, ACTIVITY_REQUEST);
+                                    break;
+                                case 2://采摘
+                                {
+                                    WorkInfoEntity infoEntity = new WorkInfoEntity();
+                                    infoEntity.setItemType(WorkInfoEntity.TYPE_WORK_CONTENT_PICK);
+                                    infoEntity.setName("采摘");
+                                    infoEntity.setSubName("");
+                                    adapter.addData(4, infoEntity);
+                                }
                                 break;
-                            case 1://打药
-                                ARouter.getInstance().build("/manage/activity/SelectActivity")
-                                        .withBoolean("isRadio", true)
-                                        .withInt("selectType", EnumRequestType.TYPE_RETURN_PESTICIDE)
-                                        .navigation(WorkInfoActivity.this, ACTIVITY_REQUEST);
-                                break;
-                            case 2://采摘
-                            {
-                                WorkInfoEntity infoEntity = new WorkInfoEntity();
-                                infoEntity.setItemType(WorkInfoEntity.TYPE_WORK_CONTENT_PICK);
-                                infoEntity.setName("采摘");
-                                infoEntity.setSubName("");
-                                adapter.addData(4, infoEntity);
+                                case 3://其他
+                                    new ErayicEditDialog.Builder(WorkInfoActivity.this)
+                                            .setMessage("", null)
+                                            .setTitle("设置作业内容")
+                                            .setButton1("取消", new ErayicEditDialog.OnClickListener() {
+                                                @Override
+                                                public void onClick(Dialog dialog, int which, CharSequence s) {
+                                                    dialog.dismiss();
+                                                }
+                                            })
+                                            .setButton2("确定", new ErayicEditDialog.OnClickListener() {
+                                                @Override
+                                                public void onClick(Dialog dialog, int which, CharSequence s) {
+                                                    if (!TextUtils.isEmpty(s)) {
+                                                        WorkInfoEntity infoEntity = new WorkInfoEntity();
+                                                        infoEntity.setItemType(WorkInfoEntity.TYPE_WORK_CONTENT_OTHER);
+                                                        infoEntity.setName(s.toString());
+                                                        infoEntity.setSubProp("");
+                                                        adapter.addData(4, infoEntity);
+                                                    } else {
+                                                        showToast("名称不能为空");
+                                                    }
+                                                    dialog.dismiss();
+                                                }
+                                            }).show();
+                                    break;
+                                default:
+                                    break;
                             }
-                            break;
-                            case 3://其他
-                                WorkInfoEntity infoEntity = new WorkInfoEntity();
-                                infoEntity.setItemType(WorkInfoEntity.TYPE_WORK_CONTENT_OTHER);
-                                infoEntity.setName("其他");
-                                infoEntity.setSubProp("");
-                                adapter.addData(4, infoEntity);
-                                break;
-                            default:
-                                break;
                         }
-                    }
-                }).show();
+                    }).show();
 
             }
 
@@ -223,7 +245,7 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
                     break;
                 case WorkInfoEntity.TYPE_WORK_CONTENT_FERTILIZE://施肥
                     if (TextUtils.isEmpty(entity.getSubProp())) {
-                        showToast("请输入规范");
+                        showToast("施肥量");
                         return;
                     } else {
                         CommonWorkInfoBean.JobContent content = new CommonWorkInfoBean.JobContent();
@@ -236,7 +258,7 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
                     break;
                 case WorkInfoEntity.TYPE_WORK_CONTENT_PESTICIDE://打药
                     if (TextUtils.isEmpty(entity.getSubProp())) {
-                        showToast("请输入规范");
+                        showToast("农药配比");
                         return;
                     } else {
                         CommonWorkInfoBean.JobContent content = new CommonWorkInfoBean.JobContent();
@@ -256,24 +278,14 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
                 break;
                 case WorkInfoEntity.TYPE_WORK_CONTENT_OTHER://其他
                 {
-                    if (TextUtils.isEmpty(entity.getSubProp())) {
-                        showToast("请输入规范");
-                        return;
-                    } else {
-                        CommonWorkInfoBean.JobContent content = new CommonWorkInfoBean.JobContent();
-                        content.setOpeType(EnumOperationType.TYPE_Other);
-                        content.setNorm(entity.getSubProp());
-                        list.add(content);
-                    }
+                    CommonWorkInfoBean.JobContent content = new CommonWorkInfoBean.JobContent();
+                    content.setOpeType(EnumOperationType.TYPE_Other);
+                    content.setResName(entity.getName());
+                    list.add(content);
                 }
                 break;
                 case WorkInfoEntity.TYPE_WORK_CONTENT_NORM://工作要求
-                    if (TextUtils.isEmpty(entity.getSubName())) {
-                        showToast("请输入工作要求");
-                        return;
-                    } else {
-                        workInfoBean.setDescript(entity.getSubName());
-                    }
+                    workInfoBean.setDescript(entity.getSubName());
                     break;
             }
         }
@@ -339,9 +351,8 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
                             break;
                         case EnumOperationType.TYPE_Other://其他
                             infoEntity.setItemType(WorkInfoEntity.TYPE_WORK_CONTENT_OTHER);
-                            infoEntity.setName("其他");
-                            infoEntity.setSubName(content.getResName());
-                            infoEntity.setSubProp(content.getNorm());
+                            infoEntity.setName(content.getResName());
+//                            infoEntity.setSubName(content.getResName());
                             break;
                         default:
                             break;

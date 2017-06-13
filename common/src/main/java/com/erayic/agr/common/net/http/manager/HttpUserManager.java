@@ -4,7 +4,8 @@ import com.erayic.agr.common.net.back.CommonByteArrayBean;
 import com.erayic.agr.common.net.http.HttpRetrofit;
 import com.erayic.agr.common.net.http.IHttpUserService;
 
-import rx.Observable;
+import io.reactivex.Flowable;
+
 
 /**
  * 作者：hejian
@@ -36,21 +37,21 @@ public class HttpUserManager {
     /**
      * 获取用户信息
      */
-    public Observable getUserInfo() {
+    public Flowable getUserInfo() {
         return serviceRequest.getUserInfo();
     }
 
     /**
      * 更新用户姓名
      */
-    public Observable updateUserName(String newName) {
+    public Flowable updateUserName(String newName) {
         return serviceRequest.updateUserName(newName);
     }
 
     /**
      * 更新用户头像
      */
-    public Observable updateUserIcon(byte[] icon) {
+    public Flowable updateUserIcon(byte[] icon) {
         CommonByteArrayBean arrayBean = new CommonByteArrayBean();
         CommonByteArrayBean.ByteArrayInfo arrayInfo = new CommonByteArrayBean.ByteArrayInfo();
         arrayInfo.setBytes(icon);
@@ -61,49 +62,49 @@ public class HttpUserManager {
     /**
      * 重设用户密码
      */
-    public Observable setPassword(String pass) {
+    public Flowable setPassword(String pass) {
         return serviceRequest.setPassword(pass);
     }
 
     /**
      * 得到基地所有用户
      */
-    public Observable GetAllUserByBase() {
+    public Flowable GetAllUserByBase() {
         return serviceRequest.GetAllUserByBase();
     }
 
     /**
      * 得到指定基地的所有用户
      */
-    public Observable getAllUserBySpecifyBase(String baseID){
+    public Flowable getAllUserBySpecifyBase(String baseID){
         return serviceRequest.getAllUserBySpecifyBase(baseID);
     }
 
     /**
      * 更新电话号码
      */
-    public Observable UpdateTel(String newTel, String oriTel, String verifyNum) {
+    public Flowable UpdateTel(String newTel, String oriTel, String verifyNum) {
         return serviceRequest.UpdateTel(newTel, oriTel, verifyNum);
     }
 
     /**
      * 更新用户信息
      */
-    public Observable updateUserInfo(String userID, String name, String tel, int role) {
+    public Flowable updateUserInfo(String userID, String name, String tel, int role) {
         return serviceRequest.updateUserInfo(userID, name, tel, role);
     }
 
     /**
      * 删除用户信息
      */
-    public Observable deleteUser(String userID) {
+    public Flowable deleteUser(String userID) {
         return serviceRequest.deleteUser(userID);
     }
 
     /**
      * 发送邀请
      */
-    public Observable sendInvite(String tel, String name, int role) {
+    public Flowable sendInvite(String tel, String name, int role) {
         return serviceRequest.sendInvite(tel, name, role);
     }
 }

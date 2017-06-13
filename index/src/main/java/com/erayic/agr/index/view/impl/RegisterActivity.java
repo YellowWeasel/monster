@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.facade.callback.NavigationCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseActivity;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.index.R;
 import com.erayic.agr.index.R2;
 import com.erayic.agr.index.view.IRegisterView;
@@ -27,7 +28,7 @@ import butterknife.OnClick;
 public class RegisterActivity extends BaseActivity implements IRegisterView {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.index_register_ent)
     LinearLayout indexRegisterEnt;
     @BindView(R2.id.index_register_user)

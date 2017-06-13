@@ -16,6 +16,7 @@ public class ManageSelectEntity implements MultiItemEntity {
     public static final int TYPE_SELECT_PESTICIDE = 4;//选择农药
     public static final int TYPE_SELECT_SEED = 5;//选择种苗
     public static final int TYPE_SELECT_WORK = 6;//选择工作
+    public static final int TYPE_SELECT_ADD = 1000;//新增
 
     private String icon;//头像
     private String name;//名称

@@ -35,8 +35,8 @@
     <!--viewpager顶部标题栏 分割线颜色-->
     <color name="app_base_tab_strip_divider">#d5d6d7</color>
 
-    <!--按钮绿色-->
-    <color name="ui_btn_background_green">#1aad19</color>
+    <!--按钮蓝色-->
+    <color name="ui_btn_background_blue">#22cfae</color>
     <!--按钮红色-->
     <color name="ui_btn_background_red">#e64c1a</color>
     <!--按钮橙色-->

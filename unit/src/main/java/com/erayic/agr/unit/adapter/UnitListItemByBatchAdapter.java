@@ -72,7 +72,7 @@ public class UnitListItemByBatchAdapter extends BaseMultiItemQuickAdapter<UnitLi
                         @Override
                         public void onClick(View v) {
                             if (onItemBatchClickListener != null)
-                                onItemBatchClickListener.onBatchInfo(item.getMap().get("BatchID"));
+                                onItemBatchClickListener.onBatchInfo(item.getMap().get("BatchID"),item.getName());
                         }
                     });
                     ((UnitListItemByBatchInfoViewHolder) helper).itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -109,7 +109,7 @@ public class UnitListItemByBatchAdapter extends BaseMultiItemQuickAdapter<UnitLi
     }
 
     public interface OnItemBatchClickListener {
-        void onBatchInfo(String batchID);
+        void onBatchInfo(String batchID,String batchName);
 
         void onAddBatch(String unitID);
     }

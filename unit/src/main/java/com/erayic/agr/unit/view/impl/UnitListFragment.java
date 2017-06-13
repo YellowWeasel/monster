@@ -78,8 +78,8 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
         });
         adapter.setOnItemBatchClickListener(new UnitListItemByBatchAdapter.OnItemBatchClickListener() {
             @Override
-            public void onBatchInfo(String batchID) {
-                showToast("暂未实现");
+            public void onBatchInfo(String batchID, String batchName) {
+                ARouter.getInstance().build("/unit/activity/BatchInfoActivity").withString("batchID", batchID).withString("batchName", batchName).navigation();
             }
 
             @Override

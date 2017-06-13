@@ -20,12 +20,18 @@ import com.erayic.agr.common.net.http.manager.HttpApiManager;
 import com.erayic.agr.common.util.ErayicGson;
 import com.erayic.agr.common.util.ErayicLog;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * 作者：hejian
@@ -42,12 +48,11 @@ public class ApiModelImpl implements IApiModel {
         HttpApiManager.getInstance().getRealTimeWeather()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<CommonRealTimeWeatherBean>>() {
+                .doOnNext(new Consumer<DataBack<CommonRealTimeWeatherBean>>() {
                     @Override
-                    public void call(DataBack<CommonRealTimeWeatherBean> objectDataBack) {
+                    public void accept(@NonNull DataBack<CommonRealTimeWeatherBean> objectDataBack) throws Exception {
                         ErayicLog.i("getRealTimeWeather", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -57,21 +62,60 @@ public class ApiModelImpl implements IApiModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
+
+
+//        HttpApiManager.getInstance().getRealTimeWeather()
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(Schedulers.io())
+//                .doOnNext(new Action1<DataBack<CommonRealTimeWeatherBean>>() {
+//                    @Override
+//                    public void call(DataBack<CommonRealTimeWeatherBean> objectDataBack) {
+//                        ErayicLog.i("getRealTimeWeather", ErayicGson.getJsonString(objectDataBack));
+//                        if (objectDataBack.isSucess()) {
+//
+//                            listener.success(objectDataBack.getResult());
+//                        } else {
+//                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+//                        }
+//                    }
+//                })
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Subscriber<DataBack<Object>>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable throwable) {
+//                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+//                        //System.out.println(throwable);
+//                    }
+//
+//                    @Override
+//                    public void onNext(DataBack<Object> objectDataBack) {
+//
+//                    }
+//                });
     }
 
     @SuppressWarnings("unchecked")
@@ -80,12 +124,11 @@ public class ApiModelImpl implements IApiModel {
         HttpApiManager.getInstance().getFeatureWeather()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonFutureWeatherBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonFutureWeatherBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonFutureWeatherBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<CommonFutureWeatherBean>> objectDataBack) throws Exception {
                         ErayicLog.i("getFeatureWeather", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -95,18 +138,22 @@ public class ApiModelImpl implements IApiModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -115,15 +162,15 @@ public class ApiModelImpl implements IApiModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getWeatherTenDayReportsByMonth(int year, int month, final OnDataListener<List<CommonReportsByMonthBean>> listener) {
-        HttpApiManager.getInstance().getWeatherTenDayReportsByMonth(year,month)
+
+        HttpApiManager.getInstance().getWeatherTenDayReportsByMonth(year, month)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonReportsByMonthBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonReportsByMonthBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonReportsByMonthBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<CommonReportsByMonthBean>> objectDataBack) throws Exception {
                         ErayicLog.i("getWeatherTenDayReportsByMonth", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -133,34 +180,38 @@ public class ApiModelImpl implements IApiModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void getDynamicPrice(int cropId, String start, String end,String serviceId,final OnDataListener<CommonDynamicPriceBean> listener) {
-        HttpApiManager.getInstance().getDynamicPrices(cropId,start,end,serviceId)
+    public void getDynamicPrice(int cropId, String start, String end, String serviceId, final OnDataListener<CommonDynamicPriceBean> listener) {
+        HttpApiManager.getInstance().getDynamicPrices(cropId, start, end, serviceId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<CommonDynamicPriceBean>>() {
+                .doOnNext(new Consumer<DataBack<CommonDynamicPriceBean>>() {
                     @Override
-                    public void call(DataBack<CommonDynamicPriceBean> objectDataBack) {
+                    public void accept(@NonNull DataBack<CommonDynamicPriceBean> objectDataBack) throws Exception {
                         ErayicLog.i("getDynamicPrice", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -170,34 +221,39 @@ public class ApiModelImpl implements IApiModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
+
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void getPoliciesRegulationsDetail(int Id,final OnDataListener<CommonPoliciesRegulationsDetailBean> listener) {
+    public void getPoliciesRegulationsDetail(int Id, final OnDataListener<CommonPoliciesRegulationsDetailBean> listener) {
         HttpApiManager.getInstance().getPoliciesRegulationsDetail(Id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<CommonPoliciesRegulationsDetailBean>>() {
+                .doOnNext(new Consumer<DataBack<CommonPoliciesRegulationsDetailBean>>() {
                     @Override
-                    public void call(DataBack<CommonPoliciesRegulationsDetailBean> objectDataBack) {
+                    public void accept(@NonNull DataBack<CommonPoliciesRegulationsDetailBean> objectDataBack) throws Exception {
                         ErayicLog.i("getPoliciesRegulationsDetail", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -207,34 +263,38 @@ public class ApiModelImpl implements IApiModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void getPoliciesRegulations(int pageIndex, int pageSize,final OnDataListener<List<CommonPoliciesRegulationsBean>> listener) {
-        HttpApiManager.getInstance().getPoliciesRegulations(pageIndex,pageSize)
+    public void getPoliciesRegulations(int pageIndex, int pageSize, final OnDataListener<List<CommonPoliciesRegulationsBean>> listener) {
+        HttpApiManager.getInstance().getPoliciesRegulations(pageIndex, pageSize)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonPoliciesRegulationsBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonPoliciesRegulationsBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonPoliciesRegulationsBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<CommonPoliciesRegulationsBean>> objectDataBack) throws Exception {
                         ErayicLog.i("getPoliciesRegulations", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -244,34 +304,38 @@ public class ApiModelImpl implements IApiModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void getDesignatedMarketDynamicPrices(int cropId, String marketName,String start,String end,String serviceId,final OnDataListener<List<CommonMarketDynamicPriceBean>> listener) {
-        HttpApiManager.getInstance().getDesignatedMarketDynamicPrices(cropId,marketName,start,end,serviceId)
+    public void getDesignatedMarketDynamicPrices(int cropId, String marketName, String start, String end, String serviceId, final OnDataListener<List<CommonMarketDynamicPriceBean>> listener) {
+        HttpApiManager.getInstance().getDesignatedMarketDynamicPrices(cropId, marketName, start, end, serviceId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonMarketDynamicPriceBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonMarketDynamicPriceBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonMarketDynamicPriceBean>> objectDataBack) {
-                        ErayicLog.i("getWeatherTenDayReportsByMonth", ErayicGson.getJsonString(objectDataBack));
+                    public void accept(@NonNull DataBack<List<CommonMarketDynamicPriceBean>> objectDataBack) throws Exception {
+                        ErayicLog.i("getDesignatedMarketDynamicPrices", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -281,34 +345,38 @@ public class ApiModelImpl implements IApiModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void getAgriculturalDetailInfos(int Id,final OnDataListener<CommonAgriculturalinfoDetailBean> listener) {
+    public void getAgriculturalDetailInfos(int Id, final OnDataListener<CommonAgriculturalinfoDetailBean> listener) {
         HttpApiManager.getInstance().getAgriculturalDetailInfos(Id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<CommonAgriculturalinfoDetailBean>>() {
+                .doOnNext(new Consumer<DataBack<CommonAgriculturalinfoDetailBean>>() {
                     @Override
-                    public void call(DataBack<CommonAgriculturalinfoDetailBean> objectDataBack) {
+                    public void accept(@NonNull DataBack<CommonAgriculturalinfoDetailBean> objectDataBack) throws Exception {
                         ErayicLog.i("getAgriculturalDetailInfos", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -318,33 +386,39 @@ public class ApiModelImpl implements IApiModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
     }
+
+    @SuppressWarnings("unchecked")
     @Override
-    public void getAgriculturalInfos(int pageIndex,int pageSize,final OnDataListener<List<CommonAgriculturalInfoBean>> listener) {
-        HttpApiManager.getInstance().getAgriculturalInfos(pageIndex,pageSize)
+    public void getAgriculturalInfos(int pageIndex, int pageSize, final OnDataListener<List<CommonAgriculturalInfoBean>> listener) {
+
+        HttpApiManager.getInstance().getAgriculturalInfos(pageIndex, pageSize)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonAgriculturalInfoBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonAgriculturalInfoBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonAgriculturalInfoBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<CommonAgriculturalInfoBean>> objectDataBack) throws Exception {
                         ErayicLog.i("getAgriculturalInfos", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -354,22 +428,27 @@ public class ApiModelImpl implements IApiModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
     }
+
     @Override
     public void init(Context context) {
 

@@ -21,8 +21,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
             android:background="@color/app_base_bar_background"
+            android:minHeight="?attr/actionBarSize"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay">
@@ -33,19 +33,22 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:text="www.erayic.com"
                 android:maxLines="1"
+                android:text="www.erayic.com"
                 android:textColor="@color/app_base_item_background"
                 android:textSize="20sp" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/toolbar_title_img"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="end"
                 android:layout_marginEnd="15dp"
-                android:src="@drawable/image_jobs_toolbar_jobs" />
+                android:maxLines="1"
+                android:text="添加"
+                android:textColor="@color/app_base_item_background"
+                android:textSize="16sp" />
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
@@ -57,101 +60,101 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/layout_schedule"/>
+        <include layout="@layout/layout_schedule" />
 
         <!--<com.erayic.agr.common.view.calendar.WeekBarView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/week_bar_height"-->
-            <!--android:background="@color/app_base_bar_background"-->
-            <!--app:week_text_color="@color/calendar_bg_color"-->
-            <!--app:week_text_size="@integer/calendar_week_text_size" />-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/week_bar_height"-->
+        <!--android:background="@color/app_base_bar_background"-->
+        <!--app:week_text_color="@color/calendar_bg_color"-->
+        <!--app:week_text_size="@integer/calendar_week_text_size" />-->
 
         <!--<com.erayic.agr.common.view.calendar.schedule.ScheduleLayout-->
-            <!--android:id="@+id/slSchedule"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--app:auto_change_month_row="true"-->
-            <!--app:default_view="week">-->
+        <!--android:id="@+id/slSchedule"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:auto_change_month_row="true"-->
+        <!--app:default_view="week">-->
 
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:orientation="vertical">-->
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical">-->
 
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content">-->
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-                    <!--<RelativeLayout-->
-                        <!--android:id="@+id/rlMonthCalendar"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content">-->
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/rlMonthCalendar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-                        <!--<com.erayic.agr.common.view.calendar.month.MonthCalendarView-->
-                            <!--android:id="@+id/mcvCalendar"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="@dimen/month_calendar_height"-->
-                            <!--android:background="@color/calendar_bg_color"-->
-                            <!--android:overScrollMode="never"-->
-                            <!--app:month_day_text_size="@integer/calendar_text_size"-->
-                            <!--app:month_holiday_color="@color/holiday_text_color"-->
-                            <!--app:month_selected_circle_color="@color/select_circle_color"-->
-                            <!--app:month_show_holiday_hint="true"-->
-                            <!--app:month_show_lunar="false"-->
-                            <!--app:month_show_task_hint="true" />-->
-                    <!--</RelativeLayout>-->
+        <!--<com.erayic.agr.common.view.calendar.month.MonthCalendarView-->
+        <!--android:id="@+id/mcvCalendar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/month_calendar_height"-->
+        <!--android:background="@color/calendar_bg_color"-->
+        <!--android:overScrollMode="never"-->
+        <!--app:month_day_text_size="@integer/calendar_text_size"-->
+        <!--app:month_holiday_color="@color/holiday_text_color"-->
+        <!--app:month_selected_circle_color="@color/select_circle_color"-->
+        <!--app:month_show_holiday_hint="true"-->
+        <!--app:month_show_lunar="false"-->
+        <!--app:month_show_task_hint="true" />-->
+        <!--</RelativeLayout>-->
 
-                    <!--<com.erayic.agr.common.view.calendar.week.WeekCalendarView-->
-                        <!--android:id="@+id/wcvCalendar"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="@dimen/week_calendar_height"-->
-                        <!--android:background="@color/calendar_bg_color"-->
-                        <!--android:overScrollMode="never"-->
-                        <!--android:visibility="gone"-->
-                        <!--app:week_day_text_size="@integer/calendar_text_size"-->
-                        <!--app:week_holiday_color="@color/holiday_text_color"-->
-                        <!--app:week_selected_circle_color="@color/select_circle_color"-->
-                        <!--app:week_show_holiday_hint="true"-->
-                        <!--app:week_show_lunar="false"-->
-                        <!--app:week_show_task_hint="true" />-->
+        <!--<com.erayic.agr.common.view.calendar.week.WeekCalendarView-->
+        <!--android:id="@+id/wcvCalendar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/week_calendar_height"-->
+        <!--android:background="@color/calendar_bg_color"-->
+        <!--android:overScrollMode="never"-->
+        <!--android:visibility="gone"-->
+        <!--app:week_day_text_size="@integer/calendar_text_size"-->
+        <!--app:week_holiday_color="@color/holiday_text_color"-->
+        <!--app:week_selected_circle_color="@color/select_circle_color"-->
+        <!--app:week_show_holiday_hint="true"-->
+        <!--app:week_show_lunar="false"-->
+        <!--app:week_show_task_hint="true" />-->
 
-                <!--</RelativeLayout>-->
+        <!--</RelativeLayout>-->
 
-                <!--<RelativeLayout-->
-                    <!--android:id="@+id/rlScheduleList"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:background="@color/colorBackground">-->
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/rlScheduleList"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@color/colorBackground">-->
 
-                    <!--<com.erayic.agr.common.view.calendar.schedule.ScheduleRecyclerView-->
-                        <!--android:id="@+id/jobs_list_RecyclerView"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:orientation="vertical"-->
-                        <!--android:overScrollMode="never"-->
-                        <!--android:paddingTop="6dp"-->
-                        <!--android:layout_below="@+id/rlNoTask"-->
-                        <!--android:layout_alignParentStart="true" />-->
+        <!--<com.erayic.agr.common.view.calendar.schedule.ScheduleRecyclerView-->
+        <!--android:id="@+id/jobs_list_RecyclerView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical"-->
+        <!--android:overScrollMode="never"-->
+        <!--android:paddingTop="6dp"-->
+        <!--android:layout_below="@+id/rlNoTask"-->
+        <!--android:layout_alignParentStart="true" />-->
 
-                    <!--<RelativeLayout-->
-                        <!--android:id="@+id/rlNoTask"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:visibility="gone"-->
-                        <!--android:background="@color/colorBackground">-->
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/rlNoTask"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:visibility="gone"-->
+        <!--android:background="@color/colorBackground">-->
 
-                        <!--<ImageView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_centerHorizontal="true"-->
-                            <!--android:layout_marginTop="50dp"-->
-                            <!--android:src="@drawable/bg_no_task" />-->
+        <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--android:src="@drawable/bg_no_task" />-->
 
-                    <!--</RelativeLayout>-->
+        <!--</RelativeLayout>-->
 
-                <!--</RelativeLayout>-->
+        <!--</RelativeLayout>-->
 
-            <!--</LinearLayout>-->
+        <!--</LinearLayout>-->
 
         <!--</com.erayic.agr.common.view.calendar.schedule.ScheduleLayout>-->
 

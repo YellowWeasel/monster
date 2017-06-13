@@ -1,5 +1,7 @@
 package com.erayic.agr.common.net.back.work;
 
+import com.erayic.agr.common.net.back.CommonMapArrayBean;
+
 import java.util.List;
 
 /**
@@ -13,8 +15,8 @@ public class CommonJobInfoBean {
     private String SchID;//调度ID
     private String JobID;//作业ID
     private String DemandTime;//建议执行时间
-    private List<String> UnitIDs;//管理单元ID
-    private int NoticeTime;//提醒时间
+    private List<CommonMapArrayBean> UnitIDs;//管理单元ID
+    private int NoticeHour;//提醒时间
     private int Tips;//提醒方式
     private String CreateTime;//建立时间
     private String Creater;//建立人
@@ -43,20 +45,20 @@ public class CommonJobInfoBean {
         DemandTime = demandTime;
     }
 
-    public List<String> getUnitIDs() {
+    public List<CommonMapArrayBean> getUnitIDs() {
         return UnitIDs;
     }
 
-    public void setUnitIDs(List<String> unitIDs) {
+    public void setUnitIDs(List<CommonMapArrayBean> unitIDs) {
         UnitIDs = unitIDs;
     }
 
     public int getNoticeTime() {
-        return NoticeTime;
+        return NoticeHour;
     }
 
     public void setNoticeTime(int noticeTime) {
-        NoticeTime = noticeTime;
+        NoticeHour = noticeTime;
     }
 
     public int getTips() {

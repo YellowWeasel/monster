@@ -7,11 +7,11 @@ import com.erayic.agr.common.net.back.CommonUserInfoBean;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * 作者：hejian
@@ -27,7 +27,7 @@ public interface IHttpUserService {
      * @return DataBack
      */
     @GET("User/GetUserInfo")
-    Observable<DataBack<CommonUserInfoBean>> getUserInfo();
+    Flowable<DataBack<CommonUserInfoBean>> getUserInfo();
 
     /**
      * 更新用户姓名
@@ -36,7 +36,7 @@ public interface IHttpUserService {
      * @return DataBack
      */
     @GET("User/UpdateUserName")
-    Observable<DataBack<Object>> updateUserName(
+    Flowable<DataBack<Object>> updateUserName(
             @Query("newName") String newName
     );
 
@@ -47,7 +47,7 @@ public interface IHttpUserService {
      * @return DataBack
      */
     @POST("User/UpdateUserIcon")
-    Observable<DataBack<Object>> updateUserIcon(
+    Flowable<DataBack<Object>> updateUserIcon(
             @Body CommonByteArrayBean icon
     );
 
@@ -58,7 +58,7 @@ public interface IHttpUserService {
      * @return DataBack
      */
     @GET("User/SetPassword")
-    Observable<DataBack<Object>> setPassword(
+    Flowable<DataBack<Object>> setPassword(
             @Query("pass") String pass
     );
 
@@ -68,13 +68,13 @@ public interface IHttpUserService {
      * @return DataBack
      */
     @GET("User/GetAllUserByBase")
-    Observable<DataBack<List<CommonPersonnelBean>>> GetAllUserByBase();
+    Flowable<DataBack<List<CommonPersonnelBean>>> GetAllUserByBase();
 
     /**
      * 根据基地ID得到基地的所有用户
      */
     @GET("User/GetAllUserBySpecifyBase")
-    Observable<DataBack<List<CommonPersonnelBean>>> getAllUserBySpecifyBase(
+    Flowable<DataBack<List<CommonPersonnelBean>>> getAllUserBySpecifyBase(
             @Query("baseID") String baseID
     );
 
@@ -87,7 +87,7 @@ public interface IHttpUserService {
      * @return DataBack
      */
     @GET("User/UpdateTel")
-    Observable<DataBack<Object>> UpdateTel(
+    Flowable<DataBack<Object>> UpdateTel(
             @Query("newTel") String newTel,
             @Query("oriTel") String oriTel,
             @Query("verifyNum") String verifyNum
@@ -103,7 +103,7 @@ public interface IHttpUserService {
      * @return DataBack
      */
     @GET("User/UpdateUserInfo")
-    Observable<DataBack<Object>> updateUserInfo(
+    Flowable<DataBack<Object>> updateUserInfo(
             @Query("userID") String userID,
             @Query("name") String name,
             @Query("tel") String tel,
@@ -117,7 +117,7 @@ public interface IHttpUserService {
      * @return DataBack
      */
     @GET("User/DeleteUser")
-    Observable<DataBack<Object>> deleteUser(
+    Flowable<DataBack<Object>> deleteUser(
             @Query("userID") String userID
     );
 
@@ -130,7 +130,7 @@ public interface IHttpUserService {
      * @return
      */
     @GET("User/SendInvite")
-    Observable<DataBack<Object>> sendInvite(
+    Flowable<DataBack<Object>> sendInvite(
             @Query("tel") String tel,
             @Query("name") String name,
             @Query("role") int role

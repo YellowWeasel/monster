@@ -13,12 +13,15 @@ import com.erayic.agr.common.net.http.manager.HttpUnitManager;
 import com.erayic.agr.common.util.ErayicGson;
 import com.erayic.agr.common.util.ErayicLog;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 作者：hejian
@@ -30,15 +33,15 @@ public class UnitModelImpl implements IUnitModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getAllUnit(int type, final OnDataListener<List<CommonUnitListBean>> listener) {
+
         HttpUnitManager.getInstance().getAllUnit(type)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonUnitListBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonUnitListBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonUnitListBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<CommonUnitListBean>> objectDataBack) throws Exception {
                         ErayicLog.i("getAllUnit", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -48,18 +51,22 @@ public class UnitModelImpl implements IUnitModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -68,15 +75,15 @@ public class UnitModelImpl implements IUnitModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getAllUnitByBase(int type, final OnDataListener<List<CommonUnitListByBaseBean>> listener) {
+
         HttpUnitManager.getInstance().getAllUnitByBase(type)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<List<CommonUnitListByBaseBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonUnitListByBaseBean>>>() {
                     @Override
-                    public void call(DataBack<List<CommonUnitListByBaseBean>> objectDataBack) {
+                    public void accept(@NonNull DataBack<List<CommonUnitListByBaseBean>> objectDataBack) throws Exception {
                         ErayicLog.i("getAllUnitByBase", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -86,18 +93,22 @@ public class UnitModelImpl implements IUnitModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });
@@ -106,15 +117,15 @@ public class UnitModelImpl implements IUnitModel {
     @SuppressWarnings("unchecked")
     @Override
     public void createBatch(String proID, String seedID,String seedName, String quantity, int unit, String stTime, String ope, String unitID, int unitType, final OnDataListener<Object> listener) {
+
         HttpUnitManager.getInstance().createBatch(proID, seedID,seedName, quantity, unit, stTime, ope, unitID, unitType)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Action1<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<Object>>() {
                     @Override
-                    public void call(DataBack<Object> objectDataBack) {
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("createBatch", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
-
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -124,18 +135,22 @@ public class UnitModelImpl implements IUnitModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<DataBack<Object>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
 
                     }
 
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
-                        //System.out.println(throwable);
                     }
 
                     @Override
-                    public void onNext(DataBack<Object> objectDataBack) {
+                    public void onComplete() {
 
                     }
                 });

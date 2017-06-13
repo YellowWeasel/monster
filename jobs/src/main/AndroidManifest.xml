@@ -11,10 +11,10 @@
             android:name=".view.impl.WorkInfoActivity"
             android:theme="@style/AppTheme.Transparent" />
         <activity
-            android:name=".view.impl.ArrangeJobActivity"
+            android:name=".view.impl.JobInfoActivity"
             android:theme="@style/AppTheme.Transparent" />
         <activity
-            android:name=".view.impl.JobInfoActivity"
+            android:name=".view.impl.JobsInfoActivity"
             android:theme="@style/AppTheme.Transparent" />
     </application>
 
