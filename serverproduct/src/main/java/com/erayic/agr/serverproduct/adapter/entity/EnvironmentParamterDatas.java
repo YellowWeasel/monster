@@ -193,9 +193,9 @@ public class EnvironmentParamterDatas {
 
         public RealTime(String appearTime, double rain_10M, double wind_Max, double temp_Max, int errCode, String rainDesc, String windDesc) {
             AppearTime = appearTime;
-            Rain_10M = rain_10M;
-            Wind_Max = wind_Max;
-            Temp_Max = temp_Max;
+            Rain_10M =  Double.parseDouble(TextUtils.FormatNumber(Math.abs(rain_10M),1));
+            Wind_Max = Double.parseDouble(TextUtils.FormatNumber(Math.abs(wind_Max),1));
+            Temp_Max = Double.parseDouble(TextUtils.FormatNumber(Math.abs(temp_Max),1));
             this.errCode = errCode;
             this.RainDesc = rainDesc;
             this.WindDesc = windDesc;
