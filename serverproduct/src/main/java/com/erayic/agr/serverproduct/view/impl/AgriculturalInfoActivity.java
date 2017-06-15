@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -12,7 +13,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
 import com.erayic.agr.serverproduct.adapter.AgriculturalInfosAdapter;
 import com.erayic.agr.serverproduct.adapter.PoliciesRegulationsAdapter;
@@ -34,9 +37,9 @@ import butterknife.BindView;
 public class AgriculturalInfoActivity extends BaseActivity implements IAgriculturalInfoView, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
-    @BindView(R2.id.serverproduct_policies_regulations_swipe)
+    @BindView(R2.id.serverproduct_agricultural_info_swipe)
     SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R2.id.serverproduct_policies_regulations_recycler)
+    @BindView(R2.id.serverproduct_agricultural_info_recycler)
     RecyclerView agriculturalRecyclerview;
     AgriculturalInfosAdapter adapter;
     IAgriculturalInfoPresenter presenter;
@@ -45,7 +48,9 @@ public class AgriculturalInfoActivity extends BaseActivity implements IAgricultu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_agricultural_info);
     }
+
     @Override
     public void initView() {
         toolbar.setTitle("农业资讯");
@@ -64,7 +69,7 @@ public class AgriculturalInfoActivity extends BaseActivity implements IAgricultu
         adapter.setItemOnclickListener(new AgriculturalInfosAdapter.AgriculturalItemOnclickListener() {
             @Override
             public void doItemOnclick(AgriculturalInfoDatas item, View view) {
-                ARouter.getInstance().build("").withInt("Id", item.getId()).navigation();
+                ARouter.getInstance().build("/serverproduct/activity/AgriculturalInfoDetailActivity").withInt("Id", item.getId()).navigation();
             }
         });
         adapter.isFirstOnly(false);
@@ -115,6 +120,13 @@ public class AgriculturalInfoActivity extends BaseActivity implements IAgricultu
                     }
                 }
             });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home)
+            ErayicStack.getInstance().finishCurrentActivity();
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

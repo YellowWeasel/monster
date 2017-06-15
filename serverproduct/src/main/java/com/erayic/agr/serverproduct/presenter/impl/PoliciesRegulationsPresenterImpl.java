@@ -83,7 +83,7 @@ public class PoliciesRegulationsPresenterImpl implements IPoliciesRegulationsPre
     @Override
     public List<PoliciesRegulationsTitleDatas> sortPoliciesRegulationsDatasByProvince(String province, List<PoliciesRegulationsTitleDatas> titleDatasList,int sort) {
         if (titleDatasList==null){
-            context.showToast("无网络，请检查网络连接!");
+//            context.showToast("无网络，请检查网络连接!");
             return null;
         }
         List<PoliciesRegulationsTitleDatas> datases=new ArrayList<>();

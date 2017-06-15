@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 23060 on 2017/5/9.
+ * Created by wxk on 2017/5/9.
  */
 
 public class WeatherTenDayReportingPresenterImpl implements IWeatherTenDayReportingPresenter {
@@ -48,12 +48,12 @@ public class WeatherTenDayReportingPresenterImpl implements IWeatherTenDayReport
             }
 
             @Override
-            public void fail(int errCode, String msg) {
+            public void fail(final int errCode, final String msg) {
                 MainLooperManage.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         context.dismissLoading();
-                        context.showToast();
+                        context.showToast(msg);
                     }
                 });
             }

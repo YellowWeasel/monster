@@ -11,20 +11,20 @@ import android.widget.TextView;
 
 import com.erayic.agr.serverproduct.Constants;
 import com.erayic.agr.serverproduct.R;
-import com.erayic.agr.serverproduct.adapter.entity.FutureForecastDatas;
+import com.erayic.agr.serverproduct.adapter.entity.EnvironmentParamterDatas;
 
-import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * Created by wxk on 2017/5/16.
  */
 
 public class ForecastReportingAdapter extends BaseAdapter {
-    FutureForecastDatas forecastDatas;
+    EnvironmentParamterDatas.FeatureWeather featureWeather;
     Context context;
 
-    public void setForecastDatas(FutureForecastDatas forecastDatas) {
-        this.forecastDatas = forecastDatas;
+    public void setFeatureWeather(EnvironmentParamterDatas.FeatureWeather featureWeather) {
+        this.featureWeather = featureWeather;
     }
 
     public ForecastReportingAdapter(Context context) {
@@ -33,12 +33,25 @@ public class ForecastReportingAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return (forecastDatas != null) ? forecastDatas.getFeartureBeans().size() : 0;
+        //获取最大长度
+        int maxSize=0;
+        if (featureWeather == null)return  maxSize;
+        if (featureWeather.getTmpForecastWeathers().size()>maxSize)maxSize=featureWeather.getTmpForecastWeathers().size();
+        if (featureWeather.getWindForecastWeathers().size()>maxSize)maxSize=featureWeather.getWindForecastWeathers().size();
+        if (featureWeather.getRainForecastWeathers().size()>maxSize)maxSize=featureWeather.getRainForecastWeathers().size();
+
+        return  maxSize;
     }
 
     @Override
     public Object getItem(int position) {
-        return forecastDatas.getFeartureBeans().get(position);
+        List<EnvironmentParamterDatas.WeatherMap> weatherMaps;
+        if (featureWeather == null)return  null;
+        weatherMaps=(featureWeather.getTmpForecastWeathers().size()>featureWeather.getWindForecastWeathers().size())
+                ?featureWeather.getTmpForecastWeathers():featureWeather.getWindForecastWeathers();
+        weatherMaps=(weatherMaps.size()>featureWeather.getRainForecastWeathers().size())?weatherMaps:featureWeather.getRainForecastWeathers();
+
+        return weatherMaps.get(position);
     }
 
     @Override
@@ -70,20 +83,32 @@ public class ForecastReportingAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.layout.setBackgroundColor(Color.parseColor("#ffffff"));
-        FutureForecastDatas.ForecastDatas forecastData = this.forecastDatas.getFeartureBeans().get(position);
+
         if (position%2==1){
             viewHolder.layout.setBackgroundColor(Color.parseColor("#efeff4"));
         }
-        if (forecastData.getTemperature() == 0 && forecastData.getWindSpeed() == 0 && forecastData.getRain() == 0) {
-            viewHolder.rainTextView.setText("—");
-            viewHolder.windTextView.setText("—");
-            viewHolder.tempTextView.setText("—");
-        } else {
-            viewHolder.rainTextView.setText(String.valueOf(forecastData.getRain()));
-            viewHolder.windTextView.setText(getWindLvl(forecastData.getWindSpeed()));
-            viewHolder.tempTextView.setText(String.valueOf(forecastData.getTemperature()));
+
+            if (featureWeather.getRainForecastWeathers().size()>position){
+                viewHolder.rainTextView.setText(String.valueOf(featureWeather.getRainForecastWeathers().get(position).getValue()));
+            }else{
+                viewHolder.rainTextView.setText("—");
+            }
+            if (featureWeather.getWindForecastWeathers().size()>position){
+                viewHolder.windTextView.setText(getWindLvl(featureWeather.getWindForecastWeathers().get(position).getValue()));
+            }else{
+                viewHolder.windTextView.setText("—");
+            }
+            if (featureWeather.getTmpForecastWeathers().size()>position){
+                viewHolder.tempTextView.setText(String.valueOf(featureWeather.getTmpForecastWeathers().get(position).getValue()));
+            }else{
+                viewHolder.tempTextView.setText("—");
+            }
+
+        if (featureWeather.getDateList().size()>position){
+            viewHolder.dateTextView.setText(featureWeather.getDateList().get(position));
+        }else{
+            viewHolder.dateTextView.setText("—");
         }
-        viewHolder.dateTextView.setText(forecastData.getAppearTime());
         return convertView;
     }
 

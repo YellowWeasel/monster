@@ -3,6 +3,7 @@ package com.erayic.agr.serverproduct.adapter.entity;
 import com.erayic.agr.common.net.back.api.CommonAgriculturalInfoBean;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by wxk on 2017/5/19.
@@ -18,7 +19,7 @@ public class AgriculturalInfoDatas {
         this.Title=bean.getTitle();
         this.InfoSource=bean.getInfoSource();
         String strDate=bean.getPublishTime().substring(bean.getPublishTime().indexOf("(")+1,bean.getPublishTime().indexOf(")"));
-        this.PublishTime=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(strDate);
+        this.PublishTime=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date(Long.parseLong(strDate)));
     }
 
     public int getId() {

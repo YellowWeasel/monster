@@ -8,6 +8,7 @@ import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
 import com.erayic.agr.common.net.back.api.CommonAgriculturalInfoBean;
 import com.erayic.agr.common.net.back.api.CommonAgriculturalinfoDetailBean;
 import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
+import com.erayic.agr.common.net.back.api.CommonEnvironmentParameterBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonMarketDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsDetailBean;
@@ -27,7 +28,7 @@ public interface IApiModel extends IProvider {
     /**
      * 得到气象实况信息
      */
-    void getRealTimeWeather(OnDataListener<CommonRealTimeWeatherBean> listener);
+    void getRealTimeWeather(OnDataListener<CommonEnvironmentParameterBean> listener);
 
     /**
      * 得到未来24小时气象信息

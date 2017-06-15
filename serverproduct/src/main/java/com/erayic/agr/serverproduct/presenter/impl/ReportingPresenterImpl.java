@@ -6,8 +6,10 @@ import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.model.IApiModel;
 import com.erayic.agr.common.model.impl.ApiModelImpl;
 import com.erayic.agr.common.net.OnDataListener;
+import com.erayic.agr.common.net.back.api.CommonEnvironmentParameterBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
+import com.erayic.agr.serverproduct.adapter.entity.EnvironmentParamterDatas;
 import com.erayic.agr.serverproduct.presenter.IReportingPresenter;
 import com.erayic.agr.serverproduct.view.IReportingInfoView;
 
@@ -16,7 +18,6 @@ import java.util.List;
 /**
  * Created by wxk on 2017/5/6
  */
-
 public class ReportingPresenterImpl implements IReportingPresenter {
     private IReportingInfoView context;
     public ReportingPresenterImpl(IReportingInfoView mContext){
@@ -25,17 +26,17 @@ public class ReportingPresenterImpl implements IReportingPresenter {
     }
     @Autowired
     IApiModel apiModel;
-    int index=0;
+
     @Override
     public void getRealTimeWeather() {
         context.showLoading();
-        apiModel.getRealTimeWeather(new OnDataListener<CommonRealTimeWeatherBean>() {
+        apiModel.getRealTimeWeather(new OnDataListener<CommonEnvironmentParameterBean>() {
             @Override
-            public void success(final CommonRealTimeWeatherBean response) {
+            public void success(final CommonEnvironmentParameterBean response) {
                 MainLooperManage.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        context.refreshRealDataView(response);
+                        context.refreshReportingInfoView(new EnvironmentParamterDatas(response));
                         context.dismissLoading();
                     }
                 });
@@ -43,27 +44,8 @@ public class ReportingPresenterImpl implements IReportingPresenter {
             @Override
             public void fail(int errCode, String msg) {
                 context.dismissLoading();
+                context.showToast(msg);
             }
         });
-    }
-    @Override
-    public void getFeatureWeather() {
-            context.showLoading();
-            apiModel.getFeatureWeather(new OnDataListener<List<CommonFutureWeatherBean>>() {
-                @Override
-                public void success(final List<CommonFutureWeatherBean> response) {
-                    MainLooperManage.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            context.refreshFeatureDataView(response);
-                        }
-                    });
-                }
-
-                @Override
-                public void fail(int errCode, String msg) {
-                    context.dismissLoading();
-                }
-            });
     }
 }

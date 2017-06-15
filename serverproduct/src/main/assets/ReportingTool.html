@@ -42,7 +42,7 @@ var windDatas=[];
 var tmpDatas=[];
 
 if(jsonData!=null&&jsonData.rainDatas!=null&&jsonData.windDatas!=null&&jsonData.tmpDatas!=null){
- xDatas=jsonData.xDatas;
+ xDatas=jsonData.DateList;
  maxRainlabel=jsonData.maxRainLabel;
  rainYInterval=jsonData.rainYInterval;
  minRainlabel=jsonData.minRainLabel;
@@ -57,8 +57,6 @@ if(jsonData!=null&&jsonData.rainDatas!=null&&jsonData.windDatas!=null&&jsonData.
  windDatas=jsonData.windDatas;
  tmpDatas=jsonData.tmpDatas;
 }
-
-
 
  var colors = ['#00a29a', '#6dabde', '#ea5514'];
         // 指定图表的配置项和数据
@@ -122,11 +120,16 @@ if(jsonData!=null&&jsonData.rainDatas!=null&&jsonData.windDatas!=null&&jsonData.
             },
             splitLine:{
                 show:false
+            },
+            axisLabel:{
+            formatter:function(value,index){
+            return value.toFixed(1);
+            }
             }
         },
         {
             type: 'value',
-            name: '降水量(ml)',
+            name: '降水量(mm)',
             min: minRainlabel,
             max: maxRainlabel,
             interval:rainYInterval,
@@ -142,6 +145,11 @@ if(jsonData!=null&&jsonData.rainDatas!=null&&jsonData.windDatas!=null&&jsonData.
             },
             splitLine:{
                 show:false
+            },
+            axisLabel:{
+            formatter:function(value,index){
+            return value.toFixed(1);
+            }
             }
         },
         {
@@ -158,6 +166,11 @@ if(jsonData!=null&&jsonData.rainDatas!=null&&jsonData.windDatas!=null&&jsonData.
             },
             axisLabel: {
                 formatter: '{value}'
+            },
+            axisLabel:{
+            formatter:function(value,index){
+            return value.toFixed(1);
+            }
             }
         }
     ],
@@ -181,14 +194,12 @@ if(jsonData!=null&&jsonData.rainDatas!=null&&jsonData.windDatas!=null&&jsonData.
         }
     ]
 };
-
 // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
         if(rainDatas.length>0&&tmpDatas.length>0&&windDatas.length>0){
         myChart.hideLoading();
         }
 }
-
 </script>
 </body>
 </html>

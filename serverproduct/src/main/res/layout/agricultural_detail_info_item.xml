@@ -50,7 +50,7 @@
                 android:layout_marginLeft="5dp"
                 android:id="@+id/serverproduct_agricultural_detail_item_content_textview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/contentbg"
                 android:lineSpacingExtra="4dp"
                 android:padding="5dp"

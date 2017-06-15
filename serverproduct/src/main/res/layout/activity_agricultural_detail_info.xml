@@ -20,10 +20,6 @@
             app:contentInsetStart="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/serverproduct_agricultural_detail_info_swipe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:descendantFocusability="blocksDescendants">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/serverproduct_agricultural_detail_info_recycler"
@@ -32,5 +28,4 @@
             android:background="@color/app_base_layout_background"
             android:clipToPadding="false"
             />
-    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

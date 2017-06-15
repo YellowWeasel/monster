@@ -34,7 +34,6 @@ public class AgriculturalDetailInfoPresenterImpl implements IAgriculturalDetailI
 
     @Override
     public void getAgriculturalDetailInfo(int Id) {
-        context.openRefresh();
         apiModel.getAgriculturalDetailInfos(Id, new OnDataListener<CommonAgriculturalinfoDetailBean>() {
             @Override
             public void success(final CommonAgriculturalinfoDetailBean response) {
@@ -46,12 +45,10 @@ public class AgriculturalDetailInfoPresenterImpl implements IAgriculturalDetailI
                         context.refreshAgriculturatlDetailInfoView(datasList);
                     }
                 });
-                context.clearRefresh();
             }
 
             @Override
             public void fail(int errCode, String msg) {
-                context.clearRefresh();
                 context.showToast("错误代码：" + errCode + "\n描述：" + msg);
             }
         });

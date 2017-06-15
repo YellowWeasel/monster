@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseActivity;
+import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.common.view.PagerSlidingTabStrip;
 import com.erayic.agr.common.view.codbking.bean.DateType;
@@ -105,8 +107,13 @@ public class WeatherTenDayReportingActivity extends BaseActivity implements ITen
     }
 
     @Override
-    public void showToast() {
-
+    public void showToast(final String msg) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ErayicToast.TextToast(WeatherTenDayReportingActivity.this,msg);
+            }
+        });
     }
 
     @Override

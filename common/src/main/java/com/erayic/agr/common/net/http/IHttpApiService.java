@@ -5,12 +5,14 @@ import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
 import com.erayic.agr.common.net.back.api.CommonAgriculturalInfoBean;
 import com.erayic.agr.common.net.back.api.CommonAgriculturalinfoDetailBean;
 import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
+import com.erayic.agr.common.net.back.api.CommonEnvironmentParameterBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonMarketDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsBean;
 import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsDetailBean;
 import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
 
+import java.io.Flushable;
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -31,7 +33,7 @@ public interface IHttpApiService {
      * @return DataBack
      */
     @GET("Weather/GetRealTimeWeather")
-    Flowable<DataBack<CommonRealTimeWeatherBean>> getRealTimeWeather();
+    Flowable<DataBack<CommonEnvironmentParameterBean>> getRealTimeWeather();
 
     /**
      * 得到未来24小时气象信息
@@ -43,7 +45,6 @@ public interface IHttpApiService {
 
     /**
      * 获取农业气象旬报
-     *
      * @param year  年
      * @param month 月
      * @return

@@ -11,6 +11,7 @@ import com.erayic.agr.common.net.back.CommonReportsByMonthBean;
 import com.erayic.agr.common.net.back.api.CommonAgriculturalInfoBean;
 import com.erayic.agr.common.net.back.api.CommonAgriculturalinfoDetailBean;
 import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
+import com.erayic.agr.common.net.back.api.CommonEnvironmentParameterBean;
 import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
 import com.erayic.agr.common.net.back.api.CommonMarketDynamicPriceBean;
 import com.erayic.agr.common.net.back.api.CommonPoliciesRegulationsDetailBean;
@@ -45,13 +46,13 @@ public class ApiModelImpl implements IApiModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void getRealTimeWeather(final OnDataListener<CommonRealTimeWeatherBean> listener) {
+    public void getRealTimeWeather(final OnDataListener<CommonEnvironmentParameterBean> listener){
         HttpApiManager.getInstance().getRealTimeWeather()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Consumer<DataBack<CommonRealTimeWeatherBean>>() {
+                .doOnNext(new Consumer<DataBack<CommonEnvironmentParameterBean>>() {
                     @Override
-                    public void accept(@NonNull DataBack<CommonRealTimeWeatherBean> objectDataBack) throws Exception {
+                    public void accept(@NonNull DataBack<CommonEnvironmentParameterBean> objectDataBack) throws Exception {
                         ErayicLog.i("getRealTimeWeather", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
@@ -66,12 +67,10 @@ public class ApiModelImpl implements IApiModel {
                     public void onSubscribe(Subscription s) {
 
                     }
-
                     @Override
                     public void onNext(DataBack<Object> o) {
 
                     }
-
                     @Override
                     public void onError(Throwable throwable) {
                         listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());

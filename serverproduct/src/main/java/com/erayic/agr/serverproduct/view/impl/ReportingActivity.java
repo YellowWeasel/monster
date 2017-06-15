@@ -23,31 +23,21 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.config.PreferenceUtils;
-import com.erayic.agr.common.net.back.api.CommonFutureWeatherBean;
-import com.erayic.agr.common.net.back.api.CommonRealTimeWeatherBean;
-import com.erayic.agr.common.util.ErayicNetDate;
-import com.erayic.agr.common.util.ErayicTextUtil;
+import com.erayic.agr.common.util.ErayicStack;
+import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.serverproduct.Constants;
 import com.erayic.agr.serverproduct.DateFormatUtils;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
-import com.erayic.agr.serverproduct.TextUtils;
 import com.erayic.agr.serverproduct.adapter.ForecastReportingAdapter;
-import com.erayic.agr.serverproduct.adapter.entity.BaseForecastInfo;
-import com.erayic.agr.serverproduct.adapter.entity.FutureForecastDatas;
-import com.erayic.agr.serverproduct.adapter.entity.RealTimeForecastInfo;
-import com.erayic.agr.serverproduct.adapter.entity.ReportingInfo;
+import com.erayic.agr.serverproduct.adapter.entity.EnvironmentParamterDatas;
 import com.erayic.agr.serverproduct.presenter.IReportingPresenter;
 import com.erayic.agr.serverproduct.presenter.impl.ReportingPresenterImpl;
 import com.erayic.agr.serverproduct.view.IReportingInfoView;
 import com.erayic.agr.serverproduct.view.IShowClockView;
 import com.erayic.agr.serverproduct.view.custom.NoScrollWebView;
 import com.google.gson.Gson;
-
-import java.text.DateFormat;
-import java.util.List;
-import java.util.Timer;
 
 import butterknife.BindView;
 
@@ -56,7 +46,7 @@ import butterknife.BindView;
  */
 
 @Route(path = "/serverproduct/activity/ReportingActivity", name = "农事气象")
-public class ReportingActivity extends BaseActivity implements IReportingInfoView,IShowClockView {
+public class ReportingActivity extends BaseActivity implements IReportingInfoView, IShowClockView {
     @Autowired
     String serviceID;
 
@@ -102,10 +92,9 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     ListView reportingListView;
     @BindView(R2.id.serverproduct_reporting_realtime_linearlayout)
     LinearLayout realtimeLinearlayout;
-
-    public BaseForecastInfo infos;
+    public EnvironmentParamterDatas environmentParamterDatas;
     public IReportingPresenter reportingPresenter;
-    ForecastReportingAdapter adapter;
+    private ForecastReportingAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,44 +110,41 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        baseLonTextView.setText(TextUtils.FormatNumber(PreferenceUtils.getParam("BaseLon"),4));
-        baseLatTextView.setText(TextUtils.FormatNumber(PreferenceUtils.getParam("BaseLat"),4));
+        baseTextView.setText(PreferenceUtils.getParam("BaseName"));
+        DateFormatUtils.showClock(100, "yyyy-MM-dd HH:mm", this);
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDefaultTextEncodingName("utf-8");
         webView.addJavascriptInterface(new DataForJsInterface(), "Datas");
         refreshWebView();
     }
-     public void setLayoutHeight(){
-         int stateHeight=-1;
-         int resourceId=getResources().getIdentifier("status_bar_height","dimen","android");
-         if (resourceId>0){
-             stateHeight=getResources().getDimensionPixelSize(resourceId);
-         }
-         WindowManager manager= (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-         Display defaultDisplay = manager.getDefaultDisplay();
-         ViewGroup.LayoutParams layoutParams = parentLinearLayout.getLayoutParams();
-         layoutParams.height=defaultDisplay.getHeight()-toolbar.getLayoutParams().height-stateHeight;
-         parentLinearLayout.setLayoutParams(layoutParams);
-     }
+
+    public void setLayoutHeight() {
+        int stateHeight = -1;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            stateHeight = getResources().getDimensionPixelSize(resourceId);
+        }
+        WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        Display defaultDisplay = manager.getDefaultDisplay();
+        ViewGroup.LayoutParams layoutParams = parentLinearLayout.getLayoutParams();
+        layoutParams.height = defaultDisplay.getHeight() - toolbar.getLayoutParams().height - stateHeight;
+        parentLinearLayout.setLayoutParams(layoutParams);
+    }
+
     @Override
     public void initData() {
-        DateFormatUtils.showClock(100,"yyyy-MM-dd HH:mm",this);
-        adapter=new ForecastReportingAdapter(this);
+        adapter = new ForecastReportingAdapter(this);
         reportingListView.setAdapter(adapter);
+
         reportingPresenter = new ReportingPresenterImpl(this);
-        infos = new BaseForecastInfo();
-        infos.setBaseName(PreferenceUtils.getParam("BaseName"));
-        baseTextView.setText(PreferenceUtils.getParam("BaseName"));
-        reportingPresenter.getFeatureWeather();
         reportingPresenter.getRealTimeWeather();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {//返回
-            finish();
-        }
+        if (item.getItemId() == android.R.id.home)
+            ErayicStack.getInstance().finishCurrentActivity();
         return super.onOptionsItemSelected(item);
     }
 
@@ -173,15 +159,12 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     }
 
     public class DataForJsInterface {
-
-        public ReportingInfo reportingInfo;
-
         @JavascriptInterface
         public String GetData() {
-            reportingInfo = new ReportingInfo(infos);
             String json = "";
             Gson gson = new Gson();
-            json = gson.toJson(reportingInfo);
+            if (environmentParamterDatas != null)
+                json = gson.toJson(environmentParamterDatas.getFeatures());
             return json;
         }
     }
@@ -193,66 +176,42 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     }
 
     @Override
-    public void showToast(String msg) {
-
+    public void showToast(final String msg) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ErayicToast.TextToast(ReportingActivity.this, msg);
+            }
+        });
     }
 
     private LoadingDialog dialog;
 
-    @Override
-    public void refreshRealDataView(CommonRealTimeWeatherBean bean) {
-        infos.setNowForecastInfo(new RealTimeForecastInfo(bean.getAppearTime(), bean.getRain_10M()
-                , bean.getWind_Max(), bean.getWindDirect_Max(), bean.getTemp_Max()
-                , bean.getTemp_Min(), bean.getHumi()));
-        RealTimeForecastInfo nowInfo = infos.getNowForecastInfo();
-        rainLvlTextView.setText(Constants.getRainLvlTitle(nowInfo.getRain_10M()));
-        if (!Constants.getRainLvlTitle(nowInfo.getRain_10M()).equals("晴")){
-            rainTextView.setText(String.valueOf(nowInfo.getRain_10M()) + "mm/10min");
-        }
-        tmpTextView.setVisibility(View.VISIBLE);
-        tmpTextView.setText(String.valueOf(nowInfo.getTemp_Max()) + "℃");
-        humTextView.setText(String.valueOf(nowInfo.getHumi()) + "%");
-
-        String windLvl=Constants.getWindLvlTitle(nowInfo.getWind_Max());
-        windLvlTextView.setText(windLvl);
-        if (windLvl.equals("—")){
-            windSpeedTextView.setText("—");
-        }else{
-            windSpeedTextView.setText(String.valueOf(nowInfo.getWind_Max()+"m/s"));
-        }
-
-        realtimeLinearlayout.setVisibility(View.VISIBLE);
-        setTextViewContent(fertilizationTextView, 75);
-        setTextViewContent(pickingTextView, 89);
-        setTextViewContent(sprayTextView, 30);
-        setTextViewContent(irrigationTextView, 20);
-    }
 
     public void setTextViewContent(TextView tv, int score) {
-        String strSocre="";
-        if (score <=0 || score > 100) {
-            strSocre="—";
+        String strSocre = "";
+        if (score <= 0 || score > 100) {
+            strSocre = "—";
             tv.setTextColor(tv.getResources().getColor(R.color.pinred));
         } else if (score < 60) {//不适宜
-            strSocre=String.valueOf(score)+"\n"+"(不适宜)";
+            strSocre = String.valueOf(score) + "\n" + "(不适宜)";
             tv.setTextColor(tv.getResources().getColor(R.color.pinred));
         } else if (60 <= score && score < 80) {//一般、不建议
-            strSocre=String.valueOf(score)+"\n"+"(适宜)";
+            strSocre = String.valueOf(score) + "\n" + "(适宜)";
             tv.setTextColor(tv.getResources().getColor(R.color.pinblue));
         } else if (80 <= score && score <= 100) {//适宜
-            strSocre=String.valueOf(score)+"\n"+"(很适宜)";
+            strSocre = String.valueOf(score) + "\n" + "(非常适宜)";
             tv.setTextColor(tv.getResources().getColor(R.color.green));
         }
-        int start=strSocre.indexOf("(");
-        int end=strSocre.length();
-        Spannable textSpan=new SpannableString(strSocre);
-        textSpan.setSpan(new AbsoluteSizeSpan(sp2px(25)),0,start,Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        textSpan.setSpan(new AbsoluteSizeSpan(sp2px(15)),start,end,Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        int start = strSocre.indexOf("(");
+        int end = strSocre.length();
+        Spannable textSpan = new SpannableString(strSocre);
+        textSpan.setSpan(new AbsoluteSizeSpan(sp2px(25)), 0, start, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        textSpan.setSpan(new AbsoluteSizeSpan(sp2px(15)), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
         tv.setText(textSpan);
     }
-
-    public  int sp2px(float spValue) {
+    public int sp2px(float spValue) {
         final float fontScale = getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
     }
@@ -276,16 +235,42 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     }
 
     @Override
-    public void refreshFeatureDataView(List<CommonFutureWeatherBean> bean) {
-        FutureForecastDatas featureForecastDatas = new FutureForecastDatas();
-        infos.setFeatureForecastDatas(featureForecastDatas.InitFeature(bean));
-        adapter.setForecastDatas(featureForecastDatas);
-        adapter.notifyDataSetChanged();
+    public void refreshReportingInfoView(EnvironmentParamterDatas datas) {
+
+        if (datas == null || datas.getGps() == null || datas.getFeatures() == null
+                || datas.getSuggest() == null || datas.getRealTimeInfo() == null) return;
+        //基地信息
+        baseLonTextView.setText(String.valueOf(datas.getGps().getLon()));
+        baseLatTextView.setText(String.valueOf(datas.getGps().getLat()));
+        baseTextView.setText(datas.getBaseName());
+        //预测数据表格
+        this.environmentParamterDatas = datas;
         refreshWebView();
+        //预测数据列表
+        adapter.setFeatureWeather(datas.getFeatures());
+        adapter.notifyDataSetChanged();
+        //实况数据
+        EnvironmentParamterDatas.RealTime realTime = datas.getRealTimeInfo();
+        rainLvlTextView.setText(Constants.getRainLvlTitle(realTime.getRain_10M()));
+        if (!Constants.getRainLvlTitle(realTime.getRain_10M()).equals("晴")) {
+            rainTextView.setText(String.valueOf(realTime.getRain_10M()) + "mm/10min");
+        }
+        tmpTextView.setVisibility(View.VISIBLE);
+        tmpTextView.setText(String.valueOf(realTime.getTemp_Max()) + "℃");
+        windSpeedTextView.setText(String.valueOf(realTime.getWind_Max())+"m/s");
+        windLvlTextView.setText(realTime.getWindDesc());
+        realtimeLinearlayout.setVisibility(View.VISIBLE);
+        setTextViewContent(fertilizationTextView, datas.getSuggest()
+                .getFertilizationSuggestion().getResultIndex());
+        setTextViewContent(pickingTextView, datas.getSuggest()
+                .getHarvestSuggestion().getResultIndex());
+        setTextViewContent(sprayTextView, datas.getSuggest()
+                .getSprayInsecticideSuggestion().getResultIndex());
+        setTextViewContent(irrigationTextView, datas.getSuggest()
+                .getIrrigationSuggestion().getResultIndex());
     }
 
     int index = 0;
-
     @Override
     public void showLoading() {
         index++;

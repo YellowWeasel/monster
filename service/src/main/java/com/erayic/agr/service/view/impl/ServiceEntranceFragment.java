@@ -204,6 +204,9 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
                 case "3fabad22-5e5f-4d76-9ddf-d3af850019de"://政策法规
                     ARouter.getInstance().build("/serverproduct/activity/PoliciesRegulationsActivity").withString("serviceID", serviceID).navigation();
                     break;
+                case "c74cb478-10b0-4973-8756-c26e89570b8b"://农业资讯
+                    ARouter.getInstance().build("/serverproduct/activity/AgriculturalInfoActivity").withString("serviceID", serviceID).navigation();
+                    break;
                 default:
                     break;
             }

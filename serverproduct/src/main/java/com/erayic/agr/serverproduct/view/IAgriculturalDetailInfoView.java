@@ -12,6 +12,4 @@ import java.util.List;
 
 public interface IAgriculturalDetailInfoView extends IBaseView{
         void refreshAgriculturatlDetailInfoView(List<AgriculturalDetailInfoDatas> bean);
-        void openRefresh();
-        void clearRefresh();
 }

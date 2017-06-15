@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 23060 on 2017/5/19.
+ * Created by wxk on 2017/5/19.
  */
 
 public class AgriculturalInfoPresenterImpl implements IAgriculturalInfoPresenter {
@@ -39,7 +39,7 @@ public class AgriculturalInfoPresenterImpl implements IAgriculturalInfoPresenter
                             for (CommonAgriculturalInfoBean bean:response){
                                 infoDatases.add(new AgriculturalInfoDatas(bean));
                             }
-                            context.refreshAgriculturatlInfoView(infoDatases);
+                            context.loadMoreSure(infoDatases);
                         }
                     });
                     context.clearRefresh();
@@ -52,7 +52,6 @@ public class AgriculturalInfoPresenterImpl implements IAgriculturalInfoPresenter
                 }
             });
     }
-
     @Override
     public void initAgriculturalInfo(int pageSize) {
         context.openRefresh();

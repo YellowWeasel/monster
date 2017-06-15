@@ -14,5 +14,5 @@ public interface ITenDayReportingView {
     void updateTenDayReportingDatas(Date date);
     void showLoading();
     void dismissLoading();
-    void showToast();
+    void showToast(String msg);
 }
