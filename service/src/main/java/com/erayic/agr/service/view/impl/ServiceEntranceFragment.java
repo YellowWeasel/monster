@@ -197,7 +197,10 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
                     case "eda779ef-ef1c-4225-b563-83cd7c321776"://上海青
                         ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
                         break;
-                    case "dce3c919-5b0b-4b40-87b6-a29eac1080f8"://香蕉
+                        case "dce3c919-5b0b-4b40-87b6-a29eac1080f8"://香蕉
+                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
+                            break;
+                    case "7c17aba8-1ec6-4c87-8e92-d35c5f1ccee6"://大白菜
                         ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
                         break;
                     default:
