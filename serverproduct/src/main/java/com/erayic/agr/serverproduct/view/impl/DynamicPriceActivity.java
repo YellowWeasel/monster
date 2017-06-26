@@ -85,7 +85,7 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
         averagePriceDatas = new DynamicAveragePriceDatas();
         refreshWebView();
         dynamicPricePresenter = new DynamicPricePresenterImpl(this);
-        toolbar.setTitle("市场价格");
+        toolbar.setTitle("价格动态");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

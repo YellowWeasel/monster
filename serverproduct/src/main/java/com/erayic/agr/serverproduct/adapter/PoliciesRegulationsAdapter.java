@@ -1,8 +1,10 @@
 package com.erayic.agr.serverproduct.adapter;
 
 import android.graphics.Rect;
+import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +25,6 @@ import butterknife.BindView;
 
 public class PoliciesRegulationsAdapter extends BaseQuickAdapter<PoliciesRegulationsTitleDatas, PoliciesRegulationsViewHolder> {
     PoliciesRegulationsItemClickListener regulationsItemClickListener;
-
 
     public PoliciesRegulationsAdapter(List<PoliciesRegulationsTitleDatas> data) {
         super(R.layout.policies_regulation_item, data);

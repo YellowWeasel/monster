@@ -82,7 +82,7 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
 
     @Override
     public void initView() {
-        toolbar.setTitle("市场价格详情");
+        toolbar.setTitle("市场价格");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

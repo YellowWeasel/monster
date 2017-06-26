@@ -1,5 +1,6 @@
 package com.erayic.agr.serverproduct.adapter.viewholder;
 
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;

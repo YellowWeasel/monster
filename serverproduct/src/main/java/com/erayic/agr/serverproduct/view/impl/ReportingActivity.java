@@ -49,7 +49,6 @@ import butterknife.BindView;
 public class ReportingActivity extends BaseActivity implements IReportingInfoView, IShowClockView {
     @Autowired
     String serviceID;
-
     @BindView(R2.id.serverproduct_reporting_webview)
     NoScrollWebView webView;
 
@@ -95,6 +94,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     public EnvironmentParamterDatas environmentParamterDatas;
     public IReportingPresenter reportingPresenter;
     private ForecastReportingAdapter adapter;
+    //下拉刷新
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +105,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
 
     @Override
     public void initView() {
-        toolbar.setTitle("实况天气");
+        toolbar.setTitle("农业气象实况");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -233,7 +233,6 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
             }
         });
     }
-
     @Override
     public void refreshReportingInfoView(EnvironmentParamterDatas datas) {
 
@@ -269,7 +268,6 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
         setTextViewContent(irrigationTextView, datas.getSuggest()
                 .getIrrigationSuggestion().getResultIndex());
     }
-
     int index = 0;
     @Override
     public void showLoading() {
@@ -285,7 +283,6 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
             }
         });
     }
-
     @Override
     public void dismissLoading() {
         index--;
@@ -299,5 +296,4 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
             }
         });
     }
-
 }

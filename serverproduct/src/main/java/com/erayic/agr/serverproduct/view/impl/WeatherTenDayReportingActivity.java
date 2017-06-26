@@ -120,7 +120,7 @@ public class WeatherTenDayReportingActivity extends BaseActivity implements ITen
     public void initView() {
 
         viewPager.setOffscreenPageLimit(2);
-        mToolbar.setTitle("旬报");
+        mToolbar.setTitle("农业气象旬报");
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -59,7 +59,7 @@ public class PoliciesRegulationsDetailActivity extends BaseActivity implements I
 
     @Override
     public void initView() {
-        toolbar.setTitle("政策法规");
+        toolbar.setTitle("政策法规详情");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
