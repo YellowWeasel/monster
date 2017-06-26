@@ -118,7 +118,7 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_MONTH, -dateInterval);
-        dynamicPricePresenter.getDynamicPricedatas((cropId=7)
+        dynamicPricePresenter.getDynamicPricedatas(cropId
                 , new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime())
                 , new SimpleDateFormat("yyyy/MM/dd").format(new Date()),serviceID);
     }

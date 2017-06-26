@@ -25,9 +25,18 @@ public class ServiceBuyByUserBean  {
     public static class SpecifysInfo{
         private int JumpType;//跳转类型
         private String Sepcify;//子服务名称
+        private int SepcifyId;//子服务对应作物ID
         private String ServiceID;//服务ID
         private String Url;//跳转链接
         private boolean IsOwner;//是否关注
+
+        public int getSepcifyId() {
+            return SepcifyId;
+        }
+
+        public void setSepcifyId(int sepcifyId) {
+            SepcifyId = sepcifyId;
+        }
 
         public int getJumpType() {
             return JumpType;

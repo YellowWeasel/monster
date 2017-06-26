@@ -101,7 +101,7 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
                     notifyDataSetChanged();
                 } else {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onClick(v, list.get(section).getServiceID(), null);
+                        onItemClickListener.onClick(v, list.get(section).getServiceID(), null,list.get(section).getSpecifys().get(section).getSepcifyId());
                     }
                 }
             }
@@ -132,7 +132,7 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onClick(v, list.get(section).getServiceID(), list.get(section).getSpecifys().get(position).getServiceID());
+                    onItemClickListener.onClick(v, list.get(section).getServiceID(), list.get(section).getSpecifys().get(position).getServiceID(),list.get(section).getSpecifys().get(position).getSepcifyId());
                 }
             }
         });
@@ -145,6 +145,6 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
     }
 
     public interface OnItemClickListener {
-        void onClick(View v, String serviceID, String subServiceID);
+        void onClick(View v, String serviceID, String subServiceID,int SepcifyId);
     }
 }
