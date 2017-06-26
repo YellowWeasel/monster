@@ -101,7 +101,7 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
                     notifyDataSetChanged();
                 } else {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onClick(v, list.get(section).getServiceID(), null,list.get(section).getSpecifys().get(section).getSepcifyId());
+                        onItemClickListener.onClick(v, list.get(section).getServiceID(), null,0);
                     }
                 }
             }
