@@ -12,6 +12,18 @@
         <activity
             android:name=".view.impl.BatchInfoActivity"
             android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.BatchBindServiceActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.BatchCycleInfoActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.BatchSuggestInfoActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.AddLogActivity"
+            android:theme="@style/AppTheme.Transparent" />
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.erayic.agr.common.net.back.work;
 
 import com.erayic.agr.common.AgrConstant;
+import com.erayic.agr.common.net.back.base.CommonImagesEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,13 +104,13 @@ public class CommonJobsInfoBean {
     public static class RecordsInfo {
         private String ApplyID = AgrConstant.GUID_Empty;//
         private String Descript = "";
-        private List<ApplyPicInfo> Records;//工作记录
+        private List<CommonImagesEntity> Records;//工作记录
 
-        public List<ApplyPicInfo> getRecords() {
+        public List<CommonImagesEntity> getRecords() {
             return Records;
         }
 
-        public void setRecords(List<ApplyPicInfo> records) {
+        public void setRecords(List<CommonImagesEntity> records) {
             Records = records;
         }
 
@@ -130,26 +131,26 @@ public class CommonJobsInfoBean {
         }
     }
 
-    public static class ApplyPicInfo {
-        private String ImgPath;
-        private String Thumbnail = "";
-
-        public String getImgPath() {
-            return ImgPath;
-        }
-
-        public void setImgPath(String imgPath) {
-            ImgPath = imgPath;
-        }
-
-        public String getThumbnail() {
-            return Thumbnail;
-        }
-
-        public void setThumbnail(String thumbnail) {
-            Thumbnail = thumbnail;
-        }
-    }
+//    public static class ApplyPicInfo {
+//        private String ImgPath;
+//        private String Thumbnail = "";
+//
+//        public String getImgPath() {
+//            return ImgPath;
+//        }
+//
+//        public void setImgPath(String imgPath) {
+//            ImgPath = imgPath;
+//        }
+//
+//        public String getThumbnail() {
+//            return Thumbnail;
+//        }
+//
+//        public void setThumbnail(String thumbnail) {
+//            Thumbnail = thumbnail;
+//        }
+//    }
 
     public String getJobName() {
         return JobName;

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/unit_batch_log_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/unit_batch_log_RecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/app_base_layout_background"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/unit_batch_log_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/app_base_default_add"
+        app:backgroundTint="#80ffffff"
+        app:borderWidth="0dp"
+        app:elevation="1dp"
+        app:fabSize="mini"
+        app:layout_anchor="@+id/unit_batch_log_RecyclerView"
+        app:layout_anchorGravity="top|right"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="#80ffffff" />
+
+</android.support.design.widget.CoordinatorLayout>

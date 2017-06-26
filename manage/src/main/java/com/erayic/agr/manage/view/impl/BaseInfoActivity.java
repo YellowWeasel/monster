@@ -262,7 +262,7 @@ public class BaseInfoActivity extends BaseActivity implements IBaseInfoView, Swi
                 break;
                 case ManageBaseInfoEntity.TYPE_BASE_POSITION://
                 {
-                    showToast("未实现");
+                    ARouter.getInstance().build("/manage/activity/BasePositionActivity").withString("baseID", baseID).navigation();
 
                 }
                 break;

@@ -266,6 +266,6 @@ public class MqttService extends Service {
 
     @Override
     public void onDestroy() {
-
+        callbackConnection.disconnect(null);
     }
 }

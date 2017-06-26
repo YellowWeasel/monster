@@ -3,7 +3,7 @@
     package="com.erayic.agr">
 
     <application
-        android:name=".AgrApplication"
+        android:name="com.erayic.agr.AgrApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -40,8 +40,8 @@
 
         <activity
             android:name=".view.impl.WelcomeActivity"
-            android:theme="@style/WelcomeStyle"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/WelcomeStyle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

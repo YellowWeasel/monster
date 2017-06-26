@@ -4,31 +4,10 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/batch_info_pie_chart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="300dp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:layout_weight="1">
-
-        <com.github.mikephil.charting.charts.HorizontalBarChart
-            android:id="@+id/batch_info_bar_chart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="180dp"
-            android:minWidth="180dp" />
-    </RelativeLayout>
-
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/batch_info_pie_chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="300dp" />
 
 </LinearLayout>

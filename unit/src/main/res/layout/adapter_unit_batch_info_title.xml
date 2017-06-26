@@ -7,7 +7,6 @@
     android:orientation="vertical">
 
     <TableRow
-        android:id="@+id/service_manage_item_layout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center_vertical">
@@ -24,8 +23,8 @@
 
             <ImageView
                 android:id="@+id/unit_item_list_icon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 app:srcCompat="@drawable/app_base_image_item_icon_white" />
         </LinearLayout>
 
@@ -41,6 +40,16 @@
             android:text="TitleName"
             android:textColor="@color/app_base_item_background"
             android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:text="设置"
+            android:textColor="@color/app_base_item_background"
+            android:textSize="14sp" />
 
     </TableRow>
 

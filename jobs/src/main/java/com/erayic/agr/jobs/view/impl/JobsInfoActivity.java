@@ -14,8 +14,11 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.base.BaseActivity;
+import com.erayic.agr.common.base.CommonGridImageAdapter;
+import com.erayic.agr.common.base.CommonLocalMedia;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.net.back.base.CommonImagesEntity;
 import com.erayic.agr.common.net.back.img.CommonResultImage;
 import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
@@ -25,10 +28,8 @@ import com.erayic.agr.common.view.ErayicTextDialog;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.jobs.R;
 import com.erayic.agr.jobs.R2;
-import com.erayic.agr.jobs.adapter.JobsInfoGridImageAdapter;
 import com.erayic.agr.jobs.adapter.JobsInfoItemAdapter;
 import com.erayic.agr.jobs.adapter.entity.JobsInfoEntity;
-import com.erayic.agr.jobs.bean.JobsLocalMedia;
 import com.erayic.agr.jobs.presenter.IJobsInfoPresenter;
 import com.erayic.agr.jobs.presenter.impl.JobsInfoPresenterImpl;
 import com.erayic.agr.jobs.view.IJobsInfoView;
@@ -73,8 +74,8 @@ public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
     private JobsInfoItemAdapter adapter;
 
     //相册初始化
-    private List<JobsLocalMedia> selectMedia = new ArrayList<>();
-    private JobsInfoGridImageAdapter imageAdapter;
+    private List<CommonLocalMedia> selectMedia = new ArrayList<>();
+    private CommonGridImageAdapter imageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,15 +94,15 @@ public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
         }
 
         adapter = new JobsInfoItemAdapter(JobsInfoActivity.this, null);
-        imageAdapter = new JobsInfoGridImageAdapter(JobsInfoActivity.this, onAddPicClickListener);
+        imageAdapter = new CommonGridImageAdapter(JobsInfoActivity.this, onAddPicClickListener);
         imageAdapter.setList(selectMedia);
         imageAdapter.setSelectMax(9);
-        imageAdapter.setOnItemClickListener(new JobsInfoGridImageAdapter.OnItemClickListener() {
+        imageAdapter.setOnItemClickListener(new CommonGridImageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, View v) {
                 List<LocalMedia> list = new ArrayList<>();
                 for (int i = 0; i < imageAdapter.getList().size(); i++) {
-                    JobsLocalMedia jobsLocalMedia = imageAdapter.getList().get(i);
+                    CommonLocalMedia jobsLocalMedia = imageAdapter.getList().get(i);
                     LocalMedia localMedia = new LocalMedia();
                     localMedia.setType(1);
                     localMedia.setPath(TextUtils.isEmpty(jobsLocalMedia.getResultImage().getRamFileName()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + jobsLocalMedia.getResultImage().getRamFileName()));
@@ -212,8 +213,8 @@ public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
                     else
                         imageAdapter.setEdit(true);
                     selectMedia = new ArrayList<>();
-                    for (CommonJobsInfoBean.ApplyPicInfo applyPicInfo : bean.getRecords().getRecords()) {
-                        JobsLocalMedia jobsLocalMedia = new JobsLocalMedia();
+                    for (CommonImagesEntity applyPicInfo : bean.getRecords().getRecords()) {
+                        CommonLocalMedia jobsLocalMedia = new CommonLocalMedia();
                         jobsLocalMedia.setUpload(true);
                         CommonResultImage resultImage = new CommonResultImage();
                         resultImage.setRamFileName(applyPicInfo.getImgPath());
@@ -232,18 +233,18 @@ public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
     }
 
     @Override
-    public void uploadImageResult(final List<JobsLocalMedia> selectMedia) {
+    public void uploadImageResult(final List<CommonLocalMedia> selectMedia) {
 
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 int position = 0;
                 CommonJobsInfoBean.RecordsInfo recoder = new CommonJobsInfoBean.RecordsInfo();
-                List<CommonJobsInfoBean.ApplyPicInfo> records = new ArrayList<>();
-                for (JobsLocalMedia jobsLocalMedia : selectMedia) {
+                List<CommonImagesEntity> records = new ArrayList<>();
+                for (CommonLocalMedia jobsLocalMedia : selectMedia) {
                     if (jobsLocalMedia.isUpload()) {
                         position++;
-                        CommonJobsInfoBean.ApplyPicInfo applyPicInfo = new CommonJobsInfoBean.ApplyPicInfo();
+                        CommonImagesEntity applyPicInfo = new CommonImagesEntity();
                         applyPicInfo.setImgPath(jobsLocalMedia.getResultImage().getRamFileName());
                         applyPicInfo.setThumbnail(jobsLocalMedia.getResultImage().getThumbnailFile());
                         records.add(applyPicInfo);
@@ -330,7 +331,7 @@ public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
      * 删除图片回调接口
      */
 
-    private JobsInfoGridImageAdapter.onAddPicClickListener onAddPicClickListener = new JobsInfoGridImageAdapter.onAddPicClickListener() {
+    private CommonGridImageAdapter.onAddPicClickListener onAddPicClickListener = new CommonGridImageAdapter.onAddPicClickListener() {
         @Override
         public void onAddPicClick(int type, int position) {
             switch (type) {
@@ -365,7 +366,7 @@ public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
             selectMedia = new ArrayList<>();
             for (LocalMedia media : resultList) {
 //                LocalMedia media = resultList.get(0);
-                JobsLocalMedia jobsLocalMedia = new JobsLocalMedia();
+                CommonLocalMedia jobsLocalMedia = new CommonLocalMedia();
                 jobsLocalMedia.setLocalMedia(media);
                 if (media.isCut() && !media.isCompressed()) {
                     // 裁剪过
@@ -394,7 +395,7 @@ public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
         @Override
         public void onSelectSuccess(LocalMedia media) {
             // 单选回调
-            JobsLocalMedia jobsLocalMedia = new JobsLocalMedia();
+            CommonLocalMedia jobsLocalMedia = new CommonLocalMedia();
             jobsLocalMedia.setLocalMedia(media);
             if (media.isCut() && !media.isCompressed()) {
                 // 裁剪过

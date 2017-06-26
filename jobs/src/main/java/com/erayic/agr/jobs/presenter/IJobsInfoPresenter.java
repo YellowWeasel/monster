@@ -1,8 +1,7 @@
 package com.erayic.agr.jobs.presenter;
 
+import com.erayic.agr.common.base.CommonLocalMedia;
 import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
-import com.erayic.agr.jobs.bean.JobsLocalMedia;
-import com.yalantis.ucrop.entity.LocalMedia;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public interface IJobsInfoPresenter {
     /**
      * 上传图片
      */
-    void submitImage(List<JobsLocalMedia> selectMedia);
+    void submitImage(List<CommonLocalMedia> selectMedia);
 
     /**
      * 执行工作安排

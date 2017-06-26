@@ -56,6 +56,8 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
     public UnitListItemAdapter(Context context) {
         this.context = context;
         mBooleanMap = new SparseBooleanArray();
+        mBooleanMap.append(0, true);//默认打开第一个
+        onItemPosition = 0;//默认打开0个
     }
 
     public void setList(List<CommonUnitListBean> list) {

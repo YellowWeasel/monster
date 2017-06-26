@@ -10,11 +10,16 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.util.ErayicNetDate;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.adapter.entity.UnitListItemByBatchEntity;
 import com.erayic.agr.unit.adapter.holder.UnitListItemByBatchAddViewHolder;
 import com.erayic.agr.unit.adapter.holder.UnitListItemByBatchInfoViewHolder;
+
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.PeriodType;
 
 import java.util.List;
 
@@ -65,14 +70,15 @@ public class UnitListItemByBatchAdapter extends BaseMultiItemQuickAdapter<UnitLi
                             .into(((UnitListItemByBatchInfoViewHolder) helper).unitContentIcon);
                     ((UnitListItemByBatchInfoViewHolder) helper).unitContentName.setText(item.getName());
                     ((UnitListItemByBatchInfoViewHolder) helper).unitContentSubName.setText(
-                            Html.fromHtml("距离采摘还有<font color=red>" + ErayicNetDate.getStringDate(item.getMap().get("Mature")) + "</font>天")
+                            Html.fromHtml("距离采摘还有<font color=red>" +
+                                    new Period(new DateTime(), new DateTime(ErayicNetDate.getLongDates(item.getMap().get("Mature"))), PeriodType.days()).getDays() + "</font>天")
                     );
                     ((UnitListItemByBatchInfoViewHolder) helper).unitContentDate.setText(ErayicNetDate.getStringDate(item.getMap().get("StartTime")));
                     ((UnitListItemByBatchInfoViewHolder) helper).itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             if (onItemBatchClickListener != null)
-                                onItemBatchClickListener.onBatchInfo(item.getMap().get("BatchID"),item.getName());
+                                onItemBatchClickListener.onBatchInfo(unitID, item.getMap().get("BatchID"), item.getName(), item.getMap().get("Icon"));
                         }
                     });
                     ((UnitListItemByBatchInfoViewHolder) helper).itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -109,7 +115,7 @@ public class UnitListItemByBatchAdapter extends BaseMultiItemQuickAdapter<UnitLi
     }
 
     public interface OnItemBatchClickListener {
-        void onBatchInfo(String batchID,String batchName);
+        void onBatchInfo(String unitID, String batchID, String batchName, String imgUrl);
 
         void onAddBatch(String unitID);
     }

@@ -16,7 +16,6 @@ public class AgrApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         mApplication = this;
-
     }
 
 

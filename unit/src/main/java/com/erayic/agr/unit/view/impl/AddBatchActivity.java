@@ -18,6 +18,7 @@ import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.enums.EnumRequestType;
 import com.erayic.agr.common.util.DividerItemDecoration;
+import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicEditDialog;
 import com.erayic.agr.common.view.LoadingDialog;
@@ -364,6 +365,6 @@ public class AddBatchActivity extends BaseActivity implements IAddBatchView {
 
     @Override
     public void addBatchSure() {
-        AddBatchActivity.this.finish();
+        ErayicStack.getInstance().finishCurrentActivity();
     }
 }

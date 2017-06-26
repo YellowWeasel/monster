@@ -1,21 +1,16 @@
 package com.erayic.agr.jobs.presenter.impl;
 
-import android.graphics.BitmapFactory;
-
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.erayic.agr.common.base.CommonLocalMedia;
 import com.erayic.agr.common.model.IIndexModel;
 import com.erayic.agr.common.model.IWorkModel;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.enums.EnumUnitType;
 import com.erayic.agr.common.net.back.img.CommonResultImage;
 import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
-import com.erayic.agr.common.util.ErayicImage;
-import com.erayic.agr.common.util.ErayicLog;
-import com.erayic.agr.jobs.bean.JobsLocalMedia;
 import com.erayic.agr.jobs.presenter.IJobsInfoPresenter;
 import com.erayic.agr.jobs.view.IJobsInfoView;
-import com.yalantis.ucrop.entity.LocalMedia;
 
 import java.util.List;
 
@@ -61,12 +56,12 @@ public class JobsInfoPresenterImpl implements IJobsInfoPresenter {
     }
 
     @Override
-    public void submitImage(final List<JobsLocalMedia> selectMedia) {
+    public void submitImage(final List<CommonLocalMedia> selectMedia) {
         jobsInfoView.showLoading();
         final int size = selectMedia.size();
         surePosition = 0;
         failPosition = 0;
-        for (final JobsLocalMedia media : selectMedia) {
+        for (final CommonLocalMedia media : selectMedia) {
             if (!media.isUpload())
                 indexModel.uploadImg(media.getFinalPath(), new OnDataListener<CommonResultImage>() {
                     @Override

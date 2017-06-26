@@ -20,8 +20,6 @@ public class UnitBatchInfoByModelViewHolder extends BaseViewHolder {
 
     @BindView(R2.id.batch_info_pie_chart)
     public PieChart batchInfoPieChart;
-    @BindView(R2.id.batch_info_bar_chart)
-    public HorizontalBarChart batchInfoBarChart;
 
     public UnitBatchInfoByModelViewHolder(View view) {
         super(view);

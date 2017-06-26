@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.erayic.agr.common.base.CommonGridImageAdapter;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.FullyGridLayoutManager;
 import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
@@ -36,7 +37,7 @@ public class JobsInfoItemAdapter extends BaseMultiItemQuickAdapter<JobsInfoEntit
     private Context context;
     private JobsBatchItemAdapter adapter;
 
-    private JobsInfoGridImageAdapter imageAdapter;
+    private CommonGridImageAdapter imageAdapter;
     private boolean isEdit = false;
 
     public JobsInfoItemAdapter(Context context, List<JobsInfoEntity> data) {
@@ -50,7 +51,7 @@ public class JobsInfoItemAdapter extends BaseMultiItemQuickAdapter<JobsInfoEntit
         adapter.setEdit(edit);
     }
 
-    public void setImageAdapter(JobsInfoGridImageAdapter imageAdapter) {
+    public void setImageAdapter(CommonGridImageAdapter imageAdapter) {
         this.imageAdapter = imageAdapter;
     }
 

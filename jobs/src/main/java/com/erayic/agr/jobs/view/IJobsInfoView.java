@@ -1,9 +1,8 @@
 package com.erayic.agr.jobs.view;
 
 import com.erayic.agr.common.base.IBaseView;
-import com.erayic.agr.common.net.back.img.CommonResultImage;
+import com.erayic.agr.common.base.CommonLocalMedia;
 import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
-import com.erayic.agr.jobs.bean.JobsLocalMedia;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ public interface IJobsInfoView extends IBaseView {
     /**
      * 上传图片成功
      */
-    void uploadImageResult(List<JobsLocalMedia> selectMedia);
+    void uploadImageResult(List<CommonLocalMedia> selectMedia);
 
     /**
      * 执行工作安排成功

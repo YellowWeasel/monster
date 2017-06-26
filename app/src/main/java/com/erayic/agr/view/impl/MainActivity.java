@@ -94,27 +94,40 @@ public class MainActivity extends BaseActivity implements IMainView {
             public void run() {
                 switch (PreferenceUtils.getParam("UserRole", 0)) {
                     case 1://管理员
-                    {
-                        titlesName = new String[]{"首页", "管理", "作业", "服务", "我的"};
-                        titleNormalIcons = new int[]{R.drawable.app_base_default_index_press, R.drawable.app_base_default_unit_press, R.drawable.app_base_default_job_press,
-                                R.drawable.app_base_default_service_press, R.drawable.app_base_default_mine_press};
-                        titleSelectedIcons = new int[]{R.drawable.app_base_default_index_nomal, R.drawable.app_base_default_unit_nomal, R.drawable.app_base_default_job_nomal,
-                                R.drawable.app_base_default_service_nomal, R.drawable.app_base_default_mine_nomal};
-                        fragments = new Fragment[]{(Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
-                                (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "生产管理").navigation(),
-                                (Fragment) ARouter.getInstance().build("/jobs/fragment/JobsListFragment").withString("titleName", "今日作业").navigation(),
-                                (Fragment) ARouter.getInstance().build("/service/fragment/ServiceEntranceFragment").withString("titleName", "我的服务").navigation(),
-                                (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
-                    }
-                    break;
+//                    {
+//                        titlesName = new String[]{"首页", "管理", "作业", "服务", "我的"};
+//                        titleNormalIcons = new int[]{R.drawable.app_base_default_index_press, R.drawable.app_base_default_unit_press, R.drawable.app_base_default_job_press,
+//                                R.drawable.app_base_default_service_press, R.drawable.app_base_default_mine_press};
+//                        titleSelectedIcons = new int[]{R.drawable.app_base_default_index_nomal, R.drawable.app_base_default_unit_nomal, R.drawable.app_base_default_job_nomal,
+//                                R.drawable.app_base_default_service_nomal, R.drawable.app_base_default_mine_nomal};
+//                        fragments = new Fragment[]{(Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
+//                                (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "生产管理").navigation(),
+//                                (Fragment) ARouter.getInstance().build("/jobs/fragment/JobsListFragment").withString("titleName", "今日作业").navigation(),
+//                                (Fragment) ARouter.getInstance().build("/service/fragment/ServiceEntranceFragment").withString("titleName", "我的服务").navigation(),
+//                                (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
+//                    }
+//                        break;
                     case 9://用户
+//                    {
+//                        titlesName = new String[]{"首页", "管理", "作业", "服务", "我的"};
+//                        titleNormalIcons = new int[]{R.drawable.app_base_default_index_press, R.drawable.app_base_default_unit_press, R.drawable.app_base_default_job_press,
+//                                R.drawable.app_base_default_service_press, R.drawable.app_base_default_mine_press};
+//                        titleSelectedIcons = new int[]{R.drawable.app_base_default_index_nomal, R.drawable.app_base_default_unit_nomal, R.drawable.app_base_default_job_nomal,
+//                                R.drawable.app_base_default_service_nomal, R.drawable.app_base_default_mine_nomal};
+//                        fragments = new Fragment[]{(Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
+//                                (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "生产管理").navigation(),
+//                                (Fragment) ARouter.getInstance().build("/jobs/fragment/JobsListFragment").withString("titleName", "今日作业").navigation(),
+//                                (Fragment) ARouter.getInstance().build("/service/fragment/ServiceEntranceFragment").withString("titleName", "我的服务").navigation(),
+//                                (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
+//                    }
                     {
-                        titlesName = new String[]{"首页", "管理", "作业", "服务", "我的"};
-                        titleNormalIcons = new int[]{R.drawable.app_base_default_index_press, R.drawable.app_base_default_unit_press, R.drawable.app_base_default_job_press,
+                        //去掉首页
+                        titlesName = new String[]{"管理", "作业", "服务", "我的"};
+                        titleNormalIcons = new int[]{R.drawable.app_base_default_unit_press, R.drawable.app_base_default_job_press,
                                 R.drawable.app_base_default_service_press, R.drawable.app_base_default_mine_press};
-                        titleSelectedIcons = new int[]{R.drawable.app_base_default_index_nomal, R.drawable.app_base_default_unit_nomal, R.drawable.app_base_default_job_nomal,
+                        titleSelectedIcons = new int[]{R.drawable.app_base_default_unit_nomal, R.drawable.app_base_default_job_nomal,
                                 R.drawable.app_base_default_service_nomal, R.drawable.app_base_default_mine_nomal};
-                        fragments = new Fragment[]{(Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
+                        fragments = new Fragment[]{
                                 (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "生产管理").navigation(),
                                 (Fragment) ARouter.getInstance().build("/jobs/fragment/JobsListFragment").withString("titleName", "今日作业").navigation(),
                                 (Fragment) ARouter.getInstance().build("/service/fragment/ServiceEntranceFragment").withString("titleName", "我的服务").navigation(),

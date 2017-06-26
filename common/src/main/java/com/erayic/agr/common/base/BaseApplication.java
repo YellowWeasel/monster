@@ -59,7 +59,7 @@ public abstract class BaseApplication extends MultiDexApplication {
     /**
      * 初始化图片选择库
      */
-    private void initPictureSelector(){
+    private void initPictureSelector() {
 
     }
 }

@@ -30,10 +30,10 @@ public class ErayicService extends JobService {
         boolean isLocalServiceWork = ErayicApp.isServiceExisted(this, "com.erayic.agr.common.emqtt.MqttService");
         boolean isRemoteServiceWork = ErayicApp.isServiceExisted(this, "com.marswin89.marsdaemon.demo.Service2");
         if (!isLocalServiceWork) {
-            this.startService(new Intent(this, MqttService.class));
+//            this.startService(new Intent(this, MqttService.class));
 //            this.startService(new Intent(this,Service2.class));
 //            Toast.makeText(this, "进程启动", Toast.LENGTH_SHORT).show();
-            ErayicLog.i("ErayicService", "启动MqttService");
+//            ErayicLog.i("ErayicService", "启动MqttService");
         }
         return true;
     }
