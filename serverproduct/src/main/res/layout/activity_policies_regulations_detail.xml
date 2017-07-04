@@ -34,8 +34,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:id="@+id/serverproduct_policies_regulations_title_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,37 +44,44 @@
                 android:gravity="center"
                 android:textColor="@color/toptitle"
                 android:textSize="@dimen/title" />
-            <LinearLayout
+            <RelativeLayout
+                android:layout_marginRight="8dp"
                 android:layout_marginTop="5dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/serverproduct_policies_regulations_source_textview"
-                    android:ellipsize="end"
+                <LinearLayout
+                    android:layout_alignParentRight="true"
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/fontcolor"
-                    android:textSize="@dimen/title" />
-                <TextView
-                    android:layout_marginLeft="15dp"
-                    android:id="@+id/serverproduct_policies_regulations_publishdate_textview"
-                    android:ellipsize="end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/fontcolor"
-                    android:textSize="@dimen/content" />
-            </LinearLayout>
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/serverproduct_policies_regulations_source_textview"
+                        android:ellipsize="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/fontcolor"
+                        android:textSize="@dimen/content" />
+                    <TextView
+                        android:layout_marginLeft="15dp"
+                        android:id="@+id/serverproduct_policies_regulations_publishdate_textview"
+                        android:ellipsize="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/fontcolor"
+                        android:textSize="@dimen/mincontent" />
+                </LinearLayout>
+            </RelativeLayout>
             <TextView
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
                 android:id="@+id/serverproduct_policies_regulations_content_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/contentbg"
-                android:lineSpacingExtra="4dp"
+                android:lineSpacingExtra="8dp"
                 android:padding="5dp"
                 android:textColor="@color/textfont"
                 android:textSize="@dimen/content" />

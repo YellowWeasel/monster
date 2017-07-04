@@ -5,6 +5,7 @@
     android:background="@drawable/layout_click_selector"
     android:layout_height="50dp">
     <TextView
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="60dp"
         android:ellipsize="end"
         android:maxLines="1"
