@@ -11,6 +11,7 @@ import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.enums.EnumUnitType;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchInfoBean;
+import com.erayic.agr.common.net.back.unit.CommonUnitBatchSuggestBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
@@ -52,7 +53,8 @@ public class BatchSuggestInfoActivity extends BaseActivity implements IBatchSugg
     String batchID;
     @Autowired
     String batchName;
-    CommonUnitBatchInfoBean.FarmingSuggestionResult resultList;
+
+//    CommonUnitBatchInfoBean.FarmingSuggestionResult resultList;
 
     private UnitBatchSuggestInfoItemAdapter adapter;
     private IBatchSuggestInfoPresenter presenter;
@@ -60,7 +62,7 @@ public class BatchSuggestInfoActivity extends BaseActivity implements IBatchSugg
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        resultList = (CommonUnitBatchInfoBean.FarmingSuggestionResult) getIntent().getSerializableExtra("data");
+//        resultList = (CommonUnitBatchInfoBean.FarmingSuggestionResult) getIntent().getSerializableExtra("data");
         setContentView(R.layout.activity_unit_batch_give_info);
         ButterKnife.bind(this);
     }
@@ -88,61 +90,24 @@ public class BatchSuggestInfoActivity extends BaseActivity implements IBatchSugg
     }
 
     @Override
-    public void refreshBatchSuggestView(Object object) {
+    public void refreshBatchSuggestView(final CommonUnitBatchSuggestBean bean) {
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 //测试
                 List<UnitBatchSuggestInfoEntity> list = new ArrayList<>();
-
-                //批次
-                {
-                    UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
-                    entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_BATCH);
-                    list.add(entity);
-                }
-
-                //适应性
-                {
-                    UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
-                    entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_GIVE);
-                    list.add(entity);
-                }
-                //适应性
-                {
-                    UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
-                    entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_GIVE);
-                    list.add(entity);
-                }
-                //适应性
-                {
-                    UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
-                    entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_GIVE);
-                    list.add(entity);
-                }
-                //适应性
-                {
-                    UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
-                    entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_GIVE);
-                    list.add(entity);
-                }
-                //适应性
-                {
-                    UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
-                    entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_GIVE);
-                    list.add(entity);
-                }
-                //环境标题
+                //适应性评价
                 {
                     UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
                     entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_TITLE);
+                    entity.setName("适应性评价");
                     list.add(entity);
                 }
-
-                //当前环境
-                {
+                //适应性
+                for (CommonUnitBatchSuggestBean.SuggestionResult result : bean.getSuggest().getSuggestionResultList()) {
                     UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
-                    entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_ENVIRONMENT);
+                    entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_SUGGEST);
+                    entity.setData(result);
                     list.add(entity);
                 }
 
@@ -150,6 +115,7 @@ public class BatchSuggestInfoActivity extends BaseActivity implements IBatchSugg
                 {
                     UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
                     entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_TITLE);
+                    entity.setName("未来24小时天气情况(小时)");
                     list.add(entity);
                 }
 
@@ -157,8 +123,25 @@ public class BatchSuggestInfoActivity extends BaseActivity implements IBatchSugg
                 {
                     UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
                     entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_WEATHER);
+                    entity.setData(bean.getFeatures());
+                    entity.setSubData(bean.getRealTime());
                     list.add(entity);
                 }
+
+                //环境标题
+//                {
+//                    UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
+//                    entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_TITLE);
+//                    list.add(entity);
+//                }
+//
+//                //当前环境
+//                {
+//                    UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
+//                    entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_ENVIRONMENT);
+//                    list.add(entity);
+//                }
+
                 adapter.setNewData(list);
             }
         });

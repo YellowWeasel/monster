@@ -10,6 +10,7 @@ import com.erayic.agr.common.net.back.unit.CommonUnitBatchLogsBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchResumeBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchSaveLogBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchServiceBean;
+import com.erayic.agr.common.net.back.unit.CommonUnitBatchSuggestBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitListByBaseBean;
 
@@ -97,5 +98,5 @@ public interface IUnitModel extends IProvider {
     /**
      *得到生产建议详情
      */
-     void getSuggestDetail(String unitID, int type, String batchID, OnDataListener<Object> listener);
+     void getSuggestDetail(String unitID, int type, String batchID, OnDataListener<CommonUnitBatchSuggestBean> listener);
 }

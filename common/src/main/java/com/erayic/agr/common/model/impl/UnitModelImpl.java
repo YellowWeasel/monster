@@ -15,6 +15,7 @@ import com.erayic.agr.common.net.back.unit.CommonUnitBatchLogsBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchResumeBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchSaveLogBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchServiceBean;
+import com.erayic.agr.common.net.back.unit.CommonUnitBatchSuggestBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitListByBaseBean;
 import com.erayic.agr.common.net.http.manager.HttpUnitManager;
@@ -617,13 +618,13 @@ public class UnitModelImpl implements IUnitModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void getSuggestDetail(String unitID, int type, String batchID, final OnDataListener<Object> listener) {
+    public void getSuggestDetail(String unitID, int type, String batchID, final OnDataListener<CommonUnitBatchSuggestBean> listener) {
         HttpUnitManager.getInstance().getSuggestDetail(unitID, type, batchID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Consumer<DataBack<Object>>() {
+                .doOnNext(new Consumer<DataBack<CommonUnitBatchSuggestBean>>() {
                     @Override
-                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                    public void accept(@NonNull DataBack<CommonUnitBatchSuggestBean> objectDataBack) throws Exception {
                         ErayicLog.i("getSuggestDetail", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());

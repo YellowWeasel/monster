@@ -35,6 +35,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <TextView
+            android:id="@+id/manage_base_map_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:background="#c0ffffff"
+            android:gravity="center"
+            android:text="海南省海口市龙华区国贸路59号正昊大厦9H"
+            android:textColor="@color/app_base_text_status_green"
+            android:textSize="14sp" />
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

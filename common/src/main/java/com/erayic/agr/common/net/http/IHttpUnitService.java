@@ -9,6 +9,7 @@ import com.erayic.agr.common.net.back.unit.CommonUnitBatchLogsBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchResumeBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchSaveLogBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchServiceBean;
+import com.erayic.agr.common.net.back.unit.CommonUnitBatchSuggestBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitListByBaseBean;
 
@@ -228,7 +229,7 @@ public interface IHttpUnitService {
      * @return DataBack
      */
     @GET("Unit/GetSuggestDetail")
-    Flowable<DataBack<Object>> getSuggestDetail(
+    Flowable<DataBack<CommonUnitBatchSuggestBean>> getSuggestDetail(
             @Query("batchID") String batchID,
             @Query("unitID") String unitID,
             @Query("type") int type

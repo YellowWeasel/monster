@@ -120,7 +120,8 @@ public class BatchInfoByStatueFragment extends BaseFragment implements IBatchInf
                     case UnitBatchItemEntity.TYPE_SUGGEST:
                         ARouter.getInstance().build("/unit/activity/BatchSuggestInfoActivity")
                                 .withSerializable("data", (Serializable) object)
-                                .withString("batchID", batchID).withString("unitID", unitID).withString("batchName", batchName).navigation();
+                                .withString("unitID", unitID)
+                                .withString("batchID", batchID).withString("batchName", batchName).navigation();
                         break;
                     case UnitBatchItemEntity.TYPE_PRODUCE:
                         showToast("暂未开放，敬请期待");

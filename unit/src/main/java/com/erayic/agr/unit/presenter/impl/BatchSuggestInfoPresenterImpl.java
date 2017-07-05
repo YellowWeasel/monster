@@ -4,6 +4,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.model.IUnitModel;
 import com.erayic.agr.common.net.OnDataListener;
+import com.erayic.agr.common.net.back.unit.CommonUnitBatchSuggestBean;
 import com.erayic.agr.unit.presenter.IBatchSuggestInfoPresenter;
 import com.erayic.agr.unit.view.IBatchSuggestInfoView;
 
@@ -27,9 +28,9 @@ public class BatchSuggestInfoPresenterImpl implements IBatchSuggestInfoPresenter
     @Override
     public void getSuggestDetail(String unitID, int type, String batchID) {
         batchSuggestInfoView.showLoading();
-        unitModel.getSuggestDetail(unitID, type, batchID, new OnDataListener<Object>() {
+        unitModel.getSuggestDetail(unitID, type, batchID, new OnDataListener<CommonUnitBatchSuggestBean>() {
             @Override
-            public void success(Object response) {
+            public void success(CommonUnitBatchSuggestBean response) {
                 batchSuggestInfoView.dismissLoading();
                 batchSuggestInfoView.refreshBatchSuggestView(response);
             }

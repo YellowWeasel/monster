@@ -1,5 +1,6 @@
 package com.erayic.agr.common.net.http.manager;
 
+import com.erayic.agr.common.net.back.manage.CommonBasePositionBean;
 import com.erayic.agr.common.net.http.HttpRetrofit;
 import com.erayic.agr.common.net.http.IHttpManageService;
 
@@ -70,8 +71,13 @@ public class HttpManageManager {
     }
 
     /**
-     * 上传基地位置信息
+     * 上传一个基地位置信息
      */
+    public Flowable setBasePosition(String baseID, double lon, double lat, String provinceName, String cityName, String regionName, String regionCode, String townName,
+                                    String townCode, String village, String address) {
+        //省市截取
+        return manageService.setBasePosition(baseID, lon, lat, provinceName, cityName, regionName, regionCode, townName, townCode, village, address);
+    }
 
     /**
      * 得到基地信息

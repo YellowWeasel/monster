@@ -12,6 +12,7 @@ import com.erayic.agr.common.net.back.CommonBaseInfoBean;
 import com.erayic.agr.common.net.back.CommonBaseListBean;
 import com.erayic.agr.common.net.back.CommonEntInfoBean;
 import com.erayic.agr.common.net.back.CommonUnitInfoBean;
+import com.erayic.agr.common.net.back.manage.CommonBasePositionBean;
 import com.erayic.agr.common.net.http.manager.HttpManageManager;
 import com.erayic.agr.common.util.ErayicGson;
 import com.erayic.agr.common.util.ErayicLog;
@@ -212,7 +213,6 @@ public class ManageModelImpl implements IManageModel {
     @SuppressWarnings("unchecked")
     @Override
     public void changeBase(String newBaseID, final OnDataListener<Object> listener) {
-
         HttpManageManager.getInstance().changeBase(newBaseID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
@@ -220,6 +220,48 @@ public class ManageModelImpl implements IManageModel {
                     @Override
                     public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("changeBase", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void setBasePosition(String baseID, CommonBasePositionBean bean, final OnDataListener<Object> listener) {
+        HttpManageManager.getInstance().setBasePosition(baseID, bean.getLon(), bean.getLat(), bean.getProvinceName(), bean.getCityName(), bean.getRegionName(), bean.getRegionCode(),
+                bean.getTownName(), bean.getTownCode(), bean.getVillage(), bean.getAddress())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<Object>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                        ErayicLog.i("setBasePosition", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
                         } else {

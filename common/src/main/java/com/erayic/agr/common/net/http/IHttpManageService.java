@@ -5,6 +5,7 @@ import com.erayic.agr.common.net.back.CommonBaseInfoBean;
 import com.erayic.agr.common.net.back.CommonBaseListBean;
 import com.erayic.agr.common.net.back.CommonEntInfoBean;
 import com.erayic.agr.common.net.back.CommonUnitInfoBean;
+import com.erayic.agr.common.net.back.manage.CommonBasePositionBean;
 
 import java.util.List;
 
@@ -77,10 +78,41 @@ public interface IHttpManageService {
      *
      * @return DataBack
      */
-    @POST("EntBase/SetBasePostition")
-    Flowable<DataBack<Object>> setBasePostition(
+//    @POST("EntBase/SetBasePostition")
+//    Flowable<DataBack<Object>> setBasePosition(
+//            @Query("baseID") String baseID,
+//            @Body CommonBasePositionBean pos
+//    );
+
+    /**
+     * 上传一个基地位置信息(点数据)
+     *
+     * @param baseID       基地ID
+     * @param lon          经度
+     * @param lat          纬度
+     * @param provinceName 省名称
+     * @param cityName     市名称
+     * @param regionName   区名称
+     * @param regionCode   区代码
+     * @param townName     乡镇名称
+     * @param townCode     乡镇代码
+     * @param village      村名称
+     * @param address      地址
+     * @return
+     */
+    @GET("EntBase/SetBasePostition")
+    Flowable<DataBack<Object>> setBasePosition(
             @Query("baseID") String baseID,
-            @Body Object object
+            @Query("lon") double lon,
+            @Query("lat") double lat,
+            @Query("provinceName") String provinceName,
+            @Query("cityName") String cityName,
+            @Query("regionName") String regionName,
+            @Query("regionCode") String regionCode,
+            @Query("townName") String townName,
+            @Query("townCode") String townCode,
+            @Query("village") String village,
+            @Query("address") String address
     );
 
     /**

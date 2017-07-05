@@ -24,7 +24,7 @@
     <!--价格信息-->
     <color name="app_base_text_price">#ed7d31</color>
     <!--状态信息 红色-->
-    <color name="app_base_text_status_red">#f76120</color>
+    <color name="app_base_text_status_red">#e75f44</color>
     <!--状态信息 绿色-->
     <color name="app_base_text_status_green">#2bb8aa</color>
     <!--状态信息 灰色-->

@@ -149,7 +149,7 @@ public class BaseInfoActivity extends BaseActivity implements IBaseInfoView, Swi
                 entityBasePosition.setItemType(ManageBaseInfoEntity.TYPE_BASE_POSITION);
                 entityBasePosition.setName("基地位置");
                 if (bean.isRegion()) {
-                    entityBasePosition.setSubName("已上传");
+                    entityBasePosition.setSubName(bean.getAddress());
                 } else {
                     entityBasePosition.setSubName("未上传");
                 }
@@ -262,8 +262,13 @@ public class BaseInfoActivity extends BaseActivity implements IBaseInfoView, Swi
                 break;
                 case ManageBaseInfoEntity.TYPE_BASE_POSITION://
                 {
-                    ARouter.getInstance().build("/manage/activity/BasePositionActivity").withString("baseID", baseID).navigation();
-
+                    ARouter.getInstance().build("/manage/activity/BasePositionActivity")
+                            .withString("baseID", baseID)
+                            .withBoolean("isRegion", baseInfoBean.isRegion())
+                            .withDouble("lon", baseInfoBean.getLon())
+                            .withDouble("lat", baseInfoBean.getLat())
+                            .withString("address", baseInfoBean.getAddress())
+                            .navigation();
                 }
                 break;
                 case ManageBaseInfoEntity.TYPE_BASE_ADD_UNIT://增加管理单元

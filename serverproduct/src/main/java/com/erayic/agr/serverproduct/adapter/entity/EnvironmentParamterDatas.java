@@ -88,8 +88,9 @@ public class EnvironmentParamterDatas {
         }
         this.ErrCode = beans.getErrCode();
     }
-    public long parseStrDateToLong(String strDate){
-        String formatDate=strDate.substring(strDate.indexOf("(")+1,strDate.indexOf(")"));
+
+    public long parseStrDateToLong(String strDate) {
+        String formatDate = strDate.substring(strDate.indexOf("(") + 1, strDate.indexOf(")"));
         return Long.parseLong(formatDate);
     }
 
@@ -152,9 +153,10 @@ public class EnvironmentParamterDatas {
         }
 
         public GPS(double lat, double lon, double evl) {
-            Lat = Double.parseDouble(TextUtils.FormatNumber(lat,4));
-            Lon = Double.parseDouble(TextUtils.FormatNumber(lon,4));
-            Evl = Double.parseDouble(TextUtils.FormatNumber(evl,4));;
+            Lat = Double.parseDouble(TextUtils.FormatNumber(lat, 4));
+            Lon = Double.parseDouble(TextUtils.FormatNumber(lon, 4));
+            Evl = Double.parseDouble(TextUtils.FormatNumber(evl, 4));
+            ;
         }
 
         public double getLat() {
@@ -193,9 +195,9 @@ public class EnvironmentParamterDatas {
 
         public RealTime(String appearTime, double rain_10M, double wind_Max, double temp_Max, int errCode, String rainDesc, String windDesc) {
             AppearTime = appearTime;
-            Rain_10M =  Double.parseDouble(TextUtils.FormatNumber(Math.abs(rain_10M),1));
-            Wind_Max = Double.parseDouble(TextUtils.FormatNumber(Math.abs(wind_Max),1));
-            Temp_Max = Double.parseDouble(TextUtils.FormatNumber(Math.abs(temp_Max),1));
+            Rain_10M = Double.parseDouble(TextUtils.FormatNumber(Math.abs(rain_10M), 1));
+            Wind_Max = Double.parseDouble(TextUtils.FormatNumber(Math.abs(wind_Max), 1));
+            Temp_Max = Double.parseDouble(TextUtils.FormatNumber(Math.abs(temp_Max), 1));
             this.errCode = errCode;
             this.RainDesc = rainDesc;
             this.WindDesc = windDesc;
@@ -324,9 +326,11 @@ public class EnvironmentParamterDatas {
         public double getMaxWindLabel() {
             return maxWindLabel;
         }
+
         public double getMinWindLabel() {
             return minWindLabel;
         }
+
         public double getWindYInterval() {
             return windYInterval;
         }
@@ -337,7 +341,7 @@ public class EnvironmentParamterDatas {
 
         public void setTmpForecastWeathers(long date, double tmpVal) {
 
-            TmpForecastWeathers.add(new WeatherMap(date, Double.parseDouble(TextUtils.FormatNumber(Math.abs(tmpVal),1))));
+            TmpForecastWeathers.add(new WeatherMap(date, Double.parseDouble(TextUtils.FormatNumber(Math.abs(tmpVal), 1))));
         }
 
         public List<WeatherMap> getWindForecastWeathers() {
@@ -345,7 +349,7 @@ public class EnvironmentParamterDatas {
         }
 
         public void setWindForecastWeathers(long date, double windVal) {
-            WindForecastWeathers.add(new WeatherMap(date, Double.parseDouble(TextUtils.FormatNumber(Math.abs(windVal),1))));
+            WindForecastWeathers.add(new WeatherMap(date, Double.parseDouble(TextUtils.FormatNumber(Math.abs(windVal), 1))));
         }
 
         public List<WeatherMap> getRainForecastWeathers() {
@@ -353,7 +357,7 @@ public class EnvironmentParamterDatas {
         }
 
         public void setRainForecastWeathers(long date, double rainVal) {
-            RainForecastWeathers.add(new WeatherMap(date, Double.parseDouble(TextUtils.FormatNumber(Math.abs(rainVal),1))));
+            RainForecastWeathers.add(new WeatherMap(date, Double.parseDouble(TextUtils.FormatNumber(Math.abs(rainVal), 1))));
         }
 
         public void sortFutureDatas() {
@@ -361,91 +365,88 @@ public class EnvironmentParamterDatas {
             Collections.sort(RainForecastWeathers, weatherComparator);
             Collections.sort(WindForecastWeathers, weatherComparator);
 
-            if (TmpForecastWeathers.size()>0)
-            TmpForecastWeathers.remove(0);
-            if (RainForecastWeathers.size()>0)
-            RainForecastWeathers.remove(0);
-            if (WindForecastWeathers.size()>0)
-            WindForecastWeathers.remove(0);
+            if (TmpForecastWeathers.size() > 0)
+                TmpForecastWeathers.remove(0);
+            if (RainForecastWeathers.size() > 0)
+                RainForecastWeathers.remove(0);
+            if (WindForecastWeathers.size() > 0)
+                WindForecastWeathers.remove(0);
 
-            tmpDatas=new double[TmpForecastWeathers.size()];
-            rainDatas=new double[RainForecastWeathers.size()];
-            windDatas=new double[WindForecastWeathers.size()];
+            tmpDatas = new double[TmpForecastWeathers.size()];
+            rainDatas = new double[RainForecastWeathers.size()];
+            windDatas = new double[WindForecastWeathers.size()];
 
-            for (int i=0;i<TmpForecastWeathers.size();i++){
+            for (int i = 0; i < TmpForecastWeathers.size(); i++) {
 
-                if (Math.abs(TmpForecastWeathers.get(i).getValue())>50){
-                    tmpDatas[i]=getAverageForList(TmpForecastWeathers,i);
-                }else {
+                if (Math.abs(TmpForecastWeathers.get(i).getValue()) > 50) {
+                    tmpDatas[i] = getAverageForList(TmpForecastWeathers, i);
+                } else {
                     tmpDatas[i] = TmpForecastWeathers.get(i).getValue();
                 }
                 TmpForecastWeathers.get(i).setValue(tmpDatas[i]);
-                if (tmpDatas[i]>maxTmpLabel)maxTmpLabel=tmpDatas[i];
-                if (i==0){
-                    minTmpLabel=tmpDatas[i];
-                }else
-                if (tmpDatas[i]<minTmpLabel)minTmpLabel=tmpDatas[i];
+                if (tmpDatas[i] > maxTmpLabel) maxTmpLabel = tmpDatas[i];
+                if (i == 0) {
+                    minTmpLabel = tmpDatas[i];
+                } else if (tmpDatas[i] < minTmpLabel) minTmpLabel = tmpDatas[i];
             }
-            for (int i=0;i<RainForecastWeathers.size();i++){
-                if (RainForecastWeathers.get(i).getValue()<0){
-                    rainDatas[i]=0;
-                }else {
-                    if (Math.abs(RainForecastWeathers.get(i).getValue())>30){
-                        rainDatas[i]=getAverageForList(RainForecastWeathers,i);
+            for (int i = 0; i < RainForecastWeathers.size(); i++) {
+                if (RainForecastWeathers.get(i).getValue() < 0) {
+                    rainDatas[i] = 0;
+                } else {
+                    if (Math.abs(RainForecastWeathers.get(i).getValue()) > 30) {
+                        rainDatas[i] = getAverageForList(RainForecastWeathers, i);
 
-                    }else{
+                    } else {
                         rainDatas[i] = RainForecastWeathers.get(i).getValue();
                     }
                 }
                 RainForecastWeathers.get(i).setValue(rainDatas[i]);
-                if (rainDatas[i]>maxRainLabel)maxRainLabel=rainDatas[i];
-                if (i==0){
-                    minRainLabel=rainDatas[i];
-                }else
-                if (rainDatas[i]<minRainLabel)minRainLabel=rainDatas[i];
+                if (rainDatas[i] > maxRainLabel) maxRainLabel = rainDatas[i];
+                if (i == 0) {
+                    minRainLabel = rainDatas[i];
+                } else if (rainDatas[i] < minRainLabel) minRainLabel = rainDatas[i];
             }
 
-            for (int i=0;i<WindForecastWeathers.size();i++){
-                if (WindForecastWeathers.get(i).getValue()<0){
-                    windDatas[i]=0;
-                }else {
-                    if (Math.abs(WindForecastWeathers.get(i).getValue())>50){
-                        windDatas[i]=getAverageForList(WindForecastWeathers,i);
-                    }else {
+            for (int i = 0; i < WindForecastWeathers.size(); i++) {
+                if (WindForecastWeathers.get(i).getValue() < 0) {
+                    windDatas[i] = 0;
+                } else {
+                    if (Math.abs(WindForecastWeathers.get(i).getValue()) > 50) {
+                        windDatas[i] = getAverageForList(WindForecastWeathers, i);
+                    } else {
                         windDatas[i] = WindForecastWeathers.get(i).getValue();
                     }
                 }
                 WindForecastWeathers.get(i).setValue(windDatas[i]);
-                if (windDatas[i]>maxWindLabel)maxWindLabel=windDatas[i];
-                if (i==0){
-                    minWindLabel=windDatas[i];
-                }else
-                if (windDatas[i]<minWindLabel)minWindLabel=windDatas[i];
+                if (windDatas[i] > maxWindLabel) maxWindLabel = windDatas[i];
+                if (i == 0) {
+                    minWindLabel = windDatas[i];
+                } else if (windDatas[i] < minWindLabel) minWindLabel = windDatas[i];
 
             }
-            maxTmpLabel=maxTmpLabel+5;
-            maxRainLabel=maxRainLabel+3;
-            maxWindLabel=maxWindLabel+3;
+            maxTmpLabel = maxTmpLabel + 5;
+            maxRainLabel = maxRainLabel + 3;
+            maxWindLabel = maxWindLabel + 3;
 
-            if (minTmpLabel-5>=0)minTmpLabel=minTmpLabel-5;
-            if (minRainLabel-3>=0)minRainLabel=minRainLabel-3;
-            if (minWindLabel-3>=0)minWindLabel=minWindLabel-3;
-            windYInterval=(maxWindLabel-minWindLabel)/6;//windY轴间隔
-            rainYInterval=(maxRainLabel-minRainLabel)/6;//rainY轴间隔
-            tmpYInterval=(maxTmpLabel-minTmpLabel)/6;//tmpY轴间隔
+            if (minTmpLabel - 5 >= 0) minTmpLabel = minTmpLabel - 5;
+            if (minRainLabel - 3 >= 0) minRainLabel = minRainLabel - 3;
+            if (minWindLabel - 3 >= 0) minWindLabel = minWindLabel - 3;
+            windYInterval = (maxWindLabel - minWindLabel) / 6;//windY轴间隔
+            rainYInterval = (maxRainLabel - minRainLabel) / 6;//rainY轴间隔
+            tmpYInterval = (maxTmpLabel - minTmpLabel) / 6;//tmpY轴间隔
             getDates();
         }
 
-        public double getAverageForList(List<WeatherMap> values,int index){
-                if (index==0)return 0;
-                double sum=0;
-                for (int i=0;i<index;i++){
-                    sum=sum+values.get(i).getValue();
-                }
-                return Double.parseDouble(TextUtils.FormatNumber(sum/index,1));
+        public double getAverageForList(List<WeatherMap> values, int index) {
+            if (index == 0) return 0;
+            double sum = 0;
+            for (int i = 0; i < index; i++) {
+                sum = sum + values.get(i).getValue();
+            }
+            return Double.parseDouble(TextUtils.FormatNumber(sum / index, 1));
         }
 
-        public void getDates(){
+        public void getDates() {
             Calendar ca = Calendar.getInstance();
             ca.set(ca.get(Calendar.YEAR), ca.get(Calendar.MONTH), ca.get(Calendar.DAY_OF_MONTH), ca.get(Calendar.HOUR_OF_DAY), 0, 0);
             Date date = ca.getTime();

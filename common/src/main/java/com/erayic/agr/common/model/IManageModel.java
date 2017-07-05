@@ -6,6 +6,7 @@ import com.erayic.agr.common.net.back.CommonBaseInfoBean;
 import com.erayic.agr.common.net.back.CommonBaseListBean;
 import com.erayic.agr.common.net.back.CommonEntInfoBean;
 import com.erayic.agr.common.net.back.CommonUnitInfoBean;
+import com.erayic.agr.common.net.back.manage.CommonBasePositionBean;
 
 import java.util.List;
 
@@ -46,6 +47,7 @@ public interface IManageModel extends IProvider {
     /**
      * 上传基地位置信息
      */
+    void setBasePosition(String baseID,CommonBasePositionBean bean,OnDataListener<Object> listener);
 
     /**
      * 得到基地信息

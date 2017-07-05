@@ -10,17 +10,25 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 public class UnitBatchSuggestInfoEntity implements MultiItemEntity {
 
-    public final static int TYPE_BATCH = 0;//批次
-    public final static int TYPE_TITLE = 1;//标题
-    public final static int TYPE_GIVE = 2;//适应性
-    public final static int TYPE_WEATHER = 3;//未来24小时天气
-    public final static int TYPE_ENVIRONMENT = 4;//当前环境
+    public final static int TYPE_TITLE = 0;//标题
+    public final static int TYPE_SUGGEST = 1;//适应性
+    public final static int TYPE_WEATHER = 2;//未来24小时天气
+    public final static int TYPE_ENVIRONMENT = 3;//当前环境
 
     private int itemType;
 
     private String name;
     private String subName;
-    private Object object;
+    private Object data;
+    private Object subData;
+
+    public Object getSubData() {
+        return subData;
+    }
+
+    public void setSubData(Object subData) {
+        this.subData = subData;
+    }
 
     @Override
     public int getItemType() {
@@ -47,11 +55,11 @@ public class UnitBatchSuggestInfoEntity implements MultiItemEntity {
         this.subName = subName;
     }
 
-    public Object getObject() {
-        return object;
+    public Object getData() {
+        return data;
     }
 
-    public void setObject(Object object) {
-        this.object = object;
+    public void setData(Object data) {
+        this.data = data;
     }
 }

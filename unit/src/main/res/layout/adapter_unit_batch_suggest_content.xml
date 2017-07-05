@@ -9,7 +9,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:minHeight="60dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -68,10 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:ellipsize="end"
                     android:gravity="center_vertical|start"
-                    android:maxLines="1"
-                    android:text="2017-07-14"
                     android:textColor="@color/app_base_text_title_3"
                     android:textSize="12sp" />
             </LinearLayout>

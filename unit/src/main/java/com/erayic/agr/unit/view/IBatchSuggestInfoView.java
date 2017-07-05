@@ -1,6 +1,7 @@
 package com.erayic.agr.unit.view;
 
 import com.erayic.agr.common.base.IBaseView;
+import com.erayic.agr.common.net.back.unit.CommonUnitBatchSuggestBean;
 
 /**
  * 作者：hejian
@@ -23,5 +24,5 @@ public interface IBatchSuggestInfoView extends IBaseView{
     /**
      * 刷新数据
      */
-    void refreshBatchSuggestView(Object object);
+    void refreshBatchSuggestView(CommonUnitBatchSuggestBean bean);
 }
