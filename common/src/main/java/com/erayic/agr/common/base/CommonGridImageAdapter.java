@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.R;
 
@@ -147,7 +148,7 @@ public class CommonGridImageAdapter extends
                 }
             });
             CommonLocalMedia media = list.get(position);
-            int type = media.isUpload() ? 1 : media.getLocalMedia().getType();
+            int type = media.isUpload() ? 1 : media.getLocalMedia().getMimeType();
             String path = "";
             if (media.isUpload()) {
                 path = AgrConstant.IMAGE_URL_IMAGE + media.getResultImage().getRamFileName();
@@ -171,11 +172,13 @@ public class CommonGridImageAdapter extends
                         Log.i("压缩地址::", media.getLocalMedia().getCompressPath());
                     }
 
+//                    RequestOptions options = new RequestOptions()
+//                            .centerCrop()
+//                            .placeholder(R.color.color_f6)
+//                            .diskCacheStrategy(DiskCacheStrategy.ALL);
                     Glide.with(viewHolder.itemView.getContext())
                             .load(path)
-                            .centerCrop()
-                            .placeholder(R.color.color_f6)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .apply(AgrConstant.iconOptions)
                             .into(viewHolder.mImg);
                     break;
                 case 2:

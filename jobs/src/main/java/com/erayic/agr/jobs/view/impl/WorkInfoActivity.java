@@ -20,6 +20,8 @@ import com.bigkoo.alertview.OnItemClickListener;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.MainRefreshMessage;
+import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.enums.EnumOperationType;
 import com.erayic.agr.common.net.back.enums.EnumRequestType;
 import com.erayic.agr.common.net.back.work.CommonWorkInfoBean;
@@ -35,6 +37,8 @@ import com.erayic.agr.jobs.adapter.entity.WorkInfoEntity;
 import com.erayic.agr.jobs.presenter.IWorkInfoPresenter;
 import com.erayic.agr.jobs.presenter.impl.WorkInfoPresenterImpl;
 import com.erayic.agr.jobs.view.IWorkInfoView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,8 +70,9 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
     @Autowired
     String JobID;//工作ID
 
-    private LoadingDialog dialog;
+    boolean isUpdater;//是否在修改状态
 
+    private LoadingDialog dialog;
 
     private CommonWorkInfoBean workInfoBean;//实体类
     private WorkInfoItemAdapter adapter;
@@ -177,6 +182,7 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
         presenter = new WorkInfoPresenterImpl(this);
         if (isAdd) {
             initAddView();
+            workInfoBean = new CommonWorkInfoBean();
         } else {
             presenter.getJobDetails(JobID);
         }
@@ -231,7 +237,6 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
     }
 
     private void saveData() {
-        workInfoBean = new CommonWorkInfoBean();
         List<CommonWorkInfoBean.JobContent> list = new ArrayList<>();
         for (WorkInfoEntity entity : adapter.getData()) {
             switch (entity.getItemType()) {
@@ -401,13 +406,34 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem save = menu.findItem(R.id.action_bar_jobs_work_save);
+        MenuItem modify = menu.findItem(R.id.action_bar_jobs_work_update);
         MenuItem delete = menu.findItem(R.id.action_bar_jobs_work_delete);
         if (isAdd) {
             save.setVisible(true);
+            modify.setVisible(false);
             delete.setVisible(false);
         } else {
             save.setVisible(false);
+            modify.setVisible(true);
             delete.setVisible(true);
+            if (isUpdater) {
+                adapter.setKeyListener(keyListener);
+                adapter.notifyDataSetChanged();
+                isUpdater = false;
+                save.setVisible(true);
+                modify.setVisible(true);
+                modify.setTitle("取消编辑");
+                delete.setVisible(false);
+            } else {
+                isUpdater = true;
+                adapter.setKeyListener(null);
+                if (workInfoBean != null)
+                    selectSure(workInfoBean);
+                save.setVisible(false);
+                modify.setVisible(true);
+                modify.setTitle("编辑");
+                delete.setVisible(true);
+            }
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -420,6 +446,8 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
             saveData();
         } else if (item.getItemId() == R.id.action_bar_jobs_work_delete) {
             presenter.deleteJob(JobID);
+        } else if (item.getItemId() == R.id.action_bar_jobs_work_update) {
+            supportInvalidateOptionsMenu();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -494,6 +522,9 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
 
     @Override
     public void updateOrDeleteSure() {
+        ManageRefreshMessage message = new ManageRefreshMessage();
+        message.setMsgType(ManageRefreshMessage.MANAGE_MASTER_WORK_LIST);
+        EventBus.getDefault().post(message);
         ErayicStack.getInstance().finishCurrentActivity();
     }
 

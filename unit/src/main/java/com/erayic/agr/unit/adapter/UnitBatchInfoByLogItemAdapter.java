@@ -18,8 +18,8 @@ import com.erayic.agr.unit.adapter.entity.UnitBatchInfoByLogEntity;
 import com.erayic.agr.unit.adapter.holder.UnitBatchInfoByLogViewHolder;
 import com.erayic.agr.unit.view.impl.AddLogActivity;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
-import com.luck.picture.lib.model.PictureConfig;
-import com.yalantis.ucrop.entity.LocalMedia;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -62,7 +62,7 @@ public class UnitBatchInfoByLogItemAdapter extends BaseQuickAdapter<CommonUnitBa
         for (int i = 0; i < item.getImages().size(); i++) {
             CommonImagesEntity entity = item.getImages().get(i);
             LocalMedia localMedia = new LocalMedia();
-            localMedia.setType(1);
+            localMedia.setMimeType(1);
             localMedia.setPath(TextUtils.isEmpty(entity.getImgPath()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + entity.getImgPath()));
             localMedia.setPosition(i);
             listImg.add(localMedia);
@@ -80,6 +80,7 @@ public class UnitBatchInfoByLogItemAdapter extends BaseQuickAdapter<CommonUnitBa
 //            imageView.setTag(s);
             Glide.with(context)
                     .load(s.getPath())
+                    .apply(AgrConstant.iconOptions)
                     .into(imageView);
         }
 
@@ -93,7 +94,8 @@ public class UnitBatchInfoByLogItemAdapter extends BaseQuickAdapter<CommonUnitBa
 //            super.onItemImageClick(context, imageView, index, list);
             //点击事件
 //            ErayicToast.TextToast(context, list.get(index));
-            PictureConfig.getInstance().externalPicturePreview((Activity) context, "/Erayic/image", index, list);
+//            PictureConfig.getInstance().externalPicturePreview((Activity) context, "/Erayic/image", index, list);
+            PictureSelector.create((Activity) context).externalPicturePreview(index, "/Erayic/image", list);
         }
     };
 }

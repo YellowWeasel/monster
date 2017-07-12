@@ -14,4 +14,9 @@ public interface IMainView extends IBaseView{
 
     void loadingError();
 
+    /**
+     * 检查更新APP
+     */
+    void updateApp();
+
 }

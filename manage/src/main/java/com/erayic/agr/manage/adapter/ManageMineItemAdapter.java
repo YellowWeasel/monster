@@ -2,12 +2,15 @@ package com.erayic.agr.manage.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.net.back.enums.EnumUserRole;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.adapter.entity.ManageMineEntity;
@@ -65,6 +68,11 @@ public class ManageMineItemAdapter extends BaseMultiItemQuickAdapter<ManageMineE
                 if (helper instanceof ManageMineInfoViewHolder) {
                     ((ManageMineInfoViewHolder) helper).manageMineInfoName.setText(item.getPersonalInfo().getUserName());
                     ((ManageMineInfoViewHolder) helper).manageMineInfoRole.setText(EnumUserRole.getRoleDes(item.getPersonalInfo().getUserRole()));
+                    Glide.with(context).
+                            load(TextUtils.isEmpty(item.getPersonalInfo().getHeadImg()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + item.getPersonalInfo().getHeadImg()))
+                            .apply(AgrConstant.iconOptions)
+                            .into(((ManageMineInfoViewHolder) helper).manageMineInfoIcon);
+
                     ((ManageMineInfoViewHolder) helper).itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

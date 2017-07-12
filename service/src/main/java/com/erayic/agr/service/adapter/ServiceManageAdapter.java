@@ -85,7 +85,7 @@ public class ServiceManageAdapter extends SectionedRecyclerViewAdapter<ServiceMa
 
     @Override
     protected void onBindSectionHeaderViewHolder(ServiceManageGroupViewHolder holder, final int section) {
-        Glide.with(context).load(AgrConstant.IMAGE_URL_PREFIX + list.get(section).getIcon()).error(R.drawable.image_service_test).into(holder.serviceManageItemIcon);
+        Glide.with(context).load(AgrConstant.IMAGE_URL_PREFIX + list.get(section).getIcon()).apply(AgrConstant.iconOptions).into(holder.serviceManageItemIcon);
         holder.serviceManageItemName.setText(list.get(section).getServiceName());
         if (list.get(section).getType() == EnumServiceType.Subject) {
             holder.serviceManageItemSub.setVisibility(View.VISIBLE);

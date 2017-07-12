@@ -12,10 +12,13 @@ import android.view.ViewGroup;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.common.base.BaseFragment;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.UnitRefreshMessage;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchLogsBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
+import com.erayic.agr.common.util.ErayicLog;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.R2;
@@ -24,6 +27,9 @@ import com.erayic.agr.unit.adapter.UnitBatchInfoByResumeItemAdapter;
 import com.erayic.agr.unit.presenter.IBatchInfoByLogPresenter;
 import com.erayic.agr.unit.presenter.impl.BatchInfoByLogPresenterImpl;
 import com.erayic.agr.unit.view.IBatchInfoByLogView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -35,7 +41,7 @@ import butterknife.BindView;
  * 注解：
  */
 @Route(path = "/unit/fragment/BatchInfoByLogFragment", name = "工作日志")
-public class BatchInfoByLogFragment extends BaseFragment implements IBatchInfoByLogView, SwipeRefreshLayout.OnRefreshListener {
+public class BatchInfoByLogFragment extends BaseFragment implements IBatchInfoByLogView, BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
 
     @BindView(R2.id.unit_batch_log_RecyclerView)
@@ -48,6 +54,9 @@ public class BatchInfoByLogFragment extends BaseFragment implements IBatchInfoBy
     @Autowired
     String batchID;
 
+    private static final int PAGE_SIZE = 5;
+    private int currentPage = 0;//当前页数
+
     private IBatchInfoByLogPresenter presenter;
     private UnitBatchInfoByLogItemAdapter adapter;
 
@@ -58,6 +67,7 @@ public class BatchInfoByLogFragment extends BaseFragment implements IBatchInfoBy
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         unitBatchLogSwipe.setOnRefreshListener(this);
         unitBatchLogAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +79,10 @@ public class BatchInfoByLogFragment extends BaseFragment implements IBatchInfoBy
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         unitBatchLogRecyclerView.setLayoutManager(manager);
         adapter = new UnitBatchInfoByLogItemAdapter(getActivity(), null);
+        adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+        adapter.isFirstOnly(false);
         unitBatchLogRecyclerView.setAdapter(adapter);
+        adapter.setOnLoadMoreListener(this, unitBatchLogRecyclerView);
 //        unitBatchLogRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
     }
 
@@ -81,18 +94,55 @@ public class BatchInfoByLogFragment extends BaseFragment implements IBatchInfoBy
 
     @Override
     public void onRefresh() {
-        presenter.getWorkLogByBatch(batchID);
+        presenter.getWorkLogByBatch(batchID, PAGE_SIZE);
+    }
+
+
+    @Override
+    public void onLoadMoreRequested() {
+        //加载更多
+        presenter.getWorkLogByBatch(batchID, currentPage, PAGE_SIZE);
+        adapter.setEnableLoadMore(true);
+    }
+
+    @Subscribe
+    public void onMessageEvent(UnitRefreshMessage event) {
+        if (event.getMsgType() == UnitRefreshMessage.UNIT_MASTER_LOG) {
+            ErayicLog.i("event-refresh", "/unit/activity/AddLogActivity");
+            onRefresh();
+        }
     }
 
 
     @Override
     public void refreshLogsView(final List<CommonUnitBatchLogsBean> list) {
+        currentPage = 2;
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 adapter.setNewData(list);
             }
         });
+    }
+
+    @Override
+    public void loadMoreSure(final List<CommonUnitBatchLogsBean> list) {
+        currentPage++;
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.loadMoreComplete();//加载完成
+                if (list != null)
+                    adapter.addData(list);
+                if (list.size() == 0)//没有更多数据了
+                    adapter.loadMoreEnd();
+            }
+        });
+    }
+
+    @Override
+    public void loadMoreFailure() {
+        adapter.loadMoreFail();
     }
 
     @Override
@@ -127,5 +177,9 @@ public class BatchInfoByLogFragment extends BaseFragment implements IBatchInfoBy
         });
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

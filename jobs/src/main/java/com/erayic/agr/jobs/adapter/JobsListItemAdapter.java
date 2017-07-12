@@ -2,6 +2,8 @@ package com.erayic.agr.jobs.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
@@ -9,23 +11,37 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.config.FullyGridLayoutManager;
 import com.erayic.agr.common.net.back.enums.EnumUserRole;
 import com.erayic.agr.common.net.back.work.CommonJobsListManagerBean;
 import com.erayic.agr.common.net.back.work.CommonJobsListUserBean;
+import com.erayic.agr.common.util.ErayicLog;
 import com.erayic.agr.common.util.ErayicNetDate;
 import com.erayic.agr.common.view.SectionedRecyclerViewAdapter;
 import com.erayic.agr.jobs.R;
 import com.erayic.agr.jobs.adapter.holder.JobsItemChildByAdminViewHolder;
 import com.erayic.agr.jobs.adapter.holder.JobsItemChildByUserViewHolder;
 import com.erayic.agr.jobs.adapter.holder.JobsItemGroupByUserViewHolder;
+import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 
 import org.joda.time.DateTime;
 
 import java.util.List;
+
+import static com.bumptech.glide.request.RequestOptions.centerCropTransform;
 
 /**
  * 作者：hejian
@@ -44,14 +60,13 @@ public class JobsListItemAdapter extends SectionedRecyclerViewAdapter<BaseViewHo
 
     private OnItemScrollToPositionWithOffset onItemScrollToPositionWithOffset;
     private OnItemInfoClickListener onItemInfoClickListener;
-    private JobsListGridImageAdapter adapter;//图片adapter
 
     public JobsListItemAdapter(Context context, List<CommonJobsListUserBean.JobsInfo> userlist, int role) {
         this.context = context;
         mBooleanMap = new SparseBooleanArray();
         this.userList = userlist;
         this.role = role;
-        adapter = new JobsListGridImageAdapter(context,null);
+
     }
 
     public void setUserList(List<CommonJobsListUserBean.JobsInfo> userList) {
@@ -243,10 +258,16 @@ public class JobsListItemAdapter extends SectionedRecyclerViewAdapter<BaseViewHo
                     for (CommonJobsListManagerBean.OperatersInfo userInfo : managerList.get(section).getJobs().get(position).getOperaters()) {
                         strUserName += userInfo.getUserName() + "\n";
                     }
-                    ((JobsItemChildByAdminViewHolder) holder).jobsContentSubName.setText(strUserName.substring(0, strUserName.length() - 1));
+                    if (TextUtils.isEmpty(strUserName))
+                        ((JobsItemChildByAdminViewHolder) holder).jobsContentSubName.setText("无负责人");
+                    else
+                        ((JobsItemChildByAdminViewHolder) holder).jobsContentSubName.setText(strUserName.substring(0, strUserName.length() - 1));
                     FullyGridLayoutManager manager = new FullyGridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false);
+                    JobsListGridImageAdapter adapter = new JobsListGridImageAdapter(context, null);
                     ((JobsItemChildByAdminViewHolder) holder).jobsContentImg.setLayoutManager(manager);
                     ((JobsItemChildByAdminViewHolder) holder).jobsContentImg.setAdapter(adapter);
+//                    ImageAdapter imageAdapter = new ImageAdapter(section, position);
+//                    ((JobsItemChildByAdminViewHolder) holder).jobsContentImg.setAdapter(imageAdapter);
 
                     if (managerList.get(section).getJobs().get(position).isFinish()) {
                         ((JobsItemChildByAdminViewHolder) holder).jobsContentStatus.setTextColor(ContextCompat.getColor(context, R.color.app_base_text_title_2));
@@ -255,6 +276,7 @@ public class JobsListItemAdapter extends SectionedRecyclerViewAdapter<BaseViewHo
                         ((JobsItemChildByAdminViewHolder) holder).jobsContentImg.setVisibility(View.VISIBLE);
                         //设置图片
                         adapter.setNewData(managerList.get(section).getJobs().get(position).getRecorder().getRecords());
+
                     } else {
                         ((JobsItemChildByAdminViewHolder) holder).jobsContentStatus.setTextColor(ContextCompat.getColor(context, R.color.ui_btn_background_red));
                         ((JobsItemChildByAdminViewHolder) holder).jobsContentStatus.setText("待完成");
@@ -334,4 +356,43 @@ public class JobsListItemAdapter extends SectionedRecyclerViewAdapter<BaseViewHo
     public interface OnItemInfoClickListener {
         void onClick(View view, String schID, String unitID, String JobName, boolean isFinish);
     }
+
+//    private class ImageAdapter extends NineGridImageViewAdapter<CommonJobsListManagerBean.RecordsBean> {
+//        private int section;
+//        private int position;
+//
+//        public ImageAdapter(int section, int position) {
+//            this.section = section;
+//            this.position = position;
+//        }
+//
+//        @Override
+//        protected void onDisplayImage(Context mContext, ImageView imageView, CommonJobsListManagerBean.RecordsBean s) {
+//            //加载
+////            imageView.setTag(s);
+//            Glide.with(context.getApplicationContext())
+//                    .load(TextUtils.isEmpty(s.getImgPath()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + s.getImgPath()))
+//                    .apply(AgrConstant.iconOptions)
+//                    .into(imageView);
+//        }
+//
+//        @Override
+//        protected ImageView generateImageView(Context mContext) {
+//            return super.generateImageView(context);
+//        }
+//
+//        @Override
+//        protected void onItemImageClick(Context mContext, ImageView imageView, int index, List<CommonJobsListManagerBean.RecordsBean> list) {
+////            super.onItemImageClick(context, imageView, index, list);
+//            //点击事件
+////            ErayicToast.TextToast(context, list.get(index));
+////            PictureConfig.getInstance().externalPicturePreview((Activity) context, "/Erayic/image", index, list);
+////            PictureSelector.create((Activity) context).externalPicturePreview(index, "/Erayic/image", list);
+//            if (onItemInfoClickListener != null)
+//                onItemInfoClickListener.onClick(imageView, managerList.get(section).getJobs().get(position).getSchID(), managerList.get(section).getJobs().get(position).getUnitID(),
+//                        managerList.get(section).getJobName(), managerList.get(section).getJobs().get(position).isFinish());
+//        }
+//    }
+
+
 }

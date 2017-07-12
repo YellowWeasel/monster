@@ -3,13 +3,9 @@ package com.erayic.agr.view.impl;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -21,6 +17,7 @@ import com.erayic.agr.common.service.ErayicService;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.NoScrollViewPager;
+import com.erayic.agr.common.view.update.UpdateAppHttpUtil;
 import com.erayic.agr.presenter.IMainPresenter;
 import com.erayic.agr.presenter.impl.MainPresenterImpl;
 import com.erayic.agr.view.IMainView;
@@ -28,6 +25,12 @@ import com.jaeger.library.StatusBarUtil;
 import com.jpeng.jptabbar.BadgeDismissListener;
 import com.jpeng.jptabbar.JPTabBar;
 import com.jpeng.jptabbar.OnTabSelectListener;
+import com.vector.update_app.UpdateAppBean;
+import com.vector.update_app.UpdateAppManager;
+import com.vector.update_app.UpdateCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 
@@ -179,13 +182,106 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void loadingError() {
-        ErayicStack.getInstance().finishAllActivity();//退出所有页面（获取用户信息失败）
+        ErayicStack.getInstance().finishAllActivity();//清空所有的activity
+        ARouter.getInstance().build("/index/Activity/LoginActivity").navigation();
+    }
+
+    @Override
+    public void updateApp() {
+
+        String updateUrl = "http://weixin.erayic.com/infos_json.txt";
+        UpdateAppManager manager = new UpdateAppManager
+                .Builder()
+                //当前Activity
+                .setActivity(MainActivity.this)
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateAppHttpUtil())
+                //设置请求方式 默认get,
+                .setPost(false)
+                //设置头部
+                .setTopPic(R.drawable.app_base_default_update)
+                //更新地址
+                .setUpdateUrl(updateUrl)
+//                //添加自定义参数
+//                .setParams(params)
+                //设置主题色
+                .setThemeColor(0xff39c1e9)
+                .build();
+
+        //检测是否有新版本
+        manager.checkNewApp(new UpdateCallback() {
+            /**
+             * 解析json,自定义协议
+             *
+             * @param json 服务器返回的json
+             * @return UpdateAppBean
+             */
+            @Override
+            protected UpdateAppBean parseJson(String json) {
+                UpdateAppBean updateAppBean = new UpdateAppBean();
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    updateAppBean
+                            //是否更新Yes,No
+                            .setUpdate(jsonObject.getString("update"))
+                            //新版本号
+                            .setNew_version(jsonObject.getString("new_version"))
+                            //下载地址
+                            .setApk_file_url(jsonObject.getString("apk_file_url"))
+                            //大小
+                            .setTarget_size(jsonObject.getString("target_size"))
+                            //更新内容
+                            .setUpdate_log(jsonObject.getString("update_log"))
+                            //是否强制更新
+                            .setConstraint(jsonObject.getBoolean("constraint"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return updateAppBean;
+            }
+
+            /**
+             * 有新版本
+             *
+             * @param updateApp        新版本信息
+             * @param updateAppManager app更新管理器
+             */
+            @Override
+            public void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+                updateAppManager.showDialog();
+            }
+
+            /**
+             * 网络请求之前
+             */
+            @Override
+            public void onBefore() {
+                //CProgressDialogUtils.showProgressDialog(MainActivity.this);
+            }
+
+            /**
+             * 网路请求之后
+             */
+            @Override
+            public void onAfter() {
+                //CProgressDialogUtils.cancelProgressDialog(MainActivity.this);
+            }
+
+            /**
+             * 没有新版本
+             */
+            @Override
+            public void noNewApp() {
+                ErayicToast.TextToast(MainActivity.this, "没有新版本");
+            }
+        });
     }
 
     @Override
     protected void setStatusBar() {
         StatusBarUtil.setTranslucentForImageViewInFragment(MainActivity.this, null);
     }
+
 
     @Override
     public void showToast(final String msg) {

@@ -388,6 +388,9 @@ public class UnitBatchInfoByStatusItemAdapter extends BaseMultiItemQuickAdapter<
 
                     CommonUnitBatchInfoBean.FarmingSuggestionResult resultList = (CommonUnitBatchInfoBean.FarmingSuggestionResult) item.getData();
 
+                    if (resultList.getSuggestionResultList() == null)
+                        resultList.setSuggestionResultList(new ArrayList<CommonUnitBatchInfoBean.SuggestionResult>());
+
                     String[] strName = new String[resultList.getSuggestionResultList().size()];//Key
                     ArrayList<RadarEntry> entries = new ArrayList<>();//Value
                     for (int i = 0; i < resultList.getSuggestionResultList().size(); i++) {

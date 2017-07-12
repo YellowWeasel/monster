@@ -16,6 +16,6 @@ public interface ICodePresenter {
     /**
      * 校验验证码
      */
-    void checkTelVerify(String tel, String verifyCode);
+    void checkTelVerify(String tel, String verifyCode,String identifier);
 
 }

@@ -45,6 +45,8 @@ public class UnitListItemByEnvironmentAdapter extends BaseMultiItemQuickAdapter<
                 return new UnitListItemByEnviInfoViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_unit_list_item_by_envi_info, parent, false));
             case UnitListItemByEnvironmentEntity.TYPE_WIND:
                 return new UnitListItemByEnviInfoViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_unit_list_item_by_envi_info, parent, false));
+            case UnitListItemByEnvironmentEntity.TYPE_CO2:
+                return new UnitListItemByEnviInfoViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_unit_list_item_by_envi_info, parent, false));
             default:
                 return super.onCreateDefViewHolder(parent, viewType);
         }
@@ -98,6 +100,13 @@ public class UnitListItemByEnvironmentAdapter extends BaseMultiItemQuickAdapter<
             case UnitListItemByEnvironmentEntity.TYPE_WIND:
                 if (helper instanceof UnitListItemByEnviInfoViewHolder) {
                     ((UnitListItemByEnviInfoViewHolder) helper).unitContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.image_unit_wind));
+                    ((UnitListItemByEnviInfoViewHolder) helper).unitContentName.setText(item.getName());
+                    ((UnitListItemByEnviInfoViewHolder) helper).unitContentSub.setText(item.getSubName());
+                }
+                break;
+            case UnitListItemByEnvironmentEntity.TYPE_CO2:
+                if (helper instanceof UnitListItemByEnviInfoViewHolder) {
+                    ((UnitListItemByEnviInfoViewHolder) helper).unitContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.image_unit_co2));
                     ((UnitListItemByEnviInfoViewHolder) helper).unitContentName.setText(item.getName());
                     ((UnitListItemByEnviInfoViewHolder) helper).unitContentSub.setText(item.getSubName());
                 }

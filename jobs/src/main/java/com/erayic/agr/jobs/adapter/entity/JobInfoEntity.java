@@ -19,7 +19,7 @@ public class JobInfoEntity implements MultiItemEntity {
     public static final int TYPE_JOB_NOTICE_DATE = 6;//选择通知时间
 
     private String name;
-    private String  subName;
+    private String subName;
     private Object ID;
 
     private int itemType;

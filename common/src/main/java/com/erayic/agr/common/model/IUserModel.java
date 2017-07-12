@@ -2,6 +2,7 @@ package com.erayic.agr.common.model;
 
 import com.alibaba.android.arouter.facade.template.IProvider;
 import com.erayic.agr.common.net.OnDataListener;
+import com.erayic.agr.common.net.back.CommonBaseListBean;
 import com.erayic.agr.common.net.back.CommonPersonnelBean;
 import com.erayic.agr.common.net.back.CommonUserInfoBean;
 
@@ -28,7 +29,7 @@ public interface IUserModel extends IProvider {
     /**
      * 更新用户头像
      */
-    void updateUserIcon(byte[] icon, OnDataListener<Object> listener);
+    void updateUserIcon(String path, OnDataListener<Object> listener);
 
     /**
      * 重设用户密码
@@ -43,7 +44,7 @@ public interface IUserModel extends IProvider {
     /**
      * 得到指定基地的所有用户
      */
-    void getAllUserBySpecifyBase(String baseID,OnDataListener<List<CommonPersonnelBean>> listener);
+    void getAllUserBySpecifyBase(String baseID, OnDataListener<List<CommonPersonnelBean>> listener);
 
     /**
      * 更新电话号码
@@ -63,7 +64,17 @@ public interface IUserModel extends IProvider {
     /**
      * 邀请用户
      */
-    void sendInvite(String tel,String name,int role,OnDataListener<Object> listener);
+    void sendInvite(String tel, String name, int role, OnDataListener<Object> listener);
+
+    /**
+     * 得到一个用户的所有基地
+     */
+    void getBaseListByUser(OnDataListener<List<CommonBaseListBean>> listener);
+
+    /**
+     * 用户变更所属基地(重新保存cookies)
+     */
+    void changeBase(String newBaseID, OnDataListener<Object> listener);
 
 
 }

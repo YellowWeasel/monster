@@ -1,7 +1,9 @@
 package com.erayic.agr.common.net.http.manager;
 
 import com.erayic.agr.common.net.back.CommonByteArrayBean;
+import com.erayic.agr.common.net.back.user.CommonUserIconBean;
 import com.erayic.agr.common.net.http.HttpRetrofit;
+import com.erayic.agr.common.net.http.IHttpIndexService;
 import com.erayic.agr.common.net.http.IHttpUserService;
 
 import io.reactivex.Flowable;
@@ -17,7 +19,7 @@ public class HttpUserManager {
 
     private static HttpUserManager manager;
 
-    private static IHttpUserService serviceRequest;
+    private static IHttpUserService serviceRequest, serviceReceivedCookies;
 
     private HttpUserManager() {
     }
@@ -28,6 +30,7 @@ public class HttpUserManager {
                 if (manager == null) {
                     manager = new HttpUserManager();
                     serviceRequest = HttpRetrofit.getRequestCookiesRetrofit().create(IHttpUserService.class);
+                    serviceReceivedCookies = HttpRetrofit.getReceivedCookiesRetrofit().create(IHttpUserService.class);
                 }
             }
         }
@@ -51,12 +54,10 @@ public class HttpUserManager {
     /**
      * 更新用户头像
      */
-    public Flowable updateUserIcon(byte[] icon) {
-        CommonByteArrayBean arrayBean = new CommonByteArrayBean();
-        CommonByteArrayBean.ByteArrayInfo arrayInfo = new CommonByteArrayBean.ByteArrayInfo();
-        arrayInfo.setBytes(icon);
-        arrayBean.setByteArrayInfo(arrayInfo);
-        return serviceRequest.updateUserIcon(arrayBean);
+    public Flowable updateUserIcon(String icon) {
+        CommonUserIconBean bean = new CommonUserIconBean();
+        bean.setIcon(icon);
+        return serviceRequest.updateUserIcon(bean);
     }
 
     /**
@@ -76,7 +77,7 @@ public class HttpUserManager {
     /**
      * 得到指定基地的所有用户
      */
-    public Flowable getAllUserBySpecifyBase(String baseID){
+    public Flowable getAllUserBySpecifyBase(String baseID) {
         return serviceRequest.getAllUserBySpecifyBase(baseID);
     }
 
@@ -106,5 +107,19 @@ public class HttpUserManager {
      */
     public Flowable sendInvite(String tel, String name, int role) {
         return serviceRequest.sendInvite(tel, name, role);
+    }
+
+    /**
+     * 得到一个用户的所有基地
+     */
+    public Flowable getBaseListByUser() {
+        return serviceRequest.getBaseListByUser();
+    }
+
+    /**
+     * 用户变更所属基地(重新保存cookies)
+     */
+    public Flowable changeBase(String newBaseID) {
+        return serviceReceivedCookies.changeBase(newBaseID);
     }
 }

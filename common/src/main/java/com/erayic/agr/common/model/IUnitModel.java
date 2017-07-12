@@ -68,7 +68,7 @@ public interface IUnitModel extends IProvider {
     /**
      * 得到作物批次的生产履历
      */
-    void getPorduceHistoryByBatch(String batchID, OnDataListener<List<CommonUnitBatchResumeBean>> listener);
+    void getPorduceHistoryByBatch(String batchID, int pageNum, int pageSize, OnDataListener<List<CommonUnitBatchResumeBean>> listener);
 
     /**
      * 保存一个工作日志
@@ -78,7 +78,7 @@ public interface IUnitModel extends IProvider {
     /**
      * 得到批次所有的工作日志
      */
-    void getWorkLogByBatch(String batchID, OnDataListener<List<CommonUnitBatchLogsBean>> listener);
+    void getWorkLogByBatch(String batchID,int pageNum,int pageSize, OnDataListener<List<CommonUnitBatchLogsBean>> listener);
 
     /**
      * 得到批次详情首页

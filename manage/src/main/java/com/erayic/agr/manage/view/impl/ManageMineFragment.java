@@ -16,6 +16,7 @@ import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.adapter.ManageMineItemAdapter;
@@ -45,10 +46,8 @@ public class ManageMineFragment extends BaseFragment implements IMineView {
     String titleName;
     @BindView(R2.id.fake_status_bar)
     View fakeStatusBar;
-    @BindView(R2.id.toolbar_title_name)
-    TextView toolbarTitleName;
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.manage_mine_RecyclerView)
     RecyclerView manageMineRecyclerView;
 
@@ -63,8 +62,7 @@ public class ManageMineFragment extends BaseFragment implements IMineView {
     protected void initView(View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         EventBus.getDefault().register(this);// 注册EventBus
-        toolbar.setTitle("");
-        toolbarTitleName.setText(titleName);
+        toolbar.setTitle(titleName);
         //使用线性布局管理器
         CustomLinearLayoutManager manager = new CustomLinearLayoutManager(getActivity());
         manager.setScrollEnabled(true);//滑动监听
@@ -73,7 +71,11 @@ public class ManageMineFragment extends BaseFragment implements IMineView {
         adapter.setOnItemUrlClickListener(new ManageMineItemAdapter.onItemUrlClickListener() {
             @Override
             public void onItemClick(View v, String url) {
-                ARouter.getInstance().build(url).navigation();//跳转到具体的页面
+                if (TextUtils.equals(url, "/xxx/xxx"))
+                    showToast("暂未开放");
+                else
+                    ARouter.getInstance().build(url).navigation();//跳转到具体的页面
+
             }
         });
         manageMineRecyclerView.setAdapter(adapter);
@@ -92,7 +94,7 @@ public class ManageMineFragment extends BaseFragment implements IMineView {
         entityUserInfo.setItemType(ManageMineEntity.TYPE_INFO);
         entityUserInfo.setToUrl("/manage/activity/UserInfoActivity");
         ManageMineEntity.PersonalInfo personalInfo = new ManageMineEntity.PersonalInfo();
-        personalInfo.setHeadImg("");
+        personalInfo.setHeadImg(PreferenceUtils.getParam("UserIcon"));
         personalInfo.setUserName(PreferenceUtils.getParam("UserName"));
         personalInfo.setUserRole(PreferenceUtils.getParam("UserRole", 0));
         entityUserInfo.setPersonalInfo(personalInfo);
@@ -172,19 +174,21 @@ public class ManageMineFragment extends BaseFragment implements IMineView {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUpdateUserName(UserInfoEvent event) {
         for (ManageMineEntity entity : adapter.getData()) {
-            if (!TextUtils.isEmpty(event.getUserName())) {
-                if (entity.getItemType() == ManageMineEntity.TYPE_INFO) {
-                    entity.getPersonalInfo().setUserName(event.getUserName());
-                    adapter.notifyDataSetChanged();
+            if (entity.getItemType() == ManageMineEntity.TYPE_INFO) {
+                switch (event.getType()) {
+                    case UserInfoEvent.TYPE_USER_NAME://名字
+                    {
+                        entity.getPersonalInfo().setUserName(event.getData().toString());
+                    }
+                    break;
+                    case UserInfoEvent.TYPE_USER_ICON://图片
+                    {
+                        entity.getPersonalInfo().setHeadImg(event.getData().toString());
+                    }
+                    break;
                 }
+                adapter.notifyDataSetChanged();
             }
-            if (!TextUtils.isEmpty(event.getUserIcon())) {
-                if (entity.getItemType() == ManageMineEntity.TYPE_INFO) {
-                    entity.getPersonalInfo().setHeadImg(event.getUserIcon());
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
         }
     }
 

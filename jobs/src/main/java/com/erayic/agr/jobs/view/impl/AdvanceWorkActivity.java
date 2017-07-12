@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.work.CommonWorkListBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicStack;
@@ -25,6 +26,9 @@ import com.erayic.agr.jobs.adapter.WorkListItemAdapter;
 import com.erayic.agr.jobs.presenter.IAdvanceWorkPresenter;
 import com.erayic.agr.jobs.presenter.impl.AdvanceWorkPresenterImpl;
 import com.erayic.agr.jobs.view.IAdvanceWorkView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -53,6 +57,7 @@ public class AdvanceWorkActivity extends BaseActivity implements IAdvanceWorkVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jobs_advance_work);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -94,6 +99,12 @@ public class AdvanceWorkActivity extends BaseActivity implements IAdvanceWorkVie
         presenter.getJobList();
     }
 
+    @Subscribe
+    public void onMessageEvent(ManageRefreshMessage event) {
+        if (event.getMsgType() == ManageRefreshMessage.MANAGE_MASTER_WORK_LIST) {
+            onRefresh();
+        }
+    }
 
     @Override
     public void openRefresh() {
@@ -156,5 +167,9 @@ public class AdvanceWorkActivity extends BaseActivity implements IAdvanceWorkVie
         return super.onOptionsItemSelected(item);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }

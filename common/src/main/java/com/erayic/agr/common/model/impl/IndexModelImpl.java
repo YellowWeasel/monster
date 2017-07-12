@@ -16,7 +16,6 @@ import com.erayic.agr.common.net.http.manager.HttpIndexManager;
 import com.erayic.agr.common.util.ErayicGson;
 import com.erayic.agr.common.util.ErayicImage;
 import com.erayic.agr.common.util.ErayicLog;
-import com.yalantis.ucrop.entity.LocalMedia;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;

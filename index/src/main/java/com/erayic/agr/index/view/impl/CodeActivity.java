@@ -13,7 +13,9 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.util.ErayicIdentifier;
 import com.erayic.agr.common.util.ErayicRegularly;
+import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.index.R;
 import com.erayic.agr.index.R2;
@@ -85,7 +87,7 @@ public class CodeActivity extends BaseActivity implements ICodeView {
         if (!ErayicRegularly.isVerCode(indexCodeVerCode.getText().toString())) {
             indexCodeVerCode.setError("验证码格式错误");
         } else {
-            presenter.checkTelVerify(tel, indexCodeVerCode.getText().toString());
+            presenter.checkTelVerify(tel, indexCodeVerCode.getText().toString(), ErayicIdentifier.getInstance(CodeActivity.this).getErayicdentifier());
         }
     }
 
@@ -100,6 +102,7 @@ public class CodeActivity extends BaseActivity implements ICodeView {
             @Override
             public void run() {
                 setResult(9000);
+                ErayicStack.getInstance().finishCurrentActivity();
             }
         });
     }

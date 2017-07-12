@@ -28,9 +28,9 @@ public class BatchInfoByLogPresenterImpl implements IBatchInfoByLogPresenter {
     }
 
     @Override
-    public void getWorkLogByBatch(String batchID) {
+    public void getWorkLogByBatch(String batchID, int pageSize) {
         logView.openRefresh();
-        unitModel.getWorkLogByBatch(batchID, new OnDataListener<List<CommonUnitBatchLogsBean>>() {
+        unitModel.getWorkLogByBatch(batchID,1,pageSize, new OnDataListener<List<CommonUnitBatchLogsBean>>() {
             @Override
             public void success(List<CommonUnitBatchLogsBean> response) {
                 logView.clearRefresh();
@@ -40,6 +40,24 @@ public class BatchInfoByLogPresenterImpl implements IBatchInfoByLogPresenter {
             @Override
             public void fail(int errCode, String msg) {
                 logView.clearRefresh();
+                logView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+                logView.refreshLogsView(null);
+            }
+        });
+    }
+
+    @Override
+    public void getWorkLogByBatch(String batchID,int pageNum,int pageSize) {
+
+        unitModel.getWorkLogByBatch(batchID,pageNum,pageSize, new OnDataListener<List<CommonUnitBatchLogsBean>>() {
+            @Override
+            public void success(List<CommonUnitBatchLogsBean> response) {
+                logView.loadMoreSure(response);
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
+                logView.loadMoreFailure();
                 logView.showToast("错误代码：" + errCode + "\n描述：" + msg);
             }
         });

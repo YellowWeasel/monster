@@ -3,6 +3,7 @@ package com.erayic.agr.jobs.view.impl;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,14 +13,18 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseFragment;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.config.PreferenceUtils;
+import com.erayic.agr.common.event.MainRefreshMessage;
 import com.erayic.agr.common.net.back.enums.EnumUserRole;
 import com.erayic.agr.common.net.back.work.CommonJobsListManagerBean;
 import com.erayic.agr.common.net.back.work.CommonJobsListUserBean;
+import com.erayic.agr.common.util.ErayicLog;
+import com.erayic.agr.common.util.ErayicNetDate;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.SectionedSpanSizeLookup;
 import com.erayic.agr.common.view.calendar.OnCalendarClickListener;
 import com.erayic.agr.common.view.calendar.schedule.ScheduleLayout;
 import com.erayic.agr.common.view.calendar.schedule.ScheduleRecyclerView;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.jobs.R;
 import com.erayic.agr.jobs.R2;
 import com.erayic.agr.jobs.adapter.JobsListItemAdapter;
@@ -27,7 +32,11 @@ import com.erayic.agr.jobs.presenter.IJobsListPresenter;
 import com.erayic.agr.jobs.presenter.impl.JobsListPresenterImpl;
 import com.erayic.agr.jobs.view.IJobsListView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormat;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,14 +54,10 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
     String titleName;
     @BindView(R2.id.fake_status_bar)
     View fakeStatusBar;
-    @BindView(R2.id.toolbar_title_name)
-    TextView toolbarTitleName;
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
 
     ScheduleRecyclerView jobsListRecyclerView;
-    @BindView(R2.id.toolbar_title_img)
-    TextView toolbarTitleImg;
     @BindView(R2.id.slSchedule)
     ScheduleLayout slSchedule;
 
@@ -66,21 +71,35 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         setHasOptionsMenu(true);
-        toolbar.setTitle("");
-        toolbarTitleName.setText(titleName);
+        toolbar.setTitle(titleName);
+        if (PreferenceUtils.getParam("UserRole", 0) == EnumUserRole.Role_Manager) {
+            toolbar.inflateMenu(R.menu.menu_jobs_list_add); //加载菜单
+        }
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                //点击事件
+                if (item.getItemId() == R.id.action_bar_jobs_list_add) {
+                    ARouter.getInstance().build("/jobs/activity/JobInfoActivity").withString("strTitle", "增加工作安排").withBoolean("isAdd", true).navigation();
+                }
+                return true;
+            }
+        });
+
         slSchedule.setOnCalendarClickListener(new OnCalendarClickListener() {
             @Override
             public void onClickDate(int year, int month, int day) {
                 DateTime dateTime = new DateTime(year, month + 1, day, 0, 0);
-                toolbarTitleName.setText(dateTime.toString("yyyy-MM-dd"));
+                toolbar.setTitle(dateTime.toString("yyyy-MM-dd"));
                 requestDayWork(dateTime.toString("yyyy-MM-dd"));
             }
 
             @Override
             public void onPageChange(int year, int month, int day) {
                 DateTime dateTime = new DateTime(year, month + 1, day, 0, 0);
-                toolbarTitleName.setText(dateTime.toString("yyyy-MM-dd"));
+                toolbar.setTitle(dateTime.toString("yyyy-MM-dd"));
                 requestDayWork(dateTime.toString("yyyy-MM-dd"));
             }
         });
@@ -108,7 +127,7 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
 
     @Override
     protected void initData() {
-        toolbarTitleName.setText(new DateTime().toString("yyyy-MM-dd"));
+        toolbar.setTitle(new DateTime().toString("yyyy-MM-dd"));
         presenter = new JobsListPresenterImpl(this);
         requestDayWork(new DateTime().toString("yyyy-MM-dd"));
     }
@@ -128,36 +147,23 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
         }
     }
 
-    @OnClick(R2.id.toolbar_title_img)
-    public void onViewClicked() {
-        ARouter.getInstance().build("/jobs/activity/JobInfoActivity").withString("strTitle", "增加工作安排").withBoolean("isAdd", true).navigation();
+    @Subscribe
+    public void onMessageEvent(MainRefreshMessage event) {
+        if (event.getMsgType() == MainRefreshMessage.MAIN_MASTER_JOB) {
+//            // 根据指定格式,将时间字符串转换成DateTime对象
+//            DateTime dt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").parseDateTime("2012-12-26 03:27:39");
+            if (event.getSubType() == -1) {
+                requestDayWork(toolbar.getTitle().toString());
+            } else {
+                Period p = new Period(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm").parseDateTime(event.getData().toString()),
+                        DateTimeFormat.forPattern("yyyy-MM-dd").parseDateTime(toolbar.getTitle().toString()));
+                if (p.getDays() == 0) {
+//                ErayicLog.i("event-refresh", "/jobs/fragment/JobsListFragment");
+                    requestDayWork(toolbar.getTitle().toString());
+                }
+            }
+        }
     }
-
-
-//    private void showPopupMenu(View view) {
-//        // View当前PopupMenu显示的相对View的位置
-//        PopupMenu popupMenu = new PopupMenu(getActivity(), view);
-//        // menu布局
-//        popupMenu.getMenuInflater().inflate(R.menu.menu_jobs_list_view, popupMenu.getMenu());
-//        // menu的item点击事件
-//        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                if (item.getItemId() == R.id.action_bar_jobs_work) {//工作安排
-//                    ARouter.getInstance().build("/jobs/activity/JobInfoActivity").withString("strTitle", "增加工作安排").withBoolean("isAdd", true).navigation();
-//                }
-//                return false;
-//            }
-//        });
-//        // PopupMenu关闭事件
-//        popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
-//            @Override
-//            public void onDismiss(PopupMenu menu) {
-////                Toast.makeText(getApplicationContext(), "关闭PopupMenu", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        popupMenu.show();
-//    }
 
     @Override
     public void showToast(final String msg) {
@@ -189,5 +195,11 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -86,6 +86,11 @@ public class WorkInfoItemAdapter extends BaseMultiItemQuickAdapter<WorkInfoEntit
                     ((JobsContentEdit1ViewHolder) helper).jobsContentGoto.setVisibility(View.GONE);
                     ((JobsContentEdit1ViewHolder) helper).jobsContentName.setText(TextUtils.isEmpty(item.getName()) ? "作业名称" : item.getName());
                     ((JobsContentEdit1ViewHolder) helper).jobsContentSubName.setKeyListener(keyListener);
+                    if (keyListener == null)
+                        ((JobsContentEdit1ViewHolder) helper).jobsContentSubName.setBackground(null);
+                    else
+                        ((JobsContentEdit1ViewHolder) helper).jobsContentSubName.setBackground(ContextCompat.getDrawable(context, R.drawable.app_base_edit_back_gray));
+
                     ((JobsContentEdit1ViewHolder) helper).jobsContentSubName.setText(TextUtils.isEmpty(item.getSubName()) ? "" : item.getSubName());
                     ((JobsContentEdit1ViewHolder) helper).jobsContentSubName.addTextChangedListener(new TextWatcher() {
                         @Override
@@ -134,6 +139,10 @@ public class WorkInfoItemAdapter extends BaseMultiItemQuickAdapter<WorkInfoEntit
                     ((JobsContentEdit2ViewHolder) helper).jobsContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
                     ((JobsContentEdit2ViewHolder) helper).jobsContentSubName.setText(TextUtils.isEmpty(item.getSubName()) ? "" : item.getSubName());
                     ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setKeyListener(keyListener);
+                    if (keyListener == null)
+                        ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setBackground(null);
+                    else
+                        ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setBackground(ContextCompat.getDrawable(context, R.drawable.app_base_edit_back_gray));
                     ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setHint("施肥量");
                     Drawable textImg = ContextCompat.getDrawable(context, R.drawable.image_jobs_pick_kg);
                     textImg.setBounds(0, 0, textImg.getMinimumWidth(), textImg.getMinimumHeight());
@@ -181,6 +190,10 @@ public class WorkInfoItemAdapter extends BaseMultiItemQuickAdapter<WorkInfoEntit
                     ((JobsContentEdit2ViewHolder) helper).jobsContentSubName.setText(TextUtils.isEmpty(item.getSubName()) ? "" : item.getSubName());
                     ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setHint("配比");
                     ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setKeyListener(keyListener);
+                    if (keyListener == null)
+                        ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setBackground(null);
+                    else
+                        ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setBackground(ContextCompat.getDrawable(context, R.drawable.app_base_edit_back_gray));
                     if (keyListener == null) {
                         ((JobsContentEdit2ViewHolder) helper).jobsContentDelete.setVisibility(View.INVISIBLE);
                     }
@@ -222,6 +235,10 @@ public class WorkInfoItemAdapter extends BaseMultiItemQuickAdapter<WorkInfoEntit
                     ((JobsContentEdit2ViewHolder) helper).jobsContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
                     ((JobsContentEdit2ViewHolder) helper).jobsContentSubName.setText("");
                     ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setKeyListener(keyListener);
+                    if (keyListener == null)
+                        ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setBackground(null);
+                    else
+                        ((JobsContentEdit2ViewHolder) helper).jobsContentProp.setBackground(ContextCompat.getDrawable(context, R.drawable.app_base_edit_back_gray));
                     if (keyListener == null) {
                         ((JobsContentEdit2ViewHolder) helper).jobsContentDelete.setVisibility(View.INVISIBLE);
                     }
@@ -269,6 +286,10 @@ public class WorkInfoItemAdapter extends BaseMultiItemQuickAdapter<WorkInfoEntit
             case WorkInfoEntity.TYPE_WORK_CONTENT_NORM://工作要求
                 if (helper instanceof JobsContentEdit3ViewHolder) {
                     ((JobsContentEdit3ViewHolder) helper).jobsContentContent.setKeyListener(keyListener);
+                    if (keyListener == null)
+                        ((JobsContentEdit3ViewHolder) helper).jobsContentContent.setBackground(null);
+                    else
+                        ((JobsContentEdit3ViewHolder) helper).jobsContentContent.setBackground(ContextCompat.getDrawable(context, R.drawable.app_base_edit_back_gray));
                     ((JobsContentEdit3ViewHolder) helper).jobsContentContent.setText(TextUtils.isEmpty(item.getSubName()) ? "" : item.getSubName());
                     ((JobsContentEdit3ViewHolder) helper).jobsContentContent.addTextChangedListener(new TextWatcher() {
                         @Override

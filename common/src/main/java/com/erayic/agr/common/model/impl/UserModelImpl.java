@@ -1,6 +1,7 @@
 package com.erayic.agr.common.model.impl;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.config.PreferenceUtils;
@@ -8,10 +9,12 @@ import com.erayic.agr.common.model.IUserModel;
 import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.ErrorCode;
 import com.erayic.agr.common.net.OnDataListener;
+import com.erayic.agr.common.net.back.CommonBaseListBean;
 import com.erayic.agr.common.net.back.CommonPersonnelBean;
 import com.erayic.agr.common.net.back.CommonUserInfoBean;
 import com.erayic.agr.common.net.http.manager.HttpUserManager;
 import com.erayic.agr.common.util.ErayicGson;
+import com.erayic.agr.common.util.ErayicImage;
 import com.erayic.agr.common.util.ErayicLog;
 
 import org.reactivestreams.Subscriber;
@@ -58,7 +61,7 @@ public class UserModelImpl implements IUserModel {
                             PreferenceUtils.putParam("RegisterTime", objectDataBack.getResult().getAPP().getRegisterTime());
                             PreferenceUtils.putParam("Status", objectDataBack.getResult().getAPP().getStatus());
                             PreferenceUtils.putParam("BaseLon", String.valueOf(objectDataBack.getResult().getBasePos().getLon()));
-                            PreferenceUtils.putParam("BaseLat",String.valueOf( objectDataBack.getResult().getBasePos().getLat()));
+                            PreferenceUtils.putParam("BaseLat", String.valueOf(objectDataBack.getResult().getBasePos().getLat()));
                             listener.success(objectDataBack.getResult());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
@@ -135,9 +138,9 @@ public class UserModelImpl implements IUserModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void updateUserIcon(byte[] icon, final OnDataListener<Object> listener) {
+    public void updateUserIcon(String path, final OnDataListener<Object> listener) {
 
-        HttpUserManager.getInstance().updateUserIcon(icon)
+        HttpUserManager.getInstance().updateUserIcon(ErayicImage.bitmapToBase64(BitmapFactory.decodeFile(path)))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Consumer<DataBack<Object>>() {
@@ -146,6 +149,7 @@ public class UserModelImpl implements IUserModel {
                         ErayicLog.i("updateUserIcon", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
+                            PreferenceUtils.putParam("UserIcon", objectDataBack.getResult().toString());
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
                         }
@@ -342,6 +346,7 @@ public class UserModelImpl implements IUserModel {
                     }
                 });
     }
+
     @SuppressWarnings("unchecked")
     @Override
     public void updateUserInfo(String userID, String name, String tel, int role, final OnDataListener<Object> listener) {
@@ -383,6 +388,7 @@ public class UserModelImpl implements IUserModel {
                     }
                 });
     }
+
     @SuppressWarnings("unchecked")
     @Override
     public void deleteUser(String userID, final OnDataListener<Object> listener) {
@@ -424,6 +430,7 @@ public class UserModelImpl implements IUserModel {
                     }
                 });
     }
+
     @SuppressWarnings("unchecked")
     @Override
     public void sendInvite(String tel, String name, int role, final OnDataListener<Object> listener) {
@@ -435,6 +442,88 @@ public class UserModelImpl implements IUserModel {
                     @Override
                     public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
                         ErayicLog.i("sendInvite", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void getBaseListByUser(final OnDataListener<List<CommonBaseListBean>> listener) {
+        HttpUserManager.getInstance().getBaseListByUser()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<List<CommonBaseListBean>>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<List<CommonBaseListBean>> objectDataBack) throws Exception {
+                        ErayicLog.i("getBaseListByUser", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void changeBase(String newBaseID, final OnDataListener<Object> listener) {
+        HttpUserManager.getInstance().changeBase(newBaseID)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<Object>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                        ErayicLog.i("changeBase", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
                         } else {

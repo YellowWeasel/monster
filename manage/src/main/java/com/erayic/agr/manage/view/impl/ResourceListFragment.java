@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseFragment;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.CommonResourceBean;
 import com.erayic.agr.common.net.back.enums.EnumResourceType;
 import com.erayic.agr.common.util.DividerItemDecoration;
@@ -21,6 +22,9 @@ import com.erayic.agr.manage.adapter.ManageResourceListAdapter;
 import com.erayic.agr.manage.presenter.IResourceListPresenter;
 import com.erayic.agr.manage.presenter.impl.ResourceListPresenterImpl;
 import com.erayic.agr.manage.view.IResourceListView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -98,11 +102,23 @@ public class ResourceListFragment extends BaseFragment implements IResourceListV
     protected void initData() {
         presenter = new ResourceListPresenterImpl(this);
         onRefresh();
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onRefresh() {
         presenter.getResourceByType(type);
+    }
+
+    @Subscribe
+    public void onMessageEvent(ManageRefreshMessage event) {
+        if (event.getMsgType() == ManageRefreshMessage.MANAGE_MASTER_FERTILIZER_LIST && type == EnumResourceType.TYPE_FERTILIZER) {
+            onRefresh();
+        } else if (event.getMsgType() == ManageRefreshMessage.MANAGE_MASTER_PESTICIDE_LIST && type == EnumResourceType.TYPE_PESTICIDE) {
+            onRefresh();
+        } else if (event.getMsgType() == ManageRefreshMessage.MANAGE_MASTER_SEED_LIST && type == EnumResourceType.TYPE_SEED) {
+            onRefresh();
+        }
     }
 
     @Override
@@ -147,5 +163,9 @@ public class ResourceListFragment extends BaseFragment implements IResourceListV
         });
     }
 
-
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }

@@ -33,6 +33,8 @@ public class ManageBaseListAdapter extends BaseQuickAdapter<CommonBaseListBean, 
         helper.manageContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon_green));
         if (item.getBaseID().equals(PreferenceUtils.getParam("ActiveBaseID"))) {
             helper.manageContentSub.setText("当前基地");
+        }else {
+            helper.manageContentSub.setText("");
         }
     }
 }

@@ -18,4 +18,9 @@ public interface IUserInfoPresenter {
      */
     void updateUserName(String userName);
 
+    /**
+     * 更新用户头像
+     */
+    void updateUserIcon(String path);
+
 }

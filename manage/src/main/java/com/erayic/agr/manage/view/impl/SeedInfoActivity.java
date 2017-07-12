@@ -12,16 +12,20 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.CommonSeedBean;
 import com.erayic.agr.common.net.back.enums.EnumResourceType;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.presenter.ISeedInfoPresenter;
 import com.erayic.agr.manage.presenter.impl.SeedInfoPresenterImpl;
 import com.erayic.agr.manage.view.ISeedInfoView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 
@@ -35,7 +39,7 @@ public class SeedInfoActivity extends BaseActivity implements ISeedInfoView {
 
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.manage_content_name)
     EditText manageContentName;
     @BindView(R2.id.manage_content_factory)
@@ -67,7 +71,6 @@ public class SeedInfoActivity extends BaseActivity implements ISeedInfoView {
 
     @Override
     public void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("资源详情");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -213,6 +216,9 @@ public class SeedInfoActivity extends BaseActivity implements ISeedInfoView {
 
     @Override
     public void saveSure() {
+        ManageRefreshMessage message = new ManageRefreshMessage();
+        message.setMsgType(ManageRefreshMessage.MANAGE_MASTER_SEED_LIST);
+        EventBus.getDefault().post(message);
         ErayicStack.getInstance().finishCurrentActivity();
     }
 }

@@ -23,6 +23,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
+import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.enums.EnumBatchStatus;
@@ -158,8 +159,7 @@ public class BatchInfoActivity extends BaseActivity implements IBatchInfosView {
     public void initData() {
         Glide.with(this)
                 .load(imgUrl)
-                .placeholder(R.drawable.app_base_default_plant)//待加载时显示
-                .error(R.drawable.app_base_default_plant)//加载错误时显示
+               .apply(AgrConstant.iconOptions)
                 .into(unitContentIcon);
         unitContentName.setText(TextUtils.isEmpty(batchName) ? "未命名" : batchName);
     }

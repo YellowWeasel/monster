@@ -17,6 +17,7 @@ import com.bigkoo.alertview.OnItemClickListener;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.MainRefreshMessage;
 import com.erayic.agr.common.net.back.CommonMapArrayBean;
 import com.erayic.agr.common.net.back.enums.EnumRequestType;
 import com.erayic.agr.common.net.back.work.CommonJobInfoBean;
@@ -34,6 +35,8 @@ import com.erayic.agr.jobs.adapter.entity.JobInfoEntity;
 import com.erayic.agr.jobs.presenter.IJobInfoPresenter;
 import com.erayic.agr.jobs.presenter.impl.JobInfoPresenterImpl;
 import com.erayic.agr.jobs.view.IJobInfoView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -235,6 +238,7 @@ public class JobInfoActivity extends BaseActivity implements IJobInfoView {
             entity.setName("通知时间");
             list.add(entity);
         }
+        adapter.setShowNoticeDate(false);
         adapter.setNewData(list);
     }
 
@@ -270,12 +274,16 @@ public class JobInfoActivity extends BaseActivity implements IJobInfoView {
                     }
                     break;
                 case JobInfoEntity.TYPE_JOB_NOTICE_DATE:
-                    if (TextUtils.isEmpty(entity.getSubName())) {
-                        showToast("请选择提醒时间");
-                        return;
-                    }
-                    if (entity.getID() instanceof Integer) {
-                        infoBean.setNoticeTime(Integer.valueOf(entity.getID().toString()));
+                    if (infoBean.getTips() != 0) {
+                        if (TextUtils.isEmpty(entity.getSubName())) {
+                            showToast("请选择提醒时间");
+                            return;
+                        }
+                        if (entity.getID() instanceof Integer) {
+                            infoBean.setNoticeTime(Integer.valueOf(entity.getID().toString()));
+                        }
+                    } else {
+                        infoBean.setNoticeTime(0);
                     }
                     break;
             }
@@ -313,6 +321,10 @@ public class JobInfoActivity extends BaseActivity implements IJobInfoView {
 
     @Override
     public void updateOrDeleteSure() {
+        MainRefreshMessage message = new MainRefreshMessage();
+        message.setMsgType(MainRefreshMessage.MAIN_MASTER_JOB);
+        message.setData(infoBean.getDemandTime());
+        EventBus.getDefault().post(message);//通知刷新
         ErayicStack.getInstance().finishCurrentActivity();
     }
 
@@ -369,7 +381,6 @@ public class JobInfoActivity extends BaseActivity implements IJobInfoView {
                     //工作
                     {
                         for (Map.Entry<String, Object> entry : map.entrySet()) {
-
                             for (int i = 0; i < adapter.getData().size(); i++) {
                                 JobInfoEntity entity = adapter.getData().get(i);
                                 if (entity.getItemType() == JobInfoEntity.TYPE_JOB_WORK) {
@@ -403,7 +414,7 @@ public class JobInfoActivity extends BaseActivity implements IJobInfoView {
                 break;
                 case EnumRequestType.TYPE_RETURN_NOTICE: {
                     HashMap<String, Object> map = (HashMap<String, Object>) data.getSerializableExtra("map");
-                    //工作
+                    //通知
                     {
                         for (Map.Entry<String, Object> entry : map.entrySet()) {
 
@@ -412,6 +423,10 @@ public class JobInfoActivity extends BaseActivity implements IJobInfoView {
                                 if (entity.getItemType() == JobInfoEntity.TYPE_JOB_NOTICE) {
                                     entity.setSubName(entry.getValue().toString());
                                     entity.setID(Integer.valueOf(entry.getKey().toString()).intValue());
+                                    if (Integer.valueOf(entry.getKey().toString()).intValue() == 0)
+                                        adapter.setShowNoticeDate(false);
+                                    else
+                                        adapter.setShowNoticeDate(true);
                                 }
                                 adapter.notifyItemChanged(i);
                             }

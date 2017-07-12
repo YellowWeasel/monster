@@ -28,9 +28,9 @@ public class BatchInfoByResumePresenterImpl implements IBatchInfoByResumePresent
     }
 
     @Override
-    public void getPorduceHistoryByBatch(String batchID) {
+    public void getPorduceHistoryByBatch(String batchID, int pageSize) {
         resumeView.openRefresh();
-        unitModel.getPorduceHistoryByBatch(batchID, new OnDataListener<List<CommonUnitBatchResumeBean>>() {
+        unitModel.getPorduceHistoryByBatch(batchID, 1, pageSize, new OnDataListener<List<CommonUnitBatchResumeBean>>() {
             @Override
             public void success(List<CommonUnitBatchResumeBean> response) {
                 resumeView.clearRefresh();
@@ -40,6 +40,22 @@ public class BatchInfoByResumePresenterImpl implements IBatchInfoByResumePresent
             @Override
             public void fail(int errCode, String msg) {
                 resumeView.clearRefresh();
+                resumeView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
+    }
+
+    @Override
+    public void getPorduceHistoryByBatch(String batchID, int pageNum, int pageSize) {
+        unitModel.getPorduceHistoryByBatch(batchID, pageNum, pageSize, new OnDataListener<List<CommonUnitBatchResumeBean>>() {
+            @Override
+            public void success(List<CommonUnitBatchResumeBean> response) {
+                resumeView.loadMoreSure(response);
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
+                resumeView.loadMoreFailure();
                 resumeView.showToast("错误代码：" + errCode + "\n描述：" + msg);
             }
         });

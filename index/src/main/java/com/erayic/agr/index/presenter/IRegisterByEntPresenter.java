@@ -11,7 +11,7 @@ public interface IRegisterByEntPresenter {
     /**
      * 企业注册
      */
-    void enterpriseRegister(String tel, String userName, String entName, String password, String verCode);
+    void enterpriseRegister(String tel, String userName, String entName, String password, String verCode,String identifier);
 
     /**
      * 发送验证码

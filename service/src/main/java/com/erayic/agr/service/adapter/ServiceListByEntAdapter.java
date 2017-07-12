@@ -1,6 +1,7 @@
 package com.erayic.agr.service.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,7 @@ public class ServiceListByEntAdapter extends BaseMultiItemQuickAdapter<ServiceLi
                     ((ServiceListByEntBannerViewHolder) helper).serviceMarketBanner.setmAdapter(new XBanner.XBannerAdapter() {
                         @Override
                         public void loadBanner(XBanner banner, Object model, View view, int position) {
-                            Glide.with(context).load(urlList.get(position)).into((ImageView) view);
+                            Glide.with(context).load(urlList.get(position)).apply(AgrConstant.iconOptions).into((ImageView) view);
                         }
                     });
                     ((ServiceListByEntBannerViewHolder) helper).serviceMarketBanner.setOnItemClickListener(new XBanner.OnItemClickListener() {
@@ -101,8 +102,8 @@ public class ServiceListByEntAdapter extends BaseMultiItemQuickAdapter<ServiceLi
                             return true;
                         }
                     });
-                    Glide.with(context).load(AgrConstant.IMAGE_URL_PREFIX + item.getServicesInfo().getIcon())
-                            .error(R.drawable.image_service_test)
+                    Glide.with(context).load(TextUtils.isEmpty(item.getServicesInfo().getIcon()) ? "" : (AgrConstant.IMAGE_URL_PREFIX + item.getServicesInfo().getIcon()))
+                            .apply(AgrConstant.iconOptions)
                             .into(((ServiceListByEntItemViewHolder) helper).serviceMarketItemImg);
                     ((ServiceListByEntItemViewHolder) helper).serviceMarketItemName.setText(item.getServicesInfo().getServiceName());
                     ((ServiceListByEntItemViewHolder) helper).serviceMarketItemDirections.setText(item.getServicesInfo().getDescript());

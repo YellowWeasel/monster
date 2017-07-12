@@ -1,7 +1,8 @@
 package com.erayic.agr.common.base;
 
 import com.erayic.agr.common.net.back.img.CommonResultImage;
-import com.yalantis.ucrop.entity.LocalMedia;
+import com.luck.picture.lib.entity.LocalMedia;
+
 
 /**
  * 作者：hejian

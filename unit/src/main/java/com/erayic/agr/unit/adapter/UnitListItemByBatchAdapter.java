@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.util.ErayicNetDate;
 import com.erayic.agr.unit.R;
@@ -65,14 +66,15 @@ public class UnitListItemByBatchAdapter extends BaseMultiItemQuickAdapter<UnitLi
                 if (helper instanceof UnitListItemByBatchInfoViewHolder) {
                     Glide.with(context)
                             .load(item.getMap().get("Icon"))
-                            .placeholder(R.drawable.app_base_default_plant)//待加载时显示
-                            .error(R.drawable.app_base_default_plant)//加载错误时显示
+                           .apply(AgrConstant.iconOptions)
                             .into(((UnitListItemByBatchInfoViewHolder) helper).unitContentIcon);
                     ((UnitListItemByBatchInfoViewHolder) helper).unitContentName.setText(item.getName());
-                    ((UnitListItemByBatchInfoViewHolder) helper).unitContentSubName.setText(
-                            Html.fromHtml("距离采摘还有<font color=red>" +
-                                    new Period(new DateTime(), new DateTime(ErayicNetDate.getLongDates(item.getMap().get("Mature"))), PeriodType.days()).getDays() + "</font>天")
-                    );
+                    int day = new Period(new DateTime(), new DateTime(ErayicNetDate.getLongDates(item.getMap().get("Mature"))), PeriodType.days()).getDays();
+                    if (day > 1000)
+                        ((UnitListItemByBatchInfoViewHolder) helper).unitContentSubName.setText("");
+                    else
+                        ((UnitListItemByBatchInfoViewHolder) helper).unitContentSubName.setText(
+                                Html.fromHtml("距离采摘还有<font color=red>" + day + "</font>天"));
                     ((UnitListItemByBatchInfoViewHolder) helper).unitContentDate.setText(ErayicNetDate.getStringDate(item.getMap().get("StartTime")));
                     ((UnitListItemByBatchInfoViewHolder) helper).itemView.setOnClickListener(new View.OnClickListener() {
                         @Override

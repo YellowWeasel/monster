@@ -50,4 +50,6 @@
     <color name="select_circle_color">#374254</color>
     <color name="colorBackground">#F0F1F5</color>
     <!--日历控件 calendar end-->
+
+    <color name="color_f6">#f6f6f6</color>
 </resources>

@@ -37,6 +37,7 @@ import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.manage.CommonBasePositionBean;
 import com.erayic.agr.common.util.ErayicLog;
 import com.erayic.agr.common.util.ErayicStack;
@@ -49,6 +50,7 @@ import com.erayic.agr.manage.presenter.IBasePositionPresenter;
 import com.erayic.agr.manage.presenter.impl.BasePositionPresenterImpl;
 import com.erayic.agr.manage.view.IBasePositionView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.joda.time.DateTime;
 
 import butterknife.BindView;
@@ -480,6 +482,9 @@ public class BasePositionActivity extends BaseActivity implements IBasePositionV
 
     @Override
     public void updateSure() {
+        ManageRefreshMessage message = new ManageRefreshMessage();
+        message.setMsgType(ManageRefreshMessage.MANAGE_MASTER_BASE_INFO);
+        EventBus.getDefault().post(message);
         ErayicStack.getInstance().finishCurrentActivity();
     }
 }

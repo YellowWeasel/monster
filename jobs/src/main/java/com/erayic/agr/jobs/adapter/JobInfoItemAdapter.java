@@ -27,10 +27,15 @@ public class JobInfoItemAdapter extends BaseMultiItemQuickAdapter<JobInfoEntity,
 
     private Context context;
     private OnJobItemClickListener onJobItemClickListener;
+    private boolean isShowNoticeDate;//是否显示通知时间
 
     public JobInfoItemAdapter(Context context, List<JobInfoEntity> data) {
         super(data);
         this.context = context;
+    }
+
+    public void setShowNoticeDate(boolean showNoticeDate) {
+        isShowNoticeDate = showNoticeDate;
     }
 
     public void setOnJobItemClickListener(OnJobItemClickListener onJobItemClickListener) {
@@ -119,8 +124,8 @@ public class JobInfoItemAdapter extends BaseMultiItemQuickAdapter<JobInfoEntity,
                     ((JobsContentEdit2ViewHolder) helper).jobsContentDelete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-//                            getData().remove(helper.getAdapterPosition());
-//                            notifyDataSetChanged();
+                            getData().remove(helper.getAdapterPosition());
+                            notifyDataSetChanged();
                         }
                     });
 
@@ -174,6 +179,7 @@ public class JobInfoItemAdapter extends BaseMultiItemQuickAdapter<JobInfoEntity,
                 break;
             case JobInfoEntity.TYPE_JOB_NOTICE_DATE:
                 if (helper instanceof JobsContentText1ViewHolder) {
+                   ((JobsContentText1ViewHolder) helper).setVisibility(isShowNoticeDate);
                     ((JobsContentText1ViewHolder) helper).jobsContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.image_jobs_job_notice));
                     ((JobsContentText1ViewHolder) helper).jobsContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
                     ((JobsContentText1ViewHolder) helper).jobsContentSub.setText(TextUtils.isEmpty(item.getSubName()) ? "" : item.getSubName());
@@ -190,6 +196,7 @@ public class JobInfoItemAdapter extends BaseMultiItemQuickAdapter<JobInfoEntity,
                             return true;
                         }
                     });
+
                 }
                 break;
         }

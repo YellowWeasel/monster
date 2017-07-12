@@ -20,6 +20,7 @@ import com.erayic.agr.common.util.ErayicLog;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.PagerSlidingTabStrip;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.view.IResourceView;
@@ -38,7 +39,7 @@ import butterknife.ButterKnife;
 public class ResourceActivity extends BaseActivity implements IResourceView {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.manage_resource_tab)
     PagerSlidingTabStrip manageResourceTab;
     @BindView(R2.id.manage_resource_viewPage)
@@ -60,7 +61,6 @@ public class ResourceActivity extends BaseActivity implements IResourceView {
 
     @Override
     public void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("生产资料管理");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

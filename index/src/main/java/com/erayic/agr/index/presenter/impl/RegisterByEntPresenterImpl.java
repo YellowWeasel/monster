@@ -27,8 +27,8 @@ public class RegisterByEntPresenterImpl implements IRegisterByEntPresenter {
     }
 
     @Override
-    public void enterpriseRegister(String phone, String name, String entName, String password, String verCode) {
-        indexModel.enterpriseRegister(entName, name, password, phone, AgrConstant.AGR_APPID, AgrConstant.Test_PHONE, verCode, new OnDataListener<Object>() {
+    public void enterpriseRegister(String phone, String name, String entName, String password, String verCode,String identifier) {
+        indexModel.enterpriseRegister(entName, name, password, phone, AgrConstant.AGR_APPID, identifier, verCode, new OnDataListener<Object>() {
             @Override
             public void success(Object response) {
                 registerByEntView.registerSure();

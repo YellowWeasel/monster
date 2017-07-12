@@ -26,8 +26,8 @@ public class RegisterByUserPresenterImpl implements IRegisterByUserPresenter {
     }
 
     @Override
-    public void userByInvite(String pass, String tel, String code, String verifyNum) {
-        indexModel.userByInvite(AgrConstant.AGR_APPID, pass, tel, code, AgrConstant.Test_PHONE, verifyNum, new OnDataListener<Object>() {
+    public void userByInvite(String pass, String tel, String code, String verifyNum,String identifier) {
+        indexModel.userByInvite(AgrConstant.AGR_APPID, pass, tel, code,identifier, verifyNum, new OnDataListener<Object>() {
             @Override
             public void success(Object response) {
                 registerByUserView.registerSure();

@@ -16,12 +16,15 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.CommonMapArrayBean;
 import com.erayic.agr.common.net.back.CommonUnitInfoBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
+import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicEditDialog;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.adapter.ManageBaseInfoAdapter;
@@ -52,7 +55,7 @@ import butterknife.BindView;
 public class UnitInfoActivity extends BaseActivity implements IUnitInfoView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.manage_unit_RecyclerView)
     RecyclerView manageUnitRecyclerView;
     @BindView(R2.id.manage_unit_swipe)
@@ -221,7 +224,10 @@ public class UnitInfoActivity extends BaseActivity implements IUnitInfoView, Swi
 
     @Override
     public void updateSure() {
-        onRefresh();//测试用刷新，局部更新未实现
+        ManageRefreshMessage message = new ManageRefreshMessage();
+        message.setMsgType(ManageRefreshMessage.MANAGE_MASTER_BASE_INFO);
+        EventBus.getDefault().post(message);
+        ErayicStack.getInstance().finishCurrentActivity();
     }
 
     @Override
@@ -303,7 +309,7 @@ public class UnitInfoActivity extends BaseActivity implements IUnitInfoView, Swi
                                             return;
                                         }
                                         unitInfoBean.setArea(doubleBuffer);
-                                        adapter.getData().get(position).setSubName(s.toString() + "亩");
+                                        adapter.getData().get(position).setSubName(s.toString());
                                         adapter.notifyItemChanged(position);
                                     } else {
                                         showToast("名称不能为空");

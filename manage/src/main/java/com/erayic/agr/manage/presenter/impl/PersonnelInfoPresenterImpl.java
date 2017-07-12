@@ -50,7 +50,6 @@ public class PersonnelInfoPresenterImpl implements IPersonnelInfoPresenter {
             @Override
             public void success(Object response) {
                 personnelInfoView.dismissLoading();
-                personnelInfoView.showToast("更新成功");
                 personnelInfoView.sendSure();
             }
 
@@ -69,7 +68,6 @@ public class PersonnelInfoPresenterImpl implements IPersonnelInfoPresenter {
             @Override
             public void success(Object response) {
                 personnelInfoView.dismissLoading();
-                personnelInfoView.showToast("删除用户成功");
                 personnelInfoView.sendSure();
             }
 

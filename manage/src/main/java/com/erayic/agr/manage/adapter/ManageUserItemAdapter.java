@@ -1,11 +1,14 @@
 package com.erayic.agr.manage.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.erayic.agr.common.AgrConstant;
@@ -74,7 +77,10 @@ public class ManageUserItemAdapter extends BaseMultiItemQuickAdapter<ManageUserE
                 if (helper instanceof ManageContentImageViewHolder) {
                     ((ManageContentImageViewHolder) helper).manageContentIcon.setVisibility(View.GONE);
                     ((ManageContentImageViewHolder) helper).manageContentName.setText(item.getTitle());
-                    Glide.with(context).load(AgrConstant.IMAGE_URL_PREFIX + item.getSubTitle()).error(R.drawable.app_base_android_1).into(((ManageContentImageViewHolder) helper).manageContentHead);
+
+                    Glide.with(context).load(TextUtils.isEmpty(item.getSubTitle()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + item.getSubTitle()))
+                            .apply(AgrConstant.iconOptions)
+                            .into(((ManageContentImageViewHolder) helper).manageContentHead);
                     ((ManageContentImageViewHolder) helper).itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -152,6 +158,7 @@ public class ManageUserItemAdapter extends BaseMultiItemQuickAdapter<ManageUserE
                             return true;
                         }
                     });
+                    ((ManageContentTextViewHolder) helper).manageContentGoto.setVisibility(View.INVISIBLE);
                 }
                 break;
             case ManageUserEntity.TYPE_USER_BASE://基地

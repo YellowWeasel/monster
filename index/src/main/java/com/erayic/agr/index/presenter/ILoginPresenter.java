@@ -11,6 +11,6 @@ public interface ILoginPresenter{
     /**
      * 用户登录
      */
-    void login(String tel, String pass);
+    void login(String tel, String pass,String identifier);
 
 }

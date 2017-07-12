@@ -1,6 +1,7 @@
 package com.erayic.agr.jobs.view.impl;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.erayic.agr.common.base.CommonGridImageAdapter;
 import com.erayic.agr.common.base.CommonLocalMedia;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.MainRefreshMessage;
 import com.erayic.agr.common.net.back.base.CommonImagesEntity;
 import com.erayic.agr.common.net.back.img.CommonResultImage;
 import com.erayic.agr.common.net.back.work.CommonJobsInfoBean;
@@ -33,10 +35,13 @@ import com.erayic.agr.jobs.adapter.entity.JobsInfoEntity;
 import com.erayic.agr.jobs.presenter.IJobsInfoPresenter;
 import com.erayic.agr.jobs.presenter.impl.JobsInfoPresenterImpl;
 import com.erayic.agr.jobs.view.IJobsInfoView;
-import com.luck.picture.lib.model.FunctionConfig;
-import com.luck.picture.lib.model.FunctionOptions;
-import com.luck.picture.lib.model.PictureConfig;
-import com.yalantis.ucrop.entity.LocalMedia;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.compress.Luban;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,13 +109,18 @@ public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
                 for (int i = 0; i < imageAdapter.getList().size(); i++) {
                     CommonLocalMedia jobsLocalMedia = imageAdapter.getList().get(i);
                     LocalMedia localMedia = new LocalMedia();
-                    localMedia.setType(1);
-                    localMedia.setPath(TextUtils.isEmpty(jobsLocalMedia.getResultImage().getRamFileName()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + jobsLocalMedia.getResultImage().getRamFileName()));
+                    localMedia.setMimeType(1);
+                    if (jobsLocalMedia.isUpload())
+                        localMedia.setPath(TextUtils.isEmpty(jobsLocalMedia.getResultImage().getRamFileName()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + jobsLocalMedia.getResultImage().getRamFileName()));
+                    else
+                        localMedia = jobsLocalMedia.getLocalMedia();
                     localMedia.setPosition(i);
                     list.add(localMedia);
                 }
 
-                PictureConfig.getInstance().externalPicturePreview(JobsInfoActivity.this, "/Erayic/image", position, list);
+//                PictureConfig.getInstance().externalPicturePreview(JobsInfoActivity.this, "/Erayic/image", position, list);
+                // 预览图片 可自定长按保存路径
+                PictureSelector.create(JobsInfoActivity.this).externalPicturePreview(position, "/Erayic/image", list);
             }
         });
         adapter.setImageAdapter(imageAdapter);
@@ -297,6 +307,10 @@ public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
 
     @Override
     public void submitWorkSure() {
+        MainRefreshMessage message = new MainRefreshMessage();
+        message.setMsgType(MainRefreshMessage.MAIN_MASTER_JOB);
+        message.setSubType(-1);
+        EventBus.getDefault().post(message);
         ErayicStack.getInstance().finishCurrentActivity();
     }
 
@@ -337,17 +351,30 @@ public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
             switch (type) {
                 case 0:
                     // 进入相册
-                    FunctionOptions options = new FunctionOptions.Builder()
-                            .setType(FunctionConfig.TYPE_IMAGE)
-                            .setCompress(true) //是否压缩
-                            .setEnablePixelCompress(true) //是否启用像素压缩
-                            .setEnableQualityCompress(true) //是否启质量压缩
-                            .setMaxSelectNum(9) // 可选择图片的数量
-                            .setMaxB(202400) // 压缩最大值 例如:200kb  就设置202400，202400 / 1024 = 200kb左右
-                            .setCheckNumMode(true)
-                            .setNumComplete(true) // 0/9 完成  样式
-                            .create();
-                    PictureConfig.getInstance().init(options).openPhoto(mContext, resultCallback);
+//                    FunctionOptions options = new FunctionOptions.Builder()
+//                            .setType(FunctionConfig.TYPE_IMAGE)
+//                            .setCompress(true) //是否压缩
+//                            .setEnablePixelCompress(true) //是否启用像素压缩
+//                            .setEnableQualityCompress(true) //是否启质量压缩
+//                            .setMaxSelectNum(9 - selectMedia.size()) // 可选择图片的数量
+//                            .setMaxB(202400) // 压缩最大值 例如:200kb  就设置202400，202400 / 1024 = 200kb左右
+//                            .setCheckNumMode(true)
+//                            .setNumComplete(true) // 0/9 完成  样式
+//                            .create();
+//                    PictureConfig.getInstance().init(options).openPhoto(mContext, resultCallback);
+
+                    // 进入相册 以下是例子：用不到的api可以不写
+                    PictureSelector.create(JobsInfoActivity.this)
+                            .openGallery(PictureMimeType.ofImage())
+                            .maxSelectNum(9 - selectMedia.size())// 最大图片选择数量 int
+                            .compress(true)// 是否压缩 true or false
+                            .compressMode(PictureConfig.LUBAN_COMPRESS_MODE)//系统自带 or 鲁班压缩 PictureConfig.SYSTEM_COMPRESS_MODE or LUBAN_COMPRESS_MODE
+//                            .selectionMedia()// 是否传入已选图片 List<LocalMedia> list
+                            .previewEggs(true)// 预览图片时 是否增强左右滑动图片体验(图片滑动一半即可看到上一张是否选中) true or false
+                            .compressGrade(Luban.CUSTOM_GEAR)
+                            .compressMaxKB(500)//压缩最大值kb compressGrade()为Luban.CUSTOM_GEAR有效 int
+                            .isCamera(true)// 是否显示拍照按钮 true or false
+                            .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
                     break;
                 case 1:
                     // 删除图片
@@ -358,64 +385,112 @@ public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
         }
     };
 
-    private PictureConfig.OnSelectResultCallback resultCallback = new PictureConfig.OnSelectResultCallback() {
-        @Override
-        public void onSelectSuccess(List<LocalMedia> resultList) {
-            // 多选回调
-//            selectMedia = resultList;
-            selectMedia = new ArrayList<>();
-            for (LocalMedia media : resultList) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    // 图片选择结果回调
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    // 例如 LocalMedia 里面返回三种path
+                    // 1.media.getPath(); 为原图path
+                    // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+                    // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+                    // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+//                    adapter.setList(selectList);
+//                    adapter.notifyDataSetChanged();
+//                    DebugUtil.i(TAG, "onActivityResult:" + selectList.size());
+                    if (selectList == null)
+                        return;
+                    for (LocalMedia media : selectList) {
 //                LocalMedia media = resultList.get(0);
-                CommonLocalMedia jobsLocalMedia = new CommonLocalMedia();
-                jobsLocalMedia.setLocalMedia(media);
-                if (media.isCut() && !media.isCompressed()) {
-                    // 裁剪过
+                        CommonLocalMedia jobsLocalMedia = new CommonLocalMedia();
+                        jobsLocalMedia.setLocalMedia(media);
+                        if (media.isCut() && !media.isCompressed()) {
+                            // 裁剪过
 //                    String path = media.getCutPath();
-                    jobsLocalMedia.setFinalPath(media.getCutPath());
-                } else if (media.isCompressed() || (media.isCut() && media.isCompressed())) {
-                    // 压缩过,或者裁剪同时压缩过,以最终压缩过图片为准
+                            jobsLocalMedia.setFinalPath(media.getCutPath());
+                        } else if (media.isCompressed() || (media.isCut() && media.isCompressed())) {
+                            // 压缩过,或者裁剪同时压缩过,以最终压缩过图片为准
 //                    String path = media.getCompressPath();
-                    jobsLocalMedia.setFinalPath(media.getCompressPath());
-                } else {
-                    // 原图地址
+                            jobsLocalMedia.setFinalPath(media.getCompressPath());
+                        } else {
+                            // 原图地址
 //                    String path = media.getPath();
-                    jobsLocalMedia.setFinalPath(media.getPath());
-                }
-                selectMedia.add(jobsLocalMedia);
-            }
+                            jobsLocalMedia.setFinalPath(media.getPath());
+                        }
+                        selectMedia.add(jobsLocalMedia);
+                    }
 
 //            Log.i("callBack_result", selectMedia.size() + "");
 
-            if (selectMedia != null) {
-                imageAdapter.setList(selectMedia);
-                imageAdapter.notifyDataSetChanged();
+                    if (selectMedia != null) {
+                        imageAdapter.setList(selectMedia);
+                        imageAdapter.notifyDataSetChanged();
+                    }
+                    break;
             }
         }
+    }
 
-        @Override
-        public void onSelectSuccess(LocalMedia media) {
-            // 单选回调
-            CommonLocalMedia jobsLocalMedia = new CommonLocalMedia();
-            jobsLocalMedia.setLocalMedia(media);
-            if (media.isCut() && !media.isCompressed()) {
-                // 裁剪过
-//                    String path = media.getCutPath();
-                jobsLocalMedia.setFinalPath(media.getCutPath());
-            } else if (media.isCompressed() || (media.isCut() && media.isCompressed())) {
-                // 压缩过,或者裁剪同时压缩过,以最终压缩过图片为准
-//                    String path = media.getCompressPath();
-                jobsLocalMedia.setFinalPath(media.getCompressPath());
-            } else {
-                // 原图地址
-//                    String path = media.getPath();
-                jobsLocalMedia.setFinalPath(media.getPath());
-            }
-            selectMedia.add(jobsLocalMedia);
-            if (selectMedia != null) {
-                imageAdapter.setList(selectMedia);
-                imageAdapter.notifyDataSetChanged();
-            }
-        }
-    };
+//    private PictureConfig.OnSelectResultCallback resultCallback = new PictureConfig.OnSelectResultCallback() {
+//        @Override
+//        public void onSelectSuccess(List<LocalMedia> resultList) {
+//            // 多选回调
+////            selectMedia = resultList;
+//            for (LocalMedia media : resultList) {
+////                LocalMedia media = resultList.get(0);
+//                CommonLocalMedia jobsLocalMedia = new CommonLocalMedia();
+//                jobsLocalMedia.setLocalMedia(media);
+//                if (media.isCut() && !media.isCompressed()) {
+//                    // 裁剪过
+////                    String path = media.getCutPath();
+//                    jobsLocalMedia.setFinalPath(media.getCutPath());
+//                } else if (media.isCompressed() || (media.isCut() && media.isCompressed())) {
+//                    // 压缩过,或者裁剪同时压缩过,以最终压缩过图片为准
+////                    String path = media.getCompressPath();
+//                    jobsLocalMedia.setFinalPath(media.getCompressPath());
+//                } else {
+//                    // 原图地址
+////                    String path = media.getPath();
+//                    jobsLocalMedia.setFinalPath(media.getPath());
+//                }
+//                selectMedia.add(jobsLocalMedia);
+//            }
+//
+////            Log.i("callBack_result", selectMedia.size() + "");
+//
+//            if (selectMedia != null) {
+//                imageAdapter.setList(selectMedia);
+//                imageAdapter.notifyDataSetChanged();
+//            }
+//        }
+//
+//        @Override
+//        public void onSelectSuccess(LocalMedia media) {
+//            // 单选回调
+//            CommonLocalMedia jobsLocalMedia = new CommonLocalMedia();
+//            jobsLocalMedia.setLocalMedia(media);
+//            if (media.isCut() && !media.isCompressed()) {
+//                // 裁剪过
+////                    String path = media.getCutPath();
+//                jobsLocalMedia.setFinalPath(media.getCutPath());
+//            } else if (media.isCompressed() || (media.isCut() && media.isCompressed())) {
+//                // 压缩过,或者裁剪同时压缩过,以最终压缩过图片为准
+////                    String path = media.getCompressPath();
+//                jobsLocalMedia.setFinalPath(media.getCompressPath());
+//            } else {
+//                // 原图地址
+////                    String path = media.getPath();
+//                jobsLocalMedia.setFinalPath(media.getPath());
+//            }
+//            selectMedia.add(jobsLocalMedia);
+//            if (selectMedia != null) {
+//                imageAdapter.setList(selectMedia);
+//                imageAdapter.notifyDataSetChanged();
+//            }
+//        }
+//    };
 
 }

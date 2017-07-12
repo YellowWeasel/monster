@@ -15,17 +15,22 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.CommonBaseListBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicEditDialog;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.adapter.ManageBaseListAdapter;
 import com.erayic.agr.manage.presenter.IBaseListPresenter;
 import com.erayic.agr.manage.presenter.impl.BaseListPresenterImpl;
 import com.erayic.agr.manage.view.IBaseListView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -40,7 +45,7 @@ import butterknife.BindView;
 public class BaseListActivity extends BaseActivity implements IBaseListView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.manage_base_RecyclerView)
     RecyclerView manageBaseRecyclerView;
     @BindView(R2.id.manage_base_swipe)
@@ -55,6 +60,7 @@ public class BaseListActivity extends BaseActivity implements IBaseListView, Swi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_base_list);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -97,6 +103,13 @@ public class BaseListActivity extends BaseActivity implements IBaseListView, Swi
     @Override
     public void onRefresh() {
         presenter.getBaseByEnt();
+    }
+
+    @Subscribe
+    public void onMessageEvent(ManageRefreshMessage event) {
+        if (event.getMsgType() == ManageRefreshMessage.MANAGE_MASTER_BASE_LIST) {
+            onRefresh();
+        }
     }
 
     @Override
@@ -203,4 +216,9 @@ public class BaseListActivity extends BaseActivity implements IBaseListView, Swi
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }

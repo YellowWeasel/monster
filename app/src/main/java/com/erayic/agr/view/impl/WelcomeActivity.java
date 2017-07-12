@@ -1,5 +1,6 @@
 package com.erayic.agr.view.impl;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,20 +17,19 @@ import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavigationCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.R;
-import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
-import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.permission.PerUtils;
-import com.erayic.agr.common.permission.PerimissionsCallback;
-import com.erayic.agr.common.permission.PermissionEnum;
 import com.erayic.agr.common.permission.PermissionManager;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.view.IWelcomeView;
 import com.jaeger.library.StatusBarUtil;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import java.util.ArrayList;
 import java.util.TimerTask;
+
+import io.reactivex.functions.Consumer;
+
 
 public class WelcomeActivity extends Activity implements IWelcomeView {
 
@@ -64,35 +64,25 @@ public class WelcomeActivity extends Activity implements IWelcomeView {
      * 权限检查
      */
     public void initPermission() {
-        ArrayList<PermissionEnum> permissionList = new ArrayList<>();
-        permissionList.add(PermissionEnum.ACCESS_COARSE_LOCATION);
-        permissionList.add(PermissionEnum.ACCESS_FINE_LOCATION);
-        permissionList.add(PermissionEnum.WRITE_EXTERNAL_STORAGE);
-        permissionList.add(PermissionEnum.READ_EXTERNAL_STORAGE);
-        permissionList.add(PermissionEnum.READ_PHONE_STATE);
-        permissionList.add(PermissionEnum.CAMERA);
-//        permissionList.add(PermissionEnum.GROUP_CAMERA);
-//        permissionList.add(PermissionEnum.GROUP_LOCATION);
-//        permissionList.add(PermissionEnum.GROUP_STORAGE);
-        PermissionManager
-                .with(WelcomeActivity.this)
-                .tag(1000)
-                .permissions(permissionList)
-                .callback(new PerimissionsCallback() {
-                    @Override
-                    public void onGranted(ArrayList<PermissionEnum> grantedList) {
-                        //权限被允许了
-                        toMainActivity();
-                    }
 
+
+        new RxPermissions(WelcomeActivity.this).request(Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.CAMERA)
+                .subscribe(new Consumer<Boolean>() {
                     @Override
-                    public void onDenied(ArrayList<PermissionEnum> deniedList) {
-                        //权限被拒绝了
-//                        Toast.makeText(mContext, "权限被拒绝", Toast.LENGTH_SHORT).show();
-                        PermissionDenied(deniedList);
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+                            //所有权限都开启aBoolean才为true，否则为false
+                            toMainActivity();
+                        } else {
+                            PermissionDenied();
+                        }
                     }
-                })
-                .checkAsk();
+                });
     }
 
     protected void setStatusBar() {
@@ -106,22 +96,9 @@ public class WelcomeActivity extends Activity implements IWelcomeView {
 //        return false;
 //    }
 
-    private void PermissionDenied(final ArrayList<PermissionEnum> permissionsDenied) {
-        StringBuilder msgCN = new StringBuilder();
-        for (int i = 0; i < permissionsDenied.size(); i++) {
-
-            if (i == permissionsDenied.size() - 1) {
-                msgCN.append(permissionsDenied.get(i).getName_cn());
-            } else {
-                msgCN.append(permissionsDenied.get(i).getName_cn() + ",");
-            }
-        }
-        if (mContext == null) {
-            return;
-        }
-
+    private void PermissionDenied() {
         AlertDialog alertDialog = new AlertDialog.Builder(mContext)
-                .setMessage(String.format(mContext.getResources().getString(R.string.permission_explain), msgCN.toString()))
+                .setMessage("您有应用需要的权限未开启，是否前去设置？")
                 .setCancelable(false)
                 .setPositiveButton(R.string.per_setting, new DialogInterface.OnClickListener() {
                     @Override
@@ -200,5 +177,4 @@ public class WelcomeActivity extends Activity implements IWelcomeView {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionManager.handleResult(requestCode, permissions, grantResults);
     }
-
 }

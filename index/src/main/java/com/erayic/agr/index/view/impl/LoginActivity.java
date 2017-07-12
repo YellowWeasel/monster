@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.util.ErayicIdentifier;
 import com.erayic.agr.common.util.ErayicRegularly;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
@@ -60,12 +61,12 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @Override
     public void initView() {
-        Drawable drawableTel = ContextCompat.getDrawable(this,R.drawable.image_index_login_tel);
-        Drawable drawablePass = ContextCompat.getDrawable(this,R.drawable.image_index_login_pass);
+        Drawable drawableTel = ContextCompat.getDrawable(this, R.drawable.image_index_login_tel);
+        Drawable drawablePass = ContextCompat.getDrawable(this, R.drawable.image_index_login_pass);
         drawableTel.setBounds(0, 0, 60, 60);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
         drawablePass.setBounds(0, 0, 60, 40);//第一0是距左边距离，第二0是距上边距离，40分别是长宽
-        indexLoginEtTel.setCompoundDrawables(drawableTel,null,null,null);
-        indexLoginEtPass.setCompoundDrawables(drawablePass,null,null,null);
+        indexLoginEtTel.setCompoundDrawables(drawableTel, null, null, null);
+        indexLoginEtPass.setCompoundDrawables(drawablePass, null, null, null);
     }
 
     @Override
@@ -117,13 +118,18 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     @OnClick(R2.id.index_login_btn_login)
     public void onLoginViewClicked() {
         if (isVerification()) {
-            presenter.login(indexLoginEtTel.getText().toString(), indexLoginEtPass.getText().toString());
+            presenter.login(indexLoginEtTel.getText().toString(), indexLoginEtPass.getText().toString(), ErayicIdentifier.getInstance(LoginActivity.this).getErayicdentifier());
         }
     }
 
     @OnClick(R2.id.index_login_tv_register)
     public void onRegisterViewClicked() {
         ARouter.getInstance().build("/index/Activity/RegisterActivity").navigation();
+    }
+
+    @OnClick(R2.id.login_tv_agreements)
+    public void onPasswordViewClicked() {
+        showToast("暂未开放");
     }
 
     /**

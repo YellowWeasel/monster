@@ -18,12 +18,14 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.CommonPesticideBean;
 import com.erayic.agr.common.net.back.enums.EnumResourceType;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.adapter.ManagePesticideInfoAdapter;
@@ -31,6 +33,8 @@ import com.erayic.agr.manage.adapter.entity.ManagePesticideEntity;
 import com.erayic.agr.manage.presenter.IPesticideInfoPresenter;
 import com.erayic.agr.manage.presenter.impl.PesticideInfoPresenterImpl;
 import com.erayic.agr.manage.view.IPesticideInfoView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +54,7 @@ import butterknife.OnClick;
 public class PesticideInfoActivity extends BaseActivity implements IPesticideInfoView {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.manage_pesticide_RecyclerView)
     RecyclerView managePesticideRecyclerView;
     @BindView(R2.id.manage_content_pid)
@@ -85,7 +89,6 @@ public class PesticideInfoActivity extends BaseActivity implements IPesticideInf
 
     @Override
     public void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("资源详情");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -380,6 +383,9 @@ public class PesticideInfoActivity extends BaseActivity implements IPesticideInf
 
     @Override
     public void saveSure() {
+        ManageRefreshMessage message = new ManageRefreshMessage();
+        message.setMsgType(ManageRefreshMessage.MANAGE_MASTER_PESTICIDE_LIST);
+        EventBus.getDefault().post(message);
         ErayicStack.getInstance().finishCurrentActivity();
     }
 

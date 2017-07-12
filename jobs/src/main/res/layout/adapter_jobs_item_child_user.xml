@@ -93,8 +93,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
-                android:gravity="left|top"
-                android:text="111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+                android:gravity="center|start"
+                android:text="1111111111111111"
                 android:textColor="@color/app_base_text_title_3"
                 android:textSize="14sp" />
         </LinearLayout>

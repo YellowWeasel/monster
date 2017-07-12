@@ -9,8 +9,13 @@ package com.erayic.agr.unit.presenter;
 public interface IBatchInfoByResumePresenter {
 
     /**
-     * 得到作物批次的生产履历
+     * 得到作物批次的生产履历（刷新）
      */
-    void getPorduceHistoryByBatch(String batchID);
+    void getPorduceHistoryByBatch(String batchID,int pageSize);
+
+    /**
+     * 得到作物批次的生产履历(更多)
+     */
+    void getPorduceHistoryByBatch(String batchID,int pageNum,int pageSize);
 
 }

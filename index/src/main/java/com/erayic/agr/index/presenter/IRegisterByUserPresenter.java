@@ -11,7 +11,7 @@ public interface IRegisterByUserPresenter {
     /**
      * 邀请码注册
      */
-    void userByInvite(String pass, String tel, String code, String verifyNum);
+    void userByInvite(String pass, String tel, String code, String verifyNum,String identifier);
 
     /**
      * 发送验证码

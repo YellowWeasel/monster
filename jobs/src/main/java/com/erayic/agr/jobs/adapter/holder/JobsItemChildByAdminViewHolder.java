@@ -6,9 +6,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.erayic.agr.jobs.R;
 import com.erayic.agr.jobs.R2;
-import com.erayic.agr.jobs.adapter.JobsListGridImageAdapter;
+import com.jaeger.ninegridimageview.NineGridImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

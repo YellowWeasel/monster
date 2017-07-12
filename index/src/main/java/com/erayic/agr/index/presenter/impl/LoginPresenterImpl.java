@@ -29,9 +29,9 @@ public class LoginPresenterImpl implements ILoginPresenter {
 
 
     @Override
-    public void login(String tel, String pass) {
+    public void login(String tel, String pass,String identifier) {
         loginView.showLoading();
-        indexModel.login(AgrConstant.AGR_APPID, tel, pass, AgrConstant.Test_PHONE, new OnDataListener<Object>() {
+        indexModel.login(AgrConstant.AGR_APPID, tel, pass, identifier, new OnDataListener<Object>() {
             @Override
             public void success(Object response) {
                 loginView.dismissLoading();

@@ -15,12 +15,10 @@ import com.erayic.agr.common.net.back.unit.CommonUnitBatchResumeBean;
 import com.erayic.agr.common.util.ErayicNetDate;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.unit.R;
-import com.erayic.agr.unit.adapter.entity.UnitBatchInfoByResumeEntity;
 import com.erayic.agr.unit.adapter.holder.UnitBatchInfoByResumeViewHolder;
-import com.erayic.agr.unit.adapter.holder.UnitListItemByBatchInfoViewHolder;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
-import com.luck.picture.lib.model.PictureConfig;
-import com.yalantis.ucrop.entity.LocalMedia;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -77,7 +75,7 @@ public class UnitBatchInfoByResumeItemAdapter extends BaseQuickAdapter<CommonUni
         for (int i = 0; i < item.getRecoder().getRecords().size(); i++) {
             CommonImagesEntity entity = item.getRecoder().getRecords().get(i);
             LocalMedia localMedia = new LocalMedia();
-            localMedia.setType(1);
+            localMedia.setMimeType(1);
             localMedia.setPath(TextUtils.isEmpty(entity.getImgPath()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + entity.getImgPath()));
             localMedia.setPosition(i);
             listImg.add(localMedia);
@@ -96,6 +94,7 @@ public class UnitBatchInfoByResumeItemAdapter extends BaseQuickAdapter<CommonUni
 //            imageView.setTag(s);
             Glide.with(context)
                     .load(s.getPath())
+                    .apply(AgrConstant.iconOptions)
                     .into(imageView);
         }
 
@@ -109,7 +108,8 @@ public class UnitBatchInfoByResumeItemAdapter extends BaseQuickAdapter<CommonUni
 //            super.onItemImageClick(context, imageView, index, list);
             //点击事件
 //            ErayicToast.TextToast(context, list.get(index));
-            PictureConfig.getInstance().externalPicturePreview((Activity) context, "/Erayic/image", index, list);
+//            PictureConfig.getInstance().externalPicturePreview((Activity) context, "/Erayic/image", index, list);
+            PictureSelector.create((Activity) context).externalPicturePreview(index, "/Erayic/image", list);
         }
     };
 }

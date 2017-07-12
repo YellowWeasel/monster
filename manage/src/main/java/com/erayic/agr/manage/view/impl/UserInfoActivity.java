@@ -1,6 +1,7 @@
 package com.erayic.agr.manage.view.impl;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicEditDialog;
 import com.erayic.agr.common.view.ErayicTextDialog;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.adapter.ManageUserItemAdapter;
@@ -29,6 +31,11 @@ import com.erayic.agr.manage.event.UserInfoEvent;
 import com.erayic.agr.manage.presenter.IUserInfoPresenter;
 import com.erayic.agr.manage.presenter.impl.UserInfoPresenterImpl;
 import com.erayic.agr.manage.view.IUserInfoView;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.compress.Luban;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -46,7 +53,7 @@ import butterknife.BindView;
 public class UserInfoActivity extends BaseActivity implements IUserInfoView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.manage_user_RecyclerView)
     RecyclerView manageUserRecyclerView;
     @BindView(R2.id.manage_user_swipe)
@@ -56,7 +63,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Swi
     private ManageUserItemAdapter adapter;
     private LoadingDialog dialog;
 
-    private int positionBuffer = -1;
+    private int positionBuffer = 0;
     private ManageUserEntity entityBuffer;
 
     @Override
@@ -150,7 +157,10 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Swi
                 entityBuffer.setSubTitle(strBuffer);
                 adapter.setData(positionBuffer, entityBuffer);
                 if (entityBuffer.getItemType() == ManageUserEntity.TYPE_USER_NAME) {
-                    EventBus.getDefault().post(new UserInfoEvent(strBuffer, ""));
+                    EventBus.getDefault().post(new UserInfoEvent(UserInfoEvent.TYPE_USER_NAME, strBuffer));
+                }
+                if (entityBuffer.getItemType() == ManageUserEntity.TYPE_USER_ICON) {
+                    EventBus.getDefault().post(new UserInfoEvent(UserInfoEvent.TYPE_USER_ICON, strBuffer));
                 }
             }
         });
@@ -241,7 +251,25 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Swi
                     switch (entity.getItemType()) {
                         case ManageUserEntity.TYPE_USER_ICON://头像
                         {
-
+                            PictureSelector.create(UserInfoActivity.this)
+                                    .openGallery(PictureMimeType.ofImage())
+                                    .imageSpanCount(4)// 每行显示个数 int
+                                    .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
+                                    .previewImage(false)// 是否可预览图片 true or false
+                                    .isCamera(true)// 是否显示拍照按钮 true or false
+                                    .enableCrop(true)// 是否裁剪 true or false
+                                    .compress(false)// 是否压缩 true or false
+                                    .compressMode(PictureConfig.LUBAN_COMPRESS_MODE)//系统自带 or 鲁班压缩 PictureConfig.SYSTEM_COMPRESS_MODE or LUBAN_COMPRESS_MODE
+                                    .compressGrade(Luban.CUSTOM_GEAR)
+                                    .compressMaxKB(500)//压缩最大值kb compressGrade()为Luban.CUSTOM_GEAR有效 int
+                                    .withAspectRatio(1, 1)// int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
+                                    .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
+                                    .circleDimmedLayer(false)// 是否圆形裁剪 true or false
+//                                    .cropWH(1, 1)// 裁剪宽高比，设置如果大于图片本身宽高则无效 int
+                                    .showCropFrame(true)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false   true or false
+                                    .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
+                                    .scaleEnabled(true)// 裁剪是否可放大缩小图片 true or false
+                                    .forResult(PictureConfig.CHOOSE_REQUEST);
                         }
                         break;
                         case ManageUserEntity.TYPE_USER_NAME://姓名
@@ -268,6 +296,11 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Swi
                         case ManageUserEntity.TYPE_USER_TEL://电话
                         {
 
+                        }
+                        break;
+                        case ManageUserEntity.TYPE_USER_BASE://基地
+                        {
+                            ARouter.getInstance().build("/manage/activity/SwitchBaseActivity").navigation();
                         }
                         break;
                         case ManageUserEntity.TYPE_USER_WEIXIN://微信
@@ -329,5 +362,34 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Swi
                 ErayicToast.TextToast(getApplicationContext(), msg);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    String iconPath = "";
+                    // 图片选择结果回调
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    // 例如 LocalMedia 里面返回三种path
+                    // 1.media.getPath(); 为原图path
+                    // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+                    // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+                    // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
+                    if (selectList != null && selectList.size() > 0) {
+                        LocalMedia media = selectList.get(0);
+                        if (media.isCompressed())
+                            iconPath = media.getCompressPath();
+                        else if (media.isCut())
+                            iconPath = media.getCutPath();
+                        else
+                            iconPath = media.getPath();
+                        presenter.updateUserIcon(iconPath);
+                    }
+                    break;
+            }
+        }
     }
 }

@@ -372,8 +372,8 @@ public class UnitModelImpl implements IUnitModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void getPorduceHistoryByBatch(String batchID, final OnDataListener<List<CommonUnitBatchResumeBean>> listener) {
-        HttpUnitManager.getInstance().getPorduceHistoryByBatch(batchID)
+    public void getPorduceHistoryByBatch(String batchID, int pageNum, int pageSize, final OnDataListener<List<CommonUnitBatchResumeBean>> listener) {
+        HttpUnitManager.getInstance().getPorduceHistoryByBatch(batchID,pageNum,pageSize)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Consumer<DataBack<List<CommonUnitBatchResumeBean>>>() {
@@ -454,8 +454,8 @@ public class UnitModelImpl implements IUnitModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void getWorkLogByBatch(String batchID, final OnDataListener<List<CommonUnitBatchLogsBean>> listener) {
-        HttpUnitManager.getInstance().getWorkLogByBatch(batchID)
+    public void getWorkLogByBatch(String batchID,int pageNum,int pageSize, final OnDataListener<List<CommonUnitBatchLogsBean>> listener) {
+        HttpUnitManager.getInstance().getWorkLogByBatch(batchID,pageNum,pageSize)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Consumer<DataBack<List<CommonUnitBatchLogsBean>>>() {

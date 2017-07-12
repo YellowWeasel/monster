@@ -19,6 +19,7 @@ import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicEditDialog;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.adapter.ManageEntItemAdapter;
@@ -41,7 +42,7 @@ import butterknife.BindView;
 public class EnterpriseActivity extends BaseActivity implements IEnterpriseView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.manage_enterprise_RecyclerView)
     RecyclerView manageEnterpriseRecyclerView;
     @BindView(R2.id.manage_enterprise_swipe)

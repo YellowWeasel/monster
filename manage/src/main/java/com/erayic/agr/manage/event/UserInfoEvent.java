@@ -8,27 +8,30 @@ package com.erayic.agr.manage.event;
 
 public class UserInfoEvent {
 
-    private String userName;//用户名称
-    private String userIcon;//用户头像
+    public static final int TYPE_USER_NAME = 0;//姓名
+    public static final int TYPE_USER_ICON = 1;//头像
 
-    public UserInfoEvent( String userName,String userIcon){
-        this.userName = userName;
-        this.userIcon = userIcon;
+    private int type;//类型
+    private Object data;//数据
+
+    public UserInfoEvent(int type,Object data){
+       this.type = type;
+        this.data = data;
     }
 
-    public String getUserName() {
-        return userName;
+    public int getType() {
+        return type;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setType(int type) {
+        this.type = type;
     }
 
-    public String getUserIcon() {
-        return userIcon;
+    public Object getData() {
+        return data;
     }
 
-    public void setUserIcon(String userIcon) {
-        this.userIcon = userIcon;
+    public void setData(Object data) {
+        this.data = data;
     }
 }

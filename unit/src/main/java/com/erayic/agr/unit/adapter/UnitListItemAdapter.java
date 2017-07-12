@@ -188,14 +188,17 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                     case 1://环境
                     {
                         List<UnitListItemByEnvironmentEntity> listEnvi = new ArrayList<>();
-                        for (int i = 0; i < 7; i++) {
+                        for (int i = 0; i < 8; i++) {
                             UnitListItemByEnvironmentEntity entity = new UnitListItemByEnvironmentEntity();
                             switch (i) {
                                 case 0://空气温度
                                 {
                                     entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_AIR_TEM);
                                     entity.setName("空气温度：");
-                                    entity.setSubName("" + list.get(section).getEnvInfo().getTemp() + "℃");
+                                    if (list.get(section).getEnvInfo().getTemp() == -99)
+                                        entity.setSubName("未采集");
+                                    else
+                                        entity.setSubName("" + list.get(section).getEnvInfo().getTemp() + "℃");
                                     listEnvi.add(entity);
                                 }
                                 break;
@@ -203,7 +206,10 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                                 {
                                     entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_AIR_HUM);
                                     entity.setName("空气湿度：");
-                                    entity.setSubName(list.get(section).getEnvInfo().getHumi() + "％");
+                                    if (list.get(section).getEnvInfo().getHumi() == -1)
+                                        entity.setSubName("未采集");
+                                    else
+                                        entity.setSubName(list.get(section).getEnvInfo().getHumi() + "％");
                                     listEnvi.add(entity);
                                 }
                                 break;
@@ -211,7 +217,10 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                                 {
                                     entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_SOIL_TEM);
                                     entity.setName("土壤温度：");
-                                    entity.setSubName(list.get(section).getEnvInfo().getTempSoil() + "℃");
+                                    if (list.get(section).getEnvInfo().getTempSoil() == -99)
+                                        entity.setSubName("未采集");
+                                    else
+                                        entity.setSubName(list.get(section).getEnvInfo().getTempSoil() + "℃");
                                     listEnvi.add(entity);
                                 }
                                 break;
@@ -219,7 +228,10 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                                 {
                                     entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_SOIL_HUM);
                                     entity.setName("土壤湿度：");
-                                    entity.setSubName(list.get(section).getEnvInfo().getHumiSoil() + "％");
+                                    if (list.get(section).getEnvInfo().getHumiSoil() == -1)
+                                        entity.setSubName("未采集");
+                                    else
+                                        entity.setSubName(list.get(section).getEnvInfo().getHumiSoil() + "％");
                                     listEnvi.add(entity);
                                 }
                                 break;
@@ -227,7 +239,10 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                                 {
                                     entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_WATER);
                                     entity.setName("降水量(1H)：");
-                                    entity.setSubName(list.get(section).getEnvInfo().getRain_1H() + "ml");
+                                    if (list.get(section).getEnvInfo().getRain_1H() == -1)
+                                        entity.setSubName("未采集");
+                                    else
+                                        entity.setSubName(list.get(section).getEnvInfo().getRain_1H() + "ml");
                                     listEnvi.add(entity);
                                 }
                                 break;
@@ -235,15 +250,32 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                                 {
                                     entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_ILL);
                                     entity.setName("光照强度：");
-                                    entity.setSubName(list.get(section).getEnvInfo().getIllumination() + "lux");
+                                    if (list.get(section).getEnvInfo().getIllumination() == -1)
+                                        entity.setSubName("未采集");
+                                    else
+                                        entity.setSubName(list.get(section).getEnvInfo().getIllumination() + "lux");
                                     listEnvi.add(entity);
                                 }
                                 break;
-                                case 6://风力
+                                case 6://CO2
+                                {
+                                    entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_CO2);
+                                    entity.setName("二氧化碳：");
+                                    if (list.get(section).getEnvInfo().getCo2() == -1)
+                                        entity.setSubName("未采集");
+                                    else
+                                        entity.setSubName(list.get(section).getEnvInfo().getCo2() + "ppm");
+                                    listEnvi.add(entity);
+                                }
+                                break;
+                                case 7://风力
                                 {
                                     entity.setItemType(UnitListItemByEnvironmentEntity.TYPE_WIND);
                                     entity.setName("风力：");
-                                    entity.setSubName(list.get(section).getEnvInfo().getWind_Max() + "m/s");
+                                    if (list.get(section).getEnvInfo().getWind_Max() == -1)
+                                        entity.setSubName("未采集");
+                                    else
+                                        entity.setSubName(list.get(section).getEnvInfo().getWind_Max() + "m/s");
                                     listEnvi.add(entity);
                                 }
                                 break;

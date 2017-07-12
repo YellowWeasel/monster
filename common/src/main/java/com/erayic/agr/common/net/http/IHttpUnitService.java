@@ -148,11 +148,15 @@ public interface IHttpUnitService {
      * 得到作物批次的生产履历
      *
      * @param batchID 批次ID
+     * @param pageNum 页数（int）
+     * @param pageSize 页尺寸（int）
      * @return DataBack
      */
     @GET("Unit/GetPorduceHistoryByBatch")
     Flowable<DataBack<List<CommonUnitBatchResumeBean>>> getPorduceHistoryByBatch(
-            @Query("batchID") String batchID
+            @Query("batchID") String batchID,
+            @Query("pageNum") int pageNum,
+            @Query("pageSize") int pageSize
     );
 
     /**
@@ -171,12 +175,16 @@ public interface IHttpUnitService {
     /**
      * 得到批次所有的工作日志
      *
-     * @param batchID 批次ID
+     * @param batchID  批次ID
+     * @param pageNum  页数（int）
+     * @param pageSize 页尺寸（int）
      * @return DataBack
      */
     @GET("Unit/GetWorkLogByBatch")
     Flowable<DataBack<List<CommonUnitBatchLogsBean>>> getWorkLogByBatch(
-            @Query("batchID") String batchID
+            @Query("batchID") String batchID,
+            @Query("pageNum") int pageNum,
+            @Query("pageSize") int pageSize
     );
 
     /**

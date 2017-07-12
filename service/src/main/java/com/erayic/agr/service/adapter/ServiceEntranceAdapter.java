@@ -2,6 +2,7 @@ package com.erayic.agr.service.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,13 +85,28 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
 
     @Override
     protected void onBindSectionHeaderViewHolder(ServiceEntranceGroupViewHolder holder, final int section) {
-        if (list.get(section).isOwner()) {
-            holder.setVisibility(true);
-        } else {
-            holder.setVisibility(false);
+        boolean isShow = false;
+        if (list.get(section).getType() != EnumServiceType.Subject)
+            if (list.get(section).isOwner()) {
+                holder.setVisibility(true);
+            } else {
+                holder.setVisibility(false);
+            }
+        else {
+            for (ServiceBuyByUserBean.SpecifysInfo info : list.get(section).getSpecifys()) {
+                isShow = isShow || info.isOwner();
+            }
+            if (isShow) {
+                holder.setVisibility(true);
+            } else {
+                holder.setVisibility(false);
+            }
         }
-        Glide.with(context).load(AgrConstant.IMAGE_URL_PREFIX + list.get(section).getIcon()).error(R.drawable.image_service_test)
+        Glide.with(context).
+                load(TextUtils.isEmpty(list.get(section).getIcon()) ? "" : (AgrConstant.IMAGE_URL_PREFIX + list.get(section).getIcon())).
+                apply(AgrConstant.iconOptions)
                 .into(holder.serviceEntranceItemIcon);
+
         holder.serviceEntranceItemName.setText(list.get(section).getServiceName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +117,7 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
                     notifyDataSetChanged();
                 } else {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onClick(v, list.get(section).getServiceID(), null,0);
+                        onItemClickListener.onClick(v, list.get(section).getServiceID(), null, 0);
                     }
                 }
             }
@@ -132,7 +148,7 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onClick(v, list.get(section).getServiceID(), list.get(section).getSpecifys().get(position).getServiceID(),list.get(section).getSpecifys().get(position).getSepcifyId());
+                    onItemClickListener.onClick(v, list.get(section).getServiceID(), list.get(section).getSpecifys().get(position).getServiceID(), list.get(section).getSpecifys().get(position).getSepcifyId());
                 }
             }
         });
@@ -145,6 +161,6 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
     }
 
     public interface OnItemClickListener {
-        void onClick(View v, String serviceID, String subServiceID,int SepcifyId);
+        void onClick(View v, String serviceID, String subServiceID, int SepcifyId);
     }
 }

@@ -51,9 +51,12 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
     //    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'// 大神写的这个库可以支持
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+    compile 'com.qianwen:okhttp-utils:3.8.0'
     ////retrofit现在只支持到rxjava1.XX
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    //动态权限管理
+    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
     //    依赖注入
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
@@ -77,7 +80,7 @@ dependencies {
     compile 'com.xhb:xbanner:1.2.7'
     compile 'com.nineoldandroids:library:2.4.0'
     //    图片加载技术
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+//    compile 'com.github.bumptech.glide:glide:3.7.0'
     //    BaseRecyclerViewAdapterHelper RecyclerView的adapter封装(https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.17'
     //    switchButton
@@ -91,12 +94,19 @@ dependencies {
     //    日期
     compile 'joda-time:joda-time:2.9.4'
     //    android多图选择器 图片/视频 单选or多选，以及视频录制(https://github.com/LuckSiege/PictureSelector)
-    compile 'com.github.LuckSiege.PictureSelector:picture_library:v1.5.7'
+    compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.1.0'
     //    九宫格图片库(https://github.com/laobie/NineGridImageView)
     compile 'com.jaeger.ninegridimageview:library:1.1.0'
     //    APP介绍引导库（https://github.com/apl-devs/AppIntro）
     compile 'com.github.apl-devs:appintro:v4.2.0'
     //    图表库（https://github.com/PhilJay/MPAndroidChart）
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+    //阿里VLayout
+    compile('com.alibaba.android:vlayout:1.0.9@aar') {
+        transitive = true
+    }
+    //更新工具（https://github.com/WVector/AppUpdate）
+    compile 'com.qianwen:update-app:3.2.3'
+    //加载高德地图本地jar
     compile files('libs/AMap3DMap_5.2.0_AMapNavi_5.1.0_AMapSearch_5.1.0_AMapLocation_3.4.0_20170602.jar')
 }

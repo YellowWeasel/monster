@@ -1,9 +1,11 @@
 package com.erayic.agr.common.net.http;
 
 import com.erayic.agr.common.net.DataBack;
+import com.erayic.agr.common.net.back.CommonBaseListBean;
 import com.erayic.agr.common.net.back.CommonByteArrayBean;
 import com.erayic.agr.common.net.back.CommonPersonnelBean;
 import com.erayic.agr.common.net.back.CommonUserInfoBean;
+import com.erayic.agr.common.net.back.user.CommonUserIconBean;
 
 import java.util.List;
 
@@ -43,12 +45,12 @@ public interface IHttpUserService {
     /**
      * 更新用户头像
      *
-     * @param icon 头像byte[]
+     * @param bean 头像
      * @return DataBack
      */
     @POST("User/UpdateUserIcon")
     Flowable<DataBack<Object>> updateUserIcon(
-            @Body CommonByteArrayBean icon
+            @Body CommonUserIconBean bean
     );
 
     /**
@@ -134,6 +136,25 @@ public interface IHttpUserService {
             @Query("tel") String tel,
             @Query("name") String name,
             @Query("role") int role
+    );
+
+
+    /**
+     * 得到一个用户的所有基地
+     */
+    @GET("EntBase/GetBaseListByUser")
+    Flowable<DataBack<List<CommonBaseListBean>>> getBaseListByUser(
+    );
+
+    /**
+     * 用户变更所属基地
+     *
+     * @param newBaseID 欲变更基地ID
+     * @return DataBack
+     */
+    @GET("EntBase/ChangeBase")
+    Flowable<DataBack<Object>> changeBase(
+            @Query("newBaseID") String newBaseID
     );
 
 }

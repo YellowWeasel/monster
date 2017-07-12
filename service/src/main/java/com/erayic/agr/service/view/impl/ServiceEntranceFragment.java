@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TableRow;
@@ -22,6 +23,7 @@ import com.erayic.agr.common.net.back.enums.EnumUserRole;
 import com.erayic.agr.common.util.ErayicLog;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.SectionedSpanSizeLookup;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
 import com.erayic.agr.service.adapter.ServiceEntranceAdapter;
@@ -52,15 +54,13 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
     String titleName;
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.mine_service_RecyclerView)
     RecyclerView mineServiceRecyclerView;
     @BindView(R2.id.fake_status_bar)
     View fakeStatusBar;
-    @BindView(R2.id.toolbar_title_name)
-    TextView toolbarTitleName;
-    @BindView(R2.id.toolbar_title_img)
-    ImageView toolbarTitleImg;
+    //    @BindView(R2.id.toolbar_title_img)
+//    ImageView toolbarTitleImg;
     @BindView(R2.id.service_entrance_switch)
     TextView serviceEntranceSwitch;
     @BindView(R2.id.service_entrance_manager)
@@ -79,13 +79,21 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
         setHasOptionsMenu(true);
         EventBus.getDefault().register(this);// 注册EventBus
 //        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.setTitle("");
-        toolbarTitleName.setText(titleName);
+        toolbar.setTitle(titleName);
         if (PreferenceUtils.getParam("UserRole", 0) == EnumUserRole.Role_Manager) {
-            toolbarTitleImg.setVisibility(View.VISIBLE);
-        } else {
-            toolbarTitleImg.setVisibility(View.GONE);
+            toolbar.inflateMenu(R.menu.service_entrance_admin); //加载菜单
         }
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                //点击事件
+                if (item.getItemId() == R.id.action_service_entrance) {
+                    ARouter.getInstance().build("/service/activity/ServiceListByEntActivity").navigation();
+                }
+                return true;
+            }
+        });
+
 
         adapter = new ServiceEntranceAdapter(getActivity());
         adapter.setOnItemClickListener(new OnItemClickListener());
@@ -113,11 +121,11 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
         //应用管理
         ARouter.getInstance().build("/service/activity/ServiceManageActivity").navigation();
     }
-
-    @OnClick(R2.id.toolbar_title_img)
-    public void onToolbarTitleImgClick() {
-        ARouter.getInstance().build("/service/activity/ServiceListByEntActivity").navigation();
-    }
+//
+//    @OnClick(R2.id.toolbar_title_img)
+//    public void onToolbarTitleImgClick() {
+//
+//    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onServiceEntranceEventThread(ServiceEntranceEvent event) {
@@ -175,7 +183,7 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
     private class OnItemClickListener implements ServiceEntranceAdapter.OnItemClickListener {
 
         @Override
-        public void onClick(View v, String serviceID, String subServiceID,int SepcifyId) {
+        public void onClick(View v, String serviceID, String subServiceID, int SepcifyId) {
             switch (serviceID) {
                 case "b759c79e-b365-4932-aab0-99ca72a35e04":
                     ARouter.getInstance().build("/serverproduct/activity/ReportingActivity").withString("serviceID", serviceID).navigation();
@@ -185,28 +193,28 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
                     break;
                 case "3d8508bf-9b94-4b2c-86cb-d4e62663d25f"://价格动态服务
                     switch (subServiceID == null ? "" : subServiceID) {
-                    case "e27c20c6-9994-452a-b32c-092cfb85fcf7"://芒果
-                        ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
-                        break;
-                    case "51c74d08-054b-47d3-92f0-1b7489b2f225"://苹果
-                        ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
-                        break;
-                    case "91efc1c1-ed58-40da-926d-79faf0351488"://大白菜
-                        ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
-                        break;
-                    case "eda779ef-ef1c-4225-b563-83cd7c321776"://上海青
-                        ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
-                        break;
+                        case "e27c20c6-9994-452a-b32c-092cfb85fcf7"://芒果
+                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
+                            break;
+                        case "51c74d08-054b-47d3-92f0-1b7489b2f225"://苹果
+                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
+                            break;
+                        case "91efc1c1-ed58-40da-926d-79faf0351488"://大白菜
+                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
+                            break;
+                        case "eda779ef-ef1c-4225-b563-83cd7c321776"://上海青
+                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
+                            break;
                         case "dce3c919-5b0b-4b40-87b6-a29eac1080f8"://香蕉
                             ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
                             break;
-                    case "7c17aba8-1ec6-4c87-8e92-d35c5f1ccee6"://大白菜
-                        ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
-                        break;
-                    default:
-                        showToast("未支持的服务类型");
-                        break;
-                }
+                        case "7c17aba8-1ec6-4c87-8e92-d35c5f1ccee6"://大白菜
+                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
+                            break;
+                        default:
+                            showToast("未支持的服务类型");
+                            break;
+                    }
                     break;
                 case "3fabad22-5e5f-4d76-9ddf-d3af850019de"://政策法规
                     ARouter.getInstance().build("/serverproduct/activity/PoliciesRegulationsActivity").withString("serviceID", serviceID).navigation();

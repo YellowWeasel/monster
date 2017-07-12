@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.net.back.CommonOrderBean;
@@ -45,8 +47,13 @@ public class OrderByHistoryAdapter extends BaseQuickAdapter<CommonOrderBean, Ord
 
     @Override
     protected void convert(OrderByHistoryItemViewHolder helper, final CommonOrderBean item) {
-        Glide.with(context).load(AgrConstant.IMAGE_URL_PREFIX + item.getIcon())
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
                 .error(R.drawable.image_service_test)
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
+
+        Glide.with(context).load(AgrConstant.IMAGE_URL_PREFIX + item.getIcon())
+                .apply(options)
                 .into(helper.orderHistoryItemImg);
         helper.orderHistoryItemName.setText(item.getServiceName());
         helper.orderHistoryItemFinish.setText("订购时间：" + ErayicNetDate.getStringDateYMDHM(item.getOrderTime()) + "");

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--<item-->
+    <!--android:id="@+id/action_service_entrance"-->
+    <!--android:icon="@drawable/image_menu_service_admin"-->
+    <!--android:title="服务中心"-->
+    <!--app:showAsAction="always" />-->
+    <item
+        android:id="@+id/action_service_entrance"
+        android:title="服务中心"
+        app:showAsAction="always" />
+
+</menu>

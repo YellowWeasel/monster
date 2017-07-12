@@ -14,17 +14,20 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
-import com.erayic.agr.common.net.back.CommonBaseListBean;
+import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.CommonPersonnelBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
-import com.erayic.agr.manage.adapter.ManageBaseListAdapter;
 import com.erayic.agr.manage.adapter.ManagePersonnelItemAdapter;
 import com.erayic.agr.manage.presenter.IPersonnelListPresenter;
 import com.erayic.agr.manage.presenter.impl.PersonnelListPresenterImpl;
 import com.erayic.agr.manage.view.IPersonnelListView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -39,7 +42,7 @@ import butterknife.BindView;
 public class PersonnelListActivity extends BaseActivity implements IPersonnelListView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.manage_personnel_RecyclerView)
     RecyclerView managePersonnelRecyclerView;
     @BindView(R2.id.manage_personnel_swipe)
@@ -52,6 +55,7 @@ public class PersonnelListActivity extends BaseActivity implements IPersonnelLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_personnel);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -72,7 +76,11 @@ public class PersonnelListActivity extends BaseActivity implements IPersonnelLis
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 CommonPersonnelBean bean = (CommonPersonnelBean) adapter.getData().get(position);
-                ARouter.getInstance().build("/manage/activity/PersonnelInfoActivity").withBoolean("isAdd", false).withParcelable("bean", bean).navigation();
+                ARouter.getInstance()
+                        .build("/manage/activity/PersonnelInfoActivity")
+                        .withBoolean("isAdd", false)
+                        .withParcelable("bean", bean)
+                        .navigation();
             }
         });
         adapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
@@ -94,6 +102,13 @@ public class PersonnelListActivity extends BaseActivity implements IPersonnelLis
     @Override
     public void onRefresh() {
         presenter.GetAllUserByBase();
+    }
+
+    @Subscribe
+    public void onMessageEvent(ManageRefreshMessage event) {
+        if (event.getMsgType() == ManageRefreshMessage.MANAGE_MASTER_PERSONNEL_LIST) {
+            onRefresh();
+        }
     }
 
     @Override
@@ -154,5 +169,9 @@ public class PersonnelListActivity extends BaseActivity implements IPersonnelLis
         });
     }
 
-
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }

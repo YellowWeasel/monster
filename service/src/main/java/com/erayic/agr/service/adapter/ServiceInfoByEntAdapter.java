@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.net.back.CommonPriceBean;
 import com.erayic.agr.common.util.ErayicNetDate;
 import com.erayic.agr.service.R;
@@ -61,7 +62,7 @@ public class ServiceInfoByEntAdapter extends BaseMultiItemQuickAdapter<ServiceIn
         switch (helper.getItemViewType()) {
             case ServiceInfoByEntEntity.TYPE_TITLE:
                 if (helper instanceof ServiceInfoByEntTitleViewHolder) {
-                    Glide.with(context).load(item.getTitle().getServiceIcon()).error(R.drawable.image_service_test).into(((ServiceInfoByEntTitleViewHolder) helper).serviceInfoIcon);
+                    Glide.with(context).load(item.getTitle().getServiceIcon()).apply(AgrConstant.iconOptions).into(((ServiceInfoByEntTitleViewHolder) helper).serviceInfoIcon);
                     ((ServiceInfoByEntTitleViewHolder) helper).serviceInfoName.setText(item.getTitle().getServiceName());
                 }
                 break;

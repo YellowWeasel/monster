@@ -18,6 +18,7 @@ import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.config.PreferenceUtils;
+import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.CommonPersonnelBean;
 import com.erayic.agr.common.net.back.CommonProduceListBean;
 import com.erayic.agr.common.net.back.CommonResourceBean;
@@ -30,6 +31,7 @@ import com.erayic.agr.common.net.back.unit.CommonUnitListByBaseBean;
 import com.erayic.agr.common.net.back.work.CommonWorkListBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.adapter.ManageSelectAdapter;
@@ -38,6 +40,9 @@ import com.erayic.agr.manage.adapter.entity.ManageSelectEntity;
 import com.erayic.agr.manage.presenter.ISelectPresenter;
 import com.erayic.agr.manage.presenter.impl.SelectPresenterImpl;
 import com.erayic.agr.manage.view.ISelectView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +62,7 @@ import butterknife.ButterKnife;
 public class SelectActivity extends BaseActivity implements ISelectView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.manage_produce_RecyclerView)
     RecyclerView manageRecyclerView;
     @BindView(R2.id.manage_produce_swipe)
@@ -76,7 +81,6 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_produce_list);
-        ButterKnife.bind(this);
     }
 
 
@@ -98,19 +102,34 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
             public void onAddClick(View view) {
                 switch (selectType) {
                     case EnumRequestType.TYPE_RETURN_PRODUCT:
+                        ARouter.getInstance().build("/manage/activity/ProduceListActivity").navigation();
                         break;
                     case EnumRequestType.TYPE_RETURN_USER:
+                        ARouter.getInstance().build("/manage/activity/PersonnelInfoActivity").withBoolean("isAdd", true).navigation();
                         break;
                     case EnumRequestType.TYPE_RETURN_FERTILIZER:
+                        ARouter.getInstance().build("/manage/activity/FertilizerInfoActivity")
+                                .withBoolean("isAdd", true)
+                                .navigation();
                         break;
                     case EnumRequestType.TYPE_RETURN_PESTICIDE:
+                        ARouter.getInstance().build("/manage/activity/PesticideInfoActivity")
+                                .withBoolean("isAdd", true)
+                                .navigation();
                         break;
                     case EnumRequestType.TYPE_RETURN_SEED:
+                        ARouter.getInstance().build("/manage/activity/SeedInfoActivity")
+                                .withBoolean("isAdd", true)
+                                .navigation();
                         break;
                     case EnumRequestType.TYPE_RETURN_WORK:
                         ARouter.getInstance().build("/jobs/activity/WorkInfoActivity").withString("strTitle", "增加预设作业").withBoolean("isAdd", true).navigation();
                         break;
                     case EnumRequestType.TYPE_RETURN_UNIT:
+                        ARouter.getInstance().build("/manage/activity/BaseInfoActivity")
+                                .withString("baseID", PreferenceUtils.getParam("ActiveBaseID"))
+                                .withString("baseName", PreferenceUtils.getParam("BaseName"))
+                                .navigation();
                         break;
                     case EnumRequestType.TYPE_RETURN_NOTICE:
                         break;
@@ -127,6 +146,7 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
 
         presenter = new SelectPresenterImpl(this);
         onRefresh();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -157,7 +177,29 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
                 presenter.getNoticeList();
                 break;
         }
+    }
 
+
+    @Subscribe
+    public void onMessageEvent(ManageRefreshMessage event) {
+        if (event.getMsgType() == ManageRefreshMessage.MANAGE_MASTER_PERSONNEL_LIST && selectType == EnumRequestType.TYPE_RETURN_USER) {//人员
+            onRefresh();
+        }
+        if (event.getMsgType() == ManageRefreshMessage.MANAGE_MASTER_PESTICIDE_LIST && selectType == EnumRequestType.TYPE_RETURN_PESTICIDE) {//农药
+            onRefresh();
+        }
+        if (event.getMsgType() == ManageRefreshMessage.MANAGE_MASTER_FERTILIZER_LIST && selectType == EnumRequestType.TYPE_RETURN_FERTILIZER) {//化肥
+            onRefresh();
+        }
+        if (event.getMsgType() == ManageRefreshMessage.MANAGE_MASTER_SEED_LIST && selectType == EnumRequestType.TYPE_RETURN_SEED) {//种子
+            onRefresh();
+        }
+        if (event.getMsgType() == ManageRefreshMessage.MANAGE_MASTER_WORK_LIST && selectType == EnumRequestType.TYPE_RETURN_WORK) {//预设作业
+            onRefresh();
+        }
+        if (event.getMsgType() == ManageRefreshMessage.MANAGE_MASTER_PRODUCE_LIST && selectType == EnumRequestType.TYPE_RETURN_PRODUCT) {//产品
+            onRefresh();
+        }
     }
 
     @Override
@@ -198,6 +240,14 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
                     entity.setSubName(bean.getClassifyName());
                     listProduct.add(entity);
                 }
+                //新增
+                {
+                    ManageSelectEntity entity = new ManageSelectEntity();
+                    entity.setItemType(ManageSelectEntity.TYPE_SELECT_ADD);
+                    entity.setName("增加产品");
+                    entity.setSubName("");
+                    listProduct.add(entity);
+                }
                 adapter.setNewData(listProduct);
             }
         });
@@ -227,6 +277,24 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
                     entity.setSubName(bean.getCommonDesc());
                     listResource.add(entity);
                 }
+                //新增
+                {
+                    ManageSelectEntity entity = new ManageSelectEntity();
+                    entity.setItemType(ManageSelectEntity.TYPE_SELECT_ADD);
+                    switch (selectType) {
+                        case EnumRequestType.TYPE_RETURN_FERTILIZER:
+                            entity.setName("增加化肥");
+                            break;
+                        case EnumRequestType.TYPE_RETURN_PESTICIDE:
+                            entity.setName("增加农药");
+                            break;
+                        case EnumRequestType.TYPE_RETURN_SEED:
+                            entity.setName("增加种子");
+                            break;
+                    }
+                    entity.setSubName("");
+                    listResource.add(entity);
+                }
                 adapter.setNewData(listResource);
             }
         });
@@ -245,6 +313,14 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
                     entity.setID(bean.getUserID());
                     entity.setName(bean.getName());
                     entity.setSubName(EnumUserRole.getRoleDes(bean.getRole()));
+                    listResource.add(entity);
+                }
+                //新增
+                {
+                    ManageSelectEntity entity = new ManageSelectEntity();
+                    entity.setItemType(ManageSelectEntity.TYPE_SELECT_ADD);
+                    entity.setName("邀请用户");
+                    entity.setSubName("");
                     listResource.add(entity);
                 }
                 adapter.setNewData(listResource);
@@ -270,7 +346,7 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
                 {
                     ManageSelectEntity entity = new ManageSelectEntity();
                     entity.setItemType(ManageSelectEntity.TYPE_SELECT_ADD);
-                    entity.setName("添加作业");
+                    entity.setName("增加预设作业");
                     entity.setSubName("");
                     listResource.add(entity);
                 }
@@ -299,8 +375,13 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
                     }
                     listResource.add(entity);
                 }
+                //新增
                 {
-                    //新增
+                    ManageSelectEntity entity = new ManageSelectEntity();
+                    entity.setItemType(ManageSelectEntity.TYPE_SELECT_ADD);
+                    entity.setName("增加管理单元");
+                    entity.setSubName("");
+                    listResource.add(entity);
                 }
                 adapter.setNewData(listResource);
             }
@@ -394,4 +475,9 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
         return true;
     }
 
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }

@@ -49,6 +49,9 @@
         <activity
             android:name=".view.impl.BasePositionActivity"
             android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.SwitchBaseActivity"
+            android:theme="@style/AppTheme.Transparent" />
     </application>
 
 </manifest>

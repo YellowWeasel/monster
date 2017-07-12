@@ -82,6 +82,8 @@ public class CommonUnitListBean {
         private double TempSoil;//土壤温度
         private double HumiSoil;//土壤湿度
         private double Illumination;//光照强度
+        private double Co2;//二氧化碳
+        private double PH;//酸碱度
 
         public double getRain_1H() {
             return Rain_1H;
@@ -153,6 +155,22 @@ public class CommonUnitListBean {
 
         public void setIllumination(double illumination) {
             Illumination = illumination;
+        }
+
+        public double getCo2() {
+            return Co2;
+        }
+
+        public void setCo2(double co2) {
+            Co2 = co2;
+        }
+
+        public double getPH() {
+            return PH;
+        }
+
+        public void setPH(double PH) {
+            this.PH = PH;
         }
     }
 

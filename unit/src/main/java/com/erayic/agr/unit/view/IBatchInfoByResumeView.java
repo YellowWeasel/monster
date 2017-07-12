@@ -29,4 +29,14 @@ public interface IBatchInfoByResumeView extends IBaseView {
      */
     void refreshLogsView(List<CommonUnitBatchResumeBean> list);
 
+    /**
+     * 加载更多显示
+     */
+    void loadMoreSure(List<CommonUnitBatchResumeBean> list);
+
+    /**
+     * 加载更多失败
+     */
+    void loadMoreFailure();
+
 }

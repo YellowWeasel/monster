@@ -9,8 +9,13 @@ package com.erayic.agr.unit.presenter;
 public interface IBatchInfoByLogPresenter {
 
     /**
-     * 得到批次所有的工作日志
+     * 得到批次所有的工作日志（刷新）
      */
-    void getWorkLogByBatch(String batchID);
+    void getWorkLogByBatch(String batchID,int pageSize);
+
+    /**
+     * 得到批次所有的工作日志(加载更多)
+     */
+    void getWorkLogByBatch(String batchID,int pageNum,int pageSize);
 
 }

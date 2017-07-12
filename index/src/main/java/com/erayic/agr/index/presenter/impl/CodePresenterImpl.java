@@ -42,8 +42,8 @@ public class CodePresenterImpl implements ICodePresenter {
     }
 
     @Override
-    public void checkTelVerify(String tel, String verifyCode) {
-        indexModel.checkTelVerify(AgrConstant.AGR_APPID, tel, AgrConstant.Test_PHONE, verifyCode, new OnDataListener<Object>() {
+    public void checkTelVerify(String tel, String verifyCode, String identifier) {
+        indexModel.checkTelVerify(AgrConstant.AGR_APPID, tel, identifier, verifyCode, new OnDataListener<Object>() {
             @Override
             public void success(Object response) {
                 codeView.showToast("校验成功，正在返回重新登录");

@@ -19,6 +19,7 @@ import com.erayic.agr.common.net.back.CommonPersonnelBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.adapter.ManageUserCheckItemAdapter;
@@ -43,7 +44,7 @@ import butterknife.BindView;
 public class SelectUserActivity extends BaseActivity implements ISelectUserView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.manage_user_RecyclerView)
     RecyclerView manageUserRecyclerView;
     @BindView(R2.id.manage_user_swipe)

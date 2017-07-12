@@ -2,6 +2,7 @@ package com.erayic.agr.common.net.back.unit;
 
 import com.erayic.agr.common.net.back.base.CommonImagesEntity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**

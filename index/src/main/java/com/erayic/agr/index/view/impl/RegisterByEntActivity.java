@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.util.ErayicIdentifier;
 import com.erayic.agr.common.util.ErayicRegularly;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
@@ -106,7 +107,7 @@ public class RegisterByEntActivity extends BaseActivity implements IRegisterByEn
         if (isVerification()) {
             presenter.enterpriseRegister(indexRegisterEntPhone.getText().toString(), indexRegisterEntUserName.getText().toString(),
                     indexRegisterEntEntName.getText().toString(), indexRegisterEntPassword.getText().toString(),
-                    indexRegisterEntVerCode.getText().toString());
+                    indexRegisterEntVerCode.getText().toString(), ErayicIdentifier.getInstance(RegisterByEntActivity.this).getErayicdentifier());
         }
     }
 

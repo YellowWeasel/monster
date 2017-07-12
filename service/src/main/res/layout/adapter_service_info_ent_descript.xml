@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="6dp"
-            android:text="\u3000\u3000android开发的本地数据库存储是sqlite。greenDAO应该算android开发的本地数据库存储是sqlite。greenDAO应该算是当前最火的数据库开源框架了吧，它是一个移动开发的ORM（object / relational mapping）框架，是对sqlite数据库访问的对象化封装。以对象的形式去访问数据库，数据库表里面的字段就相当于对象的属性了。可以直接obj.data的形式访问了。如果觉得效率不够高，你也可以自己ORM的框架。据我所致GreeDao是android开发性能最好的数据库开源框架是当前最火的数据库开源框架了吧，它是一个移动开发的ORM（object / relational mapping）框架，是对sqlite数据库访问的对象化封装。以对象的形式去访问数据库，数据库表里面的字段就相当于对象的属性了。可以直接obj.data的形式访问了。如果觉得效率不够高，你也可以自己ORM的框架。据我所致GreeDao是android开发性能最好的数据库开源框架"
+            android:text=""
             android:textColor="@color/app_base_text_title_2"
             android:textSize="14sp"
             app:etv_GapToExpandHint="...."

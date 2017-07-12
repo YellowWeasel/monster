@@ -19,6 +19,7 @@ public class UnitListItemByEnvironmentEntity implements MultiItemEntity {
     public static final int TYPE_WATER = 4;//降水量
     public static final int TYPE_ILL = 5;//光照强度
     public static final int TYPE_WIND = 6;//风力
+    public static final int TYPE_CO2 = 7;//二氧化碳
 
     private String name;
     private String subName;

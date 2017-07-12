@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.net.back.work.CommonJobsListManagerBean;
@@ -30,11 +31,10 @@ public class JobsListGridImageAdapter extends BaseQuickAdapter<CommonJobsListMan
 
     @Override
     protected void convert(JobsListGridImageViewHolder helper, CommonJobsListManagerBean.RecordsBean item) {
+
         Glide.with(context.getApplicationContext())
                 .load(TextUtils.isEmpty(item.getImgPath()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + item.getImgPath()))
-                .centerCrop()
-                .placeholder(R.color.color_f6)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .apply(AgrConstant.iconOptions)
                 .into(helper.jobsContentImage);
     }
 }

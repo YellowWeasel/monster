@@ -78,19 +78,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="工作记录说明"
+                android:gravity="center|start"
+                android:text=""
                 android:textColor="@color/app_base_text_title_1"
                 android:textSize="14sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/jobs_content_img"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginTop="5dp" />
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" />
 
         </LinearLayout>
         <LinearLayout

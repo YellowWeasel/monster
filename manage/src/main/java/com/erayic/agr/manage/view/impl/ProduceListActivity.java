@@ -13,11 +13,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.CommonProduceListBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicEditDialog;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.adapter.ManageBaseListAdapter;
@@ -25,6 +27,8 @@ import com.erayic.agr.manage.adapter.ManageProduceListAdapter;
 import com.erayic.agr.manage.presenter.IProduceListPresenter;
 import com.erayic.agr.manage.presenter.impl.ProduceListPresenterImpl;
 import com.erayic.agr.manage.view.IProduceListView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -39,7 +43,7 @@ import butterknife.BindView;
 public class ProduceListActivity extends BaseActivity implements IProduceListView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.manage_produce_RecyclerView)
     RecyclerView manageProduceRecyclerView;
     @BindView(R2.id.manage_produce_swipe)
@@ -145,7 +149,9 @@ public class ProduceListActivity extends BaseActivity implements IProduceListVie
 
     @Override
     public void addSure() {
-        //测试刷新
+        ManageRefreshMessage message = new ManageRefreshMessage();
+        message.setMsgType(ManageRefreshMessage.MANAGE_MASTER_PRODUCE_LIST);
+        EventBus.getDefault().post(message);
         onRefresh();
     }
 

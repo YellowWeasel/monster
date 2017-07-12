@@ -29,4 +29,14 @@ public interface IBatchInfoByLogView extends IBaseView{
      */
     void refreshLogsView(List<CommonUnitBatchLogsBean> list);
 
+    /**
+     * 加载更多显示
+     */
+    void loadMoreSure(List<CommonUnitBatchLogsBean> list);
+
+    /**
+     * 加载更多失败
+     */
+    void loadMoreFailure();
+
 }

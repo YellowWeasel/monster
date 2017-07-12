@@ -61,4 +61,22 @@ public class UserInfoPresenterImpl implements IUserInfoPresenter {
             }
         });
     }
+
+    @Override
+    public void updateUserIcon(String path) {
+        userInfoView.showLoading();
+        userModel.updateUserIcon(path, new OnDataListener<Object>() {
+            @Override
+            public void success(Object response) {
+                userInfoView.dismissLoading();
+                userInfoView.updateSure(response.toString());
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
+                userInfoView.dismissLoading();
+                userInfoView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
+    }
 }

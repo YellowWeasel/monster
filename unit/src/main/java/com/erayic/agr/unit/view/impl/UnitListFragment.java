@@ -16,6 +16,7 @@ import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.SectionedSpanSizeLookup;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.R2;
 import com.erayic.agr.unit.adapter.UnitListItemAdapter;
@@ -43,10 +44,8 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
 
     @BindView(R2.id.fake_status_bar)
     View fakeStatusBar;
-    @BindView(R2.id.toolbar_title_name)
-    TextView toolbarTitleName;
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.unit_list_RecyclerView)
     RecyclerView unitListRecyclerView;
     @BindView(R2.id.unit_list_swipe)
@@ -64,8 +63,7 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        toolbar.setTitle("");
-        toolbarTitleName.setText(titleName);
+        toolbar.setTitle(titleName);
         unitListSwipe.setOnRefreshListener(this);
         adapter = new UnitListItemAdapter(getActivity());
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 1);

@@ -17,6 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.config.PreferenceUtils;
+import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.CommonPersonnelBean;
 import com.erayic.agr.common.net.back.enums.EnumUserRole;
 import com.erayic.agr.common.util.ErayicRegularly;
@@ -24,11 +25,14 @@ import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicTextDialog;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.R2;
 import com.erayic.agr.manage.presenter.IPersonnelInfoPresenter;
 import com.erayic.agr.manage.presenter.impl.PersonnelInfoPresenterImpl;
 import com.erayic.agr.manage.view.IPersonnelInfoView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +46,7 @@ import butterknife.ButterKnife;
 public class PersonnelInfoActivity extends BaseActivity implements IPersonnelInfoView {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.manage_personnel_info_name)
     EditText managePersonnelInfoName;
     @BindView(R2.id.manage_personnel_info_tel)
@@ -128,6 +132,9 @@ public class PersonnelInfoActivity extends BaseActivity implements IPersonnelInf
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                ManageRefreshMessage message = new ManageRefreshMessage();
+                message.setMsgType(ManageRefreshMessage.MANAGE_MASTER_PERSONNEL_LIST);
+                EventBus.getDefault().post(message);
                 ErayicStack.getInstance().finishCurrentActivity();//出栈
             }
         });

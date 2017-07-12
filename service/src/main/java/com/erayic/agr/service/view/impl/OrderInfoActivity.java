@@ -234,7 +234,7 @@ public class OrderInfoActivity extends BaseActivity implements IOrderInfoView, S
                 orderStatue = bean.getStatus();
                 orderPayPrice = bean.getPrice();
                 Glide.with(OrderInfoActivity.this).load(AgrConstant.IMAGE_URL_PREFIX + bean.getIcon())
-                        .error(R.drawable.image_service_test)
+                        .apply(AgrConstant.iconOptions)
                         .into(orderInfoServiceIcon);
                 orderInfoServiceName.setText(bean.getServiceName());
                 orderInfoPrice.setText("总价：￥" + ErayicTextUtil.getPrice(bean.getPrice()) + "");

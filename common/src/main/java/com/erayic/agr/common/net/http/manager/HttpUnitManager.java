@@ -92,8 +92,8 @@ public class HttpUnitManager {
     /**
      * 得到作物批次的生产履历
      */
-    public Flowable getPorduceHistoryByBatch(String batchID) {
-        return unitService.getPorduceHistoryByBatch(batchID);
+    public Flowable getPorduceHistoryByBatch(String batchID, int pageNum, int pageSize) {
+        return unitService.getPorduceHistoryByBatch(batchID,pageNum,pageSize);
     }
 
     /**
@@ -106,8 +106,8 @@ public class HttpUnitManager {
     /**
      * 得到批次所有的工作日志
      */
-    public Flowable getWorkLogByBatch(String batchID) {
-        return unitService.getWorkLogByBatch(batchID);
+    public Flowable getWorkLogByBatch(String batchID,int pageNum,int pageSize) {
+        return unitService.getWorkLogByBatch(batchID,pageNum,pageSize);
     }
 
     /**
