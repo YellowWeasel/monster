@@ -79,6 +79,7 @@ public class AddBatchActivity extends BaseActivity implements IAddBatchView {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         }
 
         //使用线性布局管理器

@@ -3,13 +3,22 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ErayicAgriculture.iml" filepath="$PROJECT_DIR$/ErayicAgriculture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ErayicAgriculture.iml" filepath="$PROJECT_DIR$/ErayicAgriculture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/index/index.iml" filepath="$PROJECT_DIR$/index/index.iml" />
       <module fileurl="file://$PROJECT_DIR$/index/index.iml" filepath="$PROJECT_DIR$/index/index.iml" />
       <module fileurl="file://$PROJECT_DIR$/jobs/jobs.iml" filepath="$PROJECT_DIR$/jobs/jobs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jobs/jobs.iml" filepath="$PROJECT_DIR$/jobs/jobs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/manage/manage.iml" filepath="$PROJECT_DIR$/manage/manage.iml" />
       <module fileurl="file://$PROJECT_DIR$/manage/manage.iml" filepath="$PROJECT_DIR$/manage/manage.iml" />
       <module fileurl="file://$PROJECT_DIR$/serverproduct/serverproduct.iml" filepath="$PROJECT_DIR$/serverproduct/serverproduct.iml" />
+      <module fileurl="file://$PROJECT_DIR$/serverproduct/serverproduct.iml" filepath="$PROJECT_DIR$/serverproduct/serverproduct.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service.iml" filepath="$PROJECT_DIR$/service/service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service/service.iml" filepath="$PROJECT_DIR$/service/service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/unit/unit.iml" filepath="$PROJECT_DIR$/unit/unit.iml" />
       <module fileurl="file://$PROJECT_DIR$/unit/unit.iml" filepath="$PROJECT_DIR$/unit/unit.iml" />
     </modules>
   </component>
