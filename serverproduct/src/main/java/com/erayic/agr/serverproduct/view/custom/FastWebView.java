@@ -50,7 +50,6 @@ public class FastWebView extends WebView {
 
     @Override
     protected void  onDetachedFromWindow() {
-
         if(this.is_gone) {
             try
             {

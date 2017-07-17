@@ -78,7 +78,6 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_price);
-//
 //        ButterKnife.bind(this);
     }
 
@@ -235,7 +234,7 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
 
         DynamicPricePrincipalMarketDatas.MarketPriceDatas marketPriceDatas= (DynamicPricePrincipalMarketDatas.MarketPriceDatas) parent.getItemAtPosition(position);
         ARouter.getInstance().build("/serverproduct/activity/DynamicPriceDetailActivity").withParcelable("paramter",new MarketInfoParamter(cropId,marketPriceDatas.getMarketName(),new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime())
-                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()))).withString("serviceID",serviceID).navigation();
+                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()))).withString("serviceID",serviceID).navigation();//需要传入作物信息
     }
 
     public class DynamicPriceJsInterface {

@@ -1,13 +1,6 @@
 package com.erayic.agr.serverproduct.adapter;
 
-import android.graphics.Rect;
-import android.provider.ContactsContract;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.serverproduct.R;
@@ -16,8 +9,6 @@ import com.erayic.agr.serverproduct.adapter.viewholder.PoliciesRegulationsViewHo
 import com.erayic.agr.serverproduct.view.custom.CustomOnclickListener;
 
 import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * Created by wxk on 2017/5/12.

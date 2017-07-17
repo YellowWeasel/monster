@@ -48,6 +48,9 @@ import butterknife.BindView;
 public class DynamicPriceDetailActivity extends BaseActivity implements IDynamicPriceDetailView {
     @Autowired
     String serviceID;
+
+    @Autowired
+    String cropName;
     @Autowired
     MarketInfoParamter paramter;
     @BindView(R2.id.toolbar)
@@ -80,7 +83,6 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_price_detail);
     }
-
     @Override
     public void initView() {
         toolbar.setTitle("市场价格");

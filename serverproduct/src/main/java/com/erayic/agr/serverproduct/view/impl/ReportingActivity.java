@@ -51,7 +51,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     @Autowired
     String serviceID;
     @BindView(R2.id.serverproduct_reporting_webview)
-    NoScrollWebView webView;
+    WebView webView;
 
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
@@ -111,7 +111,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        baseTextView.setText(PreferenceUtils.getParam("BaseName"));
+//        baseTextView.setText(PreferenceUtils.getParam("BaseName"));
         DateFormatUtils.showClock(100, "yyyy-MM-dd HH:mm", this);
 
         webView.getSettings().setJavaScriptEnabled(true);
@@ -258,6 +258,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
         //基地信息
         baseLonTextView.setText(String.valueOf(datas.getGps().getLon()));
         baseLatTextView.setText(String.valueOf(datas.getGps().getLat()));
+        if (!datas.getBaseName().equals(""))
         baseTextView.setText(datas.getBaseName());
         //预测数据表格
         this.environmentParamterDatas = datas;
