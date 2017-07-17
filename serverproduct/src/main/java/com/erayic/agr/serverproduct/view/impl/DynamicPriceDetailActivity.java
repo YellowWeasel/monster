@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -71,7 +72,7 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
         if (paramter == null) return;
         marketTitle.setText(paramter.getMarketName());
         presenter.getMarketDatas(paramter.getCropId(),
-                paramter.getMarketName(), paramter.getStart(), paramter.getEnd(),serviceID);
+                paramter.getMarketName(), paramter.getStart(), paramter.getEnd(), serviceID);
     }
 
     @Override
@@ -114,10 +115,10 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
 
     @Override
     public void refreshMarketDynamicPrices(MarketDynamicPriceDatas beans) {
-        this.marketDynamicPriceDatasList=beans;
+        this.marketDynamicPriceDatasList = beans;
         adapter.setMarketDynamicPriceDatas(this.marketDynamicPriceDatasList);
         adapter.notifyDataSetChanged();
-        this.marketDatas = new DesignatedMarketDatas(beans,paramter.getMarketName());
+        this.marketDatas = new DesignatedMarketDatas(beans, paramter.getMarketName());
         refreshWebView();
     }
 
@@ -139,12 +140,24 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
         dialog.dismiss();
         dialog = null;
     }
-
     @Override
     protected void onDestroy() {
         dismissLoading();
+        if (dynamicDetailPriceWebView != null) {
+            ViewParent parent = dynamicDetailPriceWebView.getParent();
+            if (parent != null) ((ViewGroup) parent).removeAllViews();
+            dynamicDetailPriceWebView.stopLoading();
+            //防止webview内存泄漏
+            dynamicDetailPriceWebView.getSettings().setJavaScriptEnabled(false);
+            dynamicDetailPriceWebView.clearHistory();
+            dynamicDetailPriceWebView.clearView();
+            try {
+                dynamicDetailPriceWebView.destroy();
+                dynamicDetailPriceWebView = null;
+            } catch (Exception ex) {
+            }
+        }
         super.onDestroy();
-
     }
 
     @Override

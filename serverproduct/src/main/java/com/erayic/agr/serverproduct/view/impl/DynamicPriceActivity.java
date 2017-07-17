@@ -5,6 +5,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.ViewStub;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
@@ -206,9 +208,24 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
 
     @Override
     protected void onDestroy() {
+        if (serverproductDynamicPriceAveragepriceWebview != null) {
+            ViewParent parent = serverproductDynamicPriceAveragepriceWebview.getParent();
+            if (parent != null) ((ViewGroup) parent).removeAllViews();
+            serverproductDynamicPriceAveragepriceWebview.stopLoading();
+            //防止webview内存泄漏
+            serverproductDynamicPriceAveragepriceWebview.getSettings().setJavaScriptEnabled(false);
+            serverproductDynamicPriceAveragepriceWebview.clearHistory();
+            serverproductDynamicPriceAveragepriceWebview.clearView();
+            try {
+                serverproductDynamicPriceAveragepriceWebview.destroy();
+                serverproductDynamicPriceAveragepriceWebview = null;
+            } catch (Exception ex) {
+            }
+        }
         super.onDestroy();
         dismissLoading();
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Date date = new Date();

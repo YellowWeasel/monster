@@ -10,6 +10,7 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
@@ -171,6 +172,20 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
 
     @Override
     protected void onDestroy() {
+        if (webView != null) {
+            ViewParent parent = webView.getParent();
+            if (parent != null) ((ViewGroup) parent).removeAllViews();
+            webView.stopLoading();
+            //防止webview内存泄漏
+            webView.getSettings().setJavaScriptEnabled(false);
+            webView.clearHistory();
+            webView.clearView();
+            try {
+                webView.destroy();
+                webView = null;
+            } catch (Exception ex) {
+            }
+        }
         super.onDestroy();
         DateFormatUtils.release();
     }
@@ -211,6 +226,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
 
         tv.setText(textSpan);
     }
+
     public int sp2px(float spValue) {
         final float fontScale = getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
@@ -233,6 +249,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
             }
         });
     }
+
     @Override
     public void refreshReportingInfoView(EnvironmentParamterDatas datas) {
 
@@ -256,7 +273,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
         }
         tmpTextView.setVisibility(View.VISIBLE);
         tmpTextView.setText(String.valueOf(realTime.getTemp_Max()) + "℃");
-        windSpeedTextView.setText(String.valueOf(realTime.getWind_Max())+"m/s");
+        windSpeedTextView.setText(String.valueOf(realTime.getWind_Max()) + "m/s");
         windLvlTextView.setText(realTime.getWindDesc());
         realtimeLinearlayout.setVisibility(View.VISIBLE);
         setTextViewContent(fertilizationTextView, datas.getSuggest()
@@ -268,7 +285,9 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
         setTextViewContent(irrigationTextView, datas.getSuggest()
                 .getIrrigationSuggestion().getResultIndex());
     }
+
     int index = 0;
+
     @Override
     public void showLoading() {
         index++;
@@ -283,6 +302,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
             }
         });
     }
+
     @Override
     public void dismissLoading() {
         index--;
