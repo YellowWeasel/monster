@@ -327,11 +327,9 @@
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/content" />
                         </LinearLayout>
-
                     </LinearLayout>
                 </RelativeLayout>
-
-                <com.erayic.agr.serverproduct.view.custom.NoScrollWebView
+                <com.erayic.agr.serverproduct.view.custom.FastWebView
                     android:id="@+id/serverproduct_reporting_webview"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

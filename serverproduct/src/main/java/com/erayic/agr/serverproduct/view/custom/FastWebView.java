@@ -2,6 +2,7 @@ package com.erayic.agr.serverproduct.view.custom;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -58,5 +59,9 @@ public class FastWebView extends WebView {
 
             }
         }
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent arg0) {
+        return false;
     }
 }

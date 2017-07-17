@@ -46,7 +46,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-    <com.erayic.agr.serverproduct.view.custom.NoScrollWebView
+    <com.erayic.agr.serverproduct.view.custom.FastWebView
         android:layout_weight="1"
         android:id="@+id/serverproduct_dynamic_price_detail_webview"
         android:layout_width="match_parent"
