@@ -28,6 +28,7 @@ public class ServiceManagePresenterImpl implements IServiceManagePresenter {
     public ServiceManagePresenterImpl(IServiceManageView serviceView) {
         this.serviceView = serviceView;
         ARouter.getInstance().inject(this);
+
     }
 
 
