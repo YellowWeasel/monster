@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewStub;
 import android.webkit.JavascriptInterface;
-import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -26,7 +25,6 @@ import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
-import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
 import com.erayic.agr.serverproduct.adapter.DynamicPricesAdapter;
@@ -36,7 +34,6 @@ import com.erayic.agr.serverproduct.adapter.entity.MarketInfoParamter;
 import com.erayic.agr.serverproduct.presenter.IDynamicPricePresenter;
 import com.erayic.agr.serverproduct.presenter.impl.DynamicPricePresenterImpl;
 import com.erayic.agr.serverproduct.view.IDynamicPriceView;
-import com.erayic.agr.serverproduct.view.custom.FastWebView;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
@@ -63,10 +60,10 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
     int dateInterval = 7;
 
     @BindView(R2.id.toolbar)
-    ErayicToolbar toolbar;
+    Toolbar toolbar;
     IDynamicPricePresenter dynamicPricePresenter;
     @BindView(R2.id.serverproduct_dynamic_price_averageprice_webview)
-    FastWebView serverproductDynamicPriceAveragepriceWebview;
+    WebView serverproductDynamicPriceAveragepriceWebview;
     DynamicAveragePriceDatas averagePriceDatas;
     DynamicPricePrincipalMarketDatas principalMarketDatas;
     DynamicPricesAdapter adapter;
@@ -102,8 +99,6 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
     }
 
     public void refreshWebView() {
-        if (serverproductDynamicPriceAveragepriceWebview == null || !serverproductDynamicPriceAveragepriceWebview.isShown())
-            return;
         serverproductDynamicPriceAveragepriceWebview.loadUrl("file:///android_asset/DynamicPriceTool.html");
         serverproductDynamicPriceAveragepriceWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -127,7 +122,7 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
         calendar.add(Calendar.DAY_OF_MONTH, -dateInterval);
         dynamicPricePresenter.getDynamicPricedatas(cropId
                 , new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime())
-                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()), serviceID);
+                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()),serviceID);
     }
 
     @Override
@@ -213,32 +208,22 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
 
     @Override
     protected void onDestroy() {
-//        if (serverproductDynamicPriceAveragepriceWebview != null) {
-//            ViewParent parent = serverproductDynamicPriceAveragepriceWebview.getParent();
-//            if (parent != null) ((ViewGroup) parent).removeAllViews();
-//            serverproductDynamicPriceAveragepriceWebview.stopLoading();
-//            //防止webview内存泄漏
-//            serverproductDynamicPriceAveragepriceWebview.getSettings().setJavaScriptEnabled(false);
-//            serverproductDynamicPriceAveragepriceWebview.clearHistory();
-//            serverproductDynamicPriceAveragepriceWebview.clearView();
-//            try {
-//                serverproductDynamicPriceAveragepriceWebview.destroy();
-//                serverproductDynamicPriceAveragepriceWebview = null;
-//            } catch (Exception ex) {
-//            }
-//        }
         if (serverproductDynamicPriceAveragepriceWebview != null) {
-            final ViewGroup viewGroup = (ViewGroup) serverproductDynamicPriceAveragepriceWebview.getParent();
-            if (viewGroup != null) {
-                viewGroup.removeView(serverproductDynamicPriceAveragepriceWebview);
-            }
+            ViewParent parent = serverproductDynamicPriceAveragepriceWebview.getParent();
+            if (parent != null) ((ViewGroup) parent).removeAllViews();
             serverproductDynamicPriceAveragepriceWebview.stopLoading();
-            serverproductDynamicPriceAveragepriceWebview.removeAllViews();
-            WebStorage.getInstance().deleteAllData();
-            serverproductDynamicPriceAveragepriceWebview.destroy();
+            //防止webview内存泄漏
+            serverproductDynamicPriceAveragepriceWebview.getSettings().setJavaScriptEnabled(false);
+            serverproductDynamicPriceAveragepriceWebview.clearHistory();
+            serverproductDynamicPriceAveragepriceWebview.clearView();
+            try {
+                serverproductDynamicPriceAveragepriceWebview.destroy();
+                serverproductDynamicPriceAveragepriceWebview = null;
+            } catch (Exception ex) {
+            }
         }
-        dismissLoading();
         super.onDestroy();
+        dismissLoading();
     }
 
     @Override
@@ -248,9 +233,9 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_MONTH, -dateInterval);
 
-        DynamicPricePrincipalMarketDatas.MarketPriceDatas marketPriceDatas = (DynamicPricePrincipalMarketDatas.MarketPriceDatas) parent.getItemAtPosition(position);
-        ARouter.getInstance().build("/serverproduct/activity/DynamicPriceDetailActivity").withParcelable("paramter", new MarketInfoParamter(cropId, marketPriceDatas.getMarketName(), new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime())
-                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()))).withString("serviceID", serviceID).navigation();
+        DynamicPricePrincipalMarketDatas.MarketPriceDatas marketPriceDatas= (DynamicPricePrincipalMarketDatas.MarketPriceDatas) parent.getItemAtPosition(position);
+        ARouter.getInstance().build("/serverproduct/activity/DynamicPriceDetailActivity").withParcelable("paramter",new MarketInfoParamter(cropId,marketPriceDatas.getMarketName(),new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime())
+                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()))).withString("serviceID",serviceID).navigation();
     }
 
     public class DynamicPriceJsInterface {

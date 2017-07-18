@@ -28,7 +28,7 @@ public class DesignatedMarketDatas {
             xDatas[i] = beans.getPriceDatasList().get(i).getKey();
             marketDatas[i] = beans.getPriceDatasList().get(i).getValue();
         }
-//        cropName = beans.; //没有作物名称
+        cropName = "大白菜"; //没有作物名称
     }
 
     public String getCropName() {

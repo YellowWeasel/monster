@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
-import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -28,7 +27,6 @@ import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
-import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.serverproduct.Constants;
 import com.erayic.agr.serverproduct.DateFormatUtils;
 import com.erayic.agr.serverproduct.R;
@@ -39,7 +37,6 @@ import com.erayic.agr.serverproduct.presenter.IReportingPresenter;
 import com.erayic.agr.serverproduct.presenter.impl.ReportingPresenterImpl;
 import com.erayic.agr.serverproduct.view.IReportingInfoView;
 import com.erayic.agr.serverproduct.view.IShowClockView;
-import com.erayic.agr.serverproduct.view.custom.FastWebView;
 import com.erayic.agr.serverproduct.view.custom.NoScrollWebView;
 import com.google.gson.Gson;
 
@@ -54,10 +51,10 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     @Autowired
     String serviceID;
     @BindView(R2.id.serverproduct_reporting_webview)
-    FastWebView webView;
+    NoScrollWebView webView;
 
     @BindView(R2.id.toolbar)
-    ErayicToolbar toolbar;
+    Toolbar toolbar;
     @BindView(R2.id.serverproduct_rain_lvl_textview)
     TextView rainLvlTextView;
     @BindView(R2.id.serverproduct_rain_valuetext)
@@ -176,15 +173,19 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     @Override
     protected void onDestroy() {
         if (webView != null) {
-            final ViewGroup viewGroup = (ViewGroup) webView.getParent();
-            if (viewGroup != null) {
-                viewGroup.removeView(webView);
+            ViewParent parent = webView.getParent();
+            if (parent != null) ((ViewGroup) parent).removeAllViews();
+            webView.stopLoading();
+            //防止webview内存泄漏
+            webView.getSettings().setJavaScriptEnabled(false);
+            webView.clearHistory();
+            webView.clearView();
+            try {
+                webView.destroy();
+                webView = null;
+            } catch (Exception ex) {
             }
-            webView.removeAllViews();
-            WebStorage.getInstance().deleteAllData();
-            webView.destroy();
         }
-
         super.onDestroy();
         DateFormatUtils.release();
     }
@@ -232,8 +233,6 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     }
 
     public void refreshWebView() {
-        if (webView == null || !webView.isShown())
-            return;
         webView.loadUrl("file:///android_asset/ReportingTool.html");
         webView.setWebViewClient(new WebViewClient() {
             @Override
