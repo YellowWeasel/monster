@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewStub;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -99,6 +100,7 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
     }
 
     public void refreshWebView() {
+        if (serverproductDynamicPriceAveragepriceWebview ==null||!serverproductDynamicPriceAveragepriceWebview.isAttachedToWindow())return;
         serverproductDynamicPriceAveragepriceWebview.loadUrl("file:///android_asset/DynamicPriceTool.html");
         serverproductDynamicPriceAveragepriceWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -209,18 +211,13 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
     @Override
     protected void onDestroy() {
         if (serverproductDynamicPriceAveragepriceWebview != null) {
-            ViewParent parent = serverproductDynamicPriceAveragepriceWebview.getParent();
-            if (parent != null) ((ViewGroup) parent).removeAllViews();
-            serverproductDynamicPriceAveragepriceWebview.stopLoading();
-            //防止webview内存泄漏
-            serverproductDynamicPriceAveragepriceWebview.getSettings().setJavaScriptEnabled(false);
-            serverproductDynamicPriceAveragepriceWebview.clearHistory();
-            serverproductDynamicPriceAveragepriceWebview.clearView();
-            try {
-                serverproductDynamicPriceAveragepriceWebview.destroy();
-                serverproductDynamicPriceAveragepriceWebview = null;
-            } catch (Exception ex) {
+            final ViewGroup viewGroup = (ViewGroup) serverproductDynamicPriceAveragepriceWebview.getParent();
+            if (viewGroup != null) {
+                viewGroup.removeView(serverproductDynamicPriceAveragepriceWebview);
             }
+            serverproductDynamicPriceAveragepriceWebview.removeAllViews();
+            WebStorage.getInstance().deleteAllData();
+            serverproductDynamicPriceAveragepriceWebview.destroy();
         }
         super.onDestroy();
         dismissLoading();

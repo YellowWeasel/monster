@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -51,7 +52,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     @Autowired
     String serviceID;
     @BindView(R2.id.serverproduct_reporting_webview)
-    NoScrollWebView webView;
+    WebView webView;
 
     @BindView(R2.id.toolbar)
     Toolbar toolbar;
@@ -173,18 +174,13 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     @Override
     protected void onDestroy() {
         if (webView != null) {
-            ViewParent parent = webView.getParent();
-            if (parent != null) ((ViewGroup) parent).removeAllViews();
-            webView.stopLoading();
-            //防止webview内存泄漏
-            webView.getSettings().setJavaScriptEnabled(false);
-            webView.clearHistory();
-            webView.clearView();
-            try {
-                webView.destroy();
-                webView = null;
-            } catch (Exception ex) {
+            final ViewGroup viewGroup = (ViewGroup) webView.getParent();
+            if (viewGroup != null) {
+                viewGroup.removeView(webView);
             }
+            webView.removeAllViews();
+            WebStorage.getInstance().deleteAllData();
+            webView.destroy();
         }
         super.onDestroy();
         DateFormatUtils.release();
@@ -233,6 +229,7 @@ public class ReportingActivity extends BaseActivity implements IReportingInfoVie
     }
 
     public void refreshWebView() {
+        if (webView == null || !webView.isAttachedToWindow()) return;
         webView.loadUrl("file:///android_asset/ReportingTool.html");
         webView.setWebViewClient(new WebViewClient() {
             @Override

@@ -61,7 +61,7 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
     @BindView(R2.id.serverproduct_dynamic_price_detail_title_textview)
     TextView marketTitle;
     @BindView(R2.id.serverproduct_dynamic_price_detail_webview)
-    FastWebView dynamicDetailPriceWebView;
+    WebView dynamicDetailPriceWebView;
     @BindView(R2.id.serverproduct_dynamic_price_detail_averageprice_listview)
     ListView detailListView;
 
@@ -102,7 +102,7 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
     }
 
     public void refreshWebView() {
-        if (dynamicDetailPriceWebView ==null||!dynamicDetailPriceWebView.isShown())return;
+        if (dynamicDetailPriceWebView == null || !dynamicDetailPriceWebView.isAttachedToWindow()) return;
         dynamicDetailPriceWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -149,20 +149,6 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
     @Override
     protected void onDestroy() {
         dismissLoading();
-//        if (dynamicDetailPriceWebView != null) {
-//            ViewParent parent = dynamicDetailPriceWebView.getParent();
-//            if (parent != null) ((ViewGroup) parent).removeAllViews();
-//            dynamicDetailPriceWebView.stopLoading();
-//            //防止webview内存泄漏
-//            dynamicDetailPriceWebView.getSettings().setJavaScriptEnabled(false);
-//            dynamicDetailPriceWebView.clearHistory();
-//            dynamicDetailPriceWebView.clearView();
-//            try {
-//                dynamicDetailPriceWebView.destroy();
-//                dynamicDetailPriceWebView = null;
-//            } catch (Exception ex) {
-//            }
-//        }
         if (dynamicDetailPriceWebView != null) {
             final ViewGroup viewGroup = (ViewGroup) dynamicDetailPriceWebView.getParent();
             if (viewGroup != null) {
