@@ -20,7 +20,7 @@ public class UnitListItemByControlEntity implements MultiItemEntity {
     private String name;
     private String subName;
     private Map<String, Object> map;
-
+    private Object data;
     private int itemType;
 
     @Override
@@ -54,5 +54,13 @@ public class UnitListItemByControlEntity implements MultiItemEntity {
 
     public void setMap(Map<String, Object> map) {
         this.map = map;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 }

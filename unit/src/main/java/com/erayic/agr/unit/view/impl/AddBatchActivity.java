@@ -25,6 +25,7 @@ import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.common.view.codbking.DatePickDialog;
 import com.erayic.agr.common.view.codbking.OnSureLisener;
 import com.erayic.agr.common.view.codbking.bean.DateType;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.R2;
 import com.erayic.agr.unit.adapter.UnitAddBatchItemAdapter;
@@ -55,7 +56,7 @@ public class AddBatchActivity extends BaseActivity implements IAddBatchView {
     private final static int ACTIVITY_REQUEST = 9000;
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.unit_batch_add_recycler)
     RecyclerView unitBatchAddRecycler;
 

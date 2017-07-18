@@ -22,8 +22,10 @@ import org.reactivestreams.Subscription;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
@@ -53,7 +55,7 @@ public class IndexModelImpl implements IIndexModel {
                             PreferenceUtils.putParam("AutoLogin", true);
                             PreferenceUtils.putParam("UserID", objectDataBack.getResult().getUserID());
                             PreferenceUtils.putParam("BaseID", objectDataBack.getResult().getBaseID());
-                            listener.success("登录成功");
+                            listener.success("登陆成功");
                         } else {
                             listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
                         }
@@ -99,8 +101,8 @@ public class IndexModelImpl implements IIndexModel {
                                 case ErrorCode.Error_UserNotRegister:
                                     return HttpIndexManager.getInstance().firstRegister(baseName, name, pass, tel, appID, phoneCode, verifyNum);
                                 default:
-                                    listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
-                                    return null;
+                                    Throwable throwable = new Throwable(objectDataBack.getErrMsg());
+                                    return Flowable.error(throwable);
                             }
                         }
                     }
@@ -210,8 +212,8 @@ public class IndexModelImpl implements IIndexModel {
                                 case ErrorCode.Error_UserNotRegister:
                                     return HttpIndexManager.getInstance().userInviteByTel(appID, pass, tel, code, phoneCode, verifyNum);
                                 default:
-                                    listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
-                                    return null;
+                                    Throwable throwable = new Throwable(objectDataBack.getErrMsg());
+                                    return Flowable.error(throwable);
                             }
                         }
                     }

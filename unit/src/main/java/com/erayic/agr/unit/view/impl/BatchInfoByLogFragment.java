@@ -67,7 +67,6 @@ public class BatchInfoByLogFragment extends BaseFragment implements IBatchInfoBy
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-        EventBus.getDefault().register(this);
         unitBatchLogSwipe.setOnRefreshListener(this);
         unitBatchLogAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +89,7 @@ public class BatchInfoByLogFragment extends BaseFragment implements IBatchInfoBy
     protected void initData() {
         presenter = new BatchInfoByLogPresenterImpl(this);
         onRefresh();
+        EventBus.getDefault().register(this);
     }
 
     @Override

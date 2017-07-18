@@ -36,6 +36,7 @@ import java.net.URISyntaxException;
 public class MqttService extends Service {
 
     private boolean isUnSubscribe = true;//是否未订阅
+    private boolean isConnection = false;
     private CallbackConnection callbackConnection;
 
     private MQTT mqtt;
@@ -93,6 +94,10 @@ public class MqttService extends Service {
 
     private void initMqtt() {
 
+        if (isConnection){
+            return;
+        }
+
         // 消息接收处理线程
         if (!MSGhandlerThread.isAlive()) {
             MSGhandlerThread.start();
@@ -121,7 +126,7 @@ public class MqttService extends Service {
             }
         }
 
-        if (!isUnSubscribe) {//断开
+        if (!isUnSubscribe) {//退订
             try {
                 //退订监听
                 callbackConnection.disconnect(new Callback<Void>() {
@@ -223,11 +228,13 @@ public class MqttService extends Service {
     private class MqttListener implements Listener {
         @Override
         public void onConnected() {
+            isConnection = true;
             ErayicLog.i("MqttListener", "连接成功");
         }
 
         @Override
         public void onDisconnected() {
+            isConnection = false;
             ErayicLog.e("MqttListener", "连接断开");
             Message message = new Message();
             message.what = 0;

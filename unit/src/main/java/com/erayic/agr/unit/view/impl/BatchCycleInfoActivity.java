@@ -120,8 +120,8 @@ public class BatchCycleInfoActivity extends BaseActivity implements IBatchCycleI
                 {
                     UnitBatchCycleInfoEntity entity = new UnitBatchCycleInfoEntity();
                     entity.setItemType(UnitBatchCycleInfoEntity.TYPE_ACCTEM);
-                    entity.setData1(bean.getHistoryTemp());
-                    entity.setData2(bean.getCurAccTemp());
+                    entity.setData1(bean.getHistoryTemp() == null ? new CommonUnitBatchCycleBean.TempInfo() : bean.getHistoryTemp());
+                    entity.setData2(bean.getCurAccTemp() == null ? new CommonUnitBatchCycleBean.TempInfo() : bean.getCurAccTemp());
                     list.add(entity);
                 }
                 //降水Title
@@ -136,8 +136,8 @@ public class BatchCycleInfoActivity extends BaseActivity implements IBatchCycleI
                 {
                     UnitBatchCycleInfoEntity entity = new UnitBatchCycleInfoEntity();
                     entity.setItemType(UnitBatchCycleInfoEntity.TYPE_ACCRAIN);
-                    entity.setData1(bean.getHistoryRain());
-                    entity.setData2(bean.getCurAccRain());
+                    entity.setData1(bean.getHistoryRain() == null ? new CommonUnitBatchCycleBean.RainInfo() : bean.getHistoryRain());
+                    entity.setData2(bean.getCurAccRain() == null ? new CommonUnitBatchCycleBean.RainInfo() : bean.getCurAccRain());
                     list.add(entity);
                 }
                 adapter.setNewData(list);

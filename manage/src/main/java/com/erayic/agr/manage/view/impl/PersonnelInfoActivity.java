@@ -2,6 +2,7 @@ package com.erayic.agr.manage.view.impl;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.text.method.KeyListener;
@@ -94,8 +95,7 @@ public class PersonnelInfoActivity extends BaseActivity implements IPersonnelInf
             managePersonnelInfoName.setText(TextUtils.isEmpty(bean.getName()) ? "" : bean.getName());
             managePersonnelInfoTel.setText(TextUtils.isEmpty(bean.getTel()) ? "" : bean.getTel());
             if (bean.getRole() == EnumUserRole.Role_Manager) {
-                managePersonnelInfoGroup.setVisibility(View.GONE);
-                managePersonnelInfoName.append("(基地管理员)");
+                managePersonnelInfoAdmin.setChecked(true);
             } else if (bean.getRole() == EnumUserRole.Role_Usage) {
                 managePersonnelInfoProducer.setChecked(true);
             }
@@ -145,7 +145,9 @@ public class PersonnelInfoActivity extends BaseActivity implements IPersonnelInf
      */
     private void disableView() {
         managePersonnelInfoName.setKeyListener(null);
+        managePersonnelInfoName.setBackground(null);
         managePersonnelInfoTel.setKeyListener(null);
+        managePersonnelInfoTel.setBackground(null);
         if (isWrite) {
             for (int i = 0; i < managePersonnelInfoGroup.getChildCount(); i++) {
                 managePersonnelInfoGroup.getChildAt(i).setEnabled(true);
@@ -162,7 +164,10 @@ public class PersonnelInfoActivity extends BaseActivity implements IPersonnelInf
      */
     private void enableView() {
         managePersonnelInfoName.setKeyListener(keyListener);
+        managePersonnelInfoName.setBackground(ContextCompat.getDrawable(PersonnelInfoActivity.this, R.drawable.app_base_edit_back_gray));
         managePersonnelInfoTel.setKeyListener(keyListener);
+        managePersonnelInfoTel.setBackground(ContextCompat.getDrawable(PersonnelInfoActivity.this, R.drawable.app_base_edit_back_gray));
+
         for (int i = 0; i < managePersonnelInfoGroup.getChildCount(); i++) {
             managePersonnelInfoGroup.getChildAt(i).setEnabled(true);
         }

@@ -19,6 +19,7 @@ import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.CommonSubServiceBean;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
 import com.erayic.agr.service.adapter.ServiceTopicByEntAdapter;
@@ -41,7 +42,7 @@ import butterknife.BindView;
 public class ServiceTopicActivity extends BaseActivity implements IServiceTopicView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.service_topic_recycler)
     RecyclerView serviceTopicRecycler;
     @BindView(R2.id.service_topic_swipe)

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_video_1"
+        android:title="高清"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_video_2"
+        android:title="流畅"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_video_3"
+        android:title="流畅2"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_video_4"
+        android:title="流畅3"
+        app:showAsAction="never" />
+
+</menu>

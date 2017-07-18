@@ -11,10 +11,12 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseFragment;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.UnitRefreshMessage;
 import com.erayic.agr.common.net.back.enums.EnumBatchByBindType;
 import com.erayic.agr.common.net.back.enums.EnumUnitType;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchInfoBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
+import com.erayic.agr.common.util.ErayicLog;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.R2;
@@ -27,6 +29,7 @@ import com.erayic.agr.unit.view.IBatchInfoByStatueView;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -140,12 +143,20 @@ public class BatchInfoByStatueFragment extends BaseFragment implements IBatchInf
     protected void initData() {
         presenter = new BatchInfoByStatuePresenterImpl(this);
         onRefresh();
+        EventBus.getDefault().register(this);
     }
 
 
     @Override
     public void onRefresh() {
         presenter.getBatchInfo(unitID, EnumUnitType.TYPE_PLOTS, batchID);
+    }
+
+    @Subscribe
+    public void onMessageEvent(UnitRefreshMessage event) {
+        if (event.getMsgType() == UnitRefreshMessage.UNIT_MASTER_STATUE) {
+            onRefresh();
+        }
     }
 
     @Override
@@ -285,4 +296,9 @@ public class BatchInfoByStatueFragment extends BaseFragment implements IBatchInf
         });
     }
 
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }

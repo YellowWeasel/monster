@@ -6,14 +6,20 @@ import android.content.ComponentName;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.SurfaceView;
+import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.R;
+import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.config.PreferenceUtils;
+import com.erayic.agr.common.dahua.DaHuaVideoView;
+import com.erayic.agr.common.net.back.enums.EnumUserRole;
 import com.erayic.agr.common.service.ErayicService;
+import com.erayic.agr.common.util.ErayicApp;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.NoScrollViewPager;
@@ -63,7 +69,6 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void initView() {
-
         //传入一定要集成继承ViewPager
         mainTabBar.setContainer(mainViewPager);
         mainViewPager.setNoScroll(true);//不可滑动
@@ -95,8 +100,9 @@ public class MainActivity extends BaseActivity implements IMainView {
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                switch (PreferenceUtils.getParam("UserRole", 0)) {
-                    case 1://管理员
+                switch (PreferenceUtils.getParam("UserRole", -1)) {
+                    case EnumUserRole.Role_Admin:
+                    case EnumUserRole.Role_Manager:
 //                    {
 //                        titlesName = new String[]{"首页", "管理", "作业", "服务", "我的"};
 //                        titleNormalIcons = new int[]{R.drawable.app_base_default_index_press, R.drawable.app_base_default_unit_press, R.drawable.app_base_default_job_press,
@@ -110,7 +116,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 //                                (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
 //                    }
 //                        break;
-                    case 9://用户
+                    case EnumUserRole.Role_Usage://用户
 //                    {
 //                        titlesName = new String[]{"首页", "管理", "作业", "服务", "我的"};
 //                        titleNormalIcons = new int[]{R.drawable.app_base_default_index_press, R.drawable.app_base_default_unit_press, R.drawable.app_base_default_job_press,
@@ -123,7 +129,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 //                                (Fragment) ARouter.getInstance().build("/service/fragment/ServiceEntranceFragment").withString("titleName", "我的服务").navigation(),
 //                                (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
 //                    }
-                    {
+                    default: {
                         //去掉首页
                         titlesName = new String[]{"管理", "作业", "服务", "我的"};
                         titleNormalIcons = new int[]{R.drawable.app_base_default_unit_press, R.drawable.app_base_default_job_press,
@@ -137,8 +143,6 @@ public class MainActivity extends BaseActivity implements IMainView {
                                 (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
                     }
                     break;
-                    default:
-                        break;
                 }
                 mainTabBar.setTitles(titlesName)
                         .setNormalIcons(titleNormalIcons)
@@ -189,7 +193,6 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void updateApp() {
 
-        String updateUrl = "http://weixin.erayic.com/infos_json.txt";
         UpdateAppManager manager = new UpdateAppManager
                 .Builder()
                 //当前Activity
@@ -201,7 +204,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 //设置头部
                 .setTopPic(R.drawable.app_base_default_update)
                 //更新地址
-                .setUpdateUrl(updateUrl)
+                .setUpdateUrl(AgrConstant.AGR_UPDATE_URL)
 //                //添加自定义参数
 //                .setParams(params)
                 //设置主题色
@@ -221,9 +224,14 @@ public class MainActivity extends BaseActivity implements IMainView {
                 UpdateAppBean updateAppBean = new UpdateAppBean();
                 try {
                     JSONObject jsonObject = new JSONObject(json);
+                    String strUpdate;
+                    if (ErayicApp.getVersionCode(MainActivity.this) >= jsonObject.getInt("VersionCode"))
+                        strUpdate = "No";
+                    else
+                        strUpdate = "Yes";
                     updateAppBean
                             //是否更新Yes,No
-                            .setUpdate(jsonObject.getString("update"))
+                            .setUpdate(strUpdate)
                             //新版本号
                             .setNew_version(jsonObject.getString("new_version"))
                             //下载地址
@@ -272,7 +280,7 @@ public class MainActivity extends BaseActivity implements IMainView {
              */
             @Override
             public void noNewApp() {
-                ErayicToast.TextToast(MainActivity.this, "没有新版本");
+//                ErayicToast.TextToast(MainActivity.this, "没有新版本");
             }
         });
     }

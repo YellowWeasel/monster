@@ -24,6 +24,7 @@ import com.erayic.agr.common.net.back.enums.EnumServiceType;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.common.view.MoneyView;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
 import com.erayic.agr.service.adapter.ServiceBuyByEntAdapter;
@@ -48,7 +49,7 @@ import butterknife.OnClick;
 public class ServiceBuyActivity extends BaseActivity implements IServiceBuyView {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.service_buy_recycler)
     RecyclerView serviceBuyRecycler;
     @BindView(R2.id.service_buy_total_price)

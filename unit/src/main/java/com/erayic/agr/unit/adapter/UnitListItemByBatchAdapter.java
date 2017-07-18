@@ -66,11 +66,14 @@ public class UnitListItemByBatchAdapter extends BaseMultiItemQuickAdapter<UnitLi
                 if (helper instanceof UnitListItemByBatchInfoViewHolder) {
                     Glide.with(context)
                             .load(item.getMap().get("Icon"))
-                           .apply(AgrConstant.iconOptions)
+                            .apply(AgrConstant.iconOptions)
                             .into(((UnitListItemByBatchInfoViewHolder) helper).unitContentIcon);
                     ((UnitListItemByBatchInfoViewHolder) helper).unitContentName.setText(item.getName());
                     int day = new Period(new DateTime(), new DateTime(ErayicNetDate.getLongDates(item.getMap().get("Mature"))), PeriodType.days()).getDays();
-                    if (day > 1000)
+                    if (day <= 0)
+                        ((UnitListItemByBatchInfoViewHolder) helper).unitContentSubName.setText(
+                                Html.fromHtml("<font color=red>已成熟</font>"));
+                    else if (day > 1000)
                         ((UnitListItemByBatchInfoViewHolder) helper).unitContentSubName.setText("");
                     else
                         ((UnitListItemByBatchInfoViewHolder) helper).unitContentSubName.setText(

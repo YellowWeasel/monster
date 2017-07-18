@@ -174,7 +174,6 @@ public class UnitBatchCycleInfoItemAdapter extends BaseMultiItemQuickAdapter<Uni
                     //数据设置
                     ArrayList<Entry> history = new ArrayList<Entry>();
                     ArrayList<Entry> curAcc = new ArrayList<Entry>();
-
                     for (int i = 0; i < historyTemp.getTempSerial().size(); i++) {
                         CommonMapArrayBean bean = historyTemp.getTempSerial().get(i);
                         if (i == 0)
@@ -219,8 +218,10 @@ public class UnitBatchCycleInfoItemAdapter extends BaseMultiItemQuickAdapter<Uni
                     d2.setDrawValues(false);
 
                     ArrayList<ILineDataSet> sets = new ArrayList<>();
-                    sets.add(d1);
-                    sets.add(d2);
+                    if (history.size() > 0)
+                        sets.add(d1);
+                    if (curAcc.size() > 0)
+                        sets.add(d2);
 
                     LineData cd = new LineData(sets);
 
@@ -312,8 +313,10 @@ public class UnitBatchCycleInfoItemAdapter extends BaseMultiItemQuickAdapter<Uni
                     d2.setDrawValues(false);
 
                     ArrayList<ILineDataSet> sets = new ArrayList<>();
-                    sets.add(d1);
-                    sets.add(d2);
+                    if (history.size() > 0)
+                        sets.add(d1);
+                    if (curAcc.size() > 0)
+                        sets.add(d2);
 
                     LineData cd = new LineData(sets);
 

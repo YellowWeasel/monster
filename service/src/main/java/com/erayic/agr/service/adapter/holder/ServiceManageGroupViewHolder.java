@@ -2,6 +2,7 @@ package com.erayic.agr.service.adapter.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
  * 注解：
  */
 
-public class ServiceManageGroupViewHolder extends RecyclerView.ViewHolder{
+public class ServiceManageGroupViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R2.id.service_manage_item_icon)
     public ImageView serviceManageItemIcon;

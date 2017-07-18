@@ -2,10 +2,8 @@ package com.erayic.agr.manage.view.impl;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -73,13 +71,23 @@ public class ManageMineFragment extends BaseFragment implements IMineView {
             public void onItemClick(View v, String url) {
                 if (TextUtils.equals(url, "/xxx/xxx"))
                     showToast("暂未开放");
-                else
+                else if (TextUtils.equals(url, "/unit/activity/BatchDahuaVideoActivity")) {
+                    ARouter.getInstance()
+                            .build(url)
+                            .withString("ip", "192.168.0.199")
+                            .withInt("port", 37777)
+                            .withString("loginName", "admin")
+                            .withString("loginPass", "admin")
+                            .withInt("passNum", 0)
+                            .withBoolean("isControl", true)
+                            .navigation();//跳转到具体的页面
+                } else
                     ARouter.getInstance().build(url).navigation();//跳转到具体的页面
 
             }
         });
         manageMineRecyclerView.setAdapter(adapter);
-        manageMineRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        manageMineRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST, DividerItemDecoration.DividerType.TYPE_F2F2F2));
     }
 
     @Override
@@ -136,7 +144,7 @@ public class ManageMineFragment extends BaseFragment implements IMineView {
         entityWork.setItemType(ManageMineEntity.TYPE_CONTENT);
         entityWork.setToUrl("/jobs/activity/AdvanceWorkActivity");
         entityWork.setName("预设作业");
-        entityWork.setIcon(R.drawable.image_manage_goods_icon);
+        entityWork.setIcon(R.drawable.image_manage_job_icon);
         list.add(entityWork);
         //设置生产资料
         ManageMineEntity entityMaterial = new ManageMineEntity();
@@ -150,7 +158,7 @@ public class ManageMineFragment extends BaseFragment implements IMineView {
         entityEqu.setItemType(ManageMineEntity.TYPE_CONTENT);
         entityEqu.setToUrl("/xxx/xxx");
         entityEqu.setName("设备");
-        entityEqu.setIcon(R.drawable.image_manage_material_icon);
+        entityEqu.setIcon(R.drawable.image_manage_equ_icon);
         list.add(entityEqu);
         //分割区域
         list.add(entityDivider);
@@ -168,6 +176,15 @@ public class ManageMineFragment extends BaseFragment implements IMineView {
         entityHelp.setName("系统帮助");
         entityHelp.setIcon(R.drawable.image_manage_help_icon);
         list.add(entityHelp);
+        //分割区域
+        list.add(entityDivider);
+        //设置测试
+        ManageMineEntity entityTest = new ManageMineEntity();
+        entityTest.setItemType(ManageMineEntity.TYPE_CONTENT);
+        entityTest.setToUrl("/unit/activity/BatchDahuaVideoActivity");
+        entityTest.setName("测试视频");
+        entityTest.setIcon(R.drawable.image_manage_recommend_icon);
+        list.add(entityTest);
         adapter.setNewData(list);
     }
 

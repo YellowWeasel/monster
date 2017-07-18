@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
 import com.erayic.agr.service.view.IBusinessAccountView;
@@ -26,7 +27,7 @@ import butterknife.OnClick;
 public class BusinessAccountActivity extends BaseActivity implements IBusinessAccountView {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.service_business_notes)
     TableRow serviceBusinessNotes;
     @BindView(R2.id.service_business_invoice)

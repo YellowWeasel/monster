@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ListView;
@@ -23,6 +24,7 @@ import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.net.back.api.CommonMarketDynamicPriceBean;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
 import com.erayic.agr.serverproduct.adapter.DynamicPricesDetailAdapter;
@@ -34,6 +36,7 @@ import com.erayic.agr.serverproduct.presenter.IPoliciesRegulationsDetailPresente
 import com.erayic.agr.serverproduct.presenter.impl.DynamicPriceDetailPresenterImpl;
 import com.erayic.agr.serverproduct.presenter.impl.PoliciesRegulationsDetailPresenterImpl;
 import com.erayic.agr.serverproduct.view.IDynamicPriceDetailView;
+import com.erayic.agr.serverproduct.view.custom.FastWebView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -51,11 +54,11 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
     @Autowired
     MarketInfoParamter paramter;
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.serverproduct_dynamic_price_detail_title_textview)
     TextView marketTitle;
     @BindView(R2.id.serverproduct_dynamic_price_detail_webview)
-    WebView dynamicDetailPriceWebView;
+    FastWebView dynamicDetailPriceWebView;
     @BindView(R2.id.serverproduct_dynamic_price_detail_averageprice_listview)
     ListView detailListView;
 
@@ -97,7 +100,7 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
     }
 
     public void refreshWebView() {
-
+        if (dynamicDetailPriceWebView ==null||!dynamicDetailPriceWebView.isShown())return;
         dynamicDetailPriceWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -140,22 +143,32 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
         dialog.dismiss();
         dialog = null;
     }
+
     @Override
     protected void onDestroy() {
         dismissLoading();
+//        if (dynamicDetailPriceWebView != null) {
+//            ViewParent parent = dynamicDetailPriceWebView.getParent();
+//            if (parent != null) ((ViewGroup) parent).removeAllViews();
+//            dynamicDetailPriceWebView.stopLoading();
+//            //防止webview内存泄漏
+//            dynamicDetailPriceWebView.getSettings().setJavaScriptEnabled(false);
+//            dynamicDetailPriceWebView.clearHistory();
+//            dynamicDetailPriceWebView.clearView();
+//            try {
+//                dynamicDetailPriceWebView.destroy();
+//                dynamicDetailPriceWebView = null;
+//            } catch (Exception ex) {
+//            }
+//        }
         if (dynamicDetailPriceWebView != null) {
-            ViewParent parent = dynamicDetailPriceWebView.getParent();
-            if (parent != null) ((ViewGroup) parent).removeAllViews();
-            dynamicDetailPriceWebView.stopLoading();
-            //防止webview内存泄漏
-            dynamicDetailPriceWebView.getSettings().setJavaScriptEnabled(false);
-            dynamicDetailPriceWebView.clearHistory();
-            dynamicDetailPriceWebView.clearView();
-            try {
-                dynamicDetailPriceWebView.destroy();
-                dynamicDetailPriceWebView = null;
-            } catch (Exception ex) {
+            final ViewGroup viewGroup = (ViewGroup) dynamicDetailPriceWebView.getParent();
+            if (viewGroup != null) {
+                viewGroup.removeView(dynamicDetailPriceWebView);
             }
+            dynamicDetailPriceWebView.removeAllViews();
+            WebStorage.getInstance().deleteAllData();
+            dynamicDetailPriceWebView.destroy();
         }
         super.onDestroy();
     }

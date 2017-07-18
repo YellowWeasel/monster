@@ -241,7 +241,7 @@ public class CommonUnitListBean {
         private String SerialNum;//设备序列号
         private int PassNum;//通道号
         private int RelayType;//继电器类别(1 启停 2正反转)
-        private int Category;//设备当前状态
+        private int Category;//设备类型（通风，遮阳等）
         private String Name;//名称
         private int Status;//状态
         private String StatusDesc;//状态

@@ -28,4 +28,22 @@ public interface IUnitListView extends IBaseView {
      */
     void refreshUnitView(List<CommonUnitListBean> list);
 
+    /**
+     * 控制设备成功
+     */
+    void refreshEquCtrSure(CommonUnitListBean.UnitListCtrlItemsBean bean, int position);
+
+    /**
+     * 控制设备失败
+     */
+    void refreshEquCtrFail(CommonUnitListBean.UnitListCtrlItemsBean bean, int position);
+
+    /**
+     * 查询设备成功
+     */
+
+    /**
+     * 查询设备失败
+     */
+
 }

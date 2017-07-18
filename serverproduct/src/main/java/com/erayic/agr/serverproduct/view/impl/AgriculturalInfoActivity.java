@@ -15,6 +15,7 @@ import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
 import com.erayic.agr.serverproduct.adapter.AgriculturalInfosAdapter;
@@ -36,7 +37,7 @@ import butterknife.BindView;
 @Route(path = "/serverproduct/activity/AgriculturalInfoActivity", name = "农业资讯列表")
 public class AgriculturalInfoActivity extends BaseActivity implements IAgriculturalInfoView, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.serverproduct_agricultural_info_swipe)
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R2.id.serverproduct_agricultural_info_recycler)

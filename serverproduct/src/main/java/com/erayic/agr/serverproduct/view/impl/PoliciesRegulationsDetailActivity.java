@@ -13,6 +13,7 @@ import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
 import com.erayic.agr.serverproduct.adapter.entity.PoliciesRegulationsDetailDatas;
@@ -39,7 +40,7 @@ public class PoliciesRegulationsDetailActivity extends BaseActivity implements I
     @BindView(R2.id.serverproduct_policies_regulations_content_textview)
     TextView contentTextView;
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     IPoliciesRegulationsDetailPresenter presenter;
 
 

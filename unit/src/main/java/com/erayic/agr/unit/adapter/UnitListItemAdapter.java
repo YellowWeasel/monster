@@ -53,6 +53,8 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
 
     private UnitListItemByBatchAdapter.OnItemBatchClickListener onItemBatchClickListener;
 
+    private UnitListItemByControlAdapter controlAdapter;
+
     public UnitListItemAdapter(Context context) {
         this.context = context;
         mBooleanMap = new SparseBooleanArray();
@@ -66,6 +68,10 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
 
     public void setOnItemScrollToPositionWithOffset(OnItemScrollToPositionWithOffset onItemScrollToPositionWithOffset) {
         this.onItemScrollToPositionWithOffset = onItemScrollToPositionWithOffset;
+    }
+
+    public void setControlAdapter(UnitListItemByControlAdapter controlAdapter) {
+        this.controlAdapter = controlAdapter;
     }
 
     @Override
@@ -310,15 +316,16 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                                     {
                                         UnitListItemByControlEntity entity = new UnitListItemByControlEntity();
                                         entity.setItemType(UnitListItemByControlEntity.TYPE_ITEM_ST);
-                                        entity.setName(TextUtils.isEmpty(bean.getName()) ? "未命名" : bean.getName());
-                                        entity.setSubName(TextUtils.isEmpty(bean.getStatusDesc()) ? "未知" : bean.getStatusDesc());
-                                        Map<String, Object> map = new ArrayMap<>();
-                                        map.put("SerialNum", bean.getSerialNum());
-                                        map.put("Status", bean.getStatus());
-                                        map.put("PassNum", bean.getPassNum());
-                                        map.put("Category", bean.getCategory());
-                                        map.put("RelayType", bean.getRelayType());
-                                        entity.setMap(map);
+//                                        entity.setName(TextUtils.isEmpty(bean.getName()) ? "未命名" : bean.getName());
+//                                        entity.setSubName(TextUtils.isEmpty(bean.getStatusDesc()) ? "未知" : bean.getStatusDesc());
+//                                        Map<String, Object> map = new ArrayMap<>();
+//                                        map.put("SerialNum", bean.getSerialNum());
+//                                        map.put("Status", bean.getStatus());
+//                                        map.put("PassNum", bean.getPassNum());
+//                                        map.put("Category", bean.getCategory());
+//                                        map.put("RelayType", bean.getRelayType());
+//                                        entity.setMap(map);
+                                        entity.setData(bean);
                                         listControl.add(entity);
                                     }
                                     break;
@@ -326,15 +333,16 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                                     {
                                         UnitListItemByControlEntity entity = new UnitListItemByControlEntity();
                                         entity.setItemType(UnitListItemByControlEntity.TYPE_ITEM_PN);
-                                        entity.setName(TextUtils.isEmpty(bean.getName()) ? "未命名" : bean.getName());
-                                        entity.setSubName(TextUtils.isEmpty(bean.getStatusDesc()) ? "未知" : bean.getStatusDesc());
-                                        Map<String, Object> map = new ArrayMap<>();
-                                        map.put("SerialNum", bean.getSerialNum());
-                                        map.put("Status", bean.getStatus());
-                                        map.put("PassNum", bean.getPassNum());
-                                        map.put("Category", bean.getCategory());
-                                        map.put("RelayType", bean.getRelayType());
-                                        entity.setMap(map);
+//                                        entity.setName(TextUtils.isEmpty(bean.getName()) ? "未命名" : bean.getName());
+//                                        entity.setSubName(TextUtils.isEmpty(bean.getStatusDesc()) ? "未知" : bean.getStatusDesc());
+//                                        Map<String, Object> map = new ArrayMap<>();
+//                                        map.put("SerialNum", bean.getSerialNum());
+//                                        map.put("Status", bean.getStatus());
+//                                        map.put("PassNum", bean.getPassNum());
+//                                        map.put("Category", bean.getCategory());
+//                                        map.put("RelayType", bean.getRelayType());
+//                                        entity.setMap(map);
+                                        entity.setData(bean);
                                         listControl.add(entity);
                                     }
                                     break;
@@ -349,9 +357,8 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                             entity.setName("系统检测到当前地块无控制设备，请联系我们");
                             listControl.add(entity);
                         }
-                        UnitListItemByControlAdapter adapter = new UnitListItemByControlAdapter(context, null);
-                        holder.unitListItemRecyclerView.setAdapter(adapter);
-                        adapter.setNewData(listControl);
+                        holder.unitListItemRecyclerView.setAdapter(controlAdapter);
+                        controlAdapter.setNewData(listControl);
                     }
                     break;
                     case 3://监控

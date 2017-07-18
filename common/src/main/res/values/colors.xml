@@ -12,7 +12,7 @@
     <!--内容页基础色-->
     <color name="app_base_layout_background">#efeff4</color>
     <!--列表页分割线-->
-    <color name="app_base_recycler_item_line">#dedee2</color>
+    <color name="app_base_recycler_item_line">#f2f2f2</color>
     <!--ITEM基础色-->
     <color name="app_base_item_background">#FFFFFF</color>
     <!--1级标题基础色-->

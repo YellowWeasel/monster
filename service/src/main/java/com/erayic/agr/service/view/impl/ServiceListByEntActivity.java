@@ -16,6 +16,7 @@ import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.CommonImageBean;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
 import com.erayic.agr.service.adapter.ServiceListByEntAdapter;
@@ -38,7 +39,7 @@ import butterknife.BindView;
 public class ServiceListByEntActivity extends BaseActivity implements IServiceListByEntView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.service_market_recycler)
     RecyclerView serviceMarketRecycler;
     @BindView(R2.id.service_market_swipe)

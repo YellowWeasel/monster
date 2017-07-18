@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:foreground="?android:attr/selectableItemBackground"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/app_base_item_background"
-    android:layout_height="wrap_content">
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="50dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:minHeight="50dp">
 
         <ImageView
             android:id="@+id/manage_content_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            app:srcCompat="@drawable/app_base_android_1"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginLeft="20dp"
+            app:srcCompat="@drawable/app_base_android_1" />
 
         <TextView
             android:id="@+id/manage_content_name"
@@ -26,8 +26,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
+            android:ellipsize="end"
             android:gravity="center_vertical|left"
-            android:text="购买记录"
+            android:maxWidth="100dp"
+            android:singleLine="true"
+            android:text=""
             android:textColor="@color/app_base_text_title_1"
             android:textSize="16sp" />
 
@@ -38,6 +41,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:gravity="end"
+            android:text=""
             android:textColor="@color/app_base_text_title_3"
             android:textSize="14sp" />
 

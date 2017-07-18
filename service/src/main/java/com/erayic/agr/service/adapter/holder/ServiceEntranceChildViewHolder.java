@@ -2,6 +2,7 @@ package com.erayic.agr.service.adapter.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ public class ServiceEntranceChildViewHolder extends RecyclerView.ViewHolder {
     public TextView serviceEntranceItemChildName;
     @BindView(R2.id.service_entrance_item_child_layout)
     public LinearLayout serviceEntranceItemChildLayout;
+    @BindView(R2.id.service_entrance_item_child_buy)
+    public Button serviceEntranceItemChildBuy;
 
     public ServiceEntranceChildViewHolder(View view) {
         super(view);
@@ -34,13 +37,13 @@ public class ServiceEntranceChildViewHolder extends RecyclerView.ViewHolder {
     /**
      * 显示隐藏ITEM
      */
-    public void setVisibility(boolean isVisible){
-        RecyclerView.LayoutParams param = (RecyclerView.LayoutParams)itemView.getLayoutParams();
-        if (isVisible){
+    public void setVisibility(boolean isVisible) {
+        RecyclerView.LayoutParams param = (RecyclerView.LayoutParams) itemView.getLayoutParams();
+        if (isVisible) {
             param.height = LinearLayout.LayoutParams.WRAP_CONTENT;
             param.width = LinearLayout.LayoutParams.MATCH_PARENT;
             itemView.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             itemView.setVisibility(View.GONE);
             param.height = 0;
             param.width = 0;

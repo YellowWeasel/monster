@@ -17,6 +17,7 @@ import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.CommonPriceBean;
 import com.erayic.agr.common.util.ErayicLog;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
 import com.erayic.agr.service.adapter.ServiceInfoByEntAdapter;
@@ -39,7 +40,7 @@ public class ServiceInfoByEntActivity extends BaseActivity implements IServiceIn
 
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @Autowired
     String serviceName;
     @Autowired

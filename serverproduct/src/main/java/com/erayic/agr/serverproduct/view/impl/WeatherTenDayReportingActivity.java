@@ -20,6 +20,7 @@ import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.common.view.PagerSlidingTabStrip;
 import com.erayic.agr.common.view.codbking.bean.DateType;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.serverproduct.DateFormatUtils;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
@@ -48,7 +49,7 @@ public class WeatherTenDayReportingActivity extends BaseActivity implements ITen
     @BindView(R2.id.serverproduct_tendayreporting_content_viewpager)
     ViewPager viewPager;
     @BindView(R2.id.serverproduct_tendayreporting_toolbar)
-    Toolbar mToolbar;
+    ErayicToolbar mToolbar;
     WeatherTenDayReporingViewPagerAdapter adapter;
 
 

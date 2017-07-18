@@ -41,6 +41,11 @@
         <!--<item name="android:textColorPrimary">@color/app_base_text_title_1</item>-->
     </style>
 
+    <style name="AppTheme.AppBarOverlayTransparent" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!--<item name="android:textColorPrimary">@color/app_base_text_title_1</item>-->
+        <item name="android:background">#00ffffff</item>
+    </style>
+
     <!--<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
 
     <style name="AppTheme.PopupOverlay" parent="@style/ThemeOverlay.AppCompat.Dark">

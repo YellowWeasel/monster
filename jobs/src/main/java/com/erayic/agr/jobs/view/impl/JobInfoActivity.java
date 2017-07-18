@@ -28,6 +28,7 @@ import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.common.view.codbking.DatePickDialog;
 import com.erayic.agr.common.view.codbking.OnSureLisener;
 import com.erayic.agr.common.view.codbking.bean.DateType;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.jobs.R;
 import com.erayic.agr.jobs.R2;
 import com.erayic.agr.jobs.adapter.JobInfoItemAdapter;
@@ -58,7 +59,7 @@ public class JobInfoActivity extends BaseActivity implements IJobInfoView {
     private final static int ACTIVITY_REQUEST = 9000;
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.job_info_list_RecyclerView)
     RecyclerView jobInfoListRecyclerView;
 

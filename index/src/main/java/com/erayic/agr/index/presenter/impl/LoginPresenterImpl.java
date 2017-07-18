@@ -29,7 +29,7 @@ public class LoginPresenterImpl implements ILoginPresenter {
 
 
     @Override
-    public void login(String tel, String pass,String identifier) {
+    public void login(String tel, String pass, String identifier) {
         loginView.showLoading();
         indexModel.login(AgrConstant.AGR_APPID, tel, pass, identifier, new OnDataListener<Object>() {
             @Override
@@ -44,7 +44,7 @@ public class LoginPresenterImpl implements ILoginPresenter {
                 if (errCode == ErrorCode.Error_UserPhoneIdentifier)
                     loginView.toCodeActivity();
                 else {
-                    loginView.showToast(msg);
+                    loginView.showToast("错误代码：" + errCode + "\n描述：" + msg);
                 }
             }
         });

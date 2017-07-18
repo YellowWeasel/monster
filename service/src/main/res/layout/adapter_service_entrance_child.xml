@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/service_entrance_item_child_layout"
     android:layout_width="match_parent"
-    android:background="#fafafa"
     android:layout_height="wrap_content"
+    android:background="#fafafa"
     android:orientation="vertical">
 
     <TableRow
@@ -20,17 +20,52 @@
             android:layout_marginRight="10dp"
             app:srcCompat="@drawable/image_service_test" />
 
-        <TextView
-            android:id="@+id/service_entrance_item_child_name"
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="电话推送"
-            android:textColor="@color/app_base_text_title_2"
-            android:textSize="16sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/service_entrance_item_child_name"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:drawableRight="@drawable/app_base_default_service_try"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="农业气象实况服务农业气象实况服务"
+                android:textColor="@color/app_base_text_title_2"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:text=""
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/service_entrance_item_child_buy"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:background="@drawable/app_base_btn_back_red"
+            android:ellipsize="end"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:singleLine="true"
+            android:text="剩999998天"
+            android:textColor="@color/app_base_btn_text_red"
+            android:textSize="12sp" />
+
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
@@ -39,6 +74,7 @@
             app:srcCompat="@drawable/app_base_default_right" />
 
     </TableRow>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

@@ -31,6 +31,7 @@ import com.erayic.agr.common.util.ErayicTextUtil;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicTextDialog;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
 import com.erayic.agr.service.adapter.OrderByInfoAdapter;
@@ -63,7 +64,7 @@ public class OrderInfoActivity extends BaseActivity implements IOrderInfoView, S
     @Autowired
     boolean isBuy;
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.order_info_service_icon)
     ImageView orderInfoServiceIcon;
     @BindView(R2.id.order_info_service_name)
@@ -103,7 +104,6 @@ public class OrderInfoActivity extends BaseActivity implements IOrderInfoView, S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_info);
-        ButterKnife.bind(this);
     }
 
     @Override

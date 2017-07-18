@@ -74,7 +74,7 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
         EventBus.getDefault().register(this);
         setHasOptionsMenu(true);
         toolbar.setTitle(titleName);
-        if (PreferenceUtils.getParam("UserRole", 0) == EnumUserRole.Role_Manager) {
+        if (PreferenceUtils.getParam("UserRole", -1) == EnumUserRole.Role_Manager || PreferenceUtils.getParam("UserRole", -1) == EnumUserRole.Role_Admin) {
             toolbar.inflateMenu(R.menu.menu_jobs_list_add); //加载菜单
         }
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

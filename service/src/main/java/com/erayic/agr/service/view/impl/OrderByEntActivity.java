@@ -15,6 +15,7 @@ import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.PagerSlidingTabStrip;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
 import com.erayic.agr.service.view.IOrderByEntView;
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
 public class OrderByEntActivity extends BaseActivity implements IOrderByEntView {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.service_order_tab)
     PagerSlidingTabStrip serviceOrderTab;
     @BindView(R2.id.service_order_viewPage)
@@ -51,7 +52,6 @@ public class OrderByEntActivity extends BaseActivity implements IOrderByEntView 
 
     @Override
     public void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("购买记录");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

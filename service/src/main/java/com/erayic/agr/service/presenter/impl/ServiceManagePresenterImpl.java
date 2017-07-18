@@ -5,9 +5,12 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.model.IServerModel;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.ServiceBuyByUserBean;
+import com.erayic.agr.common.net.back.enums.EnumServiceType;
 import com.erayic.agr.service.presenter.IServiceManagePresenter;
 import com.erayic.agr.service.view.IServiceManageView;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -34,6 +37,11 @@ public class ServiceManagePresenterImpl implements IServiceManagePresenter {
         serverModel.getAllSystemServiceByUser(new OnDataListener<List<ServiceBuyByUserBean>>() {
             @Override
             public void success(List<ServiceBuyByUserBean> response) {
+                for (ServiceBuyByUserBean bean : response) {
+                    if (bean.getType() == EnumServiceType.Subject) {
+                        Collections.sort(bean.getSpecifys(), c);
+                    }
+                }
                 serviceView.clearRefresh();
                 serviceView.refreshView(response);
             }
@@ -84,4 +92,20 @@ public class ServiceManagePresenterImpl implements IServiceManagePresenter {
             }
         });
     }
+
+    /**
+     * ServiceBuyByUserBean 根据购买排序
+     */
+    Comparator c = new Comparator<ServiceBuyByUserBean.SpecifysInfo>() {
+        @Override
+        public int compare(ServiceBuyByUserBean.SpecifysInfo o1, ServiceBuyByUserBean.SpecifysInfo o2) {
+            // TODO Auto-generated method stub
+            if (o1.isOrder())
+                return 1;
+                //注意！！返回值必须是一对相反数，否则无效。jdk1.7以后就是这样。
+                //      else return 0; //无效
+            else return -1;
+        }
+    };
+
 }

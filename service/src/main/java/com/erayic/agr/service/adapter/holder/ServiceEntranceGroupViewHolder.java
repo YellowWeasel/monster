@@ -2,6 +2,7 @@ package com.erayic.agr.service.adapter.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ public class ServiceEntranceGroupViewHolder extends RecyclerView.ViewHolder {
     public TextView serviceEntranceItemName;
     @BindView(R2.id.service_entrance_item_layout)
     public LinearLayout serviceEntranceItemLayout;
+    @BindView(R2.id.service_entrance_item_buy)
+    public Button serviceEntranceItemBuy;
 
     public ServiceEntranceGroupViewHolder(View view) {
         super(view);

@@ -13,14 +13,14 @@
         android:background="@color/toptitle"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
+        <com.erayic.agr.common.view.tooblbar.ErayicToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/app_base_bar_background"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout

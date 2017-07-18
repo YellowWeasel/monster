@@ -16,6 +16,7 @@ import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
 import com.erayic.agr.serverproduct.adapter.PoliciesRegulationsAdapter;
@@ -39,7 +40,7 @@ import butterknife.ButterKnife;
 public class PoliciesRegulationsActivity extends BaseActivity implements IPoliciesRegulartionsView, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     PoliciesRegulationsAdapter adapter;
     IPoliciesRegulationsPresenter presenter;
     List<PoliciesRegulationsTitleDatas> titleDatas;

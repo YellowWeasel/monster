@@ -9,41 +9,39 @@ import java.util.List;
  * 注解：
  */
 
-public class ServiceBuyByUserBean  {
+public class ServiceBuyByUserBean {
 
+    private String ServiceID;//服务ID
     private String Icon;//服务图标
     private String ServiceName;//服务名称
-    private String ServiceID;//服务ID
     private int Type;//服务类型
     private int Classify;//服务分类
-    private int JumpType;//跳转类型
-    private String JumpUrl;//跳转链接
-    private boolean IsOwner;//是否关注
+
+    private boolean IsOwner;//是否拥有
+    private boolean IsFree;//是否免费
+    private boolean IsTry;//是否试用
+    private boolean IsOrder;//是否订购
+    private String DueDate;//到期时间
+
     private List<SpecifysInfo> Specifys;//子服务信息
 
 
-    public static class SpecifysInfo{
-        private int JumpType;//跳转类型
-        private String Sepcify;//子服务名称
-        private int SepcifyId;//子服务对应作物ID
+    public static class SpecifysInfo {
         private String ServiceID;//服务ID
-        private String Url;//跳转链接
-        private boolean IsOwner;//是否关注
+        private String Sepcify;//子服务名称
+        private int CropID;//作物ID
+        private boolean IsOwner;//是否拥有
+        private boolean IsFree;//是否免费
+        private boolean IsTry;//是否试用
+        private boolean IsOrder;//是否订购
+        private String DueDate;//到期时间
 
-        public int getSepcifyId() {
-            return SepcifyId;
+        public String getServiceID() {
+            return ServiceID;
         }
 
-        public void setSepcifyId(int sepcifyId) {
-            SepcifyId = sepcifyId;
-        }
-
-        public int getJumpType() {
-            return JumpType;
-        }
-
-        public void setJumpType(int jumpType) {
-            JumpType = jumpType;
+        public void setServiceID(String serviceID) {
+            ServiceID = serviceID;
         }
 
         public String getSepcify() {
@@ -54,20 +52,12 @@ public class ServiceBuyByUserBean  {
             Sepcify = sepcify;
         }
 
-        public String getServiceID() {
-            return ServiceID;
+        public int getCropID() {
+            return CropID;
         }
 
-        public void setServiceID(String serviceID) {
-            ServiceID = serviceID;
-        }
-
-        public String getUrl() {
-            return Url;
-        }
-
-        public void setUrl(String url) {
-            Url = url;
+        public void setCropID(int cropID) {
+            CropID = cropID;
         }
 
         public boolean isOwner() {
@@ -77,6 +67,46 @@ public class ServiceBuyByUserBean  {
         public void setOwner(boolean owner) {
             IsOwner = owner;
         }
+
+        public boolean isFree() {
+            return IsFree;
+        }
+
+        public void setFree(boolean free) {
+            IsFree = free;
+        }
+
+        public boolean isTry() {
+            return IsTry;
+        }
+
+        public void setTry(boolean aTry) {
+            IsTry = aTry;
+        }
+
+        public boolean isOrder() {
+            return IsOrder;
+        }
+
+        public void setOrder(boolean order) {
+            IsOrder = order;
+        }
+
+        public String getDueDate() {
+            return DueDate;
+        }
+
+        public void setDueDate(String dueDate) {
+            DueDate = dueDate;
+        }
+    }
+
+    public String getServiceID() {
+        return ServiceID;
+    }
+
+    public void setServiceID(String serviceID) {
+        ServiceID = serviceID;
     }
 
     public String getIcon() {
@@ -95,14 +125,6 @@ public class ServiceBuyByUserBean  {
         ServiceName = serviceName;
     }
 
-    public String getServiceID() {
-        return ServiceID;
-    }
-
-    public void setServiceID(String serviceID) {
-        ServiceID = serviceID;
-    }
-
     public int getType() {
         return Type;
     }
@@ -119,28 +141,44 @@ public class ServiceBuyByUserBean  {
         Classify = classify;
     }
 
-    public int getJumpType() {
-        return JumpType;
-    }
-
-    public void setJumpType(int jumpType) {
-        JumpType = jumpType;
-    }
-
-    public String getJumpUrl() {
-        return JumpUrl;
-    }
-
-    public void setJumpUrl(String jumpUrl) {
-        JumpUrl = jumpUrl;
-    }
-
     public boolean isOwner() {
         return IsOwner;
     }
 
     public void setOwner(boolean owner) {
         IsOwner = owner;
+    }
+
+    public boolean isFree() {
+        return IsFree;
+    }
+
+    public void setFree(boolean free) {
+        IsFree = free;
+    }
+
+    public boolean isTry() {
+        return IsTry;
+    }
+
+    public void setTry(boolean aTry) {
+        IsTry = aTry;
+    }
+
+    public boolean isOrder() {
+        return IsOrder;
+    }
+
+    public void setOrder(boolean order) {
+        IsOrder = order;
+    }
+
+    public String getDueDate() {
+        return DueDate;
+    }
+
+    public void setDueDate(String dueDate) {
+        DueDate = dueDate;
     }
 
     public List<SpecifysInfo> getSpecifys() {

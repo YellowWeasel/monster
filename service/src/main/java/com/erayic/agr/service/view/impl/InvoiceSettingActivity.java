@@ -17,6 +17,7 @@ import com.erayic.agr.common.net.back.CommonInvoiceBean;
 import com.erayic.agr.common.util.ErayicRegularly;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
 import com.erayic.agr.service.presenter.IInvoiceSettingPresenter;
@@ -38,7 +39,7 @@ public class InvoiceSettingActivity extends BaseActivity implements IInvoiceSett
 
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.invoice_setting_ent_name)
     EditText invoiceSettingEntName;
     @BindView(R2.id.invoice_setting_user_name)
@@ -68,7 +69,6 @@ public class InvoiceSettingActivity extends BaseActivity implements IInvoiceSett
 
     @Override
     public void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("发票信息设置");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

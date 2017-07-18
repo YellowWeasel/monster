@@ -9,6 +9,7 @@ package com.erayic.agr.common.event;
 public class UnitRefreshMessage {
 
     public static final int UNIT_MASTER_LOG = 0;//工作日志
+    public static final int UNIT_MASTER_STATUE = 1;//作物生长情况
 
     private int msgType;//消息类型
     private int subType;//消息副类型

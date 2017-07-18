@@ -104,12 +104,13 @@ public class BatchSuggestInfoActivity extends BaseActivity implements IBatchSugg
                     list.add(entity);
                 }
                 //适应性
-                for (CommonUnitBatchSuggestBean.SuggestionResult result : bean.getSuggest().getSuggestionResultList()) {
-                    UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
-                    entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_SUGGEST);
-                    entity.setData(result);
-                    list.add(entity);
-                }
+                if (bean.getSuggest() != null)
+                    for (CommonUnitBatchSuggestBean.SuggestionResult result : bean.getSuggest().getSuggestionResultList()) {
+                        UnitBatchSuggestInfoEntity entity = new UnitBatchSuggestInfoEntity();
+                        entity.setItemType(UnitBatchSuggestInfoEntity.TYPE_SUGGEST);
+                        entity.setData(result);
+                        list.add(entity);
+                    }
 
                 //24小时标题
                 {

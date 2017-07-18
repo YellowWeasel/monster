@@ -18,6 +18,7 @@ import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.CommonPriceBean;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
 import com.erayic.agr.service.adapter.ServicePriceByEntAdapter;
@@ -40,7 +41,7 @@ public class ServicePriceActivity extends BaseActivity implements IServicePriceV
 
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.service_price_recycler)
     RecyclerView servicePriceRecycler;
     @BindView(R2.id.service_price_swipe)

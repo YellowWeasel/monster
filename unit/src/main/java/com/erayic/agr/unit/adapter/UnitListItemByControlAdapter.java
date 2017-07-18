@@ -2,13 +2,17 @@ package com.erayic.agr.unit.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.erayic.agr.common.net.back.enums.EnumCategoryType;
 import com.erayic.agr.common.net.back.enums.EnumControlRelayStatus;
+import com.erayic.agr.common.net.back.enums.EnumEquCmdType;
+import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.adapter.entity.UnitListItemByControlEntity;
 import com.erayic.agr.unit.adapter.holder.UnitListItemByControlByEquViewHolder;
@@ -27,10 +31,15 @@ import java.util.List;
 public class UnitListItemByControlAdapter extends BaseMultiItemQuickAdapter<UnitListItemByControlEntity, BaseViewHolder> {
 
     private Context context;
+    private OnDeviceClickListener onDeviceClickListener;
 
     public UnitListItemByControlAdapter(Context context, List<UnitListItemByControlEntity> data) {
         super(data);
         this.context = context;
+    }
+
+    public void setOnDeviceClickListener(OnDeviceClickListener onDeviceClickListener) {
+        this.onDeviceClickListener = onDeviceClickListener;
     }
 
     @Override
@@ -49,7 +58,7 @@ public class UnitListItemByControlAdapter extends BaseMultiItemQuickAdapter<Unit
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, UnitListItemByControlEntity item) {
+    protected void convert(final BaseViewHolder helper, UnitListItemByControlEntity item) {
         switch (helper.getItemViewType()) {
             case UnitListItemByControlEntity.TYPE_NO_EQU:
                 if (helper instanceof UnitListItemByNoDataViewHolder) {
@@ -66,7 +75,8 @@ public class UnitListItemByControlAdapter extends BaseMultiItemQuickAdapter<Unit
                 break;
             case UnitListItemByControlEntity.TYPE_ITEM_ST:
                 if (helper instanceof UnitListItemByControlBySTViewHolder) {
-                    switch (Integer.parseInt(item.getMap().get("Category").toString())) {
+                    final CommonUnitListBean.UnitListCtrlItemsBean bean = (CommonUnitListBean.UnitListCtrlItemsBean) item.getData();
+                    switch (bean.getCategory()) {
                         case EnumCategoryType.TYPE_Irrigation://灌溉
                             ((UnitListItemByControlBySTViewHolder) helper).unitContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.image_unit_control_irrigation));
                             break;
@@ -86,9 +96,9 @@ public class UnitListItemByControlAdapter extends BaseMultiItemQuickAdapter<Unit
                             ((UnitListItemByControlBySTViewHolder) helper).unitContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.image_unit_control_auxiliary));
                             break;
                     }
-                    ((UnitListItemByControlBySTViewHolder) helper).unitContentName.setText(item.getName());
-                    ((UnitListItemByControlBySTViewHolder) helper).unitContentSubName.setText(item.getSubName());
-                    switch (Integer.parseInt(item.getMap().get("Status").toString())) {
+                    ((UnitListItemByControlBySTViewHolder) helper).unitContentName.setText(TextUtils.isEmpty(bean.getName()) ? "未命名" : bean.getName());
+                    ((UnitListItemByControlBySTViewHolder) helper).unitContentSubName.setText(TextUtils.isEmpty(bean.getStatusDesc()) ? "未知" : bean.getStatusDesc());
+                    switch (bean.getStatus()) {
                         case EnumControlRelayStatus.TYPE_TurnOn://启动
                             ((UnitListItemByControlBySTViewHolder) helper).unitContentStart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.image_unit_conitor_open_press));
                             ((UnitListItemByControlBySTViewHolder) helper).unitContentStop.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.image_unit_conitor_stop_nomal));
@@ -108,11 +118,43 @@ public class UnitListItemByControlAdapter extends BaseMultiItemQuickAdapter<Unit
                             ((UnitListItemByControlBySTViewHolder) helper).unitContentStop.setClickable(false);
                             break;
                     }
+                    ((UnitListItemByControlBySTViewHolder) helper).unitContentStart.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (onDeviceClickListener != null) {
+                                ((UnitListItemByControlBySTViewHolder) helper).unitContentStart.setClickable(false);
+                                onDeviceClickListener.onControlClick(bean, EnumEquCmdType.ST_START, helper.getAdapterPosition());
+                            }
+                        }
+                    });
+                    ((UnitListItemByControlBySTViewHolder) helper).unitContentStop.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (onDeviceClickListener != null) {
+                                ((UnitListItemByControlBySTViewHolder) helper).unitContentStop.setClickable(false);
+                                onDeviceClickListener.onControlClick(bean, EnumEquCmdType.ST_PN_STOP, helper.getAdapterPosition());
+                            }
+
+                        }
+                    });
+                    ((UnitListItemByControlBySTViewHolder) helper).unitContentStart.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            return true;
+                        }
+                    });
+                    ((UnitListItemByControlBySTViewHolder) helper).unitContentStop.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            return true;
+                        }
+                    });
                 }
                 break;
             case UnitListItemByControlEntity.TYPE_ITEM_PN:
                 if (helper instanceof UnitListItemByControlByPNViewHolder) {
-                    switch (Integer.parseInt(item.getMap().get("Category").toString())) {
+                    final CommonUnitListBean.UnitListCtrlItemsBean bean = (CommonUnitListBean.UnitListCtrlItemsBean) item.getData();
+                    switch (bean.getCategory()) {
                         case EnumCategoryType.TYPE_Irrigation://灌溉
                             ((UnitListItemByControlByPNViewHolder) helper).unitContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.image_unit_control_irrigation));
                             break;
@@ -132,9 +174,9 @@ public class UnitListItemByControlAdapter extends BaseMultiItemQuickAdapter<Unit
                             ((UnitListItemByControlByPNViewHolder) helper).unitContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.image_unit_control_auxiliary));
                             break;
                     }
-                    ((UnitListItemByControlByPNViewHolder) helper).unitContentName.setText(item.getName());
-                    ((UnitListItemByControlByPNViewHolder) helper).unitContentSubName.setText(item.getSubName());
-                    switch (Integer.parseInt(item.getMap().get("Status").toString())) {
+                    ((UnitListItemByControlByPNViewHolder) helper).unitContentName.setText(TextUtils.isEmpty(bean.getName()) ? "未命名" : bean.getName());
+                    ((UnitListItemByControlByPNViewHolder) helper).unitContentSubName.setText(TextUtils.isEmpty(bean.getStatusDesc()) ? "未知" : bean.getStatusDesc());
+                    switch (bean.getStatus()) {
                         case EnumControlRelayStatus.TYPE_TurnOff://停止
                             ((UnitListItemByControlByPNViewHolder) helper).unitContentOpen.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.image_unit_conitor_open_nomal));
                             ((UnitListItemByControlByPNViewHolder) helper).unitContentStop.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.image_unit_conitor_stop_press));
@@ -184,10 +226,64 @@ public class UnitListItemByControlAdapter extends BaseMultiItemQuickAdapter<Unit
                             ((UnitListItemByControlByPNViewHolder) helper).unitContentClose.setClickable(false);
                             break;
                     }
+                    ((UnitListItemByControlByPNViewHolder) helper).unitContentOpen.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (onDeviceClickListener != null) {
+                                ((UnitListItemByControlByPNViewHolder) helper).unitContentOpen.setClickable(false);
+                                onDeviceClickListener.onControlClick(bean, EnumEquCmdType.PN_POSITIVE, helper.getAdapterPosition());
+                            }
+                        }
+                    });
+                    ((UnitListItemByControlByPNViewHolder) helper).unitContentStop.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (onDeviceClickListener != null) {
+                                ((UnitListItemByControlByPNViewHolder) helper).unitContentStop.setClickable(false);
+                                onDeviceClickListener.onControlClick(bean, EnumEquCmdType.ST_PN_STOP, helper.getAdapterPosition());
+                            }
+                        }
+                    });
+                    ((UnitListItemByControlByPNViewHolder) helper).unitContentClose.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (onDeviceClickListener != null) {
+                                ((UnitListItemByControlByPNViewHolder) helper).unitContentClose.setClickable(false);
+                                onDeviceClickListener.onControlClick(bean, EnumEquCmdType.PN_COUNTER, helper.getAdapterPosition());
+                            }
+                        }
+                    });
+                    ((UnitListItemByControlByPNViewHolder) helper).unitContentOpen.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            return true;
+                        }
+                    });
+                    ((UnitListItemByControlByPNViewHolder) helper).unitContentStop.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            return true;
+                        }
+                    });
+                    ((UnitListItemByControlByPNViewHolder) helper).unitContentClose.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            return true;
+                        }
+                    });
+
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    public interface OnDeviceClickListener {
+        //设备管理
+        void onDeviceClick(String equID);
+
+        //设备控制(cmd 操作命令（1、 启动，0、停止 3、正转启动 2、反转启动）)
+        void onControlClick(CommonUnitListBean.UnitListCtrlItemsBean bean, int cmd, int position);
     }
 }

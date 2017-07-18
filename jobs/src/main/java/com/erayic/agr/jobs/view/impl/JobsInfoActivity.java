@@ -28,6 +28,7 @@ import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicTextDialog;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.jobs.R;
 import com.erayic.agr.jobs.R2;
 import com.erayic.agr.jobs.adapter.JobsInfoItemAdapter;
@@ -60,7 +61,7 @@ import butterknife.ButterKnife;
 public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.job_info_list_RecyclerView)
     RecyclerView jobInfoListRecyclerView;
 
@@ -86,7 +87,6 @@ public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jobs_jobs_info);
-        ButterKnife.bind(this);
 
     }
 

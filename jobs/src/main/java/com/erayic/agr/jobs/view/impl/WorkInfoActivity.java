@@ -30,6 +30,7 @@ import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicEditDialog;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.jobs.R;
 import com.erayic.agr.jobs.R2;
 import com.erayic.agr.jobs.adapter.WorkInfoItemAdapter;
@@ -59,7 +60,7 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
     private final static int ACTIVITY_REQUEST = 9000;
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.work_info_list_RecyclerView)
     RecyclerView workInfoListRecyclerView;
 
@@ -427,7 +428,7 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
             } else {
                 isUpdater = true;
                 adapter.setKeyListener(null);
-                if (workInfoBean != null)
+                if (workInfoBean != null && workInfoBean.getContent() != null)
                     selectSure(workInfoBean);
                 save.setVisible(false);
                 modify.setVisible(true);

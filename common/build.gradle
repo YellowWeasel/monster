@@ -31,6 +31,12 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['libs']
+//        }
+//    }
 }
 
 dependencies {
@@ -80,7 +86,7 @@ dependencies {
     compile 'com.xhb:xbanner:1.2.7'
     compile 'com.nineoldandroids:library:2.4.0'
     //    图片加载技术
-//    compile 'com.github.bumptech.glide:glide:3.7.0'
+    //    compile 'com.github.bumptech.glide:glide:3.7.0'
     //    BaseRecyclerViewAdapterHelper RecyclerView的adapter封装(https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.17'
     //    switchButton
@@ -109,4 +115,8 @@ dependencies {
     compile 'com.qianwen:update-app:3.2.3'
     //加载高德地图本地jar
     compile files('libs/AMap3DMap_5.2.0_AMapNavi_5.1.0_AMapSearch_5.1.0_AMapLocation_3.4.0_20170602.jar')
+    compile files('libs/libToUProxy.jar')
+    compile files('libs/DaHua.jar')
+    compile files('libs/INetSDK.jar')
+    compile files('libs/ToUProxy.jar')
 }

@@ -1,6 +1,8 @@
 package com.erayic.agr.service.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -31,10 +33,14 @@ public class ServiceManageAdapter extends SectionedRecyclerViewAdapter<ServiceMa
     private OnSwitchStatueListener onSwitchStatueListener;
     private List<ServiceBuyByUserBean> list;
     private SparseBooleanArray mBooleanMap;
+    private Drawable draOrder;
 
     public ServiceManageAdapter(Context context) {
         this.context = context;
         mBooleanMap = new SparseBooleanArray();
+
+        draOrder = ContextCompat.getDrawable(context, R.drawable.app_base_default_service_buy);
+        draOrder.setBounds(0, 0, draOrder.getMinimumWidth(), draOrder.getMinimumHeight());
     }
 
     public void setList(List<ServiceBuyByUserBean> list) {
@@ -88,9 +94,14 @@ public class ServiceManageAdapter extends SectionedRecyclerViewAdapter<ServiceMa
         Glide.with(context).load(AgrConstant.IMAGE_URL_PREFIX + list.get(section).getIcon()).apply(AgrConstant.iconOptions).into(holder.serviceManageItemIcon);
         holder.serviceManageItemName.setText(list.get(section).getServiceName());
         if (list.get(section).getType() == EnumServiceType.Subject) {
+            holder.serviceManageItemName.setCompoundDrawables(null, null, null, null);
             holder.serviceManageItemSub.setVisibility(View.VISIBLE);
             holder.serviceManageItemSwitch.setVisibility(View.GONE);
         } else {
+            if (list.get(section).isOrder())
+                holder.serviceManageItemName.setCompoundDrawables(null, null, draOrder, null);
+            else
+                holder.serviceManageItemName.setCompoundDrawables(null, null, null, null);
             holder.serviceManageItemSub.setVisibility(View.GONE);
             holder.serviceManageItemSwitch.setVisibility(View.VISIBLE);
             holder.serviceManageItemSwitch.setCheckedImmediately(list.get(section).isOwner());
@@ -123,6 +134,10 @@ public class ServiceManageAdapter extends SectionedRecyclerViewAdapter<ServiceMa
     @Override
     protected void onBindItemViewHolder(ServiceManageChildViewHolder holder, final int section, final int position) {
         holder.serviceManageItemChildName.setText(list.get(section).getSpecifys().get(position).getSepcify());
+        if (list.get(section).getSpecifys().get(position).isOrder())
+            holder.serviceManageItemChildName.setCompoundDrawables(null, null, draOrder, null);
+        else
+            holder.serviceManageItemChildName.setCompoundDrawables(null, null, null, null);
         holder.serviceManageItemChildIcon.setVisibility(View.INVISIBLE);
         holder.serviceManageItemChildSwitch.setCheckedImmediately(list.get(section).getSpecifys().get(position).isOwner());
         holder.itemView.setOnClickListener(new View.OnClickListener() {

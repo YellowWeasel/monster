@@ -19,6 +19,7 @@ import com.erayic.agr.common.net.back.work.CommonWorkListBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.jobs.R;
 import com.erayic.agr.jobs.R2;
 import com.erayic.agr.jobs.adapter.WorkInfoItemAdapter;
@@ -44,7 +45,7 @@ import butterknife.ButterKnife;
 public class AdvanceWorkActivity extends BaseActivity implements IAdvanceWorkView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.advance_work_list_RecyclerView)
     RecyclerView advanceWorkListRecyclerView;
     @BindView(R2.id.advance_work_list_swipe)

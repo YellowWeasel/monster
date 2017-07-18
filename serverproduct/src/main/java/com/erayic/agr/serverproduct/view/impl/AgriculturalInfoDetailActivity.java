@@ -16,6 +16,7 @@ import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.serverproduct.R;
 import com.erayic.agr.serverproduct.R2;
 import com.erayic.agr.serverproduct.adapter.AgriculturalDetailInfosAdapter;
@@ -38,7 +39,7 @@ import butterknife.BindView;
 public class AgriculturalInfoDetailActivity extends BaseActivity implements IAgriculturalDetailInfoView {
     IAgriculturalDetailInfoPresenter presenter;
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.serverproduct_agricultural_detail_info_recycler)
     RecyclerView agriculturalDetailRecyclerview;
     AgriculturalDetailInfosAdapter adapter;

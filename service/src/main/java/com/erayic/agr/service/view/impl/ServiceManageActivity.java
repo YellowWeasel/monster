@@ -15,6 +15,7 @@ import com.erayic.agr.common.net.back.ServiceBuyByUserBean;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.common.view.SectionedSpanSizeLookup;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.service.R;
 import com.erayic.agr.service.R2;
 import com.erayic.agr.service.adapter.ServiceManageAdapter;
@@ -39,7 +40,7 @@ import butterknife.BindView;
 public class ServiceManageActivity extends BaseActivity implements IServiceManageView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.service_manage_recycler)
     RecyclerView serviceManageRecycler;
     @BindView(R2.id.service_manage_swipe)
@@ -62,7 +63,6 @@ public class ServiceManageActivity extends BaseActivity implements IServiceManag
 
     @Override
     public void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("服务管理");
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {

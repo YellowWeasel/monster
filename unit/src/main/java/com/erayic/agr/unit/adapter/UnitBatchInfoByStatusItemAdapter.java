@@ -288,7 +288,7 @@ public class UnitBatchInfoByStatusItemAdapter extends BaseMultiItemQuickAdapter<
 //                    mChart.setEntryLabelTypeface(mTfRegular);
                         ((UnitBatchInfoByModelViewHolder) helper).batchInfoPieChart.setEntryLabelTextSize(12f);
                         ((UnitBatchInfoByModelViewHolder) helper).batchInfoPieChart.setDrawEntryLabels(true);
-
+                        ((UnitBatchInfoByModelViewHolder) helper).batchInfoPieChart.setCenterText(Html.fromHtml("<font color='#FF0000'><big>已成熟</big></font>"));
                         //数据 添加顺序即为显示顺序
                         ArrayList<PieEntry> entries = new ArrayList<>();
                         for (int i = 0; i < key.length; i++) {

@@ -1,10 +1,8 @@
 package com.erayic.agr.manage.view.impl;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +17,6 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -27,7 +24,6 @@ import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.animation.Animation;
 import com.amap.api.maps.model.animation.TranslateAnimation;
 import com.amap.api.services.core.LatLonPoint;
@@ -54,7 +50,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.joda.time.DateTime;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 作者：hejian
@@ -125,7 +120,7 @@ public class BasePositionActivity extends BaseActivity implements IBasePositionV
             aMap = mapView.getMap();
         //地图模式可选类型：MAP_TYPE_NORMAL,MAP_TYPE_SATELLITE,MAP_TYPE_NIGHT
         aMap.setMapType(AMap.MAP_TYPE_NORMAL);// 普通模式
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
 
         UiSettings uiSettings = aMap.getUiSettings();
         uiSettings.setLogoBottomMargin(-50);//隐藏LOGO
@@ -180,7 +175,7 @@ public class BasePositionActivity extends BaseActivity implements IBasePositionV
         Point screenPosition = aMap.getProjection().toScreenLocation(latLng);
         screenMarker = aMap.addMarker(new MarkerOptions()
                 .anchor(0.5f, 0.5f)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.purple_pin)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.image_manage_position)));
         //设置Marker在屏幕上,不跟随地图移动
         screenMarker.setPositionByPixels(screenPosition.x, screenPosition.y);
     }
@@ -218,7 +213,7 @@ public class BasePositionActivity extends BaseActivity implements IBasePositionV
             screenMarker.startAnimation();
 
         } else {
-            ErayicLog.e("ama", "screenMarker is null");
+//            ErayicLog.e("ama", "screenMarker is null");
         }
     }
 

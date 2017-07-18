@@ -24,6 +24,10 @@
         <activity
             android:name=".view.impl.AddLogActivity"
             android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.BatchDahuaVideoActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

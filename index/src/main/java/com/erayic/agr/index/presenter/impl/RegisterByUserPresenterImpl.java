@@ -35,7 +35,7 @@ public class RegisterByUserPresenterImpl implements IRegisterByUserPresenter {
 
             @Override
             public void fail(int errCode, String msg) {
-                registerByUserView.showToast(msg);
+                registerByUserView.showToast("错误代码：" + errCode + "\n描述：" + msg);
             }
         });
     }
@@ -51,7 +51,7 @@ public class RegisterByUserPresenterImpl implements IRegisterByUserPresenter {
 
             @Override
             public void fail(int errCode, String msg) {
-                registerByUserView.showToast(msg);
+                registerByUserView.showToast("错误代码：" + errCode + "\n描述：" + msg);
             }
         });
     }

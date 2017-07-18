@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -80,7 +81,7 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
         EventBus.getDefault().register(this);// 注册EventBus
 //        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setTitle(titleName);
-        if (PreferenceUtils.getParam("UserRole", 0) == EnumUserRole.Role_Manager) {
+        if (PreferenceUtils.getParam("UserRole", -1) == EnumUserRole.Role_Manager || PreferenceUtils.getParam("UserRole", -1) == EnumUserRole.Role_Admin) {
             toolbar.inflateMenu(R.menu.service_entrance_admin); //加载菜单
         }
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -131,24 +132,25 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
     public void onServiceEntranceEventThread(ServiceEntranceEvent event) {
         //接受从设置服务中传回来的数据
         ErayicLog.e(event.getServiceID());
-        if (adapter.getList() == null)
-            return;
-        for (ServiceBuyByUserBean beanBuffer : adapter.getList()) {
-            if (beanBuffer.getType() == EnumServiceType.Subject) {
-                if (!beanBuffer.isOwner())
-                    beanBuffer.setOwner(true);
-                for (ServiceBuyByUserBean.SpecifysInfo specifysInfo : beanBuffer.getSpecifys()) {
-                    if (specifysInfo.getServiceID().equals(event.getServiceID())) {
-                        specifysInfo.setOwner(event.isOwner());
-                    }
-                }
-            } else {
-                if (beanBuffer.getServiceID().equals(event.getServiceID())) {
-                    beanBuffer.setOwner(event.isOwner());
-                }
-            }
-        }
-        adapter.notifyDataSetChanged();
+        presenter.getAllSystemServiceByUser();
+//        if (adapter.getList() == null)
+//            return;
+//        for (ServiceBuyByUserBean beanBuffer : adapter.getList()) {
+//            if (beanBuffer.getType() == EnumServiceType.Subject) {
+//                if (!beanBuffer.isOwner())
+//                    beanBuffer.setOwner(true);
+//                for (ServiceBuyByUserBean.SpecifysInfo specifysInfo : beanBuffer.getSpecifys()) {
+//                    if (specifysInfo.getServiceID().equals(event.getServiceID())) {
+//                        specifysInfo.setOwner(event.isOwner());
+//                    }
+//                }
+//            } else {
+//                if (beanBuffer.getServiceID().equals(event.getServiceID())) {
+//                    beanBuffer.setOwner(event.isOwner());
+//                }
+//            }
+//        }
+//        adapter.notifyDataSetChanged();
     }
 
 
@@ -183,7 +185,7 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
     private class OnItemClickListener implements ServiceEntranceAdapter.OnItemClickListener {
 
         @Override
-        public void onClick(View v, String serviceID, String subServiceID, int SepcifyId) {
+        public void onClick(View v, String serviceID, String subServiceID, int cropID) {
             switch (serviceID) {
                 case "b759c79e-b365-4932-aab0-99ca72a35e04":
                     ARouter.getInstance().build("/serverproduct/activity/ReportingActivity").withString("serviceID", serviceID).navigation();
@@ -192,29 +194,10 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
                     ARouter.getInstance().build("/serverproduct/activity/WeatherTenDayReportingActivity").withString("serviceID", serviceID).navigation();
                     break;
                 case "3d8508bf-9b94-4b2c-86cb-d4e62663d25f"://价格动态服务
-                    switch (subServiceID == null ? "" : subServiceID) {
-                        case "e27c20c6-9994-452a-b32c-092cfb85fcf7"://芒果
-                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
-                            break;
-                        case "51c74d08-054b-47d3-92f0-1b7489b2f225"://苹果
-                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
-                            break;
-                        case "91efc1c1-ed58-40da-926d-79faf0351488"://大白菜
-                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
-                            break;
-                        case "eda779ef-ef1c-4225-b563-83cd7c321776"://上海青
-                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
-                            break;
-                        case "dce3c919-5b0b-4b40-87b6-a29eac1080f8"://香蕉
-                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
-                            break;
-                        case "7c17aba8-1ec6-4c87-8e92-d35c5f1ccee6"://大白菜
-                            ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", SepcifyId).navigation();
-                            break;
-                        default:
-                            showToast("未支持的服务类型");
-                            break;
-                    }
+                    if (TextUtils.isEmpty(subServiceID))
+                        showToast("未支持的服务类型");
+                    else
+                        ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", cropID).navigation();
                     break;
                 case "3fabad22-5e5f-4d76-9ddf-d3af850019de"://政策法规
                     ARouter.getInstance().build("/serverproduct/activity/PoliciesRegulationsActivity").withString("serviceID", serviceID).navigation();
@@ -223,9 +206,22 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
                     ARouter.getInstance().build("/serverproduct/activity/AgriculturalInfoActivity").withString("serviceID", serviceID).navigation();
                     break;
                 default:
+                    showToast("未支持的服务类型");
                     break;
             }
         }
+
+        @Override
+        public void toServiceInfo(String serviceName, String serviceID, String serviceIcon, int serviceType) {//服务详情
+            if (PreferenceUtils.getParam("UserRole", -1) == EnumUserRole.Role_Manager || PreferenceUtils.getParam("UserRole", -1) == EnumUserRole.Role_Admin) {//管理员权限
+                ARouter.getInstance().build("/service/activity/ServiceInfoByEntActivity").withString("serviceName", serviceName)
+                        .withString("serviceID", serviceID).withString("serviceIcon", serviceIcon)
+                        .withInt("serviceType", serviceType).navigation();
+            } else {
+                showToast("无权限购买，请联系管理员");
+            }
+        }
+
     }
 
 }

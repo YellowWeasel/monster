@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.view.SurfaceView;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -64,7 +65,6 @@ public class WelcomeActivity extends Activity implements IWelcomeView {
      * 权限检查
      */
     public void initPermission() {
-
 
         new RxPermissions(WelcomeActivity.this).request(Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION,

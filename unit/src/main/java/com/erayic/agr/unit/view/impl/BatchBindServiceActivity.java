@@ -16,6 +16,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.UnitRefreshMessage;
 import com.erayic.agr.common.net.back.enums.EnumBatchByBindType;
 import com.erayic.agr.common.net.back.enums.EnumOrderType;
 import com.erayic.agr.common.net.back.enums.EnumUnitType;
@@ -28,6 +29,7 @@ import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.CircleImageView;
 import com.erayic.agr.common.view.LoadingDialog;
+import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.R2;
 import com.erayic.agr.unit.adapter.UnitBatchBindServiceItemAdapter;
@@ -36,6 +38,7 @@ import com.erayic.agr.unit.presenter.IBatchBindServicePresenter;
 import com.erayic.agr.unit.presenter.impl.BatchBindServicePresenterImpl;
 import com.erayic.agr.unit.view.IBatchBindServiceView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -54,7 +57,7 @@ import butterknife.OnClick;
 public class BatchBindServiceActivity extends BaseActivity implements IBatchBindServiceView {
 
     @BindView(R2.id.toolbar)
-    Toolbar toolbar;
+    ErayicToolbar toolbar;
     @BindView(R2.id.unit_batch_bind_icon)
     CircleImageView unitBatchBindIcon;
     @BindView(R2.id.unit_batch_bind_name)
@@ -189,6 +192,9 @@ public class BatchBindServiceActivity extends BaseActivity implements IBatchBind
 
     @Override
     public void saveSure() {
+        UnitRefreshMessage message = new UnitRefreshMessage();
+        message.setMsgType(UnitRefreshMessage.UNIT_MASTER_STATUE);
+        EventBus.getDefault().post(message);//通知刷新
         ErayicStack.getInstance().finishCurrentActivity();
     }
 

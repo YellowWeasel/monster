@@ -18,6 +18,7 @@ public class AgrConstant {
 
     public static final String GUID_Empty = "00000000-0000-0000-0000-000000000000";
     public static final String AGR_APPID = "7E550992-C157-4CB4-8048-9DCDF560A41D";//种植业APPID
+    public static final String AGR_UPDATE_URL = "http://weixin.erayic.com/AgrTestApk/android/trial-version.json";//APP更新体验版配置文件地址
 
 
     /* 测试数据 */
