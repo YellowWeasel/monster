@@ -138,7 +138,7 @@ public class UnitInfoActivity extends BaseActivity implements IUnitInfoView, Swi
     public void onUserCheckBack(UserCheckEvent event) {
         //获取选择负责人返回的数据
         List<CommonMapArrayBean> list = new ArrayList<>();
-        for (Map.Entry<String,String> entry:event.getUserMap().entrySet()){
+        for (Map.Entry<String, String> entry : event.getUserMap().entrySet()) {
             CommonMapArrayBean bean = new CommonMapArrayBean();
             bean.setKey(entry.getKey());
             bean.setValue(entry.getValue());
@@ -251,7 +251,7 @@ public class UnitInfoActivity extends BaseActivity implements IUnitInfoView, Swi
         if (item.getItemId() == android.R.id.home) {//返回
             finish();
         } else if (item.getItemId() == R.id.action_manage_unit_update) {
-            presenter.updateBlockInfo(unitInfoBean);
+            presenter.updateBlockInfo(baseID, unitInfoBean);
         }
         return super.onOptionsItemSelected(item);
     }

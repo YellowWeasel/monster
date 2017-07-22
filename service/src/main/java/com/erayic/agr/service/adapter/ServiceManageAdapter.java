@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,7 +92,10 @@ public class ServiceManageAdapter extends SectionedRecyclerViewAdapter<ServiceMa
 
     @Override
     protected void onBindSectionHeaderViewHolder(ServiceManageGroupViewHolder holder, final int section) {
-        Glide.with(context).load(AgrConstant.IMAGE_URL_PREFIX + list.get(section).getIcon()).apply(AgrConstant.iconOptions).into(holder.serviceManageItemIcon);
+        Glide.with(context)
+                .load(TextUtils.isEmpty(list.get(section).getIcon()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + list.get(section).getIcon()))
+                .apply(AgrConstant.iconOptions)
+                .into(holder.serviceManageItemIcon);
         holder.serviceManageItemName.setText(list.get(section).getServiceName());
         if (list.get(section).getType() == EnumServiceType.Subject) {
             holder.serviceManageItemName.setCompoundDrawables(null, null, null, null);

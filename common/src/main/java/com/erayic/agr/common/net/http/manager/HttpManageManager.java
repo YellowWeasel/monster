@@ -59,8 +59,8 @@ public class HttpManageManager {
     /**
      * 增加一个企业基地
      */
-    public Flowable addBaseByEnt(String newBaseName) {
-        return manageService.addBaseByEnt(newBaseName);
+    public Flowable addBaseByEnt(String newBaseName, String phoneCode) {
+        return manageService.addBaseByEnt(newBaseName, phoneCode);
     }
 
     /**
@@ -110,7 +110,7 @@ public class HttpManageManager {
     /**
      * 更新地块信息
      */
-    public Flowable updateBlockInfo(String unitID, String unitName, double area, List<String> regions, List<String> workes, boolean isGreenhouse) {
-        return manageService.updateBlockInfo(unitID, unitName, area, regions, workes, isGreenhouse);
+    public Flowable updateBlockInfo(String baseID, String unitID, String unitName, double area, List<String> regions, List<String> workes, boolean isGreenhouse) {
+        return manageService.updateBlockInfo(baseID, unitID, unitName, area, regions, workes, isGreenhouse);
     }
 }

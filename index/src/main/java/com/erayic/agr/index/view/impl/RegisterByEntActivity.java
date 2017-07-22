@@ -99,7 +99,6 @@ public class RegisterByEntActivity extends BaseActivity implements IRegisterByEn
             //发送验证码
             presenter.sendTelVerify(indexRegisterEntPhone.getText().toString());
         }
-
     }
 
     @OnClick(R2.id.index_register_ent_register)

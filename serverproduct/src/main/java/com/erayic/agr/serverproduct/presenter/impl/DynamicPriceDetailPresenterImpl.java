@@ -34,30 +34,33 @@ public class DynamicPriceDetailPresenterImpl implements IDynamicPriceDetailPrese
 
 
     @Override
-    public void getMarketDatas(int cropId, final String marketName, String start, String end,String serviceId) {
+    public void getMarketDatas(int cropId, final String marketName, String start, String end, String serviceId) {
         context.showLoading();
-          apiModel.getDesignatedMarketDynamicPrices(cropId, marketName, start, end,serviceId, new OnDataListener<List<CommonMarketDynamicPriceBean>>() {
-              @Override
-              public void success(final List<CommonMarketDynamicPriceBean> response) {
-                  MainLooperManage.runOnUiThread(new Runnable() {
-                      @Override
-                      public void run() {
-                          context.refreshMarketDynamicPrices(new MarketDynamicPriceDatas(response));
-                          context.dismissLoading();
-                      }
-                  });
-              }
+        apiModel.getDesignatedMarketDynamicPrices(cropId, marketName, start, end, serviceId, new OnDataListener<List<CommonMarketDynamicPriceBean>>() {
+            @Override
+            public void success(final List<CommonMarketDynamicPriceBean> response) {
+                MainLooperManage.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (response != null)
+                            context.refreshMarketDynamicPrices(new MarketDynamicPriceDatas(response));
+                        else
+                            context.showToast("未检测到数据");
+                        context.dismissLoading();
+                    }
+                });
+            }
 
-              @Override
-              public void fail(final int errCode,final String msg) {
-                    MainLooperManage.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            context.dismissLoading();
-                            context.showToast("错误代码：" + errCode + "\n描述：" + msg);
-                        }
-                    });
-              }
-          });
+            @Override
+            public void fail(final int errCode, final String msg) {
+                MainLooperManage.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        context.dismissLoading();
+                        context.showToast("错误代码：" + errCode + "\n描述：" + msg);
+                    }
+                });
+            }
+        });
     }
 }

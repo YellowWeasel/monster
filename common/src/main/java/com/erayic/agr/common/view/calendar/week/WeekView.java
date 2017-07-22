@@ -27,7 +27,6 @@ import java.util.List;
  * Created by Jimmy on 2016/10/7 0007.
  */
 public class WeekView extends View {
-
     private static final int NUM_COLUMNS = 7;
     private Paint mPaint;
     private Paint mLunarPaint;
@@ -54,7 +53,6 @@ public class WeekView extends View {
     private DisplayMetrics mDisplayMetrics;
     private OnWeekClickListener mOnWeekClickListener;
     private GestureDetector mGestureDetector;
-    private List<Integer> mTaskHintList;
     private Bitmap mRestBitmap, mWorkBitmap;
 
     public WeekView(Context context, DateTime dateTime) {
@@ -77,10 +75,12 @@ public class WeekView extends View {
         initGestureDetector();
     }
 
-    private void initTaskHint(DateTime startDate, DateTime endDate) {
+    private void initTaskHint(DateTime date) {
         if (mIsShowHint) {
+            // 从数据库中获取圆点提示数据
 //            ScheduleDao dao = ScheduleDao.getInstance(getContext());
-//            mTaskHintList = dao.getTaskHintByWeek(startDate.getYear(), startDate.getMonthOfYear() - 1, startDate.getDayOfMonth(), endDate.getYear(), endDate.getMonthOfYear() - 1, endDate.getDayOfMonth());
+//            if (CalendarUtils.getInstance(getContext()).getTaskHints(date.getYear(), date.getMonthOfYear() - 1).size() == 0)
+//                CalendarUtils.getInstance(getContext()).addTaskHints(date.getYear(), date.getMonthOfYear() - 1, dao.getTaskHintByMonth(mSelYear, mSelMonth));
         }
     }
 
@@ -155,7 +155,8 @@ public class WeekView extends View {
         } else {
             setSelectYearMonth(mStartDate.getYear(), mStartDate.getMonthOfYear() - 1, mStartDate.getDayOfMonth());
         }
-        initTaskHint(mStartDate, endDate);
+        initTaskHint(mStartDate);
+        initTaskHint(endDate);
     }
 
     private void initGestureDetector() {
@@ -200,6 +201,7 @@ public class WeekView extends View {
         clearData();
         int selected = drawThisWeek(canvas);
         drawLunarText(canvas, selected);
+        drawHintCircle(canvas);
         drawHoliday(canvas);
     }
 
@@ -234,7 +236,6 @@ public class WeekView extends View {
                 }
                 canvas.drawCircle((startRecX + endRecX) / 2, mRowSize / 2, mSelectCircleSize, mPaint);
             }
-            drawHintCircle(i, day, canvas);
             if (day == mSelDay) {
                 selected = i;
                 mPaint.setColor(mSelectDayColor);
@@ -315,18 +316,40 @@ public class WeekView extends View {
     /**
      * 绘制圆点提示
      *
-     * @param column
-     * @param day
      * @param canvas
      */
-    private void drawHintCircle(int column, int day, Canvas canvas) {
-        if (mIsShowHint && mTaskHintList != null && mTaskHintList.size() > 0) {
-            if (!mTaskHintList.contains(day)) return;
+    private void drawHintCircle(Canvas canvas) {
+        if (mIsShowHint) {
             mPaint.setColor(mHintCircleColor);
-            float circleX = (float) (mColumnSize * column + mColumnSize * 0.5);
-            float circleY = (float) (mRowSize * 0.75);
-            canvas.drawCircle(circleX, circleY, mCircleRadius, mPaint);
+            int startMonth = mStartDate.getMonthOfYear();
+            int endMonth = mStartDate.plusDays(7).getMonthOfYear();
+            int startDay = mStartDate.getDayOfMonth();
+            if (startMonth == endMonth) {
+                List<Integer> hints = CalendarUtils.getInstance(getContext()).getTaskHints(mStartDate.getYear(), mStartDate.getMonthOfYear() - 1);
+                for (int i = 0; i < 7; i++) {
+                    drawHintCircle(hints, startDay + i, i, canvas);
+                }
+            } else {
+                for (int i = 0; i < 7; i++) {
+                    List<Integer> hints = CalendarUtils.getInstance(getContext()).getTaskHints(mStartDate.getYear(), mStartDate.getMonthOfYear() - 1);
+                    List<Integer> nextHints = CalendarUtils.getInstance(getContext()).getTaskHints(mStartDate.getYear(), mStartDate.getMonthOfYear());
+                    DateTime date = mStartDate.plusDays(i);
+                    int month = date.getMonthOfYear();
+                    if (month == startMonth) {
+                        drawHintCircle(hints, date.getDayOfMonth(), i, canvas);
+                    } else {
+                        drawHintCircle(nextHints, date.getDayOfMonth(), i, canvas);
+                    }
+                }
+            }
         }
+    }
+
+    private void drawHintCircle(List<Integer> hints, int day, int col, Canvas canvas) {
+        if (!hints.contains(day)) return;
+        float circleX = (float) (mColumnSize * col + mColumnSize * 0.5);
+        float circleY = (float) (mRowSize * 0.75);
+        canvas.drawCircle(circleX, circleY, mCircleRadius, mPaint);
     }
 
     @Override
@@ -386,6 +409,7 @@ public class WeekView extends View {
         return mSelMonth;
     }
 
+
     /**
      * 获取当前选择日
      *
@@ -396,13 +420,27 @@ public class WeekView extends View {
     }
 
     /**
-     * 设置圆点提示的集合
+     * 添加多个圆点提示
      *
-     * @param taskHintList
+     * @param hints
      */
-    public void setTaskHintList(List<Integer> taskHintList) {
-        mTaskHintList = taskHintList;
-        invalidate();
+    public void addTaskHints(List<Integer> hints) {
+        if (mIsShowHint) {
+            CalendarUtils.getInstance(getContext()).addTaskHints(mSelYear, mSelMonth, hints);
+            invalidate();
+        }
+    }
+
+    /**
+     * 删除多个圆点提示
+     *
+     * @param hints
+     */
+    public void removeTaskHints(List<Integer> hints) {
+        if (mIsShowHint) {
+            CalendarUtils.getInstance(getContext()).removeTaskHints(mSelYear, mSelMonth, hints);
+            invalidate();
+        }
     }
 
     /**
@@ -411,9 +449,8 @@ public class WeekView extends View {
      * @param day
      */
     public void addTaskHint(Integer day) {
-        if (mTaskHintList != null) {
-            if (!mTaskHintList.contains(day)) {
-                mTaskHintList.add(day);
+        if (mIsShowHint) {
+            if (CalendarUtils.getInstance(getContext()).addTaskHint(mSelYear, mSelMonth, day)) {
                 invalidate();
             }
         }
@@ -425,8 +462,8 @@ public class WeekView extends View {
      * @param day
      */
     public void removeTaskHint(Integer day) {
-        if (mTaskHintList != null) {
-            if (mTaskHintList.remove(day)) {
+        if (mIsShowHint) {
+            if (CalendarUtils.getInstance(getContext()).removeTaskHint(mSelYear, mSelMonth, day)) {
                 invalidate();
             }
         }

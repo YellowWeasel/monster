@@ -1,5 +1,6 @@
 package com.erayic.agr.manage.view.impl;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ import com.erayic.agr.common.net.back.enums.EnumResourceType;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.ErayicTextDialog;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
@@ -459,7 +461,23 @@ public class PesticideInfoActivity extends BaseActivity implements IPesticideInf
                 showToast("不可编辑");
             }
         } else if (item.getItemId() == R.id.action_manage_resource_delete) {
-            presenter.deleteResource(resID, EnumResourceType.TYPE_PESTICIDE);
+            new ErayicTextDialog.Builder(PesticideInfoActivity.this)
+                    .setMessage("将要删除该农药的一切信息\n确定删除吗？", null)
+                    .setTitle("温馨提示")
+                    .setButton1("取消", new ErayicTextDialog.OnClickListener() {
+                        @Override
+                        public void onClick(Dialog dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setButton2("确定", new ErayicTextDialog.OnClickListener() {
+                        @Override
+                        public void onClick(Dialog dialog, int which) {
+                            dialog.dismiss();
+                            presenter.deleteResource(resID, EnumResourceType.TYPE_PESTICIDE);
+                        }
+                    }).show();
+
         }
         return super.onOptionsItemSelected(item);
     }

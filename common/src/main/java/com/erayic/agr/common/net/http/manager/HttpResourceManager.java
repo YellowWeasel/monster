@@ -1,8 +1,10 @@
 package com.erayic.agr.common.net.http.manager;
 
+import com.erayic.agr.common.net.back.CommonBytePhotoBean;
 import com.erayic.agr.common.net.back.CommonFertilizerBean;
 import com.erayic.agr.common.net.back.CommonPesticideBean;
 import com.erayic.agr.common.net.back.CommonSeedBean;
+import com.erayic.agr.common.net.back.user.CommonUserIconBean;
 import com.erayic.agr.common.net.http.HttpRetrofit;
 import com.erayic.agr.common.net.http.IHttpResourceService;
 
@@ -78,6 +80,30 @@ public class HttpResourceManager {
         return resourceService.deleteProduct(proID);
     }
 
+    /**
+     * 更新产品图片
+     */
+    public Flowable updateProductIcon(String proID, String icon) {
+        CommonUserIconBean bean = new CommonUserIconBean();
+        bean.setIcon(icon);
+        return resourceService.updateProductIcon(proID, bean);
+    }
+
+    /**
+     * 增加一个产品照片
+     */
+    public Flowable addProductPhoto(String proID, String photo) {
+        CommonBytePhotoBean bean = new CommonBytePhotoBean();
+        bean.setPhoto(photo);
+        return resourceService.addProductPhoto(proID, bean);
+    }
+
+    /**
+     * 删除一个产品图片
+     */
+    public Flowable delProductPhoto(String imgID, String imgPath) {
+        return resourceService.delProductPhoto(imgID, imgPath);
+    }
 
     /**
      * 通过肥料登记号进行真伪检验
@@ -146,7 +172,7 @@ public class HttpResourceManager {
      * 保存一个自定义肥料
      */
     public Flowable saveFertilizerByUserDefine(CommonFertilizerBean bean) {
-        return resourceService.saveFertilizerByUserDefine(bean.getResID(), bean.getProductName(), bean.getManufacturer());
+        return resourceService.saveFertilizerByUserDefine(bean.getResID(), bean.getCommonName(), bean.getManufacturer());
     }
 
     /**

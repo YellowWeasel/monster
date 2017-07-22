@@ -100,4 +100,11 @@ public class HttpWorkManager {
         return workService.getDayWorkJobByManager(specifyDay, type);
     }
 
+    /**
+     * 得到指定时间区域内的工作安排时间
+     */
+    public Flowable getScheduleByTime(String st, String end) {
+        return workService.getScheduleByTime(st, end);
+    }
+
 }

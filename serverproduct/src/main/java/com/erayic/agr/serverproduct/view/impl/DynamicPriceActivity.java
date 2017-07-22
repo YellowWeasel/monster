@@ -2,6 +2,7 @@ package com.erayic.agr.serverproduct.view.impl;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bumptech.glide.Glide;
+import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.net.back.api.CommonDynamicPriceBean;
@@ -79,8 +82,6 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_price);
-//
-//        ButterKnife.bind(this);
     }
 
     @Override
@@ -93,14 +94,20 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        typeTextView.setText(TextUtils.isEmpty(cropName) ? "" : cropName);
         marketPriceListView.setOnItemClickListener(this);
         serverproductDynamicPriceAveragepriceWebview.getSettings().setJavaScriptEnabled(true);
         serverproductDynamicPriceAveragepriceWebview.getSettings().setDefaultTextEncodingName("utf-8");
         serverproductDynamicPriceAveragepriceWebview.addJavascriptInterface(new DynamicPriceJsInterface(), "Datas");
+        Glide.with(DynamicPriceActivity.this).
+                load(TextUtils.isEmpty(cropIconUrl) ? "" : (AgrConstant.IMAGE_URL_IMAGE + cropIconUrl)).
+                apply(AgrConstant.iconOptions)
+                .into(iconImageView);
     }
 
     public void refreshWebView() {
-        if (serverproductDynamicPriceAveragepriceWebview ==null||!serverproductDynamicPriceAveragepriceWebview.isAttachedToWindow())return;
+        if (serverproductDynamicPriceAveragepriceWebview == null || !serverproductDynamicPriceAveragepriceWebview.isAttachedToWindow())
+            return;
         serverproductDynamicPriceAveragepriceWebview.loadUrl("file:///android_asset/DynamicPriceTool.html");
         serverproductDynamicPriceAveragepriceWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -124,7 +131,7 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
         calendar.add(Calendar.DAY_OF_MONTH, -dateInterval);
         dynamicPricePresenter.getDynamicPricedatas(cropId
                 , new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime())
-                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()),serviceID);
+                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()), serviceID);
     }
 
     @Override
@@ -230,9 +237,10 @@ public class DynamicPriceActivity extends BaseActivity implements IDynamicPriceV
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_MONTH, -dateInterval);
 
-        DynamicPricePrincipalMarketDatas.MarketPriceDatas marketPriceDatas= (DynamicPricePrincipalMarketDatas.MarketPriceDatas) parent.getItemAtPosition(position);
-        ARouter.getInstance().build("/serverproduct/activity/DynamicPriceDetailActivity").withParcelable("paramter",new MarketInfoParamter(cropId,marketPriceDatas.getMarketName(),new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime())
-                , new SimpleDateFormat("yyyy/MM/dd").format(new Date()))).withString("serviceID",serviceID).navigation();
+        DynamicPricePrincipalMarketDatas.MarketPriceDatas marketPriceDatas = (DynamicPricePrincipalMarketDatas.MarketPriceDatas) parent.getItemAtPosition(position);
+        ARouter.getInstance().build("/serverproduct/activity/DynamicPriceDetailActivity")
+                .withParcelable("paramter", new MarketInfoParamter(cropId, marketPriceDatas.getMarketName(), new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime())
+                        , new SimpleDateFormat("yyyy/MM/dd").format(new Date()))).withString("serviceID", serviceID).withString("cropName", cropName).navigation();
     }
 
     public class DynamicPriceJsInterface {

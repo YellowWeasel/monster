@@ -1,6 +1,7 @@
 package com.erayic.agr.service.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -28,7 +29,9 @@ public class ServiceInfoByEntImageAdapter extends BaseQuickAdapter<CommonImageBe
 
     @Override
     protected void convert(ServiceInfoByEntImageViewHolder helper, CommonImageBean item) {
-        Glide.with(context).load(item.getPicturePath()).apply(AgrConstant.iconOptions).into(helper.serviceInfoImg);
+        Glide.with(context).
+                load(TextUtils.isEmpty(item.getPicturePath()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + item.getPicturePath()))
+                .apply(AgrConstant.contentVerticalOptions).into(helper.serviceInfoImg);
     }
 
 }

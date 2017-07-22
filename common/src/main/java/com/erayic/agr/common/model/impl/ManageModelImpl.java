@@ -170,9 +170,9 @@ public class ManageModelImpl implements IManageModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void addBaseByEnt(String newBaseName, final OnDataListener<Object> listener) {
+    public void addBaseByEnt(String newBaseName, String phoneCode, final OnDataListener<Object> listener) {
 
-        HttpManageManager.getInstance().addBaseByEnt(newBaseName)
+        HttpManageManager.getInstance().addBaseByEnt(newBaseName, phoneCode)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Consumer<DataBack<Object>>() {
@@ -461,9 +461,9 @@ public class ManageModelImpl implements IManageModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void updateBlockInfo(String unitID, String unitName, double area, List<String> regions, List<String> workes, boolean isGreenhouse, final OnDataListener<Object> listener) {
+    public void updateBlockInfo(String baseID, String unitID, String unitName, double area, List<String> regions, List<String> workes, boolean isGreenhouse, final OnDataListener<Object> listener) {
 
-        HttpManageManager.getInstance().updateBlockInfo(unitID, unitName, area, regions, workes, isGreenhouse)
+        HttpManageManager.getInstance().updateBlockInfo(baseID, unitID, unitName, area, regions, workes, isGreenhouse)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Consumer<DataBack<Object>>() {

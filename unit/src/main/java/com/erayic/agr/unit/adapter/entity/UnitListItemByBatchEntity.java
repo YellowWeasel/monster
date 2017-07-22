@@ -12,12 +12,13 @@ import java.util.Map;
 
 public class UnitListItemByBatchEntity implements MultiItemEntity {
 
-    public static final int TYPE_BATCH_ADD = 0;
-    public static final int TYPE_BATCH_CONTENT = 1;
+    public static final int TYPE_BATCH_ADD = 0;//新增
+    public static final int TYPE_BATCH_CONTENT = 1;//当前
+    public static final int TYPE_BATCH_HISTORY = 3;//历史
 
     private String name;
     private String subName;
-    private Map<String,String> map;
+    private Map<String, String> map;
 
     private int itemType;
 

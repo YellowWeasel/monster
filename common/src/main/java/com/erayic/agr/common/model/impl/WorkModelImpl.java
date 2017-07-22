@@ -413,6 +413,48 @@ public class WorkModelImpl implements IWorkModel {
                 });
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void getScheduleByTime(String st, String end, final OnDataListener<List<String>> listener) {
+
+        HttpWorkManager.getInstance().getScheduleByTime(st, end)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<List<String>>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<List<String>> objectDataBack) throws Exception {
+                        ErayicLog.i("getScheduleByTime", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
     @Override
     public void init(Context context) {
 

@@ -38,6 +38,9 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -93,6 +96,7 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
             public void onClickDate(int year, int month, int day) {
                 DateTime dateTime = new DateTime(year, month + 1, day, 0, 0);
                 toolbar.setTitle(dateTime.toString("yyyy-MM-dd"));
+                requestDayTime(dateTime);
                 requestDayWork(dateTime.toString("yyyy-MM-dd"));
             }
 
@@ -100,12 +104,13 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
             public void onPageChange(int year, int month, int day) {
                 DateTime dateTime = new DateTime(year, month + 1, day, 0, 0);
                 toolbar.setTitle(dateTime.toString("yyyy-MM-dd"));
+                requestDayTime(dateTime);
                 requestDayWork(dateTime.toString("yyyy-MM-dd"));
             }
         });
         jobsListRecyclerView = slSchedule.getSchedulerRecyclerView();
         slSchedule.getMonthCalendar().setTodayToView();//跳转到今天
-        adapter = new JobsListItemAdapter(getActivity(), null, PreferenceUtils.getParam("UserRole", 0));
+        adapter = new JobsListItemAdapter(getActivity(), null, PreferenceUtils.getParam("UserRole", -1));
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 1);
         manager.setSpanSizeLookup(new SectionedSpanSizeLookup(adapter, manager));
         adapter.setOnItemScrollToPositionWithOffset(new JobsListItemAdapter.OnItemScrollToPositionWithOffset() {
@@ -129,12 +134,14 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
     protected void initData() {
         toolbar.setTitle(new DateTime().toString("yyyy-MM-dd"));
         presenter = new JobsListPresenterImpl(this);
+        requestDayTime(new DateTime());
         requestDayWork(new DateTime().toString("yyyy-MM-dd"));
     }
 
     private void requestDayWork(String specifyDay) {
-        switch (PreferenceUtils.getParam("UserRole", 0)) {
-            case EnumUserRole.Role_Manager://管理员
+        switch (PreferenceUtils.getParam("UserRole", -1)) {
+            case EnumUserRole.Role_Admin://基地管理员
+            case EnumUserRole.Role_Manager://生产管理员
             {
                 presenter.getDayWorkJobByManager(specifyDay);
             }
@@ -144,7 +151,16 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
                 presenter.getDayWorkJobByUser(specifyDay);
             }
             break;
+            default:
+                showToast("未发现权限");
+                break;
         }
+    }
+
+    private void requestDayTime(DateTime dateTime) {
+        String st = dateTime.dayOfMonth().withMinimumValue().toString("yyyy-MM-dd");
+        String end = dateTime.dayOfMonth().withMaximumValue().toString("yyyy-MM-dd");
+        presenter.getScheduleByTime(st, end);
     }
 
     @Subscribe
@@ -152,8 +168,9 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
         if (event.getMsgType() == MainRefreshMessage.MAIN_MASTER_JOB) {
 //            // 根据指定格式,将时间字符串转换成DateTime对象
 //            DateTime dt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").parseDateTime("2012-12-26 03:27:39");
+            requestDayWork(toolbar.getTitle().toString());
             if (event.getSubType() == -1) {
-                requestDayWork(toolbar.getTitle().toString());
+                requestDayTime(DateTimeFormat.forPattern("yyyy-MM-dd").parseDateTime(toolbar.getTitle().toString()));
             } else {
                 Period p = new Period(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm").parseDateTime(event.getData().toString()),
                         DateTimeFormat.forPattern("yyyy-MM-dd").parseDateTime(toolbar.getTitle().toString()));
@@ -198,8 +215,23 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
     }
 
     @Override
+    public void refreshSchedule(final List<String> list) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                List<Integer> dayData = new ArrayList<>();
+                for (String str : list) {
+                    DateTime dateTime = new DateTime(ErayicNetDate.getLongDates(str));
+                    dayData.add(dateTime.getDayOfMonth());
+                }
+                slSchedule.addTaskHints(dayData);
+            }
+        });
+    }
+
+    @Override
     public void onDestroy() {
-        super.onDestroy();
         EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

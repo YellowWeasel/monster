@@ -13,6 +13,7 @@ import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.util.DividerItemDecoration;
+import com.erayic.agr.common.util.ErayicApp;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
@@ -75,6 +76,7 @@ public class ManageMineFragment extends BaseFragment implements IMineView {
                     ARouter.getInstance()
                             .build(url)
                             .withString("ip", "192.168.0.199")
+//                            .withString("ip", "139.189.104.106")
                             .withInt("port", 37777)
                             .withString("loginName", "admin")
                             .withString("loginPass", "admin")
@@ -165,26 +167,27 @@ public class ManageMineFragment extends BaseFragment implements IMineView {
         //设置推荐给好友
         ManageMineEntity entityRecommend = new ManageMineEntity();
         entityRecommend.setItemType(ManageMineEntity.TYPE_CONTENT);
-        entityRecommend.setToUrl("/xxx/xxx");
+        entityRecommend.setToUrl("/manage/activity/ShareActivity");
         entityRecommend.setName("推荐给好友");
         entityRecommend.setIcon(R.drawable.image_manage_recommend_icon);
         list.add(entityRecommend);
-        //设置系统帮助
-        ManageMineEntity entityHelp = new ManageMineEntity();
-        entityHelp.setItemType(ManageMineEntity.TYPE_CONTENT);
-        entityHelp.setToUrl("/xxx/xxx");
-        entityHelp.setName("系统帮助");
-        entityHelp.setIcon(R.drawable.image_manage_help_icon);
-        list.add(entityHelp);
+        //设置关于农小二
+        ManageMineEntity entityAbout = new ManageMineEntity();
+        entityAbout.setItemType(ManageMineEntity.TYPE_CONTENT);
+        entityAbout.setToUrl("/manage/activity/AboutActivity");
+        entityAbout.setName("关于农小二");
+        entityAbout.setSubName(ErayicApp.getVersionName(getActivity()));
+        entityAbout.setIcon(R.drawable.image_manage_help_icon);
+        list.add(entityAbout);
         //分割区域
         list.add(entityDivider);
         //设置测试
-        ManageMineEntity entityTest = new ManageMineEntity();
-        entityTest.setItemType(ManageMineEntity.TYPE_CONTENT);
-        entityTest.setToUrl("/unit/activity/BatchDahuaVideoActivity");
-        entityTest.setName("测试视频");
-        entityTest.setIcon(R.drawable.image_manage_recommend_icon);
-        list.add(entityTest);
+//        ManageMineEntity entityTest = new ManageMineEntity();
+//        entityTest.setItemType(ManageMineEntity.TYPE_CONTENT);
+//        entityTest.setToUrl("/unit/activity/BatchDahuaVideoActivity");
+//        entityTest.setName("测试视频");
+//        entityTest.setIcon(R.drawable.image_manage_recommend_icon);
+//        list.add(entityTest);
         adapter.setNewData(list);
     }
 

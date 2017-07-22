@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.text.method.KeyListener;
 import android.view.Menu;
@@ -20,15 +19,16 @@ import com.bigkoo.alertview.OnItemClickListener;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
-import com.erayic.agr.common.event.MainRefreshMessage;
 import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.enums.EnumOperationType;
 import com.erayic.agr.common.net.back.enums.EnumRequestType;
+import com.erayic.agr.common.net.back.enums.EnumResourceType;
 import com.erayic.agr.common.net.back.work.CommonWorkInfoBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicEditDialog;
+import com.erayic.agr.common.view.ErayicTextDialog;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.jobs.R;
@@ -71,7 +71,7 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
     @Autowired
     String JobID;//工作ID
 
-    boolean isUpdater;//是否在修改状态
+    boolean isUpdater;//是否在未修改状态
 
     private LoadingDialog dialog;
 
@@ -103,7 +103,7 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
         adapter.setOnWorkClickListener(new WorkInfoItemAdapter.OnWorkClickListener() {
             @Override
             public void onAddWork(View view, int position) {
-                if (isAdd)
+                if (!isUpdater)
                     new AlertView("工作类型", null, "取消", null,
                             new String[]{"施肥", "打药", "采摘", "其他"},
                             WorkInfoActivity.this, AlertView.Style.ActionSheet, new OnItemClickListener() {
@@ -251,7 +251,7 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
                     break;
                 case WorkInfoEntity.TYPE_WORK_CONTENT_FERTILIZE://施肥
                     if (TextUtils.isEmpty(entity.getSubProp())) {
-                        showToast("施肥量");
+                        showToast("请输入施肥量");
                         return;
                     } else {
                         CommonWorkInfoBean.JobContent content = new CommonWorkInfoBean.JobContent();
@@ -264,7 +264,7 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
                     break;
                 case WorkInfoEntity.TYPE_WORK_CONTENT_PESTICIDE://打药
                     if (TextUtils.isEmpty(entity.getSubProp())) {
-                        showToast("农药配比");
+                        showToast("请输入农药配比");
                         return;
                     } else {
                         CommonWorkInfoBean.JobContent content = new CommonWorkInfoBean.JobContent();
@@ -291,7 +291,11 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
                 }
                 break;
                 case WorkInfoEntity.TYPE_WORK_CONTENT_NORM://工作要求
-                    workInfoBean.setDescript(entity.getSubName());
+                    if (TextUtils.isEmpty(entity.getSubName())) {
+                        showToast("请输入工作要求");
+                    } else {
+                        workInfoBean.setDescript(entity.getSubName());
+                    }
                     break;
             }
         }
@@ -446,7 +450,23 @@ public class WorkInfoActivity extends BaseActivity implements IWorkInfoView {
         } else if (item.getItemId() == R.id.action_bar_jobs_work_save) {
             saveData();
         } else if (item.getItemId() == R.id.action_bar_jobs_work_delete) {
-            presenter.deleteJob(JobID);
+            new ErayicTextDialog.Builder(WorkInfoActivity.this)
+                    .setMessage("将要删除该预设作业的一切信息\n确定删除吗？", null)
+                    .setTitle("温馨提示")
+                    .setButton1("取消", new ErayicTextDialog.OnClickListener() {
+                        @Override
+                        public void onClick(Dialog dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setButton2("确定", new ErayicTextDialog.OnClickListener() {
+                        @Override
+                        public void onClick(Dialog dialog, int which) {
+                            dialog.dismiss();
+                            presenter.deleteJob(JobID);
+                        }
+                    }).show();
+
         } else if (item.getItemId() == R.id.action_bar_jobs_work_update) {
             supportInvalidateOptionsMenu();
         }

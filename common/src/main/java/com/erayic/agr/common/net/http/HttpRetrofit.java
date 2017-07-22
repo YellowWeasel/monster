@@ -25,7 +25,7 @@ public class HttpRetrofit {
 
     private static Application application;
     private static HttpRetrofit httpService;
-    private static Retrofit receivedCookiesRetrofit, sendCookiesRetrofit, noCookiesRetrofit;
+    private static Retrofit receivedCookiesRetrofit, sendCookiesRetrofit, noCookiesRetrofit, sendReceivedCookiesRetrofit;
     private volatile static boolean hasInit = false;
 
     private HttpRetrofit(Application application) {
@@ -43,6 +43,7 @@ public class HttpRetrofit {
             }
         }
     }
+
     /**
      * 请求Retrofit（保存Cookies）
      */
@@ -61,7 +62,7 @@ public class HttpRetrofit {
                                         .retryOnConnectionFailure(true)
                                         .addInterceptor(new LoggingInterceptor())
                                         .addInterceptor(new ReceivedCookiesInterceptor(application))
-                                            .connectTimeout(15, TimeUnit.SECONDS)
+                                        .connectTimeout(15, TimeUnit.SECONDS)
                                         .build())
                                 .build();
                     }
@@ -124,7 +125,35 @@ public class HttpRetrofit {
             }
             return noCookiesRetrofit;
         }
+    }
 
+    /**
+     * 获取Retrofit（带Cookies并保持新Cookies）
+     */
+    public static Retrofit getRequestReceivedCookiesRetrofit() {
+        if (!hasInit)
+            throw new InitException("HttpRetrofit::Init::Invoke init(context) first!");
+        else {
+            if (sendReceivedCookiesRetrofit == null) {
+                synchronized (Retrofit.class) {
+                    if (sendReceivedCookiesRetrofit == null) {
+                        sendReceivedCookiesRetrofit = new Retrofit.Builder()
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                                .baseUrl(AgrConstant.WEB_SERVER_URL)
+                                .client(new OkHttpClient.Builder()
+                                        .retryOnConnectionFailure(true)
+                                        .addInterceptor(new LoggingInterceptor())
+                                        .addInterceptor(new ReceivedCookiesInterceptor(application))
+                                        .addInterceptor(new RequestCookiesInterceptor(application))
+                                        .connectTimeout(15, TimeUnit.SECONDS)
+                                        .build())
+                                .build();
+                    }
+                }
+            }
+            return sendReceivedCookiesRetrofit;
+        }
     }
 
 }

@@ -46,4 +46,12 @@ public class HttpDeviceManager {
         return deviceService.getCtrlItemStatus(serialNum, passNum, type);
     }
 
+
+    /**
+     * 得到设备信息
+     */
+    public Flowable getMonitorInfo(String serialNum) {
+        return deviceService.getMonitorInfo(serialNum);
+    }
+
 }

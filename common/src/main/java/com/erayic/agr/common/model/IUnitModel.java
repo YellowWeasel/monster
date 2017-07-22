@@ -78,7 +78,7 @@ public interface IUnitModel extends IProvider {
     /**
      * 得到批次所有的工作日志
      */
-    void getWorkLogByBatch(String batchID,int pageNum,int pageSize, OnDataListener<List<CommonUnitBatchLogsBean>> listener);
+    void getWorkLogByBatch(String batchID, int pageNum, int pageSize, OnDataListener<List<CommonUnitBatchLogsBean>> listener);
 
     /**
      * 得到批次详情首页
@@ -96,7 +96,8 @@ public interface IUnitModel extends IProvider {
     void getCycleByBatch(String batchID, OnDataListener<Object> listener);
 
     /**
-     *得到生产建议详情
+     * 得到生产建议详情
      */
-     void getSuggestDetail(String unitID, int type, String batchID, OnDataListener<CommonUnitBatchSuggestBean> listener);
+    void getSuggestDetail(String unitID, int type, String batchID, OnDataListener<CommonUnitBatchSuggestBean> listener);
+
 }

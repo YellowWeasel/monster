@@ -94,10 +94,8 @@ public class SwitchBaseActivity extends BaseActivity implements ISwitchBaseView 
                             .setButton2("确定", new ErayicTextDialog.OnClickListener() {
                                 @Override
                                 public void onClick(Dialog dialog, int which) {
-                                    if (PreferenceUtils.clearData()) {
-                                        presenter.changeBase(baseListBean.getBaseID());
-                                        dialog.dismiss();
-                                    }
+                                    presenter.changeBase(baseListBean.getBaseID());
+                                    dialog.dismiss();
                                 }
                             }).show();
                 }

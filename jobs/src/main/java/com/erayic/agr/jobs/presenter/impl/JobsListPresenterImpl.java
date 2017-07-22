@@ -10,6 +10,8 @@ import com.erayic.agr.common.net.back.work.CommonJobsListUserBean;
 import com.erayic.agr.jobs.presenter.IJobsListPresenter;
 import com.erayic.agr.jobs.view.IJobsListView;
 
+import java.util.List;
+
 /**
  * 作者：hejian
  * 邮箱：hkceey@outlook.com
@@ -96,6 +98,21 @@ public class JobsListPresenterImpl implements IJobsListPresenter {
                         response.getJobs().get(i).setPercentage(0);
                 }
                 jobsListView.selectManagerSure(response);
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
+                jobsListView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
+    }
+
+    @Override
+    public void getScheduleByTime(String st, String end) {
+        workModel.getScheduleByTime(st, end, new OnDataListener<List<String>>() {
+            @Override
+            public void success(List<String> response) {
+                jobsListView.refreshSchedule(response);
             }
 
             @Override

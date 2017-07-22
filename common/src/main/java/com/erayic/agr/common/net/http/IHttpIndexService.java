@@ -46,7 +46,7 @@ public interface IHttpIndexService {
     /**
      * 1、企业注册（用户不存在）
      *
-     * @param baseName  企业名称
+     * @param entName  企业名称
      * @param name      真实姓名
      * @param pass      登录密码
      * @param tel       电话号码
@@ -57,7 +57,7 @@ public interface IHttpIndexService {
      */
     @POST("Basic/FristRegister")
     Flowable<DataBack<Object>> firstRegister(
-            @Query("baseName") String baseName,
+            @Query("entName") String entName,
             @Query("name") String name,
             @Query("pass") String pass,
             @Query("tel") String tel,
@@ -158,7 +158,7 @@ public interface IHttpIndexService {
      * @param tel       手机号码
      * @param code      手机唯一标识码
      * @param verifyNum 验证码
-     * @return
+     * @return DataBack
      */
     @GET("Basic/TelVerify")
     Flowable<DataBack<Object>> checkTelVerify(

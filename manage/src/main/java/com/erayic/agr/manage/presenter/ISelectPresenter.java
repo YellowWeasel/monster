@@ -38,4 +38,9 @@ public interface ISelectPresenter {
      */
     void getNoticeList();
 
+    /**
+     * 得到所有的产品分类
+     */
+    void getProduceType(int type);
+
 }

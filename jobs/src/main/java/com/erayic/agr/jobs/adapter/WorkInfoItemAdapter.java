@@ -116,7 +116,7 @@ public class WorkInfoItemAdapter extends BaseMultiItemQuickAdapter<WorkInfoEntit
                     ((JobsContentText1ViewHolder) helper).jobsContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.image_jobs_work_icon));
                     ((JobsContentText1ViewHolder) helper).jobsContentName.setText(TextUtils.isEmpty(item.getName()) ? "" : item.getName());
                     ((JobsContentText1ViewHolder) helper).jobsContentSub.setTextColor(ContextCompat.getColor(context, R.color.app_base_text_price));
-                    ((JobsContentText1ViewHolder) helper).jobsContentSub.setText(TextUtils.isEmpty(item.getSubName()) ? "" : item.getSubName());
+                    ((JobsContentText1ViewHolder) helper).jobsContentSub.setText(keyListener == null ? "" : "添加");
                     ((JobsContentText1ViewHolder) helper).jobsContentGoto.setVisibility(View.INVISIBLE);
                     ((JobsContentText1ViewHolder) helper).itemView.setOnClickListener(new View.OnClickListener() {
                         @Override

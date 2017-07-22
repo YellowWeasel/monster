@@ -14,8 +14,9 @@ public class ManageRefreshMessage {
     public static final int MANAGE_MASTER_FERTILIZER_LIST = 3;//化肥
     public static final int MANAGE_MASTER_PESTICIDE_LIST = 4;//农药
     public static final int MANAGE_MASTER_SEED_LIST = 5;//种子
-    public static final int MANAGE_MASTER_PRODUCE_LIST = 6;//产品
+    public static final int MANAGE_MASTER_PRODUCE_LIST = 6;//产品列表
     public static final int MANAGE_MASTER_BASE_LIST = 7;//基地列表
+    public static final int MANAGE_MASTER_PRODUCE_INFO = 8;//产品详情
 
     private int msgType;//消息类型
     private int subType;//消息副类型

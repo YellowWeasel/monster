@@ -1,6 +1,7 @@
 package com.erayic.agr.service.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -37,13 +38,10 @@ public class OrderByPayingAdapter extends BaseQuickAdapter<CommonOrderBean, Orde
 
     @Override
     protected void convert(OrderByPayingItemViewHolder helper, final CommonOrderBean item) {
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .error(R.drawable.image_service_test)
-                .diskCacheStrategy(DiskCacheStrategy.ALL);
 
-        Glide.with(context).load(AgrConstant.IMAGE_URL_PREFIX + item.getIcon())
-                .apply(options)
+        Glide.with(context)
+                .load(TextUtils.isEmpty(item.getIcon()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + item.getIcon()))
+                .apply(AgrConstant.iconOptions)
                 .into(helper.orderPayingItemImg);
         helper.orderPayingItemName.setText(item.getServiceName());
         helper.orderPayingItemDirections.setText("生成时间：" + ErayicNetDate.getStringDateYMDHM(item.getOrderTime()) + "");

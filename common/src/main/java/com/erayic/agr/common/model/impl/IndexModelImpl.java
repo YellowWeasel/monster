@@ -87,26 +87,27 @@ public class IndexModelImpl implements IIndexModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void enterpriseRegister(final String baseName, final String name, final String pass, final String tel, final String appID, final String phoneCode, final String verifyNum, final OnDataListener<Object> listener) {
+    public void enterpriseRegister(final String entName, final String name, final String pass, final String tel, final String appID, final String phoneCode, final String verifyNum, final OnDataListener<Object> listener) {
 
-        HttpIndexManager.getInstance().userVerify(tel, pass)
-                .flatMap(new Function<DataBack<IndexRegisterUserBean>, Flowable>() {
-                    @Override
-                    public Flowable apply(@NonNull DataBack<IndexRegisterUserBean> objectDataBack) throws Exception {
-                        ErayicLog.i("userByInvite", ErayicGson.getJsonString(objectDataBack));
-                        if (objectDataBack.isSucess()) {
-                            return HttpIndexManager.getInstance().entRegister(baseName, objectDataBack.getResult().getUserID(), appID, phoneCode, verifyNum);
-                        } else {
-                            switch (objectDataBack.getErrCode()) {
-                                case ErrorCode.Error_UserNotRegister:
-                                    return HttpIndexManager.getInstance().firstRegister(baseName, name, pass, tel, appID, phoneCode, verifyNum);
-                                default:
-                                    Throwable throwable = new Throwable(objectDataBack.getErrMsg());
-                                    return Flowable.error(throwable);
-                            }
-                        }
-                    }
-                })
+//        HttpIndexManager.getInstance().userVerify(tel, pass)
+//                .flatMap(new Function<DataBack<IndexRegisterUserBean>, Flowable>() {
+//                    @Override
+//                    public Flowable apply(@NonNull DataBack<IndexRegisterUserBean> objectDataBack) throws Exception {
+//                        ErayicLog.i("userByInvite", ErayicGson.getJsonString(objectDataBack));
+//                        if (objectDataBack.isSucess()) {
+//                            return HttpIndexManager.getInstance().entRegister(baseName, objectDataBack.getResult().getUserID(), appID, phoneCode, verifyNum);
+//                        } else {
+//                            switch (objectDataBack.getErrCode()) {
+//                                case ErrorCode.Error_UserNotRegister:
+//                                    return HttpIndexManager.getInstance().firstRegister(baseName, name, pass, tel, appID, phoneCode, verifyNum);
+//                                default:
+//                                    Throwable throwable = new Throwable(objectDataBack.getErrMsg());
+//                                    return Flowable.error(throwable);
+//                            }
+//                        }
+//                    }
+//                })
+        HttpIndexManager.getInstance().firstRegister(entName, name, pass, tel, appID, phoneCode, verifyNum)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Consumer<DataBack<String>>() {
@@ -200,24 +201,25 @@ public class IndexModelImpl implements IIndexModel {
     public void userByInvite(final String appID, final String pass, final String tel, final String code, final String phoneCode, final String verifyNum, final OnDataListener<Object> listener) {
 
 
-        HttpIndexManager.getInstance().userVerify(tel, pass)
-                .flatMap(new Function<DataBack<IndexRegisterUserBean>, Flowable>() {
-                    @Override
-                    public Flowable apply(@NonNull DataBack<IndexRegisterUserBean> objectDataBack) throws Exception {
-                        ErayicLog.i("userByInvite", ErayicGson.getJsonString(objectDataBack));
-                        if (objectDataBack.isSucess()) {
-                            return HttpIndexManager.getInstance().userInviteByUserID(appID, objectDataBack.getResult().getUserID(), tel, code, phoneCode, verifyNum);
-                        } else {
-                            switch (objectDataBack.getErrCode()) {
-                                case ErrorCode.Error_UserNotRegister:
-                                    return HttpIndexManager.getInstance().userInviteByTel(appID, pass, tel, code, phoneCode, verifyNum);
-                                default:
-                                    Throwable throwable = new Throwable(objectDataBack.getErrMsg());
-                                    return Flowable.error(throwable);
-                            }
-                        }
-                    }
-                })
+//        HttpIndexManager.getInstance().userVerify(tel, pass)
+//                .flatMap(new Function<DataBack<IndexRegisterUserBean>, Flowable>() {
+//                    @Override
+//                    public Flowable apply(@NonNull DataBack<IndexRegisterUserBean> objectDataBack) throws Exception {
+//                        ErayicLog.i("userByInvite", ErayicGson.getJsonString(objectDataBack));
+//                        if (objectDataBack.isSucess()) {
+//                            return HttpIndexManager.getInstance().userInviteByUserID(appID, objectDataBack.getResult().getUserID(), tel, code, phoneCode, verifyNum);
+//                        } else {
+//                            switch (objectDataBack.getErrCode()) {
+//                                case ErrorCode.Error_UserNotRegister:
+//                                    return HttpIndexManager.getInstance().userInviteByTel(appID, pass, tel, code, phoneCode, verifyNum);
+//                                default:
+//                                    Throwable throwable = new Throwable(objectDataBack.getErrMsg());
+//                                    return Flowable.error(throwable);
+//                            }
+//                        }
+//                    }
+//                })
+        HttpIndexManager.getInstance().userInviteByTel(appID, pass, tel, code, phoneCode, verifyNum)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Consumer<DataBack<String>>() {

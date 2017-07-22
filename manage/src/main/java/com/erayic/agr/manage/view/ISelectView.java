@@ -4,6 +4,7 @@ import com.erayic.agr.common.base.IBaseView;
 import com.erayic.agr.common.net.back.CommonPersonnelBean;
 import com.erayic.agr.common.net.back.CommonProduceListBean;
 import com.erayic.agr.common.net.back.CommonResourceBean;
+import com.erayic.agr.common.net.back.manage.CommonProduceTypeBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitListByBaseBean;
 import com.erayic.agr.common.net.back.work.CommonWorkListBean;
@@ -58,5 +59,10 @@ public interface ISelectView extends IBaseView {
      * 刷新通知方式列表
      */
     void refreshNoticeView(List<ManageNoticeEntity> list);
+
+    /**
+     * 刷新产品分类列表
+     */
+    void refreshProTypeView(List<CommonProduceTypeBean> list);
 
 }

@@ -16,6 +16,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseFragment;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.UnitRefreshMessage;
+import com.erayic.agr.common.net.back.device.CommonMonitorInfoEntity;
 import com.erayic.agr.common.net.back.enums.EnumCategoryType;
 import com.erayic.agr.common.net.back.enums.EnumControlRelayStatus;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
@@ -27,10 +29,16 @@ import com.erayic.agr.unit.R2;
 import com.erayic.agr.unit.adapter.UnitListItemAdapter;
 import com.erayic.agr.unit.adapter.UnitListItemByBatchAdapter;
 import com.erayic.agr.unit.adapter.UnitListItemByControlAdapter;
+import com.erayic.agr.unit.adapter.UnitListItemByMonitorAdapter;
 import com.erayic.agr.unit.adapter.entity.UnitListItemByControlEntity;
+import com.erayic.agr.unit.event.BatchInfoEvent;
 import com.erayic.agr.unit.presenter.IUnitListPresenter;
 import com.erayic.agr.unit.presenter.impl.UnitListPresenterImpl;
 import com.erayic.agr.unit.view.IUnitListView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -99,6 +107,11 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
             public void onAddBatch(String unitID) {
                 ARouter.getInstance().build("/unit/activity/AddBatchActivity").withString("unitID", unitID).navigation();
             }
+
+            @Override
+            public void onHistoryBatch(String unitID) {
+                showToast("暂未开放历史批次");
+            }
         });
         //控制设备
         controlAdapter.setOnDeviceClickListener(new UnitListItemByControlAdapter.OnDeviceClickListener() {
@@ -112,12 +125,21 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
                 presenter.opeCtrDevice(bean, position, cmd);
             }
         });
+        //监控
+        adapter.setOnMonitorClickListener(new UnitListItemByMonitorAdapter.OnMonitorClickListener() {
+
+            @Override
+            public void onMonitorClick(String serialNum) {
+                presenter.getMonitorInfo(serialNum);//请求设备信息
+            }
+        });
         unitListRecyclerView.setLayoutManager(manager);
         unitListRecyclerView.setAdapter(adapter);
     }
 
     @Override
     protected void initData() {
+        EventBus.getDefault().register(this);
         presenter = new UnitListPresenterImpl(this);
         onRefresh();
     }
@@ -125,6 +147,13 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
     @Override
     public void onRefresh() {
         presenter.getAllUnit();
+    }
+
+    @Subscribe
+    public void onBatchInfoMessage(UnitRefreshMessage event) {
+        if (event.getMsgType() == UnitRefreshMessage.UNIT_MASTER_LIST) {
+            onRefresh();
+        }
     }
 
     @Override
@@ -218,6 +247,24 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
     }
 
     @Override
+    public void refreshMonitorInfo(CommonMonitorInfoEntity bean) {
+        if (TextUtils.isEmpty(bean.getGateWay().getIP()) || TextUtils.isEmpty(bean.getGateWay().getLoginName()) || TextUtils.isEmpty(bean.getGateWay().getLoginPass())) {
+            showToast("数据异常");
+        } else {
+            ARouter.getInstance()
+                    .build("/unit/activity/BatchDahuaVideoActivity")
+                    .withString("ip", bean.getGateWay().getIP())
+                    .withInt("port", bean.getGateWay().getPort())
+                    .withString("loginName", bean.getGateWay().getLoginName())
+                    .withString("loginPass", bean.getGateWay().getLoginPass())
+                    .withInt("passNum", bean.getPassNum())
+                    .withBoolean("isControl", bean.isControlled())
+                    .navigation();//跳转到具体的页面
+        }
+
+    }
+
+    @Override
     public void showToast(final String msg) {
         MainLooperManage.runOnUiThread(new Runnable() {
             @Override
@@ -227,5 +274,9 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
         });
     }
 
-
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }

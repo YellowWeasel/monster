@@ -49,8 +49,8 @@ public class HttpIndexManager {
     /**
      * 1、企业注册（新用户）
      */
-    public Flowable firstRegister(String baseName, String name, String pass, String tel, String appID, String phoneCode, String verifyNum) {
-        return service.firstRegister(baseName, name, pass, tel, appID, phoneCode, verifyNum);
+    public Flowable firstRegister(String entName, String name, String pass, String tel, String appID, String phoneCode, String verifyNum) {
+        return service.firstRegister(entName, name, pass, tel, appID, phoneCode, verifyNum);
     }
 
     /**

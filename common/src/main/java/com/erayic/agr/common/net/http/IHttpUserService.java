@@ -2,7 +2,6 @@ package com.erayic.agr.common.net.http;
 
 import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.back.CommonBaseListBean;
-import com.erayic.agr.common.net.back.CommonByteArrayBean;
 import com.erayic.agr.common.net.back.CommonPersonnelBean;
 import com.erayic.agr.common.net.back.CommonUserInfoBean;
 import com.erayic.agr.common.net.back.user.CommonUserIconBean;

@@ -20,6 +20,7 @@ import com.erayic.agr.common.net.back.CommonBaseInfoBean;
 import com.erayic.agr.common.net.back.CommonMapArrayBean;
 import com.erayic.agr.common.net.back.CommonResUnitListBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
+import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicEditDialog;
 import com.erayic.agr.common.view.LoadingDialog;
@@ -333,7 +334,7 @@ public class BaseInfoActivity extends BaseActivity implements IBaseInfoView, Swi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {//返回
-            finish();
+            ErayicStack.getInstance().finishCurrentActivity();
         }
         return super.onOptionsItemSelected(item);
     }

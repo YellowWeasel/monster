@@ -4,9 +4,11 @@ import com.alibaba.android.arouter.facade.template.IProvider;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.CommonFertilizerBean;
 import com.erayic.agr.common.net.back.CommonPesticideBean;
+import com.erayic.agr.common.net.back.CommonProduceInfoBean;
 import com.erayic.agr.common.net.back.CommonProduceListBean;
 import com.erayic.agr.common.net.back.CommonResourceBean;
 import com.erayic.agr.common.net.back.CommonSeedBean;
+import com.erayic.agr.common.net.back.manage.CommonProduceTypeBean;
 
 import java.util.List;
 
@@ -29,9 +31,39 @@ public interface IResourceModel extends IProvider {
     void getAllProduct(OnDataListener<List<CommonProduceListBean>> listener);
 
     /**
+     * 得到产品详情
+     */
+    void getProductDetail(String proID, OnDataListener<CommonProduceInfoBean> listener);
+
+    /**
+     * 更新产品信息
+     */
+    void updateProduct(String proID, String productName, int classicID, String descript, OnDataListener<Object> listener);
+
+    /**
+     * 删除一个产品
+     */
+    void deleteProduct(String proID, OnDataListener<Object> listener);
+
+    /**
+     * 更新产品标题图片
+     */
+    void updateProductIcon(String proID, String icon, OnDataListener<Object> listener);
+
+    /**
+     * 增加一个产品照片
+     */
+    void addProductPhoto(String proID, String photo, OnDataListener<Object> listener);
+
+    /**
+     * 删除一个产品照片
+     */
+    void delProductPhoto(String imgID, String imgPath, OnDataListener<Object> listener);
+
+    /**
      * 得到企业指定行业的所有产品
      */
-    void getAllProductClassic(int type, OnDataListener<List<CommonProduceListBean>> listener);
+    void getAllProductClassic(int type, OnDataListener<List<CommonProduceTypeBean>> listener);
 
     /**
      * 通过肥料登记号进行真伪检验
@@ -92,4 +124,5 @@ public interface IResourceModel extends IProvider {
      * 保存一个自定义农药
      */
     void savePesticideByUserDefine(CommonPesticideBean bean, OnDataListener<Object> listener);
+
 }

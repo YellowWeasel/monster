@@ -16,6 +16,7 @@ public class EnumRequestType {
     public static final int TYPE_RETURN_WORK = 9906;//选择工作
     public static final int TYPE_RETURN_UNIT = 9907;//选择管理单元
     public static final int TYPE_RETURN_NOTICE = 9908;//通知方式
+    public static final int TYPE_RETURN_PRODUCE_TYPE = 9909;//产品类别
 
     public static String getTypeDes(int type) {
         switch (type) {
@@ -35,6 +36,8 @@ public class EnumRequestType {
                 return "选择管理单元";
             case TYPE_RETURN_NOTICE:
                 return "选择通知方式";
+            case TYPE_RETURN_PRODUCE_TYPE:
+                return "选择产品类别";
             default:
                 return "未知";
         }

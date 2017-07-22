@@ -47,9 +47,9 @@ public class BaseListPresenterImpl implements IBaseListPresenter {
     }
 
     @Override
-    public void addBaseByEnt(String newBaseName) {
+    public void addBaseByEnt(String newBaseName,String phoneCode) {
         baseListView.showLoading();
-        manageModel.addBaseByEnt(newBaseName, new OnDataListener<Object>() {
+        manageModel.addBaseByEnt(newBaseName,phoneCode, new OnDataListener<Object>() {
             @Override
             public void success(Object response) {
                 baseListView.dismissLoading();

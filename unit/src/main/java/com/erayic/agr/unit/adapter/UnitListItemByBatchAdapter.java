@@ -3,6 +3,7 @@ package com.erayic.agr.unit.adapter;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,8 @@ public class UnitListItemByBatchAdapter extends BaseMultiItemQuickAdapter<UnitLi
                 return new UnitListItemByBatchInfoViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_unit_list_item_by_batch_info, parent, false));
             case UnitListItemByBatchEntity.TYPE_BATCH_ADD:
                 return new UnitListItemByBatchAddViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_unit_list_item_by_batch_add, parent, false));
+            case UnitListItemByBatchEntity.TYPE_BATCH_HISTORY:
+                return new UnitListItemByBatchAddViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_unit_list_item_by_batch_add, parent, false));
             default:
                 return super.onCreateDefViewHolder(parent, viewType);
         }
@@ -65,7 +68,7 @@ public class UnitListItemByBatchAdapter extends BaseMultiItemQuickAdapter<UnitLi
             case UnitListItemByBatchEntity.TYPE_BATCH_CONTENT:
                 if (helper instanceof UnitListItemByBatchInfoViewHolder) {
                     Glide.with(context)
-                            .load(item.getMap().get("Icon"))
+                            .load(TextUtils.isEmpty(item.getMap().get("Icon")) ? "" : (AgrConstant.IMAGE_URL_IMAGE + item.getMap().get("Icon")))
                             .apply(AgrConstant.iconOptions)
                             .into(((UnitListItemByBatchInfoViewHolder) helper).unitContentIcon);
                     ((UnitListItemByBatchInfoViewHolder) helper).unitContentName.setText(item.getName());
@@ -114,6 +117,26 @@ public class UnitListItemByBatchAdapter extends BaseMultiItemQuickAdapter<UnitLi
                     });
                 }
                 break;
+            case UnitListItemByBatchEntity.TYPE_BATCH_HISTORY:
+                if (helper instanceof UnitListItemByBatchAddViewHolder) {
+                    ((UnitListItemByBatchAddViewHolder) helper).unitContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_default_plant));
+                    ((UnitListItemByBatchAddViewHolder) helper).unitContentName.setText("历史批次");
+                    ((UnitListItemByBatchAddViewHolder) helper).unitContentSubName.setText("");
+                    ((UnitListItemByBatchAddViewHolder) helper).itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (onItemBatchClickListener != null)
+                                onItemBatchClickListener.onHistoryBatch(unitID);
+                        }
+                    });
+                    ((UnitListItemByBatchAddViewHolder) helper).itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            return true;
+                        }
+                    });
+                }
+                break;
             default:
                 break;
         }
@@ -123,5 +146,7 @@ public class UnitListItemByBatchAdapter extends BaseMultiItemQuickAdapter<UnitLi
         void onBatchInfo(String unitID, String batchID, String batchName, String imgUrl);
 
         void onAddBatch(String unitID);
+
+        void onHistoryBatch(String unitID);
     }
 }

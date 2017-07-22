@@ -21,6 +21,11 @@ public interface IUnitListPresenter {
     void opeCtrDevice(CommonUnitListBean.UnitListCtrlItemsBean bean, int position, int cmd);
 
     /**
+     * 得到设备信息
+     */
+    void getMonitorInfo(String serialNum);
+
+    /**
      * 得到控制设备子类型状态
      */
     void getCtrlItemStatus(CommonUnitListBean.UnitListCtrlItemsBean bean, int position);

@@ -52,6 +52,15 @@
         <activity
             android:name=".view.impl.SwitchBaseActivity"
             android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.ProduceInfoActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.AboutActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name=".view.impl.ShareActivity"
+            android:theme="@style/AppTheme.Transparent" />
     </application>
 
 </manifest>

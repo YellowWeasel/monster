@@ -70,7 +70,7 @@ public class ManageMineItemAdapter extends BaseMultiItemQuickAdapter<ManageMineE
                     ((ManageMineInfoViewHolder) helper).manageMineInfoRole.setText(EnumUserRole.getRoleDes(item.getPersonalInfo().getUserRole()));
                     Glide.with(context).
                             load(TextUtils.isEmpty(item.getPersonalInfo().getHeadImg()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + item.getPersonalInfo().getHeadImg()))
-                            .apply(AgrConstant.iconOptions)
+                            .apply(AgrConstant.headOptions)
                             .into(((ManageMineInfoViewHolder) helper).manageMineInfoIcon);
 
                     ((ManageMineInfoViewHolder) helper).itemView.setOnClickListener(new View.OnClickListener() {

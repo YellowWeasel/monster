@@ -2,6 +2,7 @@ package com.erayic.agr.manage.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -24,21 +25,42 @@ public class ManageProduceListAdapter extends BaseQuickAdapter<CommonProduceList
 
     private Context context;
 
+    private OnProduceItemClickListener onProduceItemClickListener;
+
     public ManageProduceListAdapter(Context context, List<CommonProduceListBean> data) {
         super(R.layout.adapter_manage_content_text_2, data);
         this.context = context;
     }
 
-    @Override
-    protected void convert(ManageContentText2ViewHolder helper, CommonProduceListBean item) {
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.color.color_f6)
-                .error(R.drawable.app_base_android_1)
-                .diskCacheStrategy(DiskCacheStrategy.ALL);
+    public void setOnProduceItemClickListener(OnProduceItemClickListener onProduceItemClickListener) {
+        this.onProduceItemClickListener = onProduceItemClickListener;
+    }
 
-        Glide.with(context).load(AgrConstant.IMAGE_URL_PREFIX + item.getIcon()).apply(options).into(helper.manageContentIcon);
+    @Override
+    protected void convert(ManageContentText2ViewHolder helper, final CommonProduceListBean item) {
+
+        Glide.with(context).
+                load(TextUtils.isEmpty(item.getIcon()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + item.getIcon()))
+                .apply(AgrConstant.iconOptions).into(helper.manageContentIcon);
+
         helper.manageContentName.setText(item.getProductName());
         helper.manageContentSubName.setText(TextUtils.isEmpty(item.getClassifyName()) ? "未指定类别" : item.getClassifyName());
+        helper.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onProduceItemClickListener != null)
+                    onProduceItemClickListener.onItemClick(v, item.getProductName(), item.getProID());
+            }
+        });
+        helper.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
+    }
+
+    public interface OnProduceItemClickListener {
+        void onItemClick(View view, String proName, String proID);
     }
 }

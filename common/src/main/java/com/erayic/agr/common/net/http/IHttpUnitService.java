@@ -147,8 +147,8 @@ public interface IHttpUnitService {
     /**
      * 得到作物批次的生产履历
      *
-     * @param batchID 批次ID
-     * @param pageNum 页数（int）
+     * @param batchID  批次ID
+     * @param pageNum  页数（int）
      * @param pageSize 页尺寸（int）
      * @return DataBack
      */

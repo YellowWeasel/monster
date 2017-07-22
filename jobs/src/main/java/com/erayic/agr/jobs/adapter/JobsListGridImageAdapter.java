@@ -34,7 +34,7 @@ public class JobsListGridImageAdapter extends BaseQuickAdapter<CommonJobsListMan
 
         Glide.with(context.getApplicationContext())
                 .load(TextUtils.isEmpty(item.getImgPath()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + item.getImgPath()))
-                .apply(AgrConstant.iconOptions)
+                .apply(AgrConstant.contentDefaultOptions)
                 .into(helper.jobsContentImage);
     }
 }

@@ -80,7 +80,7 @@ public class UnitBatchInfoByLogItemAdapter extends BaseQuickAdapter<CommonUnitBa
 //            imageView.setTag(s);
             Glide.with(context)
                     .load(s.getPath())
-                    .apply(AgrConstant.iconOptions)
+                    .apply(AgrConstant.contentDefaultOptions)
                     .into(imageView);
         }
 

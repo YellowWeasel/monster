@@ -22,6 +22,7 @@ public class PoliciesRegulationsDetailPresenterImpl implements IPoliciesRegulati
     private IPoliciesRegulationDetailView context;
     @Autowired
     IApiModel apiModel;
+
     public PoliciesRegulationsDetailPresenterImpl(IPoliciesRegulationDetailView context) {
         this.context = context;
         ARouter.getInstance().inject(this);
@@ -29,24 +30,27 @@ public class PoliciesRegulationsDetailPresenterImpl implements IPoliciesRegulati
 
     @Override
     public void getPoliciesRegulationDetailDatas(int Id) {
-           context.showLoading();
-            apiModel.getPoliciesRegulationsDetail(Id, new OnDataListener<CommonPoliciesRegulationsDetailBean>() {
-                @Override
-                public void success(final CommonPoliciesRegulationsDetailBean response) {
-                    MainLooperManage.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+        context.showLoading();
+        apiModel.getPoliciesRegulationsDetail(Id, new OnDataListener<CommonPoliciesRegulationsDetailBean>() {
+            @Override
+            public void success(final CommonPoliciesRegulationsDetailBean response) {
+                MainLooperManage.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (response != null)
                             context.refreshPoliciesRegulationDatas(new PoliciesRegulationsDetailDatas(response));
-                            context.dismissLoading();
-                        }
-                    });
-                }
+                        else
+                            context.showToast("未检测到数据");
+                        context.dismissLoading();
+                    }
+                });
+            }
 
-                @Override
-                public void fail(int errCode, String msg) {
-                     context.showToast("错误代码：" + errCode + "\n描述：" + msg);
-                    context.dismissLoading();
-                }
-            });
+            @Override
+            public void fail(int errCode, String msg) {
+                context.showToast("错误代码：" + errCode + "\n描述：" + msg);
+                context.dismissLoading();
+            }
+        });
     }
 }

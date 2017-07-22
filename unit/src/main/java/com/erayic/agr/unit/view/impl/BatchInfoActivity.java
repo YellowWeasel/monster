@@ -1,6 +1,7 @@
 package com.erayic.agr.unit.view.impl;
 
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -14,6 +15,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -26,11 +28,15 @@ import com.bumptech.glide.Glide;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.net.back.enums.EnumBatchStatus;
 import com.erayic.agr.common.net.back.enums.EnumCategoryType;
+import com.erayic.agr.common.net.back.enums.EnumResourceType;
 import com.erayic.agr.common.util.ErayicNetDate;
+import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.CircleImageView;
+import com.erayic.agr.common.view.ErayicTextDialog;
 import com.erayic.agr.common.view.PagerSlidingTabStrip;
 import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.unit.R;
@@ -158,8 +164,8 @@ public class BatchInfoActivity extends BaseActivity implements IBatchInfosView {
     @Override
     public void initData() {
         Glide.with(this)
-                .load(imgUrl)
-               .apply(AgrConstant.iconOptions)
+                .load(TextUtils.isEmpty(imgUrl) ? "" : (AgrConstant.IMAGE_URL_IMAGE + imgUrl))
+                .apply(AgrConstant.iconOptions)
                 .into(unitContentIcon);
         unitContentName.setText(TextUtils.isEmpty(batchName) ? "未命名" : batchName);
     }
@@ -189,9 +195,32 @@ public class BatchInfoActivity extends BaseActivity implements IBatchInfosView {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.unit_batch_info, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {//返回
-            finish();
+            ErayicStack.getInstance().finishCurrentActivity();
+        } else if (item.getItemId() == R.id.action_unit_batch_end) {
+            new ErayicTextDialog.Builder(BatchInfoActivity.this)
+                    .setMessage("完成批次代表此批次的生产管理已经结束\n之后不能对该批次做任何操作，且不可逆\n确定完成批次吗？", null)
+                    .setTitle("重要提示")
+                    .setButton1("取消", new ErayicTextDialog.OnClickListener() {
+                        @Override
+                        public void onClick(Dialog dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setButton2("确定", new ErayicTextDialog.OnClickListener() {
+                        @Override
+                        public void onClick(Dialog dialog, int which) {
+                            dialog.dismiss();
+                            showToast("暂未开放");
+                        }
+                    }).show();
         }
         return super.onOptionsItemSelected(item);
     }

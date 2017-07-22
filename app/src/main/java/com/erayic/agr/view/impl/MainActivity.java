@@ -103,32 +103,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 switch (PreferenceUtils.getParam("UserRole", -1)) {
                     case EnumUserRole.Role_Admin:
                     case EnumUserRole.Role_Manager:
-//                    {
-//                        titlesName = new String[]{"首页", "管理", "作业", "服务", "我的"};
-//                        titleNormalIcons = new int[]{R.drawable.app_base_default_index_press, R.drawable.app_base_default_unit_press, R.drawable.app_base_default_job_press,
-//                                R.drawable.app_base_default_service_press, R.drawable.app_base_default_mine_press};
-//                        titleSelectedIcons = new int[]{R.drawable.app_base_default_index_nomal, R.drawable.app_base_default_unit_nomal, R.drawable.app_base_default_job_nomal,
-//                                R.drawable.app_base_default_service_nomal, R.drawable.app_base_default_mine_nomal};
-//                        fragments = new Fragment[]{(Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
-//                                (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "生产管理").navigation(),
-//                                (Fragment) ARouter.getInstance().build("/jobs/fragment/JobsListFragment").withString("titleName", "今日作业").navigation(),
-//                                (Fragment) ARouter.getInstance().build("/service/fragment/ServiceEntranceFragment").withString("titleName", "我的服务").navigation(),
-//                                (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
-//                    }
-//                        break;
                     case EnumUserRole.Role_Usage://用户
-//                    {
-//                        titlesName = new String[]{"首页", "管理", "作业", "服务", "我的"};
-//                        titleNormalIcons = new int[]{R.drawable.app_base_default_index_press, R.drawable.app_base_default_unit_press, R.drawable.app_base_default_job_press,
-//                                R.drawable.app_base_default_service_press, R.drawable.app_base_default_mine_press};
-//                        titleSelectedIcons = new int[]{R.drawable.app_base_default_index_nomal, R.drawable.app_base_default_unit_nomal, R.drawable.app_base_default_job_nomal,
-//                                R.drawable.app_base_default_service_nomal, R.drawable.app_base_default_mine_nomal};
-//                        fragments = new Fragment[]{(Fragment) ARouter.getInstance().build("/main/fragment/MineFragment").withString("titleName", "首页").navigation(),
-//                                (Fragment) ARouter.getInstance().build("/unit/fragment/UnitListFragment").withString("titleName", "生产管理").navigation(),
-//                                (Fragment) ARouter.getInstance().build("/jobs/fragment/JobsListFragment").withString("titleName", "今日作业").navigation(),
-//                                (Fragment) ARouter.getInstance().build("/service/fragment/ServiceEntranceFragment").withString("titleName", "我的服务").navigation(),
-//                                (Fragment) ARouter.getInstance().build("/manage/fragment/ManageMineFragment").withString("titleName", "我的").navigation()};
-//                    }
                     default: {
                         //去掉首页
                         titlesName = new String[]{"管理", "作业", "服务", "我的"};

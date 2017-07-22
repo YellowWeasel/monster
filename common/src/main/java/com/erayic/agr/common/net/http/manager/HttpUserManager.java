@@ -1,9 +1,7 @@
 package com.erayic.agr.common.net.http.manager;
 
-import com.erayic.agr.common.net.back.CommonByteArrayBean;
 import com.erayic.agr.common.net.back.user.CommonUserIconBean;
 import com.erayic.agr.common.net.http.HttpRetrofit;
-import com.erayic.agr.common.net.http.IHttpIndexService;
 import com.erayic.agr.common.net.http.IHttpUserService;
 
 import io.reactivex.Flowable;
@@ -30,7 +28,7 @@ public class HttpUserManager {
                 if (manager == null) {
                     manager = new HttpUserManager();
                     serviceRequest = HttpRetrofit.getRequestCookiesRetrofit().create(IHttpUserService.class);
-                    serviceReceivedCookies = HttpRetrofit.getReceivedCookiesRetrofit().create(IHttpUserService.class);
+                    serviceReceivedCookies = HttpRetrofit.getRequestReceivedCookiesRetrofit().create(IHttpUserService.class);
                 }
             }
         }

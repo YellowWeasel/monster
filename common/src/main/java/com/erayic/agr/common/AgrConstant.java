@@ -12,13 +12,13 @@ import com.bumptech.glide.request.RequestOptions;
 
 public class AgrConstant {
 
-    public static final String WEB_SERVER_URL = "http://192.168.0.188:8000/";
-    public static final String IMAGE_URL_PREFIX = "http://192.168.0.7";
-    public static final String IMAGE_URL_IMAGE = "http://192.168.0.188:8020";
+    public static final String WEB_SERVER_URL = "http://agro2.erayic.com/";
+    public static final String IMAGE_URL_IMAGE = "http://agro2.erayic.com";
 
     public static final String GUID_Empty = "00000000-0000-0000-0000-000000000000";
     public static final String AGR_APPID = "7E550992-C157-4CB4-8048-9DCDF560A41D";//种植业APPID
-    public static final String AGR_UPDATE_URL = "http://weixin.erayic.com/AgrTestApk/android/trial-version.json";//APP更新体验版配置文件地址
+    public static final String AGR_UPDATE_URL = "http://agro2.erayic.com/App/android/inside/inside-version.json";//APP更新内部版配置文件地址
+    public static final String AGR_UPDATE_HISTORY = "http://agro2.erayic.com/App/android/inside/inside-version-history.json";//APP历史更新内部版配置文件地址
 
 
     /* 测试数据 */
@@ -30,14 +30,54 @@ public class AgrConstant {
     public static final int ACTIVITY_RESULT_Service_TopicByEntActivity = 9003;
 
     /**
-     * Glide RequestOptions 图标
+     * Glide RequestOptions 系统图标
      */
     public static RequestOptions iconOptions = new RequestOptions()
             .centerCrop()
-            .placeholder(R.drawable.app_base_default_placeholder_icon)
-            .error(R.drawable.app_base_default_error_icon)
+            .placeholder(R.drawable.app_base_default_launcher_2)
+            .error(R.drawable.app_base_default_launcher_2)
             .priority(Priority.HIGH)
             .diskCacheStrategy(DiskCacheStrategy.ALL);
 
+
+    /**
+     * Glide RequestOptions 头像相关
+     */
+    public static RequestOptions headOptions = new RequestOptions()
+            .centerCrop()
+            .placeholder(R.drawable.app_base_default_launcher_6)
+            .error(R.drawable.app_base_default_launcher_5)
+            .priority(Priority.HIGH)
+            .diskCacheStrategy(DiskCacheStrategy.ALL);
+
+    /**
+     * Glide RequestOptions 图片内容默认（正方形）相关
+     */
+    public static RequestOptions contentDefaultOptions = new RequestOptions()
+            .centerCrop()
+            .placeholder(R.drawable.app_base_default_launcher_8)
+            .error(R.drawable.app_base_default_launcher_8)
+            .priority(Priority.HIGH)
+            .diskCacheStrategy(DiskCacheStrategy.ALL);
+
+    /**
+     * Glide RequestOptions 图片内容横向相关
+     */
+    public static RequestOptions contentHorizontalOptions = new RequestOptions()
+            .centerCrop()
+            .placeholder(R.drawable.app_base_default_launcher_10)
+            .error(R.drawable.app_base_default_launcher_10)
+            .priority(Priority.HIGH)
+            .diskCacheStrategy(DiskCacheStrategy.ALL);
+
+    /**
+     * Glide RequestOptions 图片内容纵向相关
+     */
+    public static RequestOptions contentVerticalOptions = new RequestOptions()
+            .centerCrop()
+            .placeholder(R.drawable.app_base_default_launcher_12)
+            .error(R.drawable.app_base_default_launcher_12)
+            .priority(Priority.HIGH)
+            .diskCacheStrategy(DiskCacheStrategy.ALL);
 
 }

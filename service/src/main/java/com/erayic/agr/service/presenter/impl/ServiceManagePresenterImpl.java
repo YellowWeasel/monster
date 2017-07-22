@@ -101,7 +101,7 @@ public class ServiceManagePresenterImpl implements IServiceManagePresenter {
         @Override
         public int compare(ServiceBuyByUserBean.SpecifysInfo o1, ServiceBuyByUserBean.SpecifysInfo o2) {
             // TODO Auto-generated method stub
-            if (o1.isOrder())
+            if (o2.isOrder())
                 return 1;
                 //注意！！返回值必须是一对相反数，否则无效。jdk1.7以后就是这样。
                 //      else return 0; //无效

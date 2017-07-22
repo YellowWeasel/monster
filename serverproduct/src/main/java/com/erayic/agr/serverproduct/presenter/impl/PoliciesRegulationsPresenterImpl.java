@@ -30,47 +30,53 @@ public class PoliciesRegulationsPresenterImpl implements IPoliciesRegulationsPre
     }
 
     @Override
-    public void getPoliciesRegulationsDatas(int pageIndex,int pageSize) {
-       apiModel.getPoliciesRegulations(pageIndex,pageSize,new OnDataListener<List<CommonPoliciesRegulationsBean>>() {
-           @Override
-           public void success(final List<CommonPoliciesRegulationsBean> response) {
-               MainLooperManage.runOnUiThread(new Runnable() {
-                   @Override
-                   public void run() {
-                       List<PoliciesRegulationsTitleDatas> datas=new ArrayList<>();
-                       for (CommonPoliciesRegulationsBean bean:response){
-                           datas.add(new PoliciesRegulationsTitleDatas(bean));
-                       }
-                      context.loadMoreSure(datas);
-                   }
-               });
-           }
-           @Override
-           public void fail(int errCode, String msg) {
+    public void getPoliciesRegulationsDatas(int pageIndex, int pageSize) {
+        apiModel.getPoliciesRegulations(pageIndex, pageSize, new OnDataListener<List<CommonPoliciesRegulationsBean>>() {
+            @Override
+            public void success(final List<CommonPoliciesRegulationsBean> response) {
+                MainLooperManage.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<PoliciesRegulationsTitleDatas> datas = new ArrayList<>();
+                        if (response != null)
+                            for (CommonPoliciesRegulationsBean bean : response) {
+                                datas.add(new PoliciesRegulationsTitleDatas(bean));
+                            }
+                        context.loadMoreSure(datas);
+                    }
+                });
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
                 context.showToast("错误代码：" + errCode + "\n描述：" + msg);
                 context.loadMoreFailure();
-           }
-       });
+            }
+        });
     }
 
     @Override
     public void initPoliciesRegulationsDatas(int pageSize) {
         context.openRefresh();
-        apiModel.getPoliciesRegulations(1,pageSize,new OnDataListener<List<CommonPoliciesRegulationsBean>>() {
+        apiModel.getPoliciesRegulations(1, pageSize, new OnDataListener<List<CommonPoliciesRegulationsBean>>() {
             @Override
             public void success(final List<CommonPoliciesRegulationsBean> response) {
                 MainLooperManage.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         context.clearRefresh();
-                        List<PoliciesRegulationsTitleDatas> datas=new ArrayList<>();
-                        for (CommonPoliciesRegulationsBean bean:response){
-                            datas.add(new PoliciesRegulationsTitleDatas(bean));
-                        }
+                        List<PoliciesRegulationsTitleDatas> datas = new ArrayList<>();
+                        if (response != null)
+                            for (CommonPoliciesRegulationsBean bean : response) {
+                                datas.add(new PoliciesRegulationsTitleDatas(bean));
+                            }
+                        else
+                            context.showToast("未检测到数据");
                         context.refreshPoliciesRegulartionsView(datas);
                     }
                 });
             }
+
             @Override
             public void fail(int errCode, String msg) {
                 context.clearRefresh();
@@ -81,31 +87,31 @@ public class PoliciesRegulationsPresenterImpl implements IPoliciesRegulationsPre
     }
 
     @Override
-    public List<PoliciesRegulationsTitleDatas> sortPoliciesRegulationsDatasByProvince(String province, List<PoliciesRegulationsTitleDatas> titleDatasList,int sort) {
-        if (titleDatasList==null){
+    public List<PoliciesRegulationsTitleDatas> sortPoliciesRegulationsDatasByProvince(String province, List<PoliciesRegulationsTitleDatas> titleDatasList, int sort) {
+        if (titleDatasList == null) {
 //            context.showToast("无网络，请检查网络连接!");
             return null;
         }
-        List<PoliciesRegulationsTitleDatas> datases=new ArrayList<>();
-        switch (sort){
+        List<PoliciesRegulationsTitleDatas> datases = new ArrayList<>();
+        switch (sort) {
             case 0:
-                datases=titleDatasList;
+                datases = titleDatasList;
                 break;
             case 1:
-                for (PoliciesRegulationsTitleDatas titleDatas: titleDatasList){
-                    if (titleDatas.getInfoSource().contains(province)){
+                for (PoliciesRegulationsTitleDatas titleDatas : titleDatasList) {
+                    if (titleDatas.getInfoSource().contains(province)) {
                         datases.add(titleDatas);
                     }
                 }
                 break;
             case 2:
-                for (PoliciesRegulationsTitleDatas titleDatas: titleDatasList){
-                    if (!titleDatas.getInfoSource().contains(province)){
+                for (PoliciesRegulationsTitleDatas titleDatas : titleDatasList) {
+                    if (!titleDatas.getInfoSource().contains(province)) {
                         datases.add(titleDatas);
                     }
                 }
                 break;
         }
-        return  datases;
+        return datases;
     }
 }

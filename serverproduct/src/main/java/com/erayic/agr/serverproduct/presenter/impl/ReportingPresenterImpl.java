@@ -20,10 +20,12 @@ import java.util.List;
  */
 public class ReportingPresenterImpl implements IReportingPresenter {
     private IReportingInfoView context;
-    public ReportingPresenterImpl(IReportingInfoView mContext){
-        this.context=mContext;
+
+    public ReportingPresenterImpl(IReportingInfoView mContext) {
+        this.context = mContext;
         ARouter.getInstance().inject(this);
     }
+
     @Autowired
     IApiModel apiModel;
 
@@ -36,15 +38,19 @@ public class ReportingPresenterImpl implements IReportingPresenter {
                 MainLooperManage.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        context.refreshReportingInfoView(new EnvironmentParamterDatas(response));
+                        if (response != null)
+                            context.refreshReportingInfoView(new EnvironmentParamterDatas(response));
+                        else
+                            context.showToast("未检测到数据");
                         context.dismissLoading();
                     }
                 });
             }
+
             @Override
             public void fail(int errCode, String msg) {
                 context.dismissLoading();
-                context.showToast(msg);
+                context.showToast("错误代码：" + errCode + "\n描述：" + msg);
             }
         });
     }

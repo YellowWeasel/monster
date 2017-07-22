@@ -5,6 +5,7 @@ import android.support.multidex.MultiDexApplication;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.net.http.HttpRetrofit;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackManager;
 
@@ -22,6 +23,7 @@ public abstract class BaseApplication extends MultiDexApplication {
         initARouter();
         initConfig();
         initNet();
+        initBugly();
         initBGASwipeBackManager();
     }
 
@@ -57,9 +59,9 @@ public abstract class BaseApplication extends MultiDexApplication {
     }
 
     /**
-     * 初始化图片选择库
+     * 初始化Bugly奔溃日志收集
      */
-    private void initPictureSelector() {
-
+    private void initBugly() {
+        CrashReport.initCrashReport(getApplicationContext(), "69ba1791d1", true);
     }
 }

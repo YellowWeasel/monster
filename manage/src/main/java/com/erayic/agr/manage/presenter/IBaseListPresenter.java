@@ -16,6 +16,6 @@ public interface IBaseListPresenter {
     /**
      * 增加一个企业基地
      */
-    void addBaseByEnt(String newBaseName);
+    void addBaseByEnt(String newBaseName,String PhoneCode);
 
 }

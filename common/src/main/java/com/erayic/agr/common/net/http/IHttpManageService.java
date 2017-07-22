@@ -59,7 +59,8 @@ public interface IHttpManageService {
      */
     @GET("EntBase/AddBaseByEnt")
     Flowable<DataBack<Object>> addBaseByEnt(
-            @Query("baseName") String baseName
+            @Query("baseName") String baseName,
+            @Query("PhoneCode") String phoneCode
     );
 
     /**
@@ -174,6 +175,7 @@ public interface IHttpManageService {
     /**
      * 更新地块信息
      *
+     * @param baseID       欲更新的基地ID
      * @param unitID       管理单元ID
      * @param unitName     管理单元名称
      * @param area         管理单元面积
@@ -184,6 +186,7 @@ public interface IHttpManageService {
      */
     @POST("Unit/UpdateBlockInfo")
     Flowable<DataBack<Object>> updateBlockInfo(
+            @Query("baseID") String baseID,
             @Query("unitID") String unitID,
             @Query("unitName") String unitName,
             @Query("area") double area,

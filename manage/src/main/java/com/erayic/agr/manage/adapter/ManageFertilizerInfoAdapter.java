@@ -106,7 +106,7 @@ public class ManageFertilizerInfoAdapter extends BaseMultiItemQuickAdapter<Manag
 
                         @Override
                         public void afterTextChanged(Editable s) {
-                            bean.setProductName(s.toString());
+                            bean.setCommonName(s.toString());
                         }
                     });
                 }

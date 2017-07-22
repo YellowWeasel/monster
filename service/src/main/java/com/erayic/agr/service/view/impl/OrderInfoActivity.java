@@ -233,7 +233,7 @@ public class OrderInfoActivity extends BaseActivity implements IOrderInfoView, S
             public void run() {
                 orderStatue = bean.getStatus();
                 orderPayPrice = bean.getPrice();
-                Glide.with(OrderInfoActivity.this).load(AgrConstant.IMAGE_URL_PREFIX + bean.getIcon())
+                Glide.with(OrderInfoActivity.this).load(AgrConstant.IMAGE_URL_IMAGE + bean.getIcon())
                         .apply(AgrConstant.iconOptions)
                         .into(orderInfoServiceIcon);
                 orderInfoServiceName.setText(bean.getServiceName());

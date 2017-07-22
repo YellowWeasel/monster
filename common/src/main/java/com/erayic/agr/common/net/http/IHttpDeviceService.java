@@ -1,6 +1,7 @@
 package com.erayic.agr.common.net.http;
 
 import com.erayic.agr.common.net.DataBack;
+import com.erayic.agr.common.net.back.device.CommonMonitorInfoEntity;
 
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
@@ -45,5 +46,17 @@ public interface IHttpDeviceService {
             @Query("passNum") int passNum,
             @Query("type") int type
     );
+
+    /**
+     * 得到设备信息
+     *
+     * @param serialNum 设备号
+     * @return DataBack
+     */
+    @GET("Device/GetMonitorInfo")
+    Flowable<DataBack<CommonMonitorInfoEntity>> getMonitorInfo(
+            @Query("serialNum") String serialNum
+    );
+
 
 }

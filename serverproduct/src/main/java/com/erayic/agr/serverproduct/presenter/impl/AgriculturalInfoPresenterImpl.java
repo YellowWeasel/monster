@@ -27,31 +27,36 @@ public class AgriculturalInfoPresenterImpl implements IAgriculturalInfoPresenter
         this.context = mContext;
         ARouter.getInstance().inject(this);
     }
+
     @Override
     public void getAgriculturalInfo(int pageIndex, int pageSize) {
-            apiModel.getAgriculturalInfos(pageIndex, pageSize, new OnDataListener<List<CommonAgriculturalInfoBean>>() {
-                @Override
-                public void success(final List<CommonAgriculturalInfoBean> response) {
-                    MainLooperManage.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            List<AgriculturalInfoDatas> infoDatases=new ArrayList<AgriculturalInfoDatas>();
-                            for (CommonAgriculturalInfoBean bean:response){
+        apiModel.getAgriculturalInfos(pageIndex, pageSize, new OnDataListener<List<CommonAgriculturalInfoBean>>() {
+            @Override
+            public void success(final List<CommonAgriculturalInfoBean> response) {
+                MainLooperManage.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<AgriculturalInfoDatas> infoDatases = new ArrayList<AgriculturalInfoDatas>();
+                        if (response != null)
+                            for (CommonAgriculturalInfoBean bean : response) {
                                 infoDatases.add(new AgriculturalInfoDatas(bean));
                             }
-                            context.loadMoreSure(infoDatases);
-                        }
-                    });
-                    context.clearRefresh();
-                }
+                        else
+                            context.showToast("未检测到数据");
+                        context.loadMoreSure(infoDatases);
+                    }
+                });
+                context.clearRefresh();
+            }
 
-                @Override
-                public void fail(int errCode, String msg) {
-                    context.clearRefresh();
-                    context.showToast("错误代码：" + errCode + "\n描述：" + msg);
-                }
-            });
+            @Override
+            public void fail(int errCode, String msg) {
+                context.clearRefresh();
+                context.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
     }
+
     @Override
     public void initAgriculturalInfo(int pageSize) {
         context.openRefresh();
@@ -61,10 +66,13 @@ public class AgriculturalInfoPresenterImpl implements IAgriculturalInfoPresenter
                 MainLooperManage.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        List<AgriculturalInfoDatas> infoDatases=new ArrayList<AgriculturalInfoDatas>();
-                        for (CommonAgriculturalInfoBean bean:response){
-                            infoDatases.add(new AgriculturalInfoDatas(bean));
-                        }
+                        List<AgriculturalInfoDatas> infoDatases = new ArrayList<AgriculturalInfoDatas>();
+                        if (response != null)
+                            for (CommonAgriculturalInfoBean bean : response) {
+                                infoDatases.add(new AgriculturalInfoDatas(bean));
+                            }
+                        else
+                            context.showToast("未检测到数据");
                         context.refreshAgriculturatlInfoView(infoDatases);
                     }
                 });

@@ -18,4 +18,9 @@ public interface IJobsListPresenter {
      */
     void getDayWorkJobByManager(String specifyDay);
 
+    /**
+     * 得到指定时间区域内的工作安排时间
+     */
+    void getScheduleByTime(String st, String end);
+
 }

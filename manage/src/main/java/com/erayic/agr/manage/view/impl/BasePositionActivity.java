@@ -120,7 +120,7 @@ public class BasePositionActivity extends BaseActivity implements IBasePositionV
             aMap = mapView.getMap();
         //地图模式可选类型：MAP_TYPE_NORMAL,MAP_TYPE_SATELLITE,MAP_TYPE_NIGHT
         aMap.setMapType(AMap.MAP_TYPE_NORMAL);// 普通模式
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(12));
 
         UiSettings uiSettings = aMap.getUiSettings();
         uiSettings.setLogoBottomMargin(-50);//隐藏LOGO

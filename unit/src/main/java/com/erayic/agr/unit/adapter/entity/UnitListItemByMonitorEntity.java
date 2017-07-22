@@ -17,7 +17,7 @@ public class UnitListItemByMonitorEntity implements MultiItemEntity {
 
     private String name;
     private String subName;
-    private Map<String ,Object> map;
+    private Object Data;
 
     private int itemType;
 
@@ -46,11 +46,12 @@ public class UnitListItemByMonitorEntity implements MultiItemEntity {
         this.subName = subName;
     }
 
-    public Map<String, Object> getMap() {
-        return map;
+    public Object getData() {
+        return Data;
     }
 
-    public void setMap(Map<String, Object> map) {
-        this.map = map;
+    public void setData(Object data) {
+        Data = data;
     }
+
 }

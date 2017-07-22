@@ -79,7 +79,7 @@ public class ManageUserItemAdapter extends BaseMultiItemQuickAdapter<ManageUserE
                     ((ManageContentImageViewHolder) helper).manageContentName.setText(item.getTitle());
 
                     Glide.with(context).load(TextUtils.isEmpty(item.getSubTitle()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + item.getSubTitle()))
-                            .apply(AgrConstant.iconOptions)
+                            .apply(AgrConstant.headOptions)
                             .into(((ManageContentImageViewHolder) helper).manageContentHead);
                     ((ManageContentImageViewHolder) helper).itemView.setOnClickListener(new View.OnClickListener() {
                         @Override

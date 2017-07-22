@@ -16,6 +16,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
+import com.erayic.agr.common.event.UnitRefreshMessage;
 import com.erayic.agr.common.net.back.enums.EnumRequestType;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicStack;
@@ -33,6 +34,8 @@ import com.erayic.agr.unit.adapter.entity.UnitAddBatchItemEntity;
 import com.erayic.agr.unit.presenter.IAddBatchPresenter;
 import com.erayic.agr.unit.presenter.impl.AddBatchPresenterImpl;
 import com.erayic.agr.unit.view.IAddBatchView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -367,6 +370,9 @@ public class AddBatchActivity extends BaseActivity implements IAddBatchView {
 
     @Override
     public void addBatchSure() {
+        UnitRefreshMessage message = new UnitRefreshMessage();
+        message.setMsgType(UnitRefreshMessage.UNIT_MASTER_LIST);
+        EventBus.getDefault().post(message);//通知刷新
         ErayicStack.getInstance().finishCurrentActivity();
     }
 }

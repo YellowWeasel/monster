@@ -5,6 +5,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.erayic.agr.common.model.IDeviceModel;
 import com.erayic.agr.common.model.IUnitModel;
 import com.erayic.agr.common.net.OnDataListener;
+import com.erayic.agr.common.net.back.device.CommonMonitorInfoEntity;
 import com.erayic.agr.common.net.back.enums.EnumUnitType;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
 import com.erayic.agr.unit.presenter.IUnitListPresenter;
@@ -62,6 +63,21 @@ public class UnitListPresenterImpl implements IUnitListPresenter {
             @Override
             public void fail(int errCode, String msg) {
                 unitListView.refreshEquCtrFail(bean, position);
+                unitListView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
+    }
+
+    @Override
+    public void getMonitorInfo(String serialNum) {
+        deviceModel.getMonitorInfo(serialNum, new OnDataListener<CommonMonitorInfoEntity>() {
+            @Override
+            public void success(CommonMonitorInfoEntity response) {
+                unitListView.refreshMonitorInfo(response);
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
                 unitListView.showToast("错误代码：" + errCode + "\n描述：" + msg);
             }
         });

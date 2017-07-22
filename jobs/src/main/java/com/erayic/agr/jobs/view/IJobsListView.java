@@ -4,6 +4,8 @@ import com.erayic.agr.common.base.IBaseView;
 import com.erayic.agr.common.net.back.work.CommonJobsListManagerBean;
 import com.erayic.agr.common.net.back.work.CommonJobsListUserBean;
 
+import java.util.List;
+
 /**
  * 作者：hejian
  * 邮箱：hkceey@outlook.com
@@ -13,10 +15,18 @@ import com.erayic.agr.common.net.back.work.CommonJobsListUserBean;
 public interface IJobsListView extends IBaseView {
 
     /**
-     * 查询用户数据成功
+     * 更新用户数据
      */
     void selectUserSure(CommonJobsListUserBean bean);
 
+    /**
+     * 更新管理员数据
+     */
     void selectManagerSure(CommonJobsListManagerBean bean);
+
+    /**
+     * 更新日历数据
+     */
+    void refreshSchedule(List<String> list);
 
 }

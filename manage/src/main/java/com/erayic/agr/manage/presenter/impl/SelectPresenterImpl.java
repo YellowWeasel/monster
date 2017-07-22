@@ -12,6 +12,7 @@ import com.erayic.agr.common.net.back.CommonProduceListBean;
 import com.erayic.agr.common.net.back.CommonResourceBean;
 import com.erayic.agr.common.net.back.enums.EnumTipType;
 import com.erayic.agr.common.net.back.enums.EnumUnitType;
+import com.erayic.agr.common.net.back.manage.CommonProduceTypeBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitListByBaseBean;
 import com.erayic.agr.common.net.back.work.CommonWorkListBean;
@@ -172,5 +173,23 @@ public class SelectPresenterImpl implements ISelectPresenter {
         }
 
         selectProduceView.refreshNoticeView(list);
+    }
+
+    @Override
+    public void getProduceType(int type) {
+        selectProduceView.openRefresh();
+        resourceModel.getAllProductClassic(type, new OnDataListener<List<CommonProduceTypeBean>>() {
+            @Override
+            public void success(List<CommonProduceTypeBean> response) {
+                selectProduceView.clearRefresh();
+                selectProduceView.refreshProTypeView(response);
+            }
+
+            @Override
+            public void fail(int errCode, String msg) {
+                selectProduceView.clearRefresh();
+                selectProduceView.showToast("错误代码：" + errCode + "\n描述：" + msg);
+            }
+        });
     }
 }

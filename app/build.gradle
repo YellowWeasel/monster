@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "com.erayic.agr"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 5
-        versionName "1.0.5"
+        versionCode 7
+        versionName "1.0.7-Inside"
 
         // Enabling multidex support. 解决64Kdex问题
         multiDexEnabled true

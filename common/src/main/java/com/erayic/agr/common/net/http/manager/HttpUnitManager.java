@@ -93,7 +93,7 @@ public class HttpUnitManager {
      * 得到作物批次的生产履历
      */
     public Flowable getPorduceHistoryByBatch(String batchID, int pageNum, int pageSize) {
-        return unitService.getPorduceHistoryByBatch(batchID,pageNum,pageSize);
+        return unitService.getPorduceHistoryByBatch(batchID, pageNum, pageSize);
     }
 
     /**
@@ -106,8 +106,8 @@ public class HttpUnitManager {
     /**
      * 得到批次所有的工作日志
      */
-    public Flowable getWorkLogByBatch(String batchID,int pageNum,int pageSize) {
-        return unitService.getWorkLogByBatch(batchID,pageNum,pageSize);
+    public Flowable getWorkLogByBatch(String batchID, int pageNum, int pageSize) {
+        return unitService.getWorkLogByBatch(batchID, pageNum, pageSize);
     }
 
     /**
@@ -134,7 +134,8 @@ public class HttpUnitManager {
     /**
      * 得到生产建议详情
      */
-    public Flowable getSuggestDetail(String unitID, int type, String batchID){
+    public Flowable getSuggestDetail(String unitID, int type, String batchID) {
         return unitService.getSuggestDetail(batchID, unitID, type);
     }
+
 }

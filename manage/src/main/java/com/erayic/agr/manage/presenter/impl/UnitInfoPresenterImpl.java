@@ -49,13 +49,13 @@ public class UnitInfoPresenterImpl implements IUnitInfoPresenter {
     }
 
     @Override
-    public void updateBlockInfo(CommonUnitInfoBean bean) {
+    public void updateBlockInfo(String baseID, CommonUnitInfoBean bean) {
         List<String> list = new ArrayList<>();
         for (CommonMapArrayBean mapArrayBean : bean.getWorkers()) {
             list.add(mapArrayBean.getKey());
         }
         unitInfoView.showLoading();
-        manageModel.updateBlockInfo(bean.getUnitID(), bean.getName(), bean.getArea(), bean.getRegion(), list, bean.isGreenhouse(), new OnDataListener<Object>() {
+        manageModel.updateBlockInfo(baseID, bean.getUnitID(), bean.getName(), bean.getArea(), bean.getRegion(), list, bean.isGreenhouse(), new OnDataListener<Object>() {
             @Override
             public void success(Object response) {
                 unitInfoView.dismissLoading();

@@ -178,13 +178,16 @@ public class CommonGridImageAdapter extends
 //                            .diskCacheStrategy(DiskCacheStrategy.ALL);
                     Glide.with(viewHolder.itemView.getContext())
                             .load(path)
-                            .apply(AgrConstant.iconOptions)
+                            .apply(AgrConstant.contentDefaultOptions)
                             .into(viewHolder.mImg);
                     break;
                 case 2:
                     // 视频
                     Log.i("时长:", media.getLocalMedia().getDuration() + "");
-                    Glide.with(viewHolder.itemView.getContext()).load(path).thumbnail(0.5f).into(viewHolder.mImg);
+                    Glide.with(viewHolder.itemView.getContext())
+                            .load(path)
+                            .thumbnail(0.5f)
+                            .into(viewHolder.mImg);
                     break;
                 default:
 

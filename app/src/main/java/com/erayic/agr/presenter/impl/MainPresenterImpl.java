@@ -34,7 +34,7 @@ public class MainPresenterImpl implements IMainPresenter {
         userModel.getUserInfo(new OnDataListener<CommonUserInfoBean>() {
             @Override
             public void success(CommonUserInfoBean response) {
-                mainView.showToast("用户信息更新成功");
+//                mainView.showToast("用户信息更新成功");
                 mainView.initNetData();
                 mainView.updateApp();
             }

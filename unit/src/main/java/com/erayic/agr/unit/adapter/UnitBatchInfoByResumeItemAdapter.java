@@ -94,7 +94,7 @@ public class UnitBatchInfoByResumeItemAdapter extends BaseQuickAdapter<CommonUni
 //            imageView.setTag(s);
             Glide.with(context)
                     .load(s.getPath())
-                    .apply(AgrConstant.iconOptions)
+                    .apply(AgrConstant.contentDefaultOptions)
                     .into(imageView);
         }
 

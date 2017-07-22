@@ -1,5 +1,6 @@
 package com.erayic.agr.manage.view.impl;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ import com.erayic.agr.common.net.back.enums.EnumResourceType;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
+import com.erayic.agr.common.view.ErayicTextDialog;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.manage.R;
@@ -269,7 +271,7 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
                         ManageFertilizerEntity entity = new ManageFertilizerEntity();
                         entity.setItemType(ManageFertilizerEntity.TYPE_IMPORT_NAME);
                         Map<String, String> map = new ArrayMap<>();
-                        map.put("key1", bean.getProductName());
+                        map.put("key1", bean.getCommonName());
                         entity.setSubMap(map);
                         list.add(entity);
                     }
@@ -352,7 +354,7 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
         if (item.getItemId() == android.R.id.home) {//返回
             finish();
         } else if (item.getItemId() == R.id.action_manage_resource_save) {
-            if (!TextUtils.isEmpty(adapter.getBean().getProductName())) {
+            if (!TextUtils.isEmpty(adapter.getBean().getCommonName())) {
                 if (adapter.getBean().isReadOnly())
                     presenter.saveFertilizer(adapter.getBean());
                 else
@@ -368,7 +370,22 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
                 showToast("不可编辑");
             }
         } else if (item.getItemId() == R.id.action_manage_resource_delete) {
-            presenter.deleteResource(resID, EnumResourceType.TYPE_FERTILIZER);
+            new ErayicTextDialog.Builder(FertilizerInfoActivity.this)
+                    .setMessage("将要删除该化肥的一切信息\n确定删除吗？", null)
+                    .setTitle("温馨提示")
+                    .setButton1("取消", new ErayicTextDialog.OnClickListener() {
+                        @Override
+                        public void onClick(Dialog dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setButton2("确定", new ErayicTextDialog.OnClickListener() {
+                        @Override
+                        public void onClick(Dialog dialog, int which) {
+                            dialog.dismiss();
+                            presenter.deleteResource(resID, EnumResourceType.TYPE_FERTILIZER);
+                        }
+                    }).show();
         }
         return super.onOptionsItemSelected(item);
     }

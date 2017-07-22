@@ -8,14 +8,18 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.CommonProduceListBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
+import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicEditDialog;
 import com.erayic.agr.common.view.LoadingDialog;
@@ -29,6 +33,7 @@ import com.erayic.agr.manage.presenter.impl.ProduceListPresenterImpl;
 import com.erayic.agr.manage.view.IProduceListView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -57,6 +62,7 @@ public class ProduceListActivity extends BaseActivity implements IProduceListVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_produce_list);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -73,7 +79,15 @@ public class ProduceListActivity extends BaseActivity implements IProduceListVie
         manager.setScrollEnabled(true);//滑动监听
         manageProduceRecyclerView.setLayoutManager(manager);
         adapter = new ManageProduceListAdapter(ProduceListActivity.this, null);
-
+        adapter.setOnProduceItemClickListener(new ManageProduceListAdapter.OnProduceItemClickListener() {
+            @Override
+            public void onItemClick(View view, String proName, String proID) {
+                ARouter.getInstance().build("/manage/activity/ProduceInfoActivity")
+                        .withString("proID", proID)
+                        .withString("proName", proName)
+                        .navigation();
+            }
+        });
         manageProduceRecyclerView.setAdapter(adapter);
         manageProduceRecyclerView.addItemDecoration(new DividerItemDecoration(ProduceListActivity.this, DividerItemDecoration.VERTICAL_LIST));
     }
@@ -147,6 +161,13 @@ public class ProduceListActivity extends BaseActivity implements IProduceListVie
         });
     }
 
+    @Subscribe
+    public void onMessageEvent(ManageRefreshMessage event) {
+        if (event.getMsgType() == ManageRefreshMessage.MANAGE_MASTER_PRODUCE_INFO) {
+            addSure();//刷新当前页面和列表页面
+        }
+    }
+
     @Override
     public void addSure() {
         ManageRefreshMessage message = new ManageRefreshMessage();
@@ -174,7 +195,7 @@ public class ProduceListActivity extends BaseActivity implements IProduceListVie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {//返回
-            finish();
+            ErayicStack.getInstance().finishCurrentActivity();
         } else if (item.getItemId() == R.id.action_manage_produce_add) {
             new ErayicEditDialog.Builder(ProduceListActivity.this)
                     .setMessage("", null)
@@ -200,5 +221,9 @@ public class ProduceListActivity extends BaseActivity implements IProduceListVie
         return super.onOptionsItemSelected(item);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }

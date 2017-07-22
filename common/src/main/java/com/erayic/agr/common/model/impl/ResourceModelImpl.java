@@ -1,6 +1,7 @@
 package com.erayic.agr.common.model.impl;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.erayic.agr.common.model.IResourceModel;
@@ -9,11 +10,14 @@ import com.erayic.agr.common.net.ErrorCode;
 import com.erayic.agr.common.net.OnDataListener;
 import com.erayic.agr.common.net.back.CommonFertilizerBean;
 import com.erayic.agr.common.net.back.CommonPesticideBean;
+import com.erayic.agr.common.net.back.CommonProduceInfoBean;
 import com.erayic.agr.common.net.back.CommonProduceListBean;
 import com.erayic.agr.common.net.back.CommonResourceBean;
 import com.erayic.agr.common.net.back.CommonSeedBean;
+import com.erayic.agr.common.net.back.manage.CommonProduceTypeBean;
 import com.erayic.agr.common.net.http.manager.HttpResourceManager;
 import com.erayic.agr.common.util.ErayicGson;
+import com.erayic.agr.common.util.ErayicImage;
 import com.erayic.agr.common.util.ErayicLog;
 
 import org.reactivestreams.Subscriber;
@@ -120,14 +124,260 @@ public class ResourceModelImpl implements IResourceModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void getAllProductClassic(int type, final OnDataListener<List<CommonProduceListBean>> listener) {
+    public void getProductDetail(String proID, final OnDataListener<CommonProduceInfoBean> listener) {
+        HttpResourceManager.getInstance().getProductDetail(proID)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<CommonProduceInfoBean>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<CommonProduceInfoBean> objectDataBack) throws Exception {
+                        ErayicLog.i("getProductDetail", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void updateProduct(String proID, String productName, int classicID, String descript, final OnDataListener<Object> listener) {
+        HttpResourceManager.getInstance().updateProduct(proID, productName, classicID, descript)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<Object>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                        ErayicLog.i("updateProduct", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void deleteProduct(String proID, final OnDataListener<Object> listener) {
+        HttpResourceManager.getInstance().deleteProduct(proID)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<Object>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                        ErayicLog.i("deleteProduct", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void updateProductIcon(String proID, String icon, final OnDataListener<Object> listener) {
+        HttpResourceManager.getInstance().updateProductIcon(proID, ErayicImage.bitmapToBase64(BitmapFactory.decodeFile(icon)))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<Object>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                        ErayicLog.i("updateProductIcon", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void addProductPhoto(String proID, String photo, final OnDataListener<Object> listener) {
+        HttpResourceManager.getInstance().addProductPhoto(proID, photo)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<Object>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                        ErayicLog.i("addProductPhoto", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void delProductPhoto(String imgID, String imgPath, final OnDataListener<Object> listener) {
+        HttpResourceManager.getInstance().delProductPhoto(imgID, imgPath)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<Object>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                        ErayicLog.i("delProductPhoto", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void getAllProductClassic(int type, final OnDataListener<List<CommonProduceTypeBean>> listener) {
 
         HttpResourceManager.getInstance().getAllProductClassic(type)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
-                .doOnNext(new Consumer<DataBack<List<CommonProduceListBean>>>() {
+                .doOnNext(new Consumer<DataBack<List<CommonProduceTypeBean>>>() {
                     @Override
-                    public void accept(@NonNull DataBack<List<CommonProduceListBean>> objectDataBack) throws Exception {
+                    public void accept(@NonNull DataBack<List<CommonProduceTypeBean>> objectDataBack) throws Exception {
                         ErayicLog.i("getAllProductClassic", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());

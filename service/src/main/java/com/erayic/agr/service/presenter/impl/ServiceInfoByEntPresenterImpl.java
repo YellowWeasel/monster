@@ -44,7 +44,7 @@ public class ServiceInfoByEntPresenterImpl implements IServiceInfoByEntPresenter
                 ServiceInfoByEntEntity entEntityTitle = new ServiceInfoByEntEntity();
                 entEntityTitle.setItemType(ServiceInfoByEntEntity.TYPE_TITLE);
                 ServiceInfoByEntEntity.ServiceInfoByEntTitle title = new ServiceInfoByEntEntity.ServiceInfoByEntTitle();
-                title.setServiceIcon(TextUtils.isEmpty(response.getService().getIcon()) ? "" : (AgrConstant.IMAGE_URL_PREFIX + response.getService().getIcon()));
+                title.setServiceIcon(TextUtils.isEmpty(response.getService().getIcon()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + response.getService().getIcon()));
                 title.setServiceName(response.getService().getServiceName());
                 entEntityTitle.setTitle(title);
                 list.add(entEntityTitle);
@@ -79,7 +79,7 @@ public class ServiceInfoByEntPresenterImpl implements IServiceInfoByEntPresenter
                 List<CommonImageBean> imageList = new ArrayList<>();
                 for (int i = 0; i < response.getImages().size(); i++) {
                     CommonImageBean bean = new CommonImageBean();
-                    bean.setPicturePath(TextUtils.isEmpty(response.getImages().get(i).getPicturePath()) ? "" : (AgrConstant.IMAGE_URL_PREFIX + response.getImages().get(i).getPicturePath()));
+                    bean.setPicturePath(TextUtils.isEmpty(response.getImages().get(i).getPicturePath()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + response.getImages().get(i).getPicturePath()));
                     imageList.add(bean);
                 }
                 entEntityImages.setImageBeanList(imageList);

@@ -55,7 +55,6 @@ public class MonthView extends View {
     private DisplayMetrics mDisplayMetrics;
     private OnMonthClickListener mDateClickListener;
     private GestureDetector mGestureDetector;
-    private List<Integer> mTaskHintList;
     private Bitmap mRestBitmap, mWorkBitmap;
 
     public MonthView(Context context, int year, int month) {
@@ -83,7 +82,7 @@ public class MonthView extends View {
         if (mIsShowHint) {
             // 从数据库中获取圆点提示数据
 //            ScheduleDao dao = ScheduleDao.getInstance(getContext());
-//            mTaskHintList = dao.getTaskHintByMonth(mSelYear, mSelMonth);
+//            CalendarUtils.getInstance(getContext()).addTaskHints(mSelYear, mSelMonth, dao.getTaskHintByMonth(mSelYear, mSelMonth));
         }
     }
 
@@ -187,6 +186,7 @@ public class MonthView extends View {
         drawLastMonth(canvas);
         int selected[] = drawThisMonth(canvas);
         drawNextMonth(canvas);
+        drawHintCircle(canvas);
         drawLunarText(canvas, selected);
         drawHoliday(canvas);
     }
@@ -252,7 +252,6 @@ public class MonthView extends View {
                 canvas.drawCircle((startRecX + endRecX) / 2, (startRecY + endRecY) / 2, mSelectCircleSize, mPaint);
                 mWeekRow = row + 1;
             }
-            drawHintCircle(row, col, day + 1, canvas);
             if (dayString.equals(String.valueOf(mSelDay))) {
                 selectedPoint[0] = row;
                 selectedPoint[1] = col;
@@ -390,17 +389,24 @@ public class MonthView extends View {
     /**
      * 绘制圆点提示
      *
-     * @param column
-     * @param day
      * @param canvas
      */
-    private void drawHintCircle(int row, int column, int day, Canvas canvas) {
-        if (mIsShowHint && mTaskHintList != null && mTaskHintList.size() > 0) {
-            if (!mTaskHintList.contains(day)) return;
-            mPaint.setColor(mHintCircleColor);
-            float circleX = (float) (mColumnSize * column + mColumnSize * 0.5);
-            float circleY = (float) (mRowSize * row + mRowSize * 0.75);
-            canvas.drawCircle(circleX, circleY, mCircleRadius, mPaint);
+    private void drawHintCircle(Canvas canvas) {
+        if (mIsShowHint) {
+            List<Integer> hints = CalendarUtils.getInstance(getContext()).getTaskHints(mSelYear, mSelMonth);
+            if (hints.size() > 0) {
+                mPaint.setColor(mHintCircleColor);
+                int monthDays = CalendarUtils.getMonthDays(mSelYear, mSelMonth);
+                int weekNumber = CalendarUtils.getFirstDayWeek(mSelYear, mSelMonth);
+                for (int day = 0; day < monthDays; day++) {
+                    int col = (day + weekNumber - 1) % 7;
+                    int row = (day + weekNumber - 1) / 7;
+                    if (!hints.contains(day + 1)) continue;
+                    float circleX = (float) (mColumnSize * col + mColumnSize * 0.5);
+                    float circleY = (float) (mRowSize * row + mRowSize * 0.75);
+                    canvas.drawCircle(circleX, circleY, mCircleRadius, mPaint);
+                }
+            }
         }
     }
 
@@ -514,13 +520,27 @@ public class MonthView extends View {
     }
 
     /**
-     * 设置圆点提示的集合
+     * 添加多个圆点提示
      *
-     * @param taskHintList
+     * @param hints
      */
-    public void setTaskHintList(List<Integer> taskHintList) {
-        mTaskHintList = taskHintList;
-        invalidate();
+    public void addTaskHints(List<Integer> hints) {
+        if (mIsShowHint) {
+            CalendarUtils.getInstance(getContext()).addTaskHints(mSelYear, mSelMonth, hints);
+            invalidate();
+        }
+    }
+
+    /**
+     * 删除多个圆点提示
+     *
+     * @param hints
+     */
+    public void removeTaskHints(List<Integer> hints) {
+        if (mIsShowHint) {
+            CalendarUtils.getInstance(getContext()).removeTaskHints(mSelYear, mSelMonth, hints);
+            invalidate();
+        }
     }
 
     /**
@@ -528,13 +548,14 @@ public class MonthView extends View {
      *
      * @param day
      */
-    public void addTaskHint(Integer day) {
-        if (mTaskHintList != null) {
-            if (!mTaskHintList.contains(day)) {
-                mTaskHintList.add(day);
+    public boolean addTaskHint(Integer day) {
+        if (mIsShowHint) {
+            if (CalendarUtils.getInstance(getContext()).addTaskHint(mSelYear, mSelMonth, day)) {
                 invalidate();
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -542,12 +563,14 @@ public class MonthView extends View {
      *
      * @param day
      */
-    public void removeTaskHint(Integer day) {
-        if (mTaskHintList != null) {
-            if (mTaskHintList.remove(day)) {
+    public boolean removeTaskHint(Integer day) {
+        if (mIsShowHint) {
+            if (CalendarUtils.getInstance(getContext()).removeTaskHint(mSelYear, mSelMonth, day)) {
                 invalidate();
+                return true;
             }
         }
+        return false;
     }
 
     /**
@@ -558,6 +581,7 @@ public class MonthView extends View {
     public void setOnDateClickListener(OnMonthClickListener dateClickListener) {
         this.mDateClickListener = dateClickListener;
     }
+
 
 }
 

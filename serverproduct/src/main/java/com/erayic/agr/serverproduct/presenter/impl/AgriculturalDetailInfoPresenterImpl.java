@@ -40,8 +40,11 @@ public class AgriculturalDetailInfoPresenterImpl implements IAgriculturalDetailI
                 MainLooperManage.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        List<AgriculturalDetailInfoDatas> datasList=new ArrayList<>();
-                        datasList.add(new AgriculturalDetailInfoDatas(response));
+                        List<AgriculturalDetailInfoDatas> datasList = new ArrayList<>();
+                        if (response != null)
+                            datasList.add(new AgriculturalDetailInfoDatas(response));
+                        else
+                            context.showToast("未检测到数据");
                         context.refreshAgriculturatlDetailInfoView(datasList);
                     }
                 });

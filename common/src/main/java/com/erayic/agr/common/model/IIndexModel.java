@@ -22,7 +22,7 @@ public interface IIndexModel extends IProvider {
     /**
      * 企业注册
      */
-    void enterpriseRegister(String baseName, String name, String pass, String tel, String appID, String phoneCode, String verifyNum, OnDataListener<Object> listener);
+    void enterpriseRegister(String entName, String name, String pass, String tel, String appID, String phoneCode, String verifyNum, OnDataListener<Object> listener);
 
     /**
      * 邀请码注册

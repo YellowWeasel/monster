@@ -29,6 +29,7 @@ public class WeatherTenDayReportingPresenterImpl implements IWeatherTenDayReport
         this.context = mContext;
         ARouter.getInstance().inject(this);
     }
+
     @Override
     public void getWeatherTenDayReportingData(int year, int month) {
         context.showLoading();
@@ -39,8 +40,11 @@ public class WeatherTenDayReportingPresenterImpl implements IWeatherTenDayReport
                     @Override
                     public void run() {
                         List<WeatherTendayReportingData> reportingDatas = new ArrayList<WeatherTendayReportingData>();
-                        for (CommonReportsByMonthBean bean : response)
-                            reportingDatas.add(new WeatherTendayReportingData(bean));
+                        if (response != null)
+                            for (CommonReportsByMonthBean bean : response)
+                                reportingDatas.add(new WeatherTendayReportingData(bean));
+                        else
+                            context.showToast("未检测到数据");
                         context.refreshTenDayReportingDatas(reportingDatas);
                         context.dismissLoading();
                     }

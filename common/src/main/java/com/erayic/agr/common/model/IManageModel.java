@@ -37,7 +37,7 @@ public interface IManageModel extends IProvider {
     /**
      * 增加一个企业基地
      */
-    void addBaseByEnt(String newBaseName, OnDataListener<Object> listener);
+    void addBaseByEnt(String newBaseName, String phoneCode, OnDataListener<Object> listener);
 
     /**
      * 用户变更所属基地
@@ -47,31 +47,31 @@ public interface IManageModel extends IProvider {
     /**
      * 上传基地位置信息
      */
-    void setBasePosition(String baseID,CommonBasePositionBean bean,OnDataListener<Object> listener);
+    void setBasePosition(String baseID, CommonBasePositionBean bean, OnDataListener<Object> listener);
 
     /**
      * 得到基地信息
      */
-    void getBaseInfo(String baseID,OnDataListener<CommonBaseInfoBean> listener);
+    void getBaseInfo(String baseID, OnDataListener<CommonBaseInfoBean> listener);
 
     /**
      * 增加管理单元
      */
-    void addUnit(String baseID,String unitName,OnDataListener<Object> listener);
+    void addUnit(String baseID, String unitName, OnDataListener<Object> listener);
 
     /**
      * 更新基地信息
      */
-    void updateBaseInfo(String baseID,String baseName,String descript,OnDataListener<Object> listener);
+    void updateBaseInfo(String baseID, String baseName, String descript, OnDataListener<Object> listener);
 
     /**
      * 得到管理单元详情
      */
-    void getUnitDetailInfo(String unitID, int type,OnDataListener<CommonUnitInfoBean> listener);
+    void getUnitDetailInfo(String unitID, int type, OnDataListener<CommonUnitInfoBean> listener);
 
     /**
      * 更新地块信息
      */
-    void  updateBlockInfo(String unitID, String unitName, double area, List<String> regions, List<String> workes, boolean isGreenhouse,OnDataListener<Object> listener);
+    void updateBlockInfo(String baseID, String unitID, String unitName, double area, List<String> regions, List<String> workes, boolean isGreenhouse, OnDataListener<Object> listener);
 
 }

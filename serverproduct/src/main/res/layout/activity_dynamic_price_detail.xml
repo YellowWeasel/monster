@@ -30,10 +30,10 @@
 
         <TextView
             android:id="@+id/serverproduct_dynamic_price_detail_title_textview"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:textColor="@color/cyan"
             android:textSize="@dimen/content" />

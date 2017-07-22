@@ -68,7 +68,6 @@ public class FertilizerInfoPresenterImpl implements IFertilizerInfoPresenter {
             @Override
             public void success(Object response) {
                 fertilizerInfoView.dismissLoading();
-                fertilizerInfoView.showToast("已删除");
                 fertilizerInfoView.saveSure();
             }
 
@@ -87,7 +86,6 @@ public class FertilizerInfoPresenterImpl implements IFertilizerInfoPresenter {
             @Override
             public void success(Object response) {
                 fertilizerInfoView.dismissLoading();
-                fertilizerInfoView.showToast("保存生产资料成功");
                 fertilizerInfoView.saveSure();
             }
 
@@ -106,7 +104,6 @@ public class FertilizerInfoPresenterImpl implements IFertilizerInfoPresenter {
             @Override
             public void success(Object response) {
                 fertilizerInfoView.dismissLoading();
-                fertilizerInfoView.showToast("保存生产资料成功");
                 fertilizerInfoView.saveSure();
             }
 

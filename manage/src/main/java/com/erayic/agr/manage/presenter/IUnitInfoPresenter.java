@@ -15,6 +15,6 @@ public interface IUnitInfoPresenter {
      */
     void getUnitDetailInfo(String unitID);
 
-    void updateBlockInfo(CommonUnitInfoBean bean);
+    void updateBlockInfo(String baseID,CommonUnitInfoBean bean);
 
 }

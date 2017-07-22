@@ -1,6 +1,7 @@
 package com.erayic.agr.unit.view;
 
 import com.erayic.agr.common.base.IBaseView;
+import com.erayic.agr.common.net.back.device.CommonMonitorInfoEntity;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
 
 import java.util.List;
@@ -41,9 +42,7 @@ public interface IUnitListView extends IBaseView {
     /**
      * 查询设备成功
      */
+    void refreshMonitorInfo(CommonMonitorInfoEntity bean);
 
-    /**
-     * 查询设备失败
-     */
 
 }

@@ -165,7 +165,7 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
             }
         }
         Glide.with(context).
-                load(TextUtils.isEmpty(list.get(section).getIcon()) ? "" : (AgrConstant.IMAGE_URL_PREFIX + list.get(section).getIcon())).
+                load(TextUtils.isEmpty(list.get(section).getIcon()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + list.get(section).getIcon())).
                 apply(AgrConstant.iconOptions)
                 .into(holder.serviceEntranceItemIcon);
 
@@ -179,7 +179,7 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
                     notifyDataSetChanged();
                 } else {
                     if (onItemClickListener != null) {
-                        onItemClickListener.onClick(v, list.get(section).getServiceID(), null, 0);
+                        onItemClickListener.onClick(v, list.get(section).getServiceID(), null, 0,null);
                     }
                 }
             }
@@ -269,7 +269,8 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onClick(v, list.get(section).getServiceID(), list.get(section).getSpecifys().get(position).getServiceID(), list.get(section).getSpecifys().get(position).getCropID());
+                    onItemClickListener.onClick(v, list.get(section).getServiceID(), list.get(section).getSpecifys().get(position).getServiceID(),
+                            list.get(section).getSpecifys().get(position).getCropID(),list.get(section).getSpecifys().get(position).getSepcify());
                 }
             }
         });
@@ -298,7 +299,7 @@ public class ServiceEntranceAdapter extends SectionedRecyclerViewAdapter<Service
     }
 
     public interface OnItemClickListener {
-        void onClick(View v, String serviceID, String subServiceID, int cropID);
+        void onClick(View v, String serviceID, String subServiceID, int cropID,String cropName);
 
         void toServiceInfo(String serviceName, String serviceID, String serviceIcon, int serviceType);
     }

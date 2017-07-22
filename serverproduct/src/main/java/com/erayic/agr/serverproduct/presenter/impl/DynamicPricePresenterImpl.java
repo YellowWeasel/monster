@@ -27,12 +27,16 @@ public class DynamicPricePresenterImpl implements IDynamicPricePresenter {
     }
 
     @Override
-    public void getDynamicPricedatas(int cropId, String start, String end,String serviceId) {
+    public void getDynamicPricedatas(int cropId, String start, String end, String serviceId) {
         context.showLoading();
-        apiModel.getDynamicPrice(cropId, start, end,serviceId, new OnDataListener<CommonDynamicPriceBean>() {
+        apiModel.getDynamicPrice(cropId, start, end, serviceId, new OnDataListener<CommonDynamicPriceBean>() {
             @Override
             public void success(CommonDynamicPriceBean response) {
-                context.refreshDynamicPrice(response);
+                if (response != null)
+                    context.refreshDynamicPrice(response);
+                else
+                    context.showToast("未检测到数据");
+                context.dismissLoading();
             }
 
             @Override

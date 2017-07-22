@@ -90,6 +90,7 @@ public class JobsListItemAdapter extends SectionedRecyclerViewAdapter<BaseViewHo
         switch (role) {
             case EnumUserRole.Role_Usage:
                 return userList != null ? userList.size() : 0;
+            case EnumUserRole.Role_Admin:
             case EnumUserRole.Role_Manager:
                 return managerList != null ? managerList.size() : 0;
             default:
@@ -108,6 +109,7 @@ public class JobsListItemAdapter extends SectionedRecyclerViewAdapter<BaseViewHo
                 }
                 return userList.get(section).getContents() == null ? 0 : count;
             }
+            case EnumUserRole.Role_Admin:
             case EnumUserRole.Role_Manager: {
                 int count = managerList.get(section).getJobs() == null ? 0 : managerList.get(section).getJobs().size();
                 if (count >= 0 && !mBooleanMap.get(section)) {
@@ -136,6 +138,8 @@ public class JobsListItemAdapter extends SectionedRecyclerViewAdapter<BaseViewHo
     @Override
     protected int getSectionItemViewType(int section, int position) {
         switch (role) {
+            case EnumUserRole.Role_Admin:
+                return EnumUserRole.Role_Admin;
             case EnumUserRole.Role_Manager:
                 return EnumUserRole.Role_Manager;
             case EnumUserRole.Role_Usage:
@@ -158,6 +162,7 @@ public class JobsListItemAdapter extends SectionedRecyclerViewAdapter<BaseViewHo
     @Override
     protected BaseViewHolder onCreateItemViewHolder(ViewGroup parent, int viewType) {
         switch (role) {
+            case EnumUserRole.Role_Admin:
             case EnumUserRole.Role_Manager:
                 return new JobsItemChildByAdminViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_jobs_item_child_admin, parent, false));
             case EnumUserRole.Role_Usage:
@@ -171,6 +176,7 @@ public class JobsListItemAdapter extends SectionedRecyclerViewAdapter<BaseViewHo
     @Override
     protected void onBindSectionHeaderViewHolder(BaseViewHolder holder, final int section) {
         switch (role) {
+            case EnumUserRole.Role_Admin:
             case EnumUserRole.Role_Manager: {
                 if (holder instanceof JobsItemGroupByUserViewHolder) {
                     ((JobsItemGroupByUserViewHolder) holder).jobsContentIcon.setImageDrawable(ContextCompat.getDrawable(context,
@@ -242,6 +248,7 @@ public class JobsListItemAdapter extends SectionedRecyclerViewAdapter<BaseViewHo
     @Override
     protected void onBindItemViewHolder(BaseViewHolder holder, final int section, final int position) {
         switch (role) {
+            case EnumUserRole.Role_Admin:
             case EnumUserRole.Role_Manager:
                 if (holder instanceof JobsItemChildByAdminViewHolder) {
                     ((JobsItemChildByAdminViewHolder) holder).jobsContentName.setText(section + "  " + position);

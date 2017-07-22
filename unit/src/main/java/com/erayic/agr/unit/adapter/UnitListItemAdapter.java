@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.erayic.agr.common.config.CustomLinearLayoutManager;
+import com.erayic.agr.common.net.back.device.CommonMonitorInfoEntity;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.view.SectionedRecyclerViewAdapter;
@@ -46,12 +47,15 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
     private Context context;
     private SparseBooleanArray mBooleanMap;
     private int onItemPosition = -1;
+    private int onindexPosition = -1;//（批次，环境，控制，监控 位置记录）
 
     private List<CommonUnitListBean> list;
 
     private OnItemScrollToPositionWithOffset onItemScrollToPositionWithOffset;
 
     private UnitListItemByBatchAdapter.OnItemBatchClickListener onItemBatchClickListener;
+
+    private UnitListItemByMonitorAdapter.OnMonitorClickListener onMonitorClickListener;
 
     private UnitListItemByControlAdapter controlAdapter;
 
@@ -60,6 +64,7 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
         mBooleanMap = new SparseBooleanArray();
         mBooleanMap.append(0, true);//默认打开第一个
         onItemPosition = 0;//默认打开0个
+        onindexPosition = 0;//默认打开0个
     }
 
     public void setList(List<CommonUnitListBean> list) {
@@ -68,6 +73,10 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
 
     public void setOnItemScrollToPositionWithOffset(OnItemScrollToPositionWithOffset onItemScrollToPositionWithOffset) {
         this.onItemScrollToPositionWithOffset = onItemScrollToPositionWithOffset;
+    }
+
+    public void setOnMonitorClickListener(UnitListItemByMonitorAdapter.OnMonitorClickListener onMonitorClickListener) {
+        this.onMonitorClickListener = onMonitorClickListener;
     }
 
     public void setControlAdapter(UnitListItemByControlAdapter controlAdapter) {
@@ -183,6 +192,12 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                             UnitListItemByBatchEntity entity = new UnitListItemByBatchEntity();
                             entity.setItemType(UnitListItemByBatchEntity.TYPE_BATCH_ADD);
                             entity.setName("新建一个批次");
+                            listBatch.add(entity);
+                        }
+                        {
+                            UnitListItemByBatchEntity entity = new UnitListItemByBatchEntity();
+                            entity.setItemType(UnitListItemByBatchEntity.TYPE_BATCH_HISTORY);
+                            entity.setName("历史批次");
                             listBatch.add(entity);
                         }
                         UnitListItemByBatchAdapter adapter = new UnitListItemByBatchAdapter(context, null, list.get(section).getUnitID());
@@ -366,14 +381,12 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                         List<UnitListItemByMonitorEntity> listMonitor = new ArrayList<>();
                         if (list.get(section).getMonitors() != null && list.get(section).getMonitors().size() > 0) {
 
-                            for (CommonUnitListBean.UnitListMonitorsBean bean : list.get(section).getMonitors()) {
+                            for (CommonMonitorInfoEntity bean : list.get(section).getMonitors()) {
                                 UnitListItemByMonitorEntity entity = new UnitListItemByMonitorEntity();
                                 entity.setItemType(UnitListItemByMonitorEntity.TYPE_MONITOR);
                                 entity.setName(TextUtils.isEmpty(bean.getName()) ? "未命名" : bean.getName());
-                                Map<String, Object> map = new ArrayMap<>();
-                                map.put("SerialNum", bean.getSerialNum());
-                                map.put("EquipmentType", bean.getEquipmentType());
-                                entity.setMap(map);
+                                entity.setSubName(bean.isControlled() ? "云台" : "");
+                                entity.setData(bean);
                                 listMonitor.add(entity);
                             }
                         } else {
@@ -383,15 +396,17 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                             listMonitor.add(entity);
                         }
                         UnitListItemByMonitorAdapter adapter = new UnitListItemByMonitorAdapter(context, null);
+                        adapter.setOnMonitorClickListener(onMonitorClickListener);
                         holder.unitListItemRecyclerView.setAdapter(adapter);
                         adapter.setNewData(listMonitor);
                     }
                     break;
                 }
-
+                onindexPosition = index;
             }
         });
-        holder.unitListItemTab.setSelectTab(0);
+
+        holder.unitListItemTab.setSelectTab(onindexPosition);
     }
 
     /**

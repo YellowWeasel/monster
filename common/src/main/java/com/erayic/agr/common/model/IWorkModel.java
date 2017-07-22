@@ -64,4 +64,9 @@ public interface IWorkModel extends IProvider {
      * 得到管理者指定日期的工作安排
      */
     void getDayWorkJobByManager(String specifyDay, int type,OnDataListener<CommonJobsListManagerBean> listener);
+
+    /**
+     * 得到指定时间区域内的工作安排时间
+     */
+    void getScheduleByTime(String st, String end,OnDataListener<List<String>> listener);
 }

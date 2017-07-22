@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -86,6 +87,7 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_price_detail);
     }
+
     @Override
     public void initView() {
         toolbar.setTitle("市场价格");
@@ -102,7 +104,8 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
     }
 
     public void refreshWebView() {
-        if (dynamicDetailPriceWebView == null || !dynamicDetailPriceWebView.isAttachedToWindow()) return;
+        if (dynamicDetailPriceWebView == null || !dynamicDetailPriceWebView.isAttachedToWindow())
+            return;
         dynamicDetailPriceWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -123,7 +126,7 @@ public class DynamicPriceDetailActivity extends BaseActivity implements IDynamic
         this.marketDynamicPriceDatasList = beans;
         adapter.setMarketDynamicPriceDatas(this.marketDynamicPriceDatasList);
         adapter.notifyDataSetChanged();
-        this.marketDatas = new DesignatedMarketDatas(beans, paramter.getMarketName());
+        this.marketDatas = new DesignatedMarketDatas(beans, paramter.getMarketName(), TextUtils.isEmpty(cropName) ? "" : cropName);
         refreshWebView();
     }
 

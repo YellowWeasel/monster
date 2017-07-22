@@ -1,5 +1,7 @@
 package com.erayic.agr.common.net.back.unit;
 
+import com.erayic.agr.common.net.back.device.CommonMonitorInfoEntity;
+
 import java.util.List;
 
 /**
@@ -14,7 +16,7 @@ public class CommonUnitListBean {
     private String UnitName;//管理单元名称
     private UnitEnvInfoBean EnvInfo;//环境参数
     private UnitListRemoteCtrlBean RemoteCtrl;//控制设备
-    private List<UnitListMonitorsBean> Monitors;//监控
+    private List<CommonMonitorInfoEntity> Monitors;//监控
     private List<UnitBatchListBean> Batchs;//批次
 
 
@@ -303,38 +305,7 @@ public class CommonUnitListBean {
         }
     }
 
-    /**
-     * 监控
-     */
-    public static class UnitListMonitorsBean {
-        private String SerialNum;//监控序列号
-        private String Name;//监控名称
-        private int EquipmentType;//类型
 
-        public String getSerialNum() {
-            return SerialNum;
-        }
-
-        public void setSerialNum(String serialNum) {
-            SerialNum = serialNum;
-        }
-
-        public String getName() {
-            return Name;
-        }
-
-        public void setName(String name) {
-            Name = name;
-        }
-
-        public int getEquipmentType() {
-            return EquipmentType;
-        }
-
-        public void setEquipmentType(int equipmentType) {
-            EquipmentType = equipmentType;
-        }
-    }
 
     public String getUnitID() {
         return UnitID;
@@ -368,19 +339,19 @@ public class CommonUnitListBean {
         RemoteCtrl = remoteCtrl;
     }
 
-    public List<UnitListMonitorsBean> getMonitors() {
-        return Monitors;
-    }
-
-    public void setMonitors(List<UnitListMonitorsBean> monitors) {
-        Monitors = monitors;
-    }
-
     public List<UnitBatchListBean> getBatchs() {
         return Batchs;
     }
 
     public void setBatchs(List<UnitBatchListBean> batchs) {
         Batchs = batchs;
+    }
+
+    public List<CommonMonitorInfoEntity> getMonitors() {
+        return Monitors;
+    }
+
+    public void setMonitors(List<CommonMonitorInfoEntity> monitors) {
+        Monitors = monitors;
     }
 }

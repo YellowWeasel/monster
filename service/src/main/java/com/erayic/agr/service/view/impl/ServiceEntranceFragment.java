@@ -160,6 +160,7 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
             @Override
             public void run() {
                 adapter.setList(list);
+
                 adapter.notifyDataSetChanged();
             }
         });
@@ -185,7 +186,7 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
     private class OnItemClickListener implements ServiceEntranceAdapter.OnItemClickListener {
 
         @Override
-        public void onClick(View v, String serviceID, String subServiceID, int cropID) {
+        public void onClick(View v, String serviceID, String subServiceID, int cropID, String cropName) {
             switch (serviceID) {
                 case "b759c79e-b365-4932-aab0-99ca72a35e04":
                     ARouter.getInstance().build("/serverproduct/activity/ReportingActivity").withString("serviceID", serviceID).navigation();
@@ -197,7 +198,11 @@ public class ServiceEntranceFragment extends BaseFragment implements IServiceEnt
                     if (TextUtils.isEmpty(subServiceID))
                         showToast("未支持的服务类型");
                     else
-                        ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity").withString("serviceID", subServiceID).withInt("cropId", cropID).navigation();
+                        ARouter.getInstance().build("/serverproduct/activity/DynamicPriceActivity")
+                                .withString("serviceID", subServiceID)
+                                .withInt("cropId", cropID)
+                                .withString("cropName", cropName)
+                                .navigation();
                     break;
                 case "3fabad22-5e5f-4d76-9ddf-d3af850019de"://政策法规
                     ARouter.getInstance().build("/serverproduct/activity/PoliciesRegulationsActivity").withString("serviceID", serviceID).navigation();

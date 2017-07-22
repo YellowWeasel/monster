@@ -18,6 +18,7 @@ import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.CommonBaseListBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
+import com.erayic.agr.common.util.ErayicIdentifier;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.ErayicEditDialog;
 import com.erayic.agr.common.view.LoadingDialog;
@@ -191,7 +192,7 @@ public class BaseListActivity extends BaseActivity implements IBaseListView, Swi
                     .setButton2("确定", new ErayicEditDialog.OnClickListener() {
                         @Override
                         public void onClick(Dialog dialog, int which, CharSequence s) {
-                            presenter.addBaseByEnt(s.toString());
+                            presenter.addBaseByEnt(s.toString(), ErayicIdentifier.getInstance(BaseListActivity.this).getErayicdentifier());
                             dialog.dismiss();
                         }
                     }).show();

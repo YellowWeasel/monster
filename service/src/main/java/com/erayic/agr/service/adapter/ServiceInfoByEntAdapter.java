@@ -2,6 +2,7 @@ package com.erayic.agr.service.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,10 @@ public class ServiceInfoByEntAdapter extends BaseMultiItemQuickAdapter<ServiceIn
         switch (helper.getItemViewType()) {
             case ServiceInfoByEntEntity.TYPE_TITLE:
                 if (helper instanceof ServiceInfoByEntTitleViewHolder) {
-                    Glide.with(context).load(item.getTitle().getServiceIcon()).apply(AgrConstant.iconOptions).into(((ServiceInfoByEntTitleViewHolder) helper).serviceInfoIcon);
+                    Glide.with(context)
+                            .load(TextUtils.isEmpty(item.getTitle().getServiceIcon()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + item.getTitle().getServiceIcon()))
+                            .apply(AgrConstant.iconOptions)
+                            .into(((ServiceInfoByEntTitleViewHolder) helper).serviceInfoIcon);
                     ((ServiceInfoByEntTitleViewHolder) helper).serviceInfoName.setText(item.getTitle().getServiceName());
                 }
                 break;

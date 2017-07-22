@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="更多推荐方式"
+        android:textColor="#d5d6d7" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/manage_content_weixin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/share_ic_base_share_weixin"
+            android:gravity="center"
+            android:text="微信"
+            android:textColor="#1e1e1e"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/manage_content_friends"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/share_ic_base_share_weixin_friends"
+            android:gravity="center"
+            android:text="朋友圈"
+            android:textColor="#1e1e1e"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/manage_content_qq"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/share_ic_base_share_qq"
+            android:gravity="center"
+            android:text="QQ"
+            android:textColor="#1e1e1e"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</LinearLayout>

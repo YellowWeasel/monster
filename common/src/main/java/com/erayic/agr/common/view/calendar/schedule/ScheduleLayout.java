@@ -23,6 +23,7 @@ import com.erayic.agr.common.view.calendar.week.WeekView;
 import org.joda.time.DateTime;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Jimmy on 2016/10/7 0007.
@@ -195,6 +196,9 @@ public class ScheduleLayout extends FrameLayout {
             }
             resetMonthView();
             mcvCalendar.setOnCalendarClickListener(mMonthCalendarClickListener);
+            if (mIsAutoChangeMonthRow) {
+                mCurrentRowsIsSix = CalendarUtils.getMonthRows(year, month) == 6;
+            }
         }
 
         @Override
@@ -272,7 +276,7 @@ public class ScheduleLayout extends FrameLayout {
     }
 
     private boolean isRecyclerViewTouch() {
-        return mState == ScheduleState.CLOSE && ((rvScheduleList == null ? 0 : rvScheduleList.getChildCount()) == 0 || rvScheduleList.isScrollTop());
+        return mState == ScheduleState.CLOSE && (rvScheduleList.getChildCount() == 0 || rvScheduleList.isScrollTop());
     }
 
 
@@ -459,8 +463,7 @@ public class ScheduleLayout extends FrameLayout {
         MonthView monthView = mcvCalendar.getCurrentMonthView();
         distanceY = Math.min(distanceY, mAutoScrollDistance);
         float calendarDistanceY = distanceY / (mCurrentRowsIsSix ? 5.0f : 4.0f);
-//        int row = monthView.getWeekRow() - 1;
-        int row = CalendarUtils.getWeekRow(monthView.getSelectYear(), monthView.getSelectMonth(), monthView.getSelectDay());
+        int row = monthView.getWeekRow() - 1;
         int calendarTop = -row * mRowSize;
         int scheduleTop = mRowSize;
         float calendarY = rlMonthCalendar.getY() - calendarDistanceY * row;
@@ -509,15 +512,48 @@ public class ScheduleLayout extends FrameLayout {
     }
 
     /**
+     * 添加多个圆点提示
+     *
+     * @param hints
+     */
+    public void addTaskHints(List<Integer> hints) {
+        CalendarUtils.getInstance(getContext()).addTaskHints(mCurrentSelectYear, mCurrentSelectMonth, hints);
+        if (mcvCalendar.getCurrentMonthView() != null) {
+            mcvCalendar.getCurrentMonthView().invalidate();
+        }
+        if (wcvCalendar.getCurrentWeekView() != null) {
+            wcvCalendar.getCurrentWeekView().invalidate();
+        }
+    }
+
+    /**
+     * 删除多个圆点提示
+     *
+     * @param hints
+     */
+    public void removeTaskHints(List<Integer> hints) {
+        CalendarUtils.getInstance(getContext()).removeTaskHints(mCurrentSelectYear, mCurrentSelectMonth, hints);
+        if (mcvCalendar.getCurrentMonthView() != null) {
+            mcvCalendar.getCurrentMonthView().invalidate();
+        }
+        if (wcvCalendar.getCurrentWeekView() != null) {
+            wcvCalendar.getCurrentWeekView().invalidate();
+        }
+    }
+
+    /**
      * 添加一个圆点提示
      *
      * @param day
      */
     public void addTaskHint(Integer day) {
-        if (mcvCalendar.getCurrentMonthView() != null)
-            mcvCalendar.getCurrentMonthView().addTaskHint(day);
-        if (wcvCalendar.getCurrentWeekView() != null)
-            wcvCalendar.getCurrentWeekView().addTaskHint(day);
+        if (mcvCalendar.getCurrentMonthView() != null) {
+            if (mcvCalendar.getCurrentMonthView().addTaskHint(day)) {
+                if (wcvCalendar.getCurrentWeekView() != null) {
+                    wcvCalendar.getCurrentWeekView().invalidate();
+                }
+            }
+        }
     }
 
     /**
@@ -526,10 +562,13 @@ public class ScheduleLayout extends FrameLayout {
      * @param day
      */
     public void removeTaskHint(Integer day) {
-        if (mcvCalendar.getCurrentMonthView() != null)
-            mcvCalendar.getCurrentMonthView().removeTaskHint(day);
-        if (wcvCalendar.getCurrentWeekView() != null)
-            wcvCalendar.getCurrentWeekView().removeTaskHint(day);
+        if (mcvCalendar.getCurrentMonthView() != null) {
+            if (mcvCalendar.getCurrentMonthView().removeTaskHint(day)) {
+                if (wcvCalendar.getCurrentWeekView() != null) {
+                    wcvCalendar.getCurrentWeekView().invalidate();
+                }
+            }
+        }
     }
 
     public ScheduleRecyclerView getSchedulerRecyclerView() {

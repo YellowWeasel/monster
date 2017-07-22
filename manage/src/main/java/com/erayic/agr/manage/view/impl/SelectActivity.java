@@ -22,10 +22,13 @@ import com.erayic.agr.common.event.ManageRefreshMessage;
 import com.erayic.agr.common.net.back.CommonPersonnelBean;
 import com.erayic.agr.common.net.back.CommonProduceListBean;
 import com.erayic.agr.common.net.back.CommonResourceBean;
+import com.erayic.agr.common.net.back.enums.EnumAgrType;
 import com.erayic.agr.common.net.back.enums.EnumRequestType;
 import com.erayic.agr.common.net.back.enums.EnumResourceType;
 import com.erayic.agr.common.net.back.enums.EnumTipType;
+import com.erayic.agr.common.net.back.enums.EnumUnitType;
 import com.erayic.agr.common.net.back.enums.EnumUserRole;
+import com.erayic.agr.common.net.back.manage.CommonProduceTypeBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitListBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitListByBaseBean;
 import com.erayic.agr.common.net.back.work.CommonWorkListBean;
@@ -55,10 +58,10 @@ import butterknife.ButterKnife;
 /**
  * 作者：hejian
  * 邮箱：hkceey@outlook.com
- * 注解：单选，多选 （农药、化肥、种苗、产品、用户）
+ * 注解：单选，多选 （农药、化肥、种苗、产品、用户、产品类别）
  */
 
-@Route(path = "/manage/activity/SelectActivity", name = "单选，多选 （农药、化肥、种苗、产品、用户）")
+@Route(path = "/manage/activity/SelectActivity", name = "单选，多选 （农药、化肥、种苗、产品、用户、产品类别）")
 public class SelectActivity extends BaseActivity implements ISelectView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.toolbar)
@@ -175,6 +178,9 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
                 break;
             case EnumRequestType.TYPE_RETURN_NOTICE:
                 presenter.getNoticeList();
+                break;
+            case EnumRequestType.TYPE_RETURN_PRODUCE_TYPE:
+                presenter.getProduceType(EnumAgrType.TYPE_PLANT);
                 break;
         }
     }
@@ -399,6 +405,25 @@ public class SelectActivity extends BaseActivity implements ISelectView, SwipeRe
                     entity.setItemType(ManageSelectEntity.TYPE_SELECT_USER);
                     entity.setID(bean.getType());
                     entity.setName(bean.getName());
+                    entity.setSubName("");
+                    listResource.add(entity);
+                }
+                adapter.setNewData(listResource);
+            }
+        });
+    }
+
+    @Override
+    public void refreshProTypeView(final List<CommonProduceTypeBean> list) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                List<ManageSelectEntity> listResource = new ArrayList<>();
+                for (CommonProduceTypeBean bean : list) {
+                    ManageSelectEntity entity = new ManageSelectEntity();
+                    entity.setItemType(ManageSelectEntity.TYPE_SELECT_USER);
+                    entity.setID(bean.getClassifyID());
+                    entity.setName(bean.getClassifyName());
                     entity.setSubName("");
                     listResource.add(entity);
                 }

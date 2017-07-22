@@ -1,12 +1,15 @@
 package com.erayic.agr.common.net.http;
 
 import com.erayic.agr.common.net.DataBack;
-import com.erayic.agr.common.net.back.CommonByteArrayBean;
+import com.erayic.agr.common.net.back.CommonBytePhotoBean;
 import com.erayic.agr.common.net.back.CommonFertilizerBean;
 import com.erayic.agr.common.net.back.CommonPesticideBean;
+import com.erayic.agr.common.net.back.CommonProduceInfoBean;
 import com.erayic.agr.common.net.back.CommonProduceListBean;
 import com.erayic.agr.common.net.back.CommonResourceBean;
 import com.erayic.agr.common.net.back.CommonSeedBean;
+import com.erayic.agr.common.net.back.manage.CommonProduceTypeBean;
+import com.erayic.agr.common.net.back.user.CommonUserIconBean;
 
 import java.util.List;
 
@@ -50,7 +53,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Produce/GetAllProductClassic")
-    Flowable<DataBack<List<CommonProduceListBean>>> getAllProductClassic(
+    Flowable<DataBack<List<CommonProduceTypeBean>>> getAllProductClassic(
             @Query("type") int type
     );
 
@@ -61,7 +64,7 @@ public interface IHttpResourceService {
      * @return DataBack
      */
     @GET("Produce/GetProductDetail")
-    Flowable<DataBack<Object>> getProductDetail(
+    Flowable<DataBack<CommonProduceInfoBean>> getProductDetail(
             @Query("proID") String proID
     );
 
@@ -103,8 +106,35 @@ public interface IHttpResourceService {
     @POST("Produce/UpdateProductIcon")
     Flowable<DataBack<Object>> updateProductIcon(
             @Query("proID") String proID,
-            @Body CommonByteArrayBean bean
+            @Body CommonUserIconBean bean
     );
+
+    /**
+     * 增加一个产品照片
+     *
+     * @param proID 产品ID（Guid）
+     * @param bean  产品照片（byte[]）
+     * @return DataBack
+     */
+    @POST("Produce/AddProductPhoto")
+    Flowable<DataBack<Object>> addProductPhoto(
+            @Query("proID") String proID,
+            @Body CommonBytePhotoBean bean
+    );
+
+    /**
+     * 删除一个产品图片
+     *
+     * @param imgID   产品图片ID（Guid）
+     * @param imgPath 产品照片路径（string）
+     * @return DataBack
+     */
+    @GET("Produce/DelProductPhoto")
+    Flowable<DataBack<Object>> delProductPhoto(
+            @Query("imgID") String imgID,
+            @Query("imgPath") String imgPath
+    );
+
 
     /**
      * 通过肥料登记号进行真伪检验
@@ -238,6 +268,7 @@ public interface IHttpResourceService {
 
     /**
      * 保存一个农药
+     *
      * @param pest 农药（CommonPesticideBean）
      * @return DataBack
      */

@@ -18,7 +18,7 @@ public class DesignatedMarketDatas {
     private String[] xDatas;
     private String[] marketDatas;
 
-    public DesignatedMarketDatas(MarketDynamicPriceDatas beans, String mMarketName) {
+    public DesignatedMarketDatas(MarketDynamicPriceDatas beans, String mMarketName,String cropName) {
         this.marketName = mMarketName;
         if (beans == null&&beans.getPriceDatasList()!=null) return;
         xDatas = new String[beans.getPriceDatasList().size()];
@@ -28,7 +28,7 @@ public class DesignatedMarketDatas {
             xDatas[i] = beans.getPriceDatasList().get(i).getKey();
             marketDatas[i] = beans.getPriceDatasList().get(i).getValue();
         }
-        cropName = "大白菜"; //没有作物名称
+        this.cropName = cropName; //没有作物名称
     }
 
     public String getCropName() {

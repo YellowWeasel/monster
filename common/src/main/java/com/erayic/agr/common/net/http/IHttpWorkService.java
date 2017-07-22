@@ -122,14 +122,28 @@ public interface IHttpWorkService {
 
     /**
      * 得到管理者指定日期的工作安排
+     *
      * @param specifyDay 指定日期(DateTime)
-     * @param type 管理单元类型(1：基地，2：地块，3：塘，4：栏)
+     * @param type       管理单元类型(1：基地，2：地块，3：塘，4：栏)
      * @return DataBack
      */
     @GET("Work/GetDayWorkJobByManager")
     Flowable<DataBack<CommonJobsListManagerBean>> getDayWorkJobByManager(
             @Query("specifyDay") String specifyDay,
             @Query("type") int type
+    );
+
+    /**
+     * 得到指定时间区域内的工作安排时间
+     *
+     * @param st  起始日期(DateTime)
+     * @param end 截止日期(DateTime)
+     * @return DataBack
+     */
+    @GET("Work/GetScheduleByTime")
+    Flowable<DataBack<List<String>>> getScheduleByTime(
+            @Query("st") String st,
+            @Query("end") String end
     );
 
 }
