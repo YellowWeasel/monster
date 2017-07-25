@@ -17,6 +17,7 @@ import com.erayic.agr.common.net.back.enums.EnumUnitType;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchInfoBean;
 import com.erayic.agr.common.util.DividerItemDecoration;
 import com.erayic.agr.common.util.ErayicLog;
+import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.R2;
@@ -155,7 +156,10 @@ public class BatchInfoByStatueFragment extends BaseFragment implements IBatchInf
     @Subscribe
     public void onMessageEvent(UnitRefreshMessage event) {
         if (event.getMsgType() == UnitRefreshMessage.UNIT_MASTER_STATUE) {
-            onRefresh();
+            if (event.getSubType() == UnitRefreshMessage.TYPE_DELETE) {
+                ErayicStack.getInstance().finishActivity(BatchInfoActivity.class);
+            } else
+                onRefresh();
         }
     }
 
@@ -188,14 +192,7 @@ public class BatchInfoByStatueFragment extends BaseFragment implements IBatchInf
             public void run() {
                 //回传toolbar数据
                 BatchInfoEvent event = new BatchInfoEvent();
-                event.setProductID(bean.getBatchInfo().getProductID());
-                event.setProductName(bean.getBatchInfo().getProductName());
-                event.setProductIcon(bean.getBatchInfo().getProductIcon());
-                event.setStartTime(bean.getBatchInfo().getStartTime());
-                event.setEndTime(bean.getBatchInfo().getEndTime());
-                event.setQuantity(bean.getBatchInfo().getQuantity());
-                event.setOpeName(bean.getBatchInfo().getOpeName());
-                event.setStatus(bean.getBatchInfo().getStatus());
+                event.setBatchInfo(bean.getBatchInfo());
                 EventBus.getDefault().post(event);
 
                 List<UnitBatchItemEntity> list = new ArrayList<>();

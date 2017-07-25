@@ -12,6 +12,10 @@ public class UnitRefreshMessage {
     public static final int UNIT_MASTER_STATUE = 1;//作物生长情况
     public static final int UNIT_MASTER_LIST = 3;//管理单元列表
 
+    /* subType */
+    public static final int TYPE_REFRESH = 0;//刷新
+    public static final int TYPE_DELETE = 1;//删除
+
     private int msgType;//消息类型
     private int subType;//消息副类型
     private Object data;//数据

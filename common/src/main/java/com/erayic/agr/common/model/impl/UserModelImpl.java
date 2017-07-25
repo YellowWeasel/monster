@@ -49,6 +49,7 @@ public class UserModelImpl implements IUserModel {
                         if (objectDataBack.isSucess()) {
                             PreferenceUtils.putParam("UserID", objectDataBack.getResult().getUserID());
                             PreferenceUtils.putParam("ActiveBaseID", objectDataBack.getResult().getActiveBaseID());
+                            PreferenceUtils.putParam("BaseID", objectDataBack.getResult().getActiveBaseID());
                             PreferenceUtils.putParam("BaseName", objectDataBack.getResult().getBaseName());
                             PreferenceUtils.putParam("EntID", objectDataBack.getResult().getEntID());
                             PreferenceUtils.putParam("EntName", objectDataBack.getResult().getEntName());

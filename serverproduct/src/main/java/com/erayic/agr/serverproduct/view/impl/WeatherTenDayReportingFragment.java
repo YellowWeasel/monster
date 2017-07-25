@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
+import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.base.BaseFragment;
 import com.erayic.agr.serverproduct.Constants;
 import com.erayic.agr.serverproduct.R;
@@ -124,7 +125,7 @@ public class WeatherTenDayReportingFragment extends BaseFragment implements ITen
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            String url = Constants.REPORTINGIMGURL + reportingData.getReportImg()
+            String url = AgrConstant.IMAGE_URL_IMAGE + reportingData.getReportImg()
                     .get(position).getImgUrl();
             Glide.with(getActivity())
                     .load(url)

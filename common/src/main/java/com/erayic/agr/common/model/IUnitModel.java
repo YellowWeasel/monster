@@ -100,4 +100,24 @@ public interface IUnitModel extends IProvider {
      */
     void getSuggestDetail(String unitID, int type, String batchID, OnDataListener<CommonUnitBatchSuggestBean> listener);
 
+    /**
+     * 更新批次信息
+     */
+    void updateBatch(String batchID, String proID, String seedID, String seedName, float quantity, int unit, String stTime, String unitID, OnDataListener<Object> listener);
+
+    /**
+     * 删除批次
+     */
+    void deleteBatch(String batchID, OnDataListener<Object> listener);
+
+    /**
+     * 批次完成
+     */
+    void finishBatch(String batchID, String finishTime, OnDataListener<Object> listener);
+
+    /**
+     * 得到历史批次
+     */
+    void getAllBatchByHistory(String unitID, int type, int pageNum, int pageSize, OnDataListener<List<CommonUnitBatchInfoBean.Batch>> listener);
+
 }

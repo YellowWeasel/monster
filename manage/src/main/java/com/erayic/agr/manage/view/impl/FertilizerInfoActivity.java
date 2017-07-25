@@ -110,7 +110,7 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
     public void initData() {
         presenter = new FertilizerInfoPresenterImpl(this);
         if (isAdd) {
-            toolbar.setTitle("增加化肥");
+            toolbar.setTitle("增加肥料");
             manageContentLayout.setVisibility(View.VISIBLE);
         } else {
             toolbar.setTitle(resName);
@@ -359,7 +359,6 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
                     presenter.saveFertilizer(adapter.getBean());
                 else
                     presenter.saveFertilizerByUserDefine(adapter.getBean());
-
             } else {
                 showToast("请完善信息");
             }
@@ -371,7 +370,7 @@ public class FertilizerInfoActivity extends BaseActivity implements IFertilizerI
             }
         } else if (item.getItemId() == R.id.action_manage_resource_delete) {
             new ErayicTextDialog.Builder(FertilizerInfoActivity.this)
-                    .setMessage("将要删除该化肥的一切信息\n确定删除吗？", null)
+                    .setMessage("将要删除该肥料的一切信息\n确定删除吗？", null)
                     .setTitle("温馨提示")
                     .setButton1("取消", new ErayicTextDialog.OnClickListener() {
                         @Override

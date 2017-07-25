@@ -10,9 +10,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.adapter.entity.UnitBatchBindServiceEntity;
-import com.erayic.agr.unit.adapter.holder.UnitAddBatchItemViewHolder;
 import com.erayic.agr.unit.adapter.holder.UnitBatchBindServiceItemViewHolder;
-import com.erayic.agr.unit.adapter.holder.UnitBatchInfoByTitleViewHolder;
 
 import java.util.List;
 

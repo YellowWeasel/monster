@@ -9,7 +9,7 @@
 
     <item
         android:id="@+id/action_manage_resource_add_fertilizer"
-        android:title="增加化肥"
+        android:title="增加肥料"
         app:showAsAction="never" />
 
     <item

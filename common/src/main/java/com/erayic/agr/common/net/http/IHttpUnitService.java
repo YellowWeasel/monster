@@ -243,4 +243,70 @@ public interface IHttpUnitService {
             @Query("type") int type
     );
 
+    /**
+     * 更新批次信息
+     *
+     * @param batchID  批次ID
+     * @param proID    产品ID
+     * @param seedID   种苗ID
+     * @param seedName 种苗名称
+     * @param quantity 种植数量
+     * @param unit     种植数量单位（1:亩,2;个数）
+     * @param stTime   种植时间
+     * @param unitID   隶属管理单元ID
+     * @return DataBack
+     */
+    @GET("Unit/UpdateBatch")
+    Flowable<DataBack<Object>> updateBatch(
+            @Query("batchID") String batchID,
+            @Query("proID") String proID,
+            @Query("seedID") String seedID,
+            @Query("seedName") String seedName,
+            @Query("quantity") float quantity,
+            @Query("unit") int unit,
+            @Query("stTime") String stTime,
+            @Query("unitID") String unitID
+    );
+
+    /**
+     * 删除批次
+     *
+     * @param batchID 批次ID
+     * @return DataBack
+     */
+    @GET("Unit/DeleteBatch")
+    Flowable<DataBack<Object>> deleteBatch(
+            @Query("batchID") String batchID
+    );
+
+    /**
+     * 批次完成
+     *
+     * @param batchID    批次ID
+     * @param finishTime 批次完成时间
+     * @return DataBack
+     */
+    @GET("Unit/FinishBatch")
+    Flowable<DataBack<Object>> finishBatch(
+            @Query("batchID") String batchID,
+            @Query("finishTime") String finishTime
+    );
+
+    /**
+     * 得到历史批次
+     *
+     * @param unitID   管理单元ID
+     * @param type     管理单元类型（UnitType）
+     * @param pageNum  第几页（int）
+     * @param pageSize 页尺寸（int）
+     * @return DataBack
+     */
+    @GET("Unit/GetAllBatchByHistory")
+    Flowable<DataBack<List<CommonUnitBatchInfoBean.Batch>>> getAllBatchByHistory(
+            @Query("unitID") String unitID,
+            @Query("type") int type,
+            @Query("pageNum") int pageNum,
+            @Query("pageSize") int pageSize
+    );
+
 }

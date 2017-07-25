@@ -22,7 +22,7 @@ public class ManageResourceListAdapter extends BaseQuickAdapter<CommonResourceBe
     private OnItemClickListener onItemClickListener;
 
     public ManageResourceListAdapter(Context context, List<CommonResourceBean> data) {
-        super(R.layout.adapter_manage_content_text, data);
+        super(R.layout.adapter_manage_content_text_3, data);
         this.context = context;
     }
 

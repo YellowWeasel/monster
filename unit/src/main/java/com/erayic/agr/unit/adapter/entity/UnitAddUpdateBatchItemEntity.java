@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
  * 注解：
  */
 
-public class UnitAddBatchItemEntity implements MultiItemEntity {
+public class UnitAddUpdateBatchItemEntity implements MultiItemEntity {
 
     public static final int TYPE_PRODUCT = 0;//产品
     public static final int TYPE_SEED = 1;//种苗
@@ -16,9 +16,12 @@ public class UnitAddBatchItemEntity implements MultiItemEntity {
     public static final int TYPE_DATE = 3;//时间
     public static final int TYPE_PERSONNEL = 4;//种植人员
 
+    public static final int TYPE_DELETE = 5;//删除批次
+    public static final int TYPE_FINISH = 6;//批次完成
+
     private String name;
     private String subName;
-    private String value;
+    private Object data;
 
     private int itemType;
 
@@ -47,11 +50,11 @@ public class UnitAddBatchItemEntity implements MultiItemEntity {
         this.subName = subName;
     }
 
-    public String getValue() {
-        return value;
+    public Object getData() {
+        return data;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setData(Object data) {
+        this.data = data;
     }
 }

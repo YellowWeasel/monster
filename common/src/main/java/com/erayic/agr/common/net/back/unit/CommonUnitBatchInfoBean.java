@@ -18,11 +18,14 @@ public class CommonUnitBatchInfoBean {
     private List<CropCycle> Cycles;//生长期评估
     private FarmingSuggestionResult Suggest;// 生产建议
 
-    public static class Batch {
+    public static class Batch implements Serializable {
+        private static final long serialVersionUID = 7247714666080613254L;
         private String BatchID;//批次ID
         private String ProductID;//对应产品ID
         private String ProductName;//对应产品名称
         private String ProductIcon;//对应产品图片
+        private String seedID;//种子ID
+        private String seedName;//种子名称
         private String StartTime;//开始时间
         private String EndTime;//截止时间
         private double Quantity;//数量
@@ -117,6 +120,22 @@ public class CommonUnitBatchInfoBean {
 
         public void setStatus(int status) {
             Status = status;
+        }
+
+        public String getSeedID() {
+            return seedID;
+        }
+
+        public void setSeedID(String seedID) {
+            this.seedID = seedID;
+        }
+
+        public String getSeedName() {
+            return seedName;
+        }
+
+        public void setSeedName(String seedName) {
+            this.seedName = seedName;
         }
     }
 

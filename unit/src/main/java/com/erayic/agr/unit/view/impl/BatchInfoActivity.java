@@ -1,7 +1,6 @@
 package com.erayic.agr.unit.view.impl;
 
 
-import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -11,13 +10,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,24 +24,18 @@ import com.bumptech.glide.Glide;
 import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
-import com.erayic.agr.common.config.PreferenceUtils;
 import com.erayic.agr.common.net.back.enums.EnumBatchStatus;
-import com.erayic.agr.common.net.back.enums.EnumCategoryType;
-import com.erayic.agr.common.net.back.enums.EnumResourceType;
+import com.erayic.agr.common.net.back.unit.CommonUnitBatchInfoBean;
 import com.erayic.agr.common.util.ErayicNetDate;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.CircleImageView;
-import com.erayic.agr.common.view.ErayicTextDialog;
-import com.erayic.agr.common.view.PagerSlidingTabStrip;
 import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.R2;
-import com.erayic.agr.unit.adapter.holder.UnitListItemByBatchInfoViewHolder;
 import com.erayic.agr.unit.event.BatchInfoEvent;
 import com.erayic.agr.unit.view.IBatchInfosView;
 import com.jaeger.library.StatusBarUtil;
-import com.jpeng.jptabbar.JPTabBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -53,7 +43,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.joda.time.DateTime;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 作者：hejian
@@ -96,6 +85,10 @@ public class BatchInfoActivity extends BaseActivity implements IBatchInfosView {
     String batchName;
     @Autowired
     String imgUrl;//批次图片
+    @Autowired(name = "history")
+    boolean isHistory;
+
+    private CommonUnitBatchInfoBean.Batch batchInfo;
 
     private BatchPagerAdapter adapter;
     private String[] strTitle = new String[]{"生长数据", "生产履历", "工作日志"};
@@ -158,7 +151,6 @@ public class BatchInfoActivity extends BaseActivity implements IBatchInfosView {
         unitBatchInfoTab.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener
                 (unitBatchInfoViewPager));
 
-
     }
 
     @Override
@@ -177,11 +169,17 @@ public class BatchInfoActivity extends BaseActivity implements IBatchInfosView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onBatchInfoMessage(BatchInfoEvent event) {
-        unitContentName.setText(event.getProductName() + "(" + EnumBatchStatus.getStatueDes(event.getStatus()) + ")");
-        unitContentDate.setText(new DateTime(ErayicNetDate.getLongDates(event.getStartTime())).toString("yyyy-MM-dd"));
-        unitContentArea.setText("面积：" + event.getQuantity() + "亩");
-        unitContentResp.setText("负责人：" + event.getOpeName() + "");
+        batchInfo = event.getBatchInfo();
+        unitContentName.setText(event.getBatchInfo().getProductName() + "(" + EnumBatchStatus.getStatueDes(event.getBatchInfo().getStatus()) + ")");
+        if (event.getBatchInfo().getStatus() == EnumBatchStatus.TYPE_Doing) {
+            unitContentDate.setText("种植时间：" + new DateTime(ErayicNetDate.getLongDates(event.getBatchInfo().getStartTime())).toString("yyyy-MM-dd") + "");
+        } else {
+            unitContentDate.setText(new DateTime(ErayicNetDate.getLongDates(event.getBatchInfo().getStartTime())).toString("yyyy-MM-dd") + "……" +
+                    new DateTime(ErayicNetDate.getLongDates(event.getBatchInfo().getEndTime())).toString("yyyy-MM-dd"));
+        }
 
+        unitContentArea.setText("面积：" + event.getBatchInfo().getQuantity() + "亩");
+        unitContentResp.setText("负责人：" + event.getBatchInfo().getOpeName() + "");
     }
 
     @Override
@@ -196,7 +194,8 @@ public class BatchInfoActivity extends BaseActivity implements IBatchInfosView {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.unit_batch_info, menu);
+        if (!isHistory)
+            getMenuInflater().inflate(R.menu.unit_batch_info, menu);
         return true;
     }
 
@@ -204,23 +203,35 @@ public class BatchInfoActivity extends BaseActivity implements IBatchInfosView {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {//返回
             ErayicStack.getInstance().finishCurrentActivity();
-        } else if (item.getItemId() == R.id.action_unit_batch_end) {
-            new ErayicTextDialog.Builder(BatchInfoActivity.this)
-                    .setMessage("完成批次代表此批次的生产管理已经结束\n之后不能对该批次做任何操作，且不可逆\n确定完成批次吗？", null)
-                    .setTitle("重要提示")
-                    .setButton1("取消", new ErayicTextDialog.OnClickListener() {
-                        @Override
-                        public void onClick(Dialog dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .setButton2("确定", new ErayicTextDialog.OnClickListener() {
-                        @Override
-                        public void onClick(Dialog dialog, int which) {
-                            dialog.dismiss();
-                            showToast("暂未开放");
-                        }
-                    }).show();
+        } else if (item.getItemId() == R.id.action_unit_batch_goto) {
+            if (batchInfo != null)
+                ARouter.getInstance()
+                        .build("/unit/activity/AddUpdateBatchActivity")
+                        .withBoolean("isAdd", false)
+                        .withString("unitID", unitID)
+                        .withString("batchID", batchID)
+                        .withString("batchName", batchName)
+                        .withSerializable("batchInfo", batchInfo)
+                        .navigation();
+            else
+                showToast("正在获取数据，请稍后");
+
+//            new ErayicTextDialog.Builder(BatchInfoActivity.this)
+//                    .setMessage("完成批次代表此批次的生产管理已经结束\n之后不能对该批次做任何操作，且不可逆\n确定完成批次吗？", null)
+//                    .setTitle("重要提示")
+//                    .setButton1("取消", new ErayicTextDialog.OnClickListener() {
+//                        @Override
+//                        public void onClick(Dialog dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    })
+//                    .setButton2("确定", new ErayicTextDialog.OnClickListener() {
+//                        @Override
+//                        public void onClick(Dialog dialog, int which) {
+//                            dialog.dismiss();
+//                            showToast("暂未开放");
+//                        }
+//                    }).show();
         }
         return super.onOptionsItemSelected(item);
     }

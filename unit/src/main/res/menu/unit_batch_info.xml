@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <item
-        android:id="@+id/action_unit_batch_end"
-        android:title="批次完成"
-        app:showAsAction="never" />
+        android:id="@+id/action_unit_batch_goto"
+        android:icon="@drawable/app_base_default_edit"
+        android:title="批次信息"
+        app:showAsAction="always" />
 
 </menu>

@@ -23,6 +23,7 @@ import com.erayic.agr.unit.adapter.entity.UnitListItemByEnvironmentEntity;
 import com.erayic.agr.unit.adapter.entity.UnitListItemByMonitorEntity;
 import com.erayic.agr.unit.adapter.holder.UnitListItemChildViewHolder;
 import com.erayic.agr.unit.adapter.holder.UnitListItemGroupViewHolder;
+import com.jpeng.jptabbar.BadgeDismissListener;
 import com.jpeng.jptabbar.OnTabSelectListener;
 
 import java.util.ArrayList;
@@ -38,11 +39,11 @@ import java.util.Map;
 
 public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListItemGroupViewHolder, UnitListItemChildViewHolder, RecyclerView.ViewHolder> {
 
-    private final String[] titlesName = new String[]{"批次", "环境", "控制", "监控"};
+    private final String[] titlesName = new String[]{"批次", "环境", "控制", "监控", "历史"};
     private final int[] titleNormalIcons = new int[]{R.drawable.image_unit_batch_nomal, R.drawable.image_unit_environment_nomal,
-            R.drawable.image_unit_control_nomal, R.drawable.image_unit_monitor_nomal};
+            R.drawable.image_unit_control_nomal, R.drawable.image_unit_monitor_nomal, R.drawable.image_unit_batch_nomal};
     private final int[] titleSelectedIcons = new int[]{R.drawable.image_unit_batch_press, R.drawable.image_unit_environment_press,
-            R.drawable.image_unit_control_press, R.drawable.image_unit_monitor_press};
+            R.drawable.image_unit_control_press, R.drawable.image_unit_monitor_press, R.drawable.image_unit_batch_press};
 
     private Context context;
     private SparseBooleanArray mBooleanMap;
@@ -194,17 +195,18 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                             entity.setName("新建一个批次");
                             listBatch.add(entity);
                         }
-                        {
-                            UnitListItemByBatchEntity entity = new UnitListItemByBatchEntity();
-                            entity.setItemType(UnitListItemByBatchEntity.TYPE_BATCH_HISTORY);
-                            entity.setName("历史批次");
-                            listBatch.add(entity);
-                        }
+//                        {
+//                            UnitListItemByBatchEntity entity = new UnitListItemByBatchEntity();
+//                            entity.setItemType(UnitListItemByBatchEntity.TYPE_BATCH_HISTORY);
+//                            entity.setName("历史批次");
+//                            listBatch.add(entity);
+//                        }
                         UnitListItemByBatchAdapter adapter = new UnitListItemByBatchAdapter(context, null, list.get(section).getUnitID());
                         adapter.setOnItemBatchClickListener(onItemBatchClickListener);
                         holder.unitListItemRecyclerView.setAdapter(adapter);
                         adapter.setNewData(listBatch);
                     }
+                    onindexPosition = index;
                     break;
                     case 1://环境
                     {
@@ -308,6 +310,7 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                         holder.unitListItemRecyclerView.setAdapter(adapter);
                         adapter.setNewData(listEnvi);
                     }
+                    onindexPosition = index;
                     break;
                     case 2://控制
                     {
@@ -331,15 +334,6 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                                     {
                                         UnitListItemByControlEntity entity = new UnitListItemByControlEntity();
                                         entity.setItemType(UnitListItemByControlEntity.TYPE_ITEM_ST);
-//                                        entity.setName(TextUtils.isEmpty(bean.getName()) ? "未命名" : bean.getName());
-//                                        entity.setSubName(TextUtils.isEmpty(bean.getStatusDesc()) ? "未知" : bean.getStatusDesc());
-//                                        Map<String, Object> map = new ArrayMap<>();
-//                                        map.put("SerialNum", bean.getSerialNum());
-//                                        map.put("Status", bean.getStatus());
-//                                        map.put("PassNum", bean.getPassNum());
-//                                        map.put("Category", bean.getCategory());
-//                                        map.put("RelayType", bean.getRelayType());
-//                                        entity.setMap(map);
                                         entity.setData(bean);
                                         listControl.add(entity);
                                     }
@@ -348,15 +342,6 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                                     {
                                         UnitListItemByControlEntity entity = new UnitListItemByControlEntity();
                                         entity.setItemType(UnitListItemByControlEntity.TYPE_ITEM_PN);
-//                                        entity.setName(TextUtils.isEmpty(bean.getName()) ? "未命名" : bean.getName());
-//                                        entity.setSubName(TextUtils.isEmpty(bean.getStatusDesc()) ? "未知" : bean.getStatusDesc());
-//                                        Map<String, Object> map = new ArrayMap<>();
-//                                        map.put("SerialNum", bean.getSerialNum());
-//                                        map.put("Status", bean.getStatus());
-//                                        map.put("PassNum", bean.getPassNum());
-//                                        map.put("Category", bean.getCategory());
-//                                        map.put("RelayType", bean.getRelayType());
-//                                        entity.setMap(map);
                                         entity.setData(bean);
                                         listControl.add(entity);
                                     }
@@ -375,6 +360,7 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                         holder.unitListItemRecyclerView.setAdapter(controlAdapter);
                         controlAdapter.setNewData(listControl);
                     }
+                    onindexPosition = index;
                     break;
                     case 3://监控
                     {
@@ -400,12 +386,30 @@ public class UnitListItemAdapter extends SectionedRecyclerViewAdapter<UnitListIt
                         holder.unitListItemRecyclerView.setAdapter(adapter);
                         adapter.setNewData(listMonitor);
                     }
+                    onindexPosition = index;
+                    break;
+                    case 4://历史批次
+                    {
+                        if (onItemBatchClickListener != null)
+                            onItemBatchClickListener.onHistoryBatch(list.get(section).getUnitID());
+                        holder.unitListItemTab.setSelectTab(onindexPosition);
+                    }
                     break;
                 }
-                onindexPosition = index;
             }
         });
-
+//        holder.unitListItemTab.setDismissListener(new BadgeDismissListener() {
+//            @Override
+//            public void onDismiss(int position) {
+//                switch (position){
+//                    case 4:
+//
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        });
         holder.unitListItemTab.setSelectTab(onindexPosition);
     }
 

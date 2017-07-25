@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -180,7 +181,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Swi
                 ManageUserEntity entityIcon = new ManageUserEntity();
                 entityIcon.setItemType(ManageUserEntity.TYPE_USER_ICON);
                 entityIcon.setTitle("头像");
-                entityIcon.setSubTitle(bean.getIcon());
+                entityIcon.setSubTitle(TextUtils.isEmpty(bean.getIcon()) ? "" : bean.getIcon());
                 list.add(entityIcon);
                 //分割线
                 list.add(entityDivider);
@@ -188,25 +189,25 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView, Swi
                 ManageUserEntity entityName = new ManageUserEntity();
                 entityName.setItemType(ManageUserEntity.TYPE_USER_NAME);
                 entityName.setTitle("姓名");
-                entityName.setSubTitle(bean.getName());
+                entityName.setSubTitle(TextUtils.isEmpty(bean.getName()) ? "" : bean.getName());
                 list.add(entityName);
                 //电话
                 ManageUserEntity entityTel = new ManageUserEntity();
                 entityTel.setItemType(ManageUserEntity.TYPE_USER_TEL);
                 entityTel.setTitle("电话");
-                entityTel.setSubTitle(bean.getTelNum());
+                entityTel.setSubTitle(TextUtils.isEmpty(bean.getTelNum()) ? "" : bean.getTelNum());
                 list.add(entityTel);
                 //企业
                 ManageUserEntity entityEnt = new ManageUserEntity();
                 entityEnt.setItemType(ManageUserEntity.TYPE_USER_ENT);
                 entityEnt.setTitle("企业");
-                entityEnt.setSubTitle(bean.getEntName());
+                entityEnt.setSubTitle(TextUtils.isEmpty(bean.getEntName()) ? "" : bean.getEntName());
                 list.add(entityEnt);
                 //基地
                 ManageUserEntity entityBase = new ManageUserEntity();
                 entityBase.setItemType(ManageUserEntity.TYPE_USER_BASE);
                 entityBase.setTitle("基地");
-                entityBase.setSubTitle(bean.getBaseName());
+                entityBase.setSubTitle(TextUtils.isEmpty(bean.getBaseName()) ? "" : bean.getBaseName());
                 list.add(entityBase);
                 //微信
                 ManageUserEntity entityWeixin = new ManageUserEntity();

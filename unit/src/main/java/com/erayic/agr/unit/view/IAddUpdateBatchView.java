@@ -8,7 +8,7 @@ import com.erayic.agr.common.base.IBaseView;
  * 注解：
  */
 
-public interface IAddBatchView extends IBaseView {
+public interface IAddUpdateBatchView extends IBaseView {
 
     /**
      * 显示加载Dialog
@@ -24,5 +24,15 @@ public interface IAddBatchView extends IBaseView {
      * 增加批次成功
      */
     void addBatchSure();
+
+    /**
+     * 更新批次成功
+     */
+    void updateBatchSure();
+
+    /**
+     * 删除批次成功
+     */
+    void deleteBatchSure();
 
 }

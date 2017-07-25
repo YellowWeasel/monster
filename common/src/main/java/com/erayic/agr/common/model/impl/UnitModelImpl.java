@@ -373,7 +373,7 @@ public class UnitModelImpl implements IUnitModel {
     @SuppressWarnings("unchecked")
     @Override
     public void getPorduceHistoryByBatch(String batchID, int pageNum, int pageSize, final OnDataListener<List<CommonUnitBatchResumeBean>> listener) {
-        HttpUnitManager.getInstance().getPorduceHistoryByBatch(batchID,pageNum,pageSize)
+        HttpUnitManager.getInstance().getPorduceHistoryByBatch(batchID, pageNum, pageSize)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Consumer<DataBack<List<CommonUnitBatchResumeBean>>>() {
@@ -454,8 +454,8 @@ public class UnitModelImpl implements IUnitModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void getWorkLogByBatch(String batchID,int pageNum,int pageSize, final OnDataListener<List<CommonUnitBatchLogsBean>> listener) {
-        HttpUnitManager.getInstance().getWorkLogByBatch(batchID,pageNum,pageSize)
+    public void getWorkLogByBatch(String batchID, int pageNum, int pageSize, final OnDataListener<List<CommonUnitBatchLogsBean>> listener) {
+        HttpUnitManager.getInstance().getWorkLogByBatch(batchID, pageNum, pageSize)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Consumer<DataBack<List<CommonUnitBatchLogsBean>>>() {
@@ -657,6 +657,169 @@ public class UnitModelImpl implements IUnitModel {
                 });
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void updateBatch(String batchID, String proID, String seedID, String seedName, float quantity, int unit, String stTime, String unitID, final OnDataListener<Object> listener) {
+        HttpUnitManager.getInstance().updateBatch(batchID, proID, seedID, seedName, quantity, unit, stTime, unitID)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<Object>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                        ErayicLog.i("updateBatch", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void deleteBatch(String batchID, final OnDataListener<Object> listener) {
+        HttpUnitManager.getInstance().deleteBatch(batchID)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<Object>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                        ErayicLog.i("deleteBatch", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void finishBatch(String batchID, String finishTime, final OnDataListener<Object> listener) {
+        HttpUnitManager.getInstance().finishBatch(batchID, finishTime)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<Object>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                        ErayicLog.i("finishBatch", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void getAllBatchByHistory(String unitID, int type, int pageNum, int pageSize, final OnDataListener<List<CommonUnitBatchInfoBean.Batch>> listener) {
+        HttpUnitManager.getInstance().getAllBatchByHistory(unitID, type, pageNum, pageSize)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<List<CommonUnitBatchInfoBean.Batch>>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<List<CommonUnitBatchInfoBean.Batch>> objectDataBack) throws Exception {
+                        ErayicLog.i("getAllBatchByHistory", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 
 
     @Override

@@ -39,6 +39,7 @@ import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,6 +64,8 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
     ScheduleRecyclerView jobsListRecyclerView;
     @BindView(R2.id.slSchedule)
     ScheduleLayout slSchedule;
+
+    private List<Integer> listScheduleDefault = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31));
 
     private IJobsListPresenter presenter;
     private JobsListItemAdapter adapter;
@@ -224,6 +227,7 @@ public class JobsListFragment extends BaseFragment implements IJobsListView {
                     DateTime dateTime = new DateTime(ErayicNetDate.getLongDates(str));
                     dayData.add(dateTime.getDayOfMonth());
                 }
+                slSchedule.removeTaskHints(listScheduleDefault);
                 slSchedule.addTaskHints(dayData);
             }
         });

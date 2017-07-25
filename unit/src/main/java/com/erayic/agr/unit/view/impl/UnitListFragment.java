@@ -100,17 +100,25 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
                         .withString("batchID", batchID)
                         .withString("batchName", batchName)
                         .withString("imgUrl", imgUrl)//图片地址
+                        .withBoolean("history",false)
                         .navigation();
             }
 
             @Override
             public void onAddBatch(String unitID) {
-                ARouter.getInstance().build("/unit/activity/AddBatchActivity").withString("unitID", unitID).navigation();
+                ARouter.getInstance()
+                        .build("/unit/activity/AddUpdateBatchActivity")
+                        .withBoolean("isAdd", true)
+                        .withString("unitID", unitID)
+                        .navigation();
             }
 
             @Override
             public void onHistoryBatch(String unitID) {
-                showToast("暂未开放历史批次");
+                ARouter.getInstance()
+                        .build("/unit/activity/HistoryBatchListActivity")
+                        .withString("unitID", unitID)
+                        .navigation();
             }
         });
         //控制设备

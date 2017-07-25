@@ -36,6 +36,7 @@ import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet;
 import com.github.mikephil.charting.listener.ChartTouchListener;
@@ -179,11 +180,14 @@ public class UnitBatchInfoByStatusItemAdapter extends BaseMultiItemQuickAdapter<
                         DateTime dateTimeStart = new DateTime(ErayicNetDate.getLongDates(cycleBean.getStartDay()));
                         DateTime dateTimeEnd = new DateTime(ErayicNetDate.getLongDates(cycleBean.getEndDay()));
                         DateTime dateTimeThis = new DateTime();
-                        Period p = new Period(dateTimeStart, dateTimeEnd, PeriodType.days());
+                        Period p = new Period(dateTimeStart, dateTimeEnd);
                         value[cycleBean.getSubCycle().getSubCycleNum() - 1] = p.getDays();
-                        if (new Interval(dateTimeStart, dateTimeEnd).contains(dateTimeThis)) {//dateTimeThis是否在区间里面
+                        if (new Period(dateTimeThis, dateTimeEnd).getDays() == 0) {
                             current = cycleBean.getSubCycle().getSubCycleNum() - 1;
-                            distanceBelow = new Period(dateTimeThis, dateTimeEnd, PeriodType.days()).getDays();
+                            distanceBelow = new Period(dateTimeThis, dateTimeEnd).getDays();
+                        } else if (new Interval(dateTimeStart, dateTimeEnd).contains(dateTimeThis)) {//dateTimeThis是否在区间里面
+                            current = cycleBean.getSubCycle().getSubCycleNum() - 1;
+                            distanceBelow = new Period(dateTimeThis, dateTimeEnd).getDays();
                         }
                     }
 
@@ -297,13 +301,12 @@ public class UnitBatchInfoByStatusItemAdapter extends BaseMultiItemQuickAdapter<
                                         key[i % key.length],
                                         ContextCompat.getDrawable(context, R.drawable.image_unit_batch_info_today)));
                                 ((UnitBatchInfoByModelViewHolder) helper).batchInfoPieChart.setCenterText(Html.fromHtml("<big>" + key[i % key.length] +
-                                        "</big><br/>距" + (i == key.length ? "周期结束" : key[(i + 1) % key.length]) + "还有<font color='#FF0000'><big>" + distanceBelow + "</big></font>天"));//中心文字
+                                        "</big><br/>距" + (i == key.length ? "周期结束" : key[(i + 1) % key.length]) + "还有<font color='#FF0000'><big>" + (distanceBelow + 1) + "</big></font>天"));//中心文字
                             } else
                                 entries.add(new PieEntry(value[i],
                                         key[i % key.length],
                                         null));
                         }
-
                         PieDataSet dataSet = new PieDataSet(entries, "");
                         dataSet.setDrawIcons(false);//设置图片
                         dataSet.setSliceSpace(3f);

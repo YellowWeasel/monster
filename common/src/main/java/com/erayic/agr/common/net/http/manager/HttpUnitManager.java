@@ -1,5 +1,7 @@
 package com.erayic.agr.common.net.http.manager;
 
+import com.erayic.agr.common.net.back.CommonBaseInfoBean;
+import com.erayic.agr.common.net.back.unit.CommonUnitBatchInfoBean;
 import com.erayic.agr.common.net.back.unit.CommonUnitBatchSaveLogBean;
 import com.erayic.agr.common.net.http.HttpRetrofit;
 import com.erayic.agr.common.net.http.IHttpUnitService;
@@ -138,4 +140,31 @@ public class HttpUnitManager {
         return unitService.getSuggestDetail(batchID, unitID, type);
     }
 
+    /**
+     * 更新批次信息
+     */
+    public Flowable updateBatch(String batchID, String proID, String seedID, String seedName, float quantity, int unit, String stTime, String unitID) {
+        return unitService.updateBatch(batchID, proID, seedID, seedName, quantity, unit, stTime, unitID);
+    }
+
+    /**
+     * 删除批次
+     */
+    public Flowable deleteBatch(String batchID) {
+        return unitService.deleteBatch(batchID);
+    }
+
+    /**
+     * 批次完成
+     */
+    public Flowable finishBatch(String batchID, String finishTime) {
+        return unitService.finishBatch(batchID, finishTime);
+    }
+
+    /**
+     * 得到历史批次
+     */
+    public Flowable getAllBatchByHistory(String unitID, int type, int pageNum, int pageSize) {
+        return unitService.getAllBatchByHistory(unitID, type, pageNum, pageSize);
+    }
 }

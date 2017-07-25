@@ -5,7 +5,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.erayic.agr.common.view.CircleImageView;
+import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.R2;
+import com.jaeger.ninegridimageview.NineGridImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,18 +19,20 @@ import butterknife.ButterKnife;
  * 注解：
  */
 
-public class UnitAddBatchItemViewHolder extends BaseViewHolder {
+public class UnitBatchHistoryItemViewHolder extends BaseViewHolder {
 
     @BindView(R2.id.unit_content_icon)
-    public ImageView unitContentIcon;
+    public CircleImageView unitContentIcon;
     @BindView(R2.id.unit_content_name)
     public TextView unitContentName;
-    @BindView(R2.id.unit_content_sub_name)
-    public TextView unitContentSubName;
+    @BindView(R2.id.unit_content_date_start)
+    public TextView unitContentDateStart;
+    @BindView(R2.id.unit_content_date_end)
+    public TextView unitContentDateEnd;
     @BindView(R2.id.unit_content_goto)
     public ImageView unitContentGoto;
 
-    public UnitAddBatchItemViewHolder(View view) {
+    public UnitBatchHistoryItemViewHolder(View view) {
         super(view);
         ButterKnife.bind(this, view);
     }

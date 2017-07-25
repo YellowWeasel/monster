@@ -57,6 +57,7 @@ public class BatchInfoByResumeFragment extends BaseFragment implements IBatchInf
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
+        unitBatchResumeSwipe.setOnRefreshListener(this);
         //使用线性布局管理器
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         unitBatchResumeRecyclerView.setLayoutManager(manager);

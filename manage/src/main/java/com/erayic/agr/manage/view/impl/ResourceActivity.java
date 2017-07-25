@@ -47,7 +47,7 @@ public class ResourceActivity extends BaseActivity implements IResourceView {
 
     private ResourcePagerAdapter adapter;
 
-    private final String[] TITLES = {"农药", "化肥", "种子"};
+    private final String[] TITLES = {"农药", "肥料", "种子"};
     private final Fragment[] fragments = new Fragment[]{
             (Fragment) ARouter.getInstance().build("/manage/fragment/ResourceListFragment").withInt("type", EnumResourceType.TYPE_PESTICIDE).navigation(),
             (Fragment) ARouter.getInstance().build("/manage/fragment/ResourceListFragment").withInt("type", EnumResourceType.TYPE_FERTILIZER).navigation(),

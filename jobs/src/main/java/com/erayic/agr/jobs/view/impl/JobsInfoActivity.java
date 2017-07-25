@@ -187,7 +187,10 @@ public class JobsInfoActivity extends BaseActivity implements IJobsInfoView {
                         strBuffer += contentInfo.getResName();
                         strBuffer += (TextUtils.isEmpty(contentInfo.getNorm()) ? "" : ("    " + contentInfo.getNorm())) + "\n";
                     }
-                    map.put("key1", strBuffer.substring(0, strBuffer.length() - 1));
+                    if (strBuffer.length() > 0)
+                        map.put("key1", strBuffer.substring(0, strBuffer.length() - 1));
+                    else
+                        map.put("key1", "");
                     entity.setMap(map);
                     list.add(entity);
                 }
