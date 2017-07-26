@@ -12,6 +12,8 @@ import java.util.List;
 public class CommonUnitBatchInfoBean {
 
     private Batch BatchInfo;//批次信息
+    private String SeedID;//种子ID
+    private String SeedName;//种子名称
     private boolean IsBindSuggest;//是否绑定生产建议
     private boolean IsBindCycle;//是否绑定生长期评估
     private boolean IsBindFeild;//是否绑定产量评估
@@ -317,5 +319,21 @@ public class CommonUnitBatchInfoBean {
 
     public void setSuggest(FarmingSuggestionResult suggest) {
         Suggest = suggest;
+    }
+
+    public String getSeedID() {
+        return SeedID;
+    }
+
+    public void setSeedID(String seedID) {
+        SeedID = seedID;
+    }
+
+    public String getSeedName() {
+        return SeedName;
+    }
+
+    public void setSeedName(String seedName) {
+        SeedName = seedName;
     }
 }

@@ -7,6 +7,7 @@ import com.erayic.agr.common.model.IDeviceModel;
 import com.erayic.agr.common.net.DataBack;
 import com.erayic.agr.common.net.ErrorCode;
 import com.erayic.agr.common.net.OnDataListener;
+import com.erayic.agr.common.net.back.device.CommonCtrlDeviceInfoEntity;
 import com.erayic.agr.common.net.back.device.CommonMonitorInfoEntity;
 import com.erayic.agr.common.net.http.manager.HttpDeviceManager;
 import com.erayic.agr.common.net.http.manager.HttpUnitManager;
@@ -122,6 +123,170 @@ public class DeviceModelImpl implements IDeviceModel {
                     @Override
                     public void accept(@NonNull DataBack<CommonMonitorInfoEntity> objectDataBack) throws Exception {
                         ErayicLog.i("getMonitorInfo", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void resetDevice(String serialNum, final OnDataListener<Object> listener) {
+        HttpDeviceManager.getInstance().resetDevice(serialNum)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<Object>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                        ErayicLog.i("resetDevice", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void setCtrlBuzzer(String serialNum, boolean isOpen, final OnDataListener<Object> listener) {
+        HttpDeviceManager.getInstance().setCtrlBuzzer(serialNum, isOpen)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<Object>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                        ErayicLog.i("setCtrlBuzzer", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void setControlMode(String serialNum, boolean isAuto, final OnDataListener<Object> listener) {
+        HttpDeviceManager.getInstance().setControlMode(serialNum, isAuto)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<Object>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<Object> objectDataBack) throws Exception {
+                        ErayicLog.i("setControlMode", ErayicGson.getJsonString(objectDataBack));
+                        if (objectDataBack.isSucess()) {
+                            listener.success(objectDataBack.getResult());
+                        } else {
+                            listener.fail(objectDataBack.getErrCode(), objectDataBack.getErrMsg());
+                        }
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DataBack<Object>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(DataBack<Object> o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        listener.fail(ErrorCode.ERROR_APP_BASE, throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void getCtrlDeviceInfo(String serialNum, String deviceName, final OnDataListener<CommonCtrlDeviceInfoEntity> listener) {
+        HttpDeviceManager.getInstance().getCtrlDeviceInfo(serialNum, deviceName)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<DataBack<CommonCtrlDeviceInfoEntity>>() {
+                    @Override
+                    public void accept(@NonNull DataBack<CommonCtrlDeviceInfoEntity> objectDataBack) throws Exception {
+                        ErayicLog.i("getCtrlDeviceInfo", ErayicGson.getJsonString(objectDataBack));
                         if (objectDataBack.isSucess()) {
                             listener.success(objectDataBack.getResult());
                         } else {

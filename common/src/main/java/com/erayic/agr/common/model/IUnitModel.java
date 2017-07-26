@@ -103,7 +103,7 @@ public interface IUnitModel extends IProvider {
     /**
      * 更新批次信息
      */
-    void updateBatch(String batchID, String proID, String seedID, String seedName, float quantity, int unit, String stTime, String unitID, OnDataListener<Object> listener);
+    void updateBatch(String batchID, String proID, String seedID, String seedName, String quantity, int unit, String stTime, String ope,String unitID, OnDataListener<Object> listener);
 
     /**
      * 删除批次

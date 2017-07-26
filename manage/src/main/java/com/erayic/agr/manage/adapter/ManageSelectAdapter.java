@@ -13,6 +13,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.erayic.agr.common.AgrConstant;
 import com.erayic.agr.manage.R;
 import com.erayic.agr.manage.adapter.entity.ManageSelectEntity;
 import com.erayic.agr.manage.adapter.holder.ManageContentTextViewHolder;
@@ -113,15 +114,9 @@ public class ManageSelectAdapter extends BaseMultiItemQuickAdapter<ManageSelectE
             case ManageSelectEntity.TYPE_SELECT_PRODUCT://产品
                 if (helper instanceof ManageSelectContentViewHolder) {
 //                    ((ManageSelectContentViewHolder) helper).manageContentIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.app_base_image_item_icon_green));
-                    RequestOptions options = new RequestOptions()
-                            .centerCrop()
-                            .placeholder(R.drawable.app_base_default_plant)//待加载时显示
-                            .error(R.drawable.app_base_default_plant)//加载错误时显示
-                            .diskCacheStrategy(DiskCacheStrategy.ALL);
-
                     Glide.with(context)
-                            .load(item.getIcon())
-                            .apply(options)
+                            .load(TextUtils.isEmpty(item.getIcon()) ? "" : (AgrConstant.IMAGE_URL_IMAGE + item.getIcon()))
+                            .apply(AgrConstant.iconOptions)
                             .into(((ManageSelectContentViewHolder) helper).manageContentIcon);
                     ((ManageSelectContentViewHolder) helper).manageContentName.setText(item.getName());
                     ((ManageSelectContentViewHolder) helper).manageContentSub.setText(item.getSubName());

@@ -319,7 +319,7 @@ public class AddUpdateBatchActivity extends BaseActivity implements IAddUpdateBa
                 UnitAddUpdateBatchItemEntity entity = new UnitAddUpdateBatchItemEntity();
                 entity.setItemType(UnitAddUpdateBatchItemEntity.TYPE_AREA);
                 entity.setSubName(batchInfo.getQuantity() + "");
-                entity.setData(batchInfo.getQuantity());
+                entity.setData(batchInfo.getQuantity() + "");
                 list.add(entity);
             }
 
@@ -327,6 +327,7 @@ public class AddUpdateBatchActivity extends BaseActivity implements IAddUpdateBa
             {
                 UnitAddUpdateBatchItemEntity entity = new UnitAddUpdateBatchItemEntity();
                 entity.setItemType(UnitAddUpdateBatchItemEntity.TYPE_DATE);
+                entity.setSubName(new DateTime(ErayicNetDate.getLongDates(batchInfo.getStartTime())).toString("yyyy-MM-dd"));
                 entity.setData(new DateTime(ErayicNetDate.getLongDates(batchInfo.getStartTime())).toString("yyyy-MM-dd"));
                 list.add(entity);
             }
@@ -337,6 +338,12 @@ public class AddUpdateBatchActivity extends BaseActivity implements IAddUpdateBa
                 entity.setItemType(UnitAddUpdateBatchItemEntity.TYPE_PERSONNEL);
                 entity.setSubName(batchInfo.getOpeName());
                 entity.setData(batchInfo.getOperater());
+                list.add(entity);
+            }
+            //分割线
+            {
+                UnitAddUpdateBatchItemEntity entity = new UnitAddUpdateBatchItemEntity();
+                entity.setItemType(UnitAddUpdateBatchItemEntity.TYPE_DIVIDER);
                 list.add(entity);
             }
             //删除
@@ -480,7 +487,7 @@ public class AddUpdateBatchActivity extends BaseActivity implements IAddUpdateBa
             if (isAdd) {
                 presenter.createBatch(final_proID, final_seedID, final_seedName, final_quantity, final_stTime, final_ope, unitID);
             } else {
-                showToast("暂未开放");
+                presenter.updateBatch(batchInfo.getBatchID(), final_proID, final_seedID, final_seedName, final_quantity, final_stTime, final_ope, unitID);
             }
 
         }

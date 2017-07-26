@@ -16,7 +16,7 @@ public interface IAddUpdateBatchPresenter {
     /**
      * 更新批次
      */
-    void updateBatch(String batchID, String proID, String seedID, String seedName, float quantity, String stTime, String unitID);
+    void updateBatch(String batchID, String proID, String seedID, String seedName, String quantity, String stTime,String ope, String unitID);
 
     /**
      * 删除批次

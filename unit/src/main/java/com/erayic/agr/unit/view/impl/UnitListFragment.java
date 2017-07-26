@@ -142,7 +142,11 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
 
             @Override
             public void onMonitorClick(String serialNum) {
-                presenter.getMonitorInfo(serialNum);//请求设备信息
+//                presenter.getMonitorInfo(serialNum);//请求设备信息
+                ARouter.getInstance()
+                        .build("/unit/activity/BatchDahuaVideoActivity")
+                        .withString("serialNum", serialNum)
+                        .navigation();//跳转到具体的页面
             }
         });
         unitListRecyclerView.setLayoutManager(manager);
@@ -256,24 +260,6 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
             case 2://正反转
                 break;
         }
-    }
-
-    @Override
-    public void refreshMonitorInfo(CommonMonitorInfoEntity bean) {
-        if (TextUtils.isEmpty(bean.getGateWay().getIP()) || TextUtils.isEmpty(bean.getGateWay().getLoginName()) || TextUtils.isEmpty(bean.getGateWay().getLoginPass())) {
-            showToast("数据异常");
-        } else {
-            ARouter.getInstance()
-                    .build("/unit/activity/BatchDahuaVideoActivity")
-                    .withString("ip", bean.getGateWay().getIP())
-                    .withInt("port", bean.getGateWay().getPort())
-                    .withString("loginName", bean.getGateWay().getLoginName())
-                    .withString("loginPass", bean.getGateWay().getLoginPass())
-                    .withInt("passNum", bean.getPassNum())
-                    .withBoolean("isControl", bean.isControlled())
-                    .navigation();//跳转到具体的页面
-        }
-
     }
 
     @Override

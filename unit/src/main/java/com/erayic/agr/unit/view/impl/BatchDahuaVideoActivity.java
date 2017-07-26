@@ -12,29 +12,27 @@ import com.company.NetSDK.NET_PARAM;
 import com.company.NetSDK.SDKDEV_DSP_ENCODECAP_EX;
 import com.company.NetSDK.SDK_PRODUCTION_DEFNITION;
 import com.company.NetSDK.SDK_PTZ_ControlType;
-import com.erayic.agr.common.base.BaseActivity;
 import com.erayic.agr.common.config.MainLooperManage;
 import com.erayic.agr.common.dahua.DaHuaVideoView;
 import com.erayic.agr.common.dahua.DeviceDisConnect;
 import com.erayic.agr.common.dahua.DeviceReConnect;
 import com.erayic.agr.common.dahua.DeviceSubDisConnect;
 import com.erayic.agr.common.dahua.ErayicDaHuaBundle;
-import com.erayic.agr.common.util.ErayicLog;
+import com.erayic.agr.common.net.back.device.CommonMonitorInfoEntity;
 import com.erayic.agr.common.util.ErayicStack;
 import com.erayic.agr.common.util.ErayicToast;
 import com.erayic.agr.common.view.LoadingDialog;
 import com.erayic.agr.common.view.tooblbar.ErayicToolbar;
 import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.R2;
+import com.erayic.agr.unit.presenter.IDahuaVideoPresenter;
+import com.erayic.agr.unit.presenter.impl.DahuaVideoPresenterImpl;
 import com.erayic.agr.unit.view.IDaHuaVideoView;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,17 +56,20 @@ public class BatchDahuaVideoActivity extends AppCompatActivity implements IDaHua
     private LoadingDialog dialog;
 
     @Autowired
-    String ip;//设备IP
-    @Autowired
-    int port;//设备端口
-    @Autowired
-    String loginName;//登陆名称
-    @Autowired
-    String loginPass;//登陆密码
-    @Autowired
-    int passNum;//通道编号
-    @Autowired
-    boolean isControl;//是否可操作
+    String serialNum;
+
+//    @Autowired
+//    String ip;//设备IP
+//    @Autowired
+//    int port;//设备端口
+//    @Autowired
+//    String loginName;//登陆名称
+//    @Autowired
+//    String loginPass;//登陆密码
+//    @Autowired
+//    int passNum;//通道编号
+//    @Autowired
+//    boolean isControl;//是否可操作
 
     private int m_nGlobalChn = 0;
     private int outPortNum = 1;// 码流
@@ -89,6 +90,7 @@ public class BatchDahuaVideoActivity extends AppCompatActivity implements IDaHua
     private int nExtraChnNum;//DVR通道个数
     private int nExtraAlarmOutPortNum;//从码流个数
 
+    private IDahuaVideoPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,13 +112,7 @@ public class BatchDahuaVideoActivity extends AppCompatActivity implements IDaHua
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-//        toolbar.getBackground().mutate().setAlpha(0);
-
         monitorView = (DaHuaVideoView) findViewById(R.id.erayic_jar);
-//        lin_live_title_left = (LinearLayout) findViewById(R.id.lin_live_title_left);
-//        lin_live_title_left.setOnClickListener(this);
-//        lin_live_title_right = (LinearLayout) findViewById(R.id.lin_live_title_right);
-//        lin_live_title_right.setOnClickListener(this);
         iv_live_bt_top = (ImageButton) findViewById(R.id.iv_live_bt_top);
         iv_live_bt_top.setOnClickListener(this);
         iv_live_bt_bottom = (ImageButton) findViewById(R.id.iv_live_bt_bottom);
@@ -128,26 +124,33 @@ public class BatchDahuaVideoActivity extends AppCompatActivity implements IDaHua
         iv_live_bt_screen = (ImageButton) findViewById(R.id.iv_live_bt_screen);
         iv_live_bt_screen.setOnClickListener(this);
 
-        if (isControl) {
-            iv_live_bt_top.setVisibility(View.VISIBLE);
-            iv_live_bt_bottom.setVisibility(View.VISIBLE);
-            iv_live_bt_left.setVisibility(View.VISIBLE);
-            iv_live_bt_right.setVisibility(View.VISIBLE);
-        }
-//		initMenu();
-
     }
 
     public void initData() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                showLoading();
-                initVideo();
-            }
-        }).start();
+        presenter = new DahuaVideoPresenterImpl(this);
+        presenter.getMonitorInfo(serialNum);
+
     }
 
+    @Override
+    public void loadingConnection(final CommonMonitorInfoEntity entity) {
+        MainLooperManage.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (entity.isControlled()) {
+                    iv_live_bt_top.setVisibility(View.VISIBLE);
+                    iv_live_bt_bottom.setVisibility(View.VISIBLE);
+                    iv_live_bt_left.setVisibility(View.VISIBLE);
+                    iv_live_bt_right.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        initVideo();
+        videoLogin(entity.getGateWay().getIP(), entity.getGateWay().getPort(), entity.getGateWay().getLoginName(), entity.getGateWay().getLoginPass(),
+                entity.getPassNum(), entity.isControlled());
+
+
+    }
 
     /**
      * 初始化视频
@@ -163,11 +166,11 @@ public class BatchDahuaVideoActivity extends AppCompatActivity implements IDaHua
         stNetParam.nSearchRecordTime = 30000; // 录像回放超时时间
         INetSDK.SetNetworkParam(stNetParam);// 设置登录环境
         stCfgCapAlarm = new CFG_CAP_ALARM_INFO();
-        videoLogin();
+
     }
 
     @SuppressLint("UseValueOf")
-    private void videoLogin() {
+    private void videoLogin(String ip, int port, String loginName, String loginPass, int passNum, boolean isControl) {
         deviceInfo = new NET_DEVICEINFO();// 初始化设备信息
         if (m_loginHandle != 0) {
             INetSDK.Logout(m_loginHandle);
@@ -206,7 +209,7 @@ public class BatchDahuaVideoActivity extends AppCompatActivity implements IDaHua
             }
             nExtraAlarmOutPortNum = deviceInfo.byAlarmOutPortNum;
             supportInvalidateOptionsMenu();
-            showVideo();
+            showVideo(passNum, isControl);
             dismissLoading();
         } else {
             showToast("登陆失败");
@@ -215,7 +218,7 @@ public class BatchDahuaVideoActivity extends AppCompatActivity implements IDaHua
         }
     }
 
-    private void showVideo() {
+    private void showVideo(final int passNum, final boolean isControl) {
         if (passNum >= nExtraChnNum) {
             showToast("通道号错误，请联系管理员");
             loginFail();
@@ -322,7 +325,7 @@ public class BatchDahuaVideoActivity extends AppCompatActivity implements IDaHua
             public void run() {
                 if (dialog == null)
                     dialog = new LoadingDialog(BatchDahuaVideoActivity.this);
-                    dialog.show();
+                dialog.show();
             }
         });
     }
@@ -334,7 +337,7 @@ public class BatchDahuaVideoActivity extends AppCompatActivity implements IDaHua
             public void run() {
                 if (dialog == null)
                     dialog = new LoadingDialog(BatchDahuaVideoActivity.this);
-                    dialog.dismiss();
+                dialog.dismiss();
             }
         });
     }

@@ -262,9 +262,10 @@ public interface IHttpUnitService {
             @Query("proID") String proID,
             @Query("seedID") String seedID,
             @Query("seedName") String seedName,
-            @Query("quantity") float quantity,
+            @Query("quantity") String quantity,
             @Query("unit") int unit,
             @Query("stTime") String stTime,
+            @Query("ope") String ope,
             @Query("unitID") String unitID
     );
 

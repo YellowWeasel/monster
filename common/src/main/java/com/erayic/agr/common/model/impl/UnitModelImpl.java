@@ -659,8 +659,8 @@ public class UnitModelImpl implements IUnitModel {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void updateBatch(String batchID, String proID, String seedID, String seedName, float quantity, int unit, String stTime, String unitID, final OnDataListener<Object> listener) {
-        HttpUnitManager.getInstance().updateBatch(batchID, proID, seedID, seedName, quantity, unit, stTime, unitID)
+    public void updateBatch(String batchID, String proID, String seedID, String seedName, String quantity, int unit, String stTime,String ope, String unitID, final OnDataListener<Object> listener) {
+        HttpUnitManager.getInstance().updateBatch(batchID, proID, seedID, seedName, quantity, unit, stTime,ope, unitID)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Consumer<DataBack<Object>>() {

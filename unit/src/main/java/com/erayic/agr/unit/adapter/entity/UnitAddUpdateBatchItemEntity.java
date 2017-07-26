@@ -19,6 +19,8 @@ public class UnitAddUpdateBatchItemEntity implements MultiItemEntity {
     public static final int TYPE_DELETE = 5;//删除批次
     public static final int TYPE_FINISH = 6;//批次完成
 
+    public static final int TYPE_DIVIDER = 7;//分割区域
+
     private String name;
     private String subName;
     private Object data;

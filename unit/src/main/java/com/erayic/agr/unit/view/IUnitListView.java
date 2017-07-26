@@ -39,10 +39,5 @@ public interface IUnitListView extends IBaseView {
      */
     void refreshEquCtrFail(CommonUnitListBean.UnitListCtrlItemsBean bean, int position);
 
-    /**
-     * 查询设备成功
-     */
-    void refreshMonitorInfo(CommonMonitorInfoEntity bean);
-
 
 }

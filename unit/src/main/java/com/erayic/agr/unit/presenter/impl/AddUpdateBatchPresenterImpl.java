@@ -44,9 +44,9 @@ public class AddUpdateBatchPresenterImpl implements IAddUpdateBatchPresenter {
     }
 
     @Override
-    public void updateBatch(String batchID, String proID, String seedID, String seedName, float quantity, String stTime, String unitID) {
+    public void updateBatch(String batchID, String proID, String seedID, String seedName, String quantity, String stTime, String ope, String unitID) {
         batchView.showLoading();
-        unitModel.updateBatch(batchID, proID, seedID, seedName, quantity, 1, stTime, unitID, new OnDataListener<Object>() {
+        unitModel.updateBatch(batchID, proID, seedID, seedName, quantity, 1, stTime, ope, unitID, new OnDataListener<Object>() {
             @Override
             public void success(Object response) {
                 batchView.dismissLoading();

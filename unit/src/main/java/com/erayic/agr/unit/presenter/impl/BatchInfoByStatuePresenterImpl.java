@@ -20,17 +20,19 @@ public class BatchInfoByStatuePresenterImpl implements IBatchInfoByStatuePresent
     @Autowired
     IUnitModel unitModel;
 
-    public BatchInfoByStatuePresenterImpl(IBatchInfoByStatueView batchInfoView){
+    public BatchInfoByStatuePresenterImpl(IBatchInfoByStatueView batchInfoView) {
         this.batchInfoView = batchInfoView;
         ARouter.getInstance().inject(this);
     }
 
     @Override
-    public void getBatchInfo(String unitID,int unitType,String batchID) {
+    public void getBatchInfo(String unitID, int unitType, String batchID) {
         batchInfoView.openRefresh();
         unitModel.getBatchDetail(unitID, unitType, batchID, new OnDataListener<CommonUnitBatchInfoBean>() {
             @Override
             public void success(CommonUnitBatchInfoBean response) {
+                response.getBatchInfo().setSeedID(response.getSeedID());
+                response.getBatchInfo().setSeedName(response.getSeedName());
                 batchInfoView.clearRefresh();
                 batchInfoView.refreshBatchView(response);
             }

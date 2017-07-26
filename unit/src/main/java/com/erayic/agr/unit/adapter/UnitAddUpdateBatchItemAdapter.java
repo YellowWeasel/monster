@@ -12,6 +12,7 @@ import com.erayic.agr.unit.R;
 import com.erayic.agr.unit.adapter.entity.UnitAddUpdateBatchItemEntity;
 import com.erayic.agr.unit.adapter.holder.UnitAddUpdateBatchItemButtonViewHolder;
 import com.erayic.agr.unit.adapter.holder.UnitAddUpdateBatchItemViewHolder;
+import com.erayic.agr.unit.adapter.holder.UnitBatchDividerViewHolder;
 
 import java.util.List;
 
@@ -41,6 +42,8 @@ public class UnitAddUpdateBatchItemAdapter extends BaseMultiItemQuickAdapter<Uni
     @Override
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
+            case UnitAddUpdateBatchItemEntity.TYPE_DIVIDER:
+                return new UnitBatchDividerViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_unit_batch_divider, parent, false));
             case UnitAddUpdateBatchItemEntity.TYPE_DELETE:
                 return new UnitAddUpdateBatchItemButtonViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_unit_batch_item_by_button, parent, false));
             case UnitAddUpdateBatchItemEntity.TYPE_FINISH:

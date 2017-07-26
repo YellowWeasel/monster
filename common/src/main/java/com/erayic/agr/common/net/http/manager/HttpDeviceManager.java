@@ -54,4 +54,31 @@ public class HttpDeviceManager {
         return deviceService.getMonitorInfo(serialNum);
     }
 
+    /**
+     * 远程重启控制设备
+     */
+    public Flowable resetDevice(String serialNum) {
+        return deviceService.resetDevice(serialNum);
+    }
+
+    /**
+     * 设置峰鸣器状态
+     */
+    public Flowable setCtrlBuzzer(String serialNum, boolean isOpen) {
+        return deviceService.setCtrlBuzzer(serialNum, isOpen);
+    }
+
+    /**
+     * 设置控制柜工作模式
+     */
+    public Flowable setControlMode(String serialNum, boolean isAuto) {
+        return deviceService.setControlMode(serialNum, isAuto);
+    }
+
+    /**
+     * 得到控制柜详细信息
+     */
+    public Flowable getCtrlDeviceInfo(String serialNum, String deviceName) {
+        return deviceService.getCtrlDeviceInfo(serialNum, deviceName);
+    }
 }

@@ -143,8 +143,8 @@ public class HttpUnitManager {
     /**
      * 更新批次信息
      */
-    public Flowable updateBatch(String batchID, String proID, String seedID, String seedName, float quantity, int unit, String stTime, String unitID) {
-        return unitService.updateBatch(batchID, proID, seedID, seedName, quantity, unit, stTime, unitID);
+    public Flowable updateBatch(String batchID, String proID, String seedID, String seedName, String quantity, int unit, String stTime,String ope, String unitID) {
+        return unitService.updateBatch(batchID, proID, seedID, seedName, quantity, unit, stTime,ope, unitID);
     }
 
     /**
