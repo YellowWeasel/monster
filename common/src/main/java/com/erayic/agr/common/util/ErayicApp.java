@@ -95,4 +95,5 @@ public class ErayicApp {
         }
         return isRunning;
     }
+
 }
