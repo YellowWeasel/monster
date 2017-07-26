@@ -100,7 +100,7 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
                         .withString("batchID", batchID)
                         .withString("batchName", batchName)
                         .withString("imgUrl", imgUrl)//图片地址
-                        .withBoolean("history",false)
+                        .withBoolean("history", false)
                         .navigation();
             }
 
@@ -124,8 +124,12 @@ public class UnitListFragment extends BaseFragment implements IUnitListView, Swi
         //控制设备
         controlAdapter.setOnDeviceClickListener(new UnitListItemByControlAdapter.OnDeviceClickListener() {
             @Override
-            public void onDeviceClick(String equID) {
-
+            public void onDeviceClick(String serialNum, String deviceName) {
+                ARouter.getInstance()
+                        .build("/device/activity/DeviceInfoActivity")
+                        .withString("serialNum", serialNum)
+                        .withString("deviceName", deviceName)
+                        .navigation();
             }
 
             @Override

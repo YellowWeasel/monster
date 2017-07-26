@@ -58,7 +58,7 @@ public class UnitListItemByControlAdapter extends BaseMultiItemQuickAdapter<Unit
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, UnitListItemByControlEntity item) {
+    protected void convert(final BaseViewHolder helper, final UnitListItemByControlEntity item) {
         switch (helper.getItemViewType()) {
             case UnitListItemByControlEntity.TYPE_NO_EQU:
                 if (helper instanceof UnitListItemByNoDataViewHolder) {
@@ -71,6 +71,20 @@ public class UnitListItemByControlAdapter extends BaseMultiItemQuickAdapter<Unit
                     ((UnitListItemByControlByEquViewHolder) helper).unitControlEquMode.setText("模式:" + item.getMap().get("Mode").toString() + "");
                     ((UnitListItemByControlByEquViewHolder) helper).unitControlEquStatus.setText(item.getMap().get("Status").toString());
                     ((UnitListItemByControlByEquViewHolder) helper).unitControlEquTem.setText("机柜温度:" + item.getMap().get("Tempeture").toString() + "");
+                    ((UnitListItemByControlByEquViewHolder) helper).itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (onDeviceClickListener != null) {
+                                onDeviceClickListener.onDeviceClick(item.getName(), item.getMap().get("Name").toString());
+                            }
+                        }
+                    });
+                    ((UnitListItemByControlByEquViewHolder) helper).itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            return true;
+                        }
+                    });
                 }
                 break;
             case UnitListItemByControlEntity.TYPE_ITEM_ST:
@@ -281,7 +295,7 @@ public class UnitListItemByControlAdapter extends BaseMultiItemQuickAdapter<Unit
 
     public interface OnDeviceClickListener {
         //设备管理
-        void onDeviceClick(String equID);
+        void onDeviceClick(String serialNum, String deviceName);
 
         //设备控制(cmd 操作命令（1、 启动，0、停止 3、正转启动 2、反转启动）)
         void onControlClick(CommonUnitListBean.UnitListCtrlItemsBean bean, int cmd, int position);

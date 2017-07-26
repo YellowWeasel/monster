@@ -1,1 +1,1 @@
-include ':app', ':common', ':index', ':service', ':manage', ':serverproduct', ':unit', ':jobs'
+include ':app', ':common', ':index', ':service', ':manage', ':serverproduct', ':unit', ':jobs', ':other-1'
