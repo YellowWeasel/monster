@@ -66,6 +66,7 @@ public class ManageMineFragment extends BaseFragment implements IMineView {
         CustomLinearLayoutManager manager = new CustomLinearLayoutManager(getActivity());
         manager.setScrollEnabled(true);//滑动监听
         manageMineRecyclerView.setLayoutManager(manager);
+
         adapter = new ManageMineItemAdapter(getActivity(), null);
         adapter.setOnItemUrlClickListener(new ManageMineItemAdapter.onItemUrlClickListener() {
             @Override

@@ -1,7 +1,9 @@
 package com.erayic.agr.view.impl;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavigationCallback;
@@ -10,6 +12,7 @@ import com.erayic.agr.common.base.BaseActivity;
 
 public class SchemeFilterActivity extends BaseActivity {
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

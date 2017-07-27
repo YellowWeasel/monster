@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--按钮深蓝色-->
+    <color name="monitoring_background">#0eae8f</color>
+    <!--APP状态标题栏基础色-->
+    <color name="status_background">#374254</color>
+    <!--基础色-->
+    <color name="basics_background">#ffffff</color>
+</resources>
